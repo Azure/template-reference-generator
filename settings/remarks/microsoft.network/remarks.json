@@ -21,5 +21,392 @@
       ],
       "Description": "For guidance on creating virtual networks and subnets, see [Create virtual network resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-virtual-networks)."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
+      "Path": "applicationgatewaywebapplicationfirewallpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/ExpressRoutePorts",
+      "Path": "expressrouteports/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/ExpressRoutePorts@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies",
+      "Path": "frontdoorwebapplicationfirewallpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/applicationSecurityGroups",
+      "Path": "applicationsecuritygroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/applicationSecurityGroups@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/azureFirewalls",
+      "Path": "azurefirewalls/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/azureFirewalls@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/bastionHosts",
+      "Path": "bastionhosts/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/bastionHosts@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/ddosProtectionPlans",
+      "Path": "ddosprotectionplans/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/ddosProtectionPlans@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsForwardingRulesets",
+      "Path": "dnsforwardingrulesets/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsForwardingRulesets@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsForwardingRulesets",
+      "Path": "dnsforwardingrulesets/forwardingrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsForwardingRulesets/forwardingRules@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsForwardingRulesets",
+      "Path": "dnsforwardingrulesets/virtualnetworklinks/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsResolvers",
+      "Path": "dnsresolvers/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsResolvers@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsResolvers",
+      "Path": "dnsresolvers/inboundendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsResolvers/inboundEndpoints@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsResolvers",
+      "Path": "dnsresolvers/outboundendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/a/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/A@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/aaaa/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/AAAA@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/caa/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/CAA@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/cname/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/CNAME@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/mx/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/MX@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/ns/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/NS@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/ptr/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/PTR@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/srv/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/SRV@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "dnszones/txt/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/dnsZones/TXT@2018-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits",
+      "Path": "expressroutecircuits/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/expressRouteCircuits@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits",
+      "Path": "expressroutecircuits/authorizations/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/expressRouteCircuits/authorizations@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits",
+      "Path": "expressroutecircuits/peerings/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/expressRouteCircuits/peerings@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits",
+      "Path": "expressroutecircuits/peerings/connections/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/expressRouteCircuits/peerings/connections@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteGateways",
+      "Path": "expressroutegateways/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/expressRouteGateways@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteGateways",
+      "Path": "expressroutegateways/expressrouteconnections/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/expressRouteGateways/expressRouteConnections@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRoutePorts",
+      "Path": "expressrouteports/authorizations/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/expressRoutePorts/authorizations@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/firewallPolicies",
+      "Path": "firewallpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/firewallPolicies@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/firewallPolicies",
+      "Path": "firewallpolicies/rulecollectiongroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/firewallPolicies/ruleCollectionGroups@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/frontDoors",
+      "Path": "frontdoors/rulesengines/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/frontDoors/rulesEngines@2020-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/ipGroups",
+      "Path": "ipgroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/ipGroups@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/loadBalancers",
+      "Path": "loadbalancers/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/loadBalancers@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/loadBalancers",
+      "Path": "loadbalancers/backendaddresspools/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/loadBalancers/backendAddressPools@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/localNetworkGateways",
+      "Path": "localnetworkgateways/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/localNetworkGateways@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/natGateways",
+      "Path": "natgateways/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/natGateways@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkInterfaces",
+      "Path": "networkinterfaces/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/networkInterfaces@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkProfiles",
+      "Path": "networkprofiles/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/networkProfiles@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkSecurityGroups",
+      "Path": "networksecuritygroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/networkSecurityGroups@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkSecurityGroups",
+      "Path": "networksecuritygroups/securityrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/networkSecurityGroups/securityRules@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkWatchers",
+      "Path": "networkwatchers/flowlogs/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/networkWatchers/flowLogs@2023-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/p2svpnGateways",
+      "Path": "p2svpngateways/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/p2svpnGateways@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/a/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/A@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/aaaa/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/AAAA@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/cname/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/CNAME@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/mx/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/MX@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/ptr/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/PTR@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/srv/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/SRV@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/txt/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/TXT@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "privatednszones/virtualnetworklinks/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/privateDnsZones/virtualNetworkLinks@2018-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/publicIPAddresses",
+      "Path": "publicipaddresses/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/publicIPAddresses@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/publicIPPrefixes",
+      "Path": "publicipprefixes/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/publicIPPrefixes@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/routeFilters",
+      "Path": "routefilters/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/routeFilters@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/routeTables",
+      "Path": "routetables/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/routeTables@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/routeTables",
+      "Path": "routetables/routes/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/routeTables/routes@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/securityPartnerProviders",
+      "Path": "securitypartnerproviders/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/securityPartnerProviders@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/serviceEndpointPolicies",
+      "Path": "serviceendpointpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/serviceEndpointPolicies@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles",
+      "Path": "trafficmanagerprofiles/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/trafficManagerProfiles@2018-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles",
+      "Path": "trafficmanagerprofiles/azureendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/trafficManagerProfiles/AzureEndpoints@2018-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles",
+      "Path": "trafficmanagerprofiles/externalendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/trafficManagerProfiles/ExternalEndpoints@2018-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles",
+      "Path": "trafficmanagerprofiles/nestedendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/trafficManagerProfiles/NestedEndpoints@2018-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualHubs",
+      "Path": "virtualhubs/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualHubs@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualHubs",
+      "Path": "virtualhubs/hubvirtualnetworkconnections/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualHubs",
+      "Path": "virtualhubs/ipconfigurations/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualHubs/ipConfigurations@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworkGateways",
+      "Path": "virtualnetworkgateways/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualNetworkGateways@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworkGateways",
+      "Path": "virtualnetworkgateways/natrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworks",
+      "Path": "virtualnetworks/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualNetworks@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworks",
+      "Path": "virtualnetworks/subnets/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualNetworks/subnets@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualWans",
+      "Path": "virtualwans/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/virtualWans@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnGateways",
+      "Path": "vpngateways/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/vpnGateways@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnGateways",
+      "Path": "vpngateways/natrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/vpnGateways/natRules@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnServerConfigurations",
+      "Path": "vpnserverconfigurations/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/vpnServerConfigurations@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnServerConfigurations",
+      "Path": "vpnserverconfigurations/configurationpolicygroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups@2022-07-01."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnSites",
+      "Path": "vpnsites/main.bicep",
+      "Description": "Basic sample for Microsoft.Network/vpnSites@2022-07-01."
+    }
   ]
 }

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Qumulo.Storage/fileSystems",
+      "Path": "filesystems/main.bicep",
+      "Description": "Basic sample for Qumulo.Storage/fileSystems@2024-06-19."
+    }
+  ]
+}

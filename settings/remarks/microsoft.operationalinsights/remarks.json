@@ -7,5 +7,52 @@
       ],
       "Description": "For guidance on deploying monitoring solutions, see [Create monitoring resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-monitoring)."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.OperationalInsights/clusters",
+      "Path": "clusters/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/clusters@2020-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/queryPacks",
+      "Path": "querypacks/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/queryPacks@2019-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/queryPacks",
+      "Path": "querypacks/queries/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/queryPacks/queries@2019-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces",
+      "Path": "workspaces/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/workspaces@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces",
+      "Path": "workspaces/dataexports/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/workspaces/dataExports@2020-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces",
+      "Path": "workspaces/datasources/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/workspaces/dataSources@2020-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces",
+      "Path": "workspaces/linkedservices/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces",
+      "Path": "workspaces/linkedstorageaccounts/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/workspaces/linkedStorageAccounts@2020-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces",
+      "Path": "workspaces/savedsearches/main.bicep",
+      "Description": "Basic sample for Microsoft.OperationalInsights/workspaces/savedSearches@2020-08-01."
+    }
   ]
 }

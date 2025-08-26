@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.CustomProviders/resourceProviders",
+      "Path": "resourceproviders/main.bicep",
+      "Description": "Basic sample for Microsoft.CustomProviders/resourceProviders@2018-09-01-preview."
+    }
+  ]
+}

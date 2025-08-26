@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles@2020-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/afdendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/afdEndpoints@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/afdendpoints/routes/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/afdEndpoints/routes@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/customdomains/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/customDomains@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/endpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/endpoints@2020-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/origingroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/originGroups@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/origingroups/origins/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/originGroups/origins@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/rulesets/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/ruleSets@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "profiles/securitypolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Cdn/profiles/securityPolicies@2021-06-01."
+    }
+  ]
+}

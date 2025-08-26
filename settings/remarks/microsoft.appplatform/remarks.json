@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/devtoolportals/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/DevToolPortals@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/apiportals/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/apiPortals@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/apiportals/domains/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/apiPortals/domains@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/applicationaccelerators/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/applicationAccelerators@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/applicationaccelerators/customizedaccelerators/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/applicationAccelerators/customizedAccelerators@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/applicationliveviews/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/applicationLiveViews@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/apps/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/apps@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/apps/deployments/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/buildservices/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/buildServices@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/buildservices/builders/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/buildServices/builders@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/buildservices/builders/buildpackbindings/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/configservers/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/configServers@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/configurationservices/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/configurationServices@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/gateways/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/gateways@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/gateways/domains/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/gateways/domains@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/gateways/routeconfigs/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/gateways/routeConfigs@2023-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "spring/monitoringsettings/main.bicep",
+      "Description": "Basic sample for Microsoft.AppPlatform/Spring/monitoringSettings@2023-05-01-preview."
+    }
+  ]
+}

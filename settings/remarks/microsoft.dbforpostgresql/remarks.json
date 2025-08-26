@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "Path": "flexibleservers/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "Path": "flexibleservers/configurations/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/flexibleServers/configurations@2022-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "Path": "flexibleservers/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/flexibleServers/databases@2022-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "Path": "flexibleservers/firewallrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2022-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/serverGroupsv2",
+      "Path": "servergroupsv2/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/serverGroupsv2@2022-11-08."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers",
+      "Path": "servers/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/servers@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers",
+      "Path": "servers/configurations/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/servers/configurations@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers",
+      "Path": "servers/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/servers/databases@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers",
+      "Path": "servers/firewallrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/servers/firewallRules@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers",
+      "Path": "servers/virtualnetworkrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforPostgreSQL/servers/virtualNetworkRules@2017-12-01."
+    }
+  ]
+}

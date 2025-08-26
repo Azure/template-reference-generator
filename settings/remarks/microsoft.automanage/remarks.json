@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Automanage/configurationProfiles",
+      "Path": "configurationprofiles/main.bicep",
+      "Description": "Basic sample for Microsoft.Automanage/configurationProfiles@2022-05-04."
+    }
+  ]
+}

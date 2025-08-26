@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DevCenter/devcenters",
+      "Path": "devcenters/attachednetworks/main.bicep",
+      "Description": "Basic sample for Microsoft.DevCenter/devcenters/attachednetworks@2023-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/devcenters",
+      "Path": "devcenters/devboxdefinitions/main.bicep",
+      "Description": "Basic sample for Microsoft.DevCenter/devcenters/devboxdefinitions@2024-10-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/networkConnections",
+      "Path": "networkconnections/main.bicep",
+      "Description": "Basic sample for Microsoft.DevCenter/networkConnections@2023-04-01."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Migrate/migrateProjects",
+      "Path": "migrateprojects/main.bicep",
+      "Description": "Basic sample for Microsoft.Migrate/migrateProjects@2018-09-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Migrate/migrateProjects",
+      "Path": "migrateprojects/solutions/main.bicep",
+      "Description": "Basic sample for Microsoft.Migrate/migrateProjects/solutions@2018-09-01-preview."
+    }
+  ]
+}

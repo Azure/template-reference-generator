@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.VoiceServices/communicationsGateways",
+      "Path": "communicationsgateways/main.bicep",
+      "Description": "Basic sample for Microsoft.VoiceServices/communicationsGateways@2023-01-31."
+    },
+    {
+      "ResourceType": "Microsoft.VoiceServices/communicationsGateways",
+      "Path": "communicationsgateways/testlines/main.bicep",
+      "Description": "Basic sample for Microsoft.VoiceServices/communicationsGateways/testLines@2023-01-31."
+    }
+  ]
+}

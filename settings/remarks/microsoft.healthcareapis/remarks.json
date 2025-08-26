@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces",
+      "Path": "workspaces/main.bicep",
+      "Description": "Basic sample for Microsoft.HealthcareApis/workspaces@2022-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces",
+      "Path": "workspaces/dicomservices/main.bicep",
+      "Description": "Basic sample for Microsoft.HealthcareApis/workspaces/dicomServices@2022-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces",
+      "Path": "workspaces/iotconnectors/main.bicep",
+      "Description": "Basic sample for Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12-01."
+    }
+  ]
+}

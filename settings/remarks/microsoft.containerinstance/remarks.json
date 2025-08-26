@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ContainerInstance/containerGroups",
+      "Path": "containergroups/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerInstance/containerGroups@2023-05-01."
+    }
+  ]
+}

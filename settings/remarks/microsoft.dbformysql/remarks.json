@@ -13,5 +13,47 @@
       ],
       "Description": "Use the `maintenanceWindow` property only when updating an existing flexible server. When creating a new flexible servcer, don't specify values for this property."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers",
+      "Path": "flexibleservers/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/flexibleServers@2021-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers",
+      "Path": "flexibleservers/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/flexibleServers/databases@2021-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers",
+      "Path": "flexibleservers/firewallrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/flexibleServers/firewallRules@2021-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers",
+      "Path": "servers/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/servers@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers",
+      "Path": "servers/configurations/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/servers/configurations@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers",
+      "Path": "servers/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/servers/databases@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers",
+      "Path": "servers/firewallrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/servers/firewallRules@2017-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers",
+      "Path": "servers/virtualnetworkrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMySQL/servers/virtualNetworkRules@2017-12-01."
+    }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Cache/redis",
+      "Path": "redis/main.bicep",
+      "Description": "Basic sample for Microsoft.Cache/redis@2023-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redisEnterprise",
+      "Path": "redisenterprise/main.bicep",
+      "Description": "Basic sample for Microsoft.Cache/redisEnterprise@2022-01-01."
+    }
+  ]
+}

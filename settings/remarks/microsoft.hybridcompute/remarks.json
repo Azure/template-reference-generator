@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HybridCompute/privateLinkScopes",
+      "Path": "privatelinkscopes/main.bicep",
+      "Description": "Basic sample for Microsoft.HybridCompute/privateLinkScopes@2022-11-10."
+    }
+  ]
+}

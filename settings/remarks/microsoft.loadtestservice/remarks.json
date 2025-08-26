@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.LoadTestService/loadTests",
+      "Path": "loadtests/main.bicep",
+      "Description": "Basic sample for Microsoft.LoadTestService/loadTests@2022-12-01."
+    }
+  ]
+}

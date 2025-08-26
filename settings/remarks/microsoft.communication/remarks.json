@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Communication/communicationServices",
+      "Path": "communicationservices/main.bicep",
+      "Description": "Basic sample for Microsoft.Communication/communicationServices@2023-03-31."
+    },
+    {
+      "ResourceType": "Microsoft.Communication/emailServices",
+      "Path": "emailservices/main.bicep",
+      "Description": "Basic sample for Microsoft.Communication/emailServices@2023-03-31."
+    },
+    {
+      "ResourceType": "Microsoft.Communication/emailServices",
+      "Path": "emailservices/domains/main.bicep",
+      "Description": "Basic sample for Microsoft.Communication/emailServices/domains@2023-04-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Communication/emailServices",
+      "Path": "emailservices/domains/senderusernames/main.bicep",
+      "Description": "Basic sample for Microsoft.Communication/emailServices/domains/senderUsernames@2023-04-01-preview."
+    }
+  ]
+}

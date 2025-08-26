@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "integrationaccounts/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/integrationAccounts@2019-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "integrationaccounts/agreements/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/integrationAccounts/agreements@2019-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "integrationaccounts/batchconfigurations/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/integrationAccounts/batchConfigurations@2019-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "integrationaccounts/maps/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/integrationAccounts/maps@2019-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "integrationaccounts/partners/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/integrationAccounts/partners@2019-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "integrationaccounts/schemas/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/integrationAccounts/schemas@2019-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "integrationaccounts/sessions/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/integrationAccounts/sessions@2019-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/workflows",
+      "Path": "workflows/main.bicep",
+      "Description": "Basic sample for Microsoft.Logic/workflows@2019-05-01."
+    }
+  ]
+}

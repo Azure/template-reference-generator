@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Batch/batchAccounts",
+      "Path": "batchaccounts/main.bicep",
+      "Description": "Basic sample for Microsoft.Batch/batchAccounts@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.Batch/batchAccounts",
+      "Path": "batchaccounts/applications/main.bicep",
+      "Description": "Basic sample for Microsoft.Batch/batchAccounts/applications@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.Batch/batchAccounts",
+      "Path": "batchaccounts/certificates/main.bicep",
+      "Description": "Basic sample for Microsoft.Batch/batchAccounts/certificates@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.Batch/batchAccounts",
+      "Path": "batchaccounts/pools/main.bicep",
+      "Description": "Basic sample for Microsoft.Batch/batchAccounts/pools@2022-10-01."
+    }
+  ]
+}

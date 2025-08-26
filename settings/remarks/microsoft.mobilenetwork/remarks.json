@@ -1,0 +1,50 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks",
+      "Path": "mobilenetworks/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/mobileNetworks@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks",
+      "Path": "mobilenetworks/datanetworks/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/mobileNetworks/dataNetworks@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks",
+      "Path": "mobilenetworks/services/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks",
+      "Path": "mobilenetworks/simpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks",
+      "Path": "mobilenetworks/sites/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/mobileNetworks/sites@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks",
+      "Path": "mobilenetworks/slices/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/mobileNetworks/slices@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/packetCoreControlPlanes",
+      "Path": "packetcorecontrolplanes/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/packetCoreControlPlanes@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/packetCoreControlPlanes",
+      "Path": "packetcorecontrolplanes/packetcoredataplanes/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/packetCoreControlPlanes/packetCoreDataPlanes@2022-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/simGroups",
+      "Path": "simgroups/main.bicep",
+      "Description": "Basic sample for Microsoft.MobileNetwork/simGroups@2022-11-01."
+    }
+  ]
+}

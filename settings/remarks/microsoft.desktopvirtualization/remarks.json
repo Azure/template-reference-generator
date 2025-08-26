@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/applicationGroups",
+      "Path": "applicationgroups/applications/main.bicep",
+      "Description": "Basic sample for Microsoft.DesktopVirtualization/applicationGroups/applications@2023-09-05."
+    },
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/scalingPlans",
+      "Path": "scalingplans/personalschedules/main.bicep",
+      "Description": "Basic sample for Microsoft.DesktopVirtualization/scalingPlans/personalSchedules@2023-11-01-preview."
+    }
+  ]
+}

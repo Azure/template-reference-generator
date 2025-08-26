@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.CertificateRegistration/certificateOrders",
+      "Path": "certificateorders/main.bicep",
+      "Description": "Basic sample for Microsoft.CertificateRegistration/certificateOrders@2021-02-01."
+    }
+  ]
+}

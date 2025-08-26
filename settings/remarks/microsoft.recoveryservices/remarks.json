@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/backuppolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults/backupPolicies@2023-02-01."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/backupresourceguardproxies/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults/backupResourceGuardProxies@2023-02-01."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/backupstorageconfig/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults/backupStorageConfig@2023-02-01."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/backupconfig/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults/backupconfig@2024-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/replicationfabrics/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults/replicationFabrics@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/replicationfabrics/replicationprotectioncontainers/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "vaults/replicationpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.RecoveryServices/vaults/replicationPolicies@2022-10-01."
+    }
+  ]
+}

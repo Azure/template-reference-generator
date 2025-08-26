@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Relay/namespaces",
+      "Path": "namespaces/main.bicep",
+      "Description": "Basic sample for Microsoft.Relay/namespaces@2017-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Relay/namespaces",
+      "Path": "namespaces/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Relay/namespaces/authorizationRules@2017-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Relay/namespaces",
+      "Path": "namespaces/hybridconnections/main.bicep",
+      "Description": "Basic sample for Microsoft.Relay/namespaces/hybridConnections@2017-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Relay/namespaces",
+      "Path": "namespaces/hybridconnections/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Relay/namespaces/hybridConnections/authorizationRules@2017-04-01."
+    }
+  ]
+}

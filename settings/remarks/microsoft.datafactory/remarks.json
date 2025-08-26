@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/credentials/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/credentials@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/dataflows/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/dataflows@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/datasets/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/datasets@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/integrationruntimes/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/linkedservices/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/linkedservices@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/managedvirtualnetworks/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/managedVirtualNetworks@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/managedvirtualnetworks/managedprivateendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/pipelines/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/pipelines@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "factories/triggers/main.bicep",
+      "Description": "Basic sample for Microsoft.DataFactory/factories/triggers@2018-06-01."
+    }
+  ]
+}

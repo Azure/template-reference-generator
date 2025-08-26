@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AnalysisServices/servers",
+      "Path": "servers/main.bicep",
+      "Description": "Basic sample for Microsoft.AnalysisServices/servers@2017-08-01."
+    }
+  ]
+}

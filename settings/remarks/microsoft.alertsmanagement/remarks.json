@@ -7,5 +7,17 @@
       ],
       "Description": "For guidance on deploying monitoring solutions, see [Create monitoring resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-monitoring)."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AlertsManagement/prometheusRuleGroups",
+      "Path": "prometheusrulegroups/main.bicep",
+      "Description": "Basic sample for Microsoft.AlertsManagement/prometheusRuleGroups@2023-03-01."
+    },
+    {
+      "ResourceType": "microsoft.alertsManagement/smartDetectorAlertRules",
+      "Path": "smartdetectoralertrules/main.bicep",
+      "Description": "Basic sample for microsoft.alertsManagement/smartDetectorAlertRules@2019-06-01."
+    }
   ]
 }

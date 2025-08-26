@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.PolicyInsights/policyStates",
+      "Path": "policystates/main.bicep",
+      "Description": "Basic sample for Microsoft.PolicyInsights/policyStates@2019-10-01."
+    }
+  ]
+}

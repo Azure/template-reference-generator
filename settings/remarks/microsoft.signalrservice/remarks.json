@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.SignalRService/signalR",
+      "Path": "signalr/main.bicep",
+      "Description": "Basic sample for Microsoft.SignalRService/signalR@2023-02-01."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub",
+      "Path": "webpubsub/main.bicep",
+      "Description": "Basic sample for Microsoft.SignalRService/webPubSub@2023-02-01."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub",
+      "Path": "webpubsub/hubs/main.bicep",
+      "Description": "Basic sample for Microsoft.SignalRService/webPubSub/hubs@2023-02-01."
+    }
+  ]
+}

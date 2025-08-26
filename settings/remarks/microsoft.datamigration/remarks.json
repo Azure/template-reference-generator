@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataMigration/services",
+      "Path": "services/main.bicep",
+      "Description": "Basic sample for Microsoft.DataMigration/services@2018-04-19."
+    },
+    {
+      "ResourceType": "Microsoft.DataMigration/services",
+      "Path": "services/projects/main.bicep",
+      "Description": "Basic sample for Microsoft.DataMigration/services/projects@2018-04-19."
+    }
+  ]
+}

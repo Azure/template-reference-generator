@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.StorageCache/caches",
+      "Path": "caches/main.bicep",
+      "Description": "Basic sample for Microsoft.StorageCache/caches@2023-01-01."
+    }
+  ]
+}

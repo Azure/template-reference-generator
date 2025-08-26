@@ -1,0 +1,80 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts@2021-06-22."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/certificates/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/certificates@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/configurations/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/configurations@2022-08-08."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/connectiontypes/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/connectionTypes@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/credentials/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/credentials@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/hybridrunbookworkergroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups@2021-06-22."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/hybridrunbookworkergroups/hybridrunbookworkers/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers@2021-06-22."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/jobschedules/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/jobSchedules@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/modules/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/modules@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/powershell72modules/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/powershell72Modules@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/runbooks/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/runbooks@2019-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/runbooks/draft/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/runbooks/draft@2018-06-30."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/schedules/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/schedules@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/variables/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/variables@2020-01-13-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "automationaccounts/webhooks/main.bicep",
+      "Description": "Basic sample for Microsoft.Automation/automationAccounts/webHooks@2015-10-31."
+    }
+  ]
+}

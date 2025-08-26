@@ -418,6 +418,829 @@ For **Periodic**, use:
 | ignoreMissingVNetServiceEndpoint | Create firewall rule before the virtual network has vnet service endpoint enabled. | bool |
 
 ## Usage Examples
+### Bicep Samples
+
+Basic sample for Microsoft.DocumentDB/databaseAccounts@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource cassandraKeyspace 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: [
+      {
+        name: 'EnableCassandra'
+      }
+    ]
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2023-04-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: [
+      {
+        name: 'EnableGremlin'
+      }
+    ]
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource gremlinDatabase 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2023-04-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs@2023-04-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: [
+      {
+        name: 'EnableGremlin'
+      }
+    ]
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource graph 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs@2023-04-15' = {
+  parent: gremlinDatabase
+  name: resource_name
+  properties: {
+    options: {
+      throughput: 400
+    }
+    resource: {
+      id: resource_name
+      partitionKey: {
+        kind: 'Hash'
+        paths: [
+          '/test'
+        ]
+      }
+    }
+  }
+}
+
+resource gremlinDatabase 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2023-04-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'MongoDB'
+  properties: {
+    capabilities: [
+      {
+        name: 'EnableMongo'
+      }
+    ]
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource mongodbDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/services@2022-05-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource service 'Microsoft.DocumentDB/databaseAccounts/services@2022-05-15' = {
+  parent: databaseAccount
+  name: 'SqlDedicatedGateway'
+  properties: {
+    instanceCount: 1
+    instanceSize: 'Cosmos.D4s'
+    serviceType: 'SqlDedicatedGateway'
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {
+      throughput: 400
+    }
+    resource: {
+      id: resource_name
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
+  parent: sqlDatabase
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: 'test-containerWest Europe'
+      partitionKey: {
+        kind: 'Hash'
+        paths: [
+          '/definition'
+        ]
+      }
+    }
+  }
+}
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {
+      throughput: 400
+    }
+    resource: {
+      id: resource_name
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
+  parent: sqlDatabase
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+      partitionKey: {
+        kind: 'Hash'
+        paths: [
+          '/definition/id'
+        ]
+      }
+    }
+  }
+}
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+
+resource storedProcedure 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures@2021-10-15' = {
+  parent: container
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      body: '  \tfunction () {\n\t\tvar context = getContext();\n\t\tvar response = context.getResponse();\n\t\tresponse.setBody(\'Hello, World\');\n\t}\n'
+      id: resource_name
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
+  parent: sqlDatabase
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+      partitionKey: {
+        kind: 'Hash'
+        paths: [
+          '/definition/id'
+        ]
+      }
+    }
+  }
+}
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+
+resource trigger 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers@2021-10-15' = {
+  parent: container
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      body: 'function trigger(){}'
+      id: resource_name
+      triggerOperation: 'All'
+      triggerType: 'Pre'
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
+  parent: sqlDatabase
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+      partitionKey: {
+        kind: 'Hash'
+        paths: [
+          '/definition/id'
+        ]
+      }
+    }
+  }
+}
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+
+resource userDefinedFunction 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions@2021-10-15' = {
+  parent: container
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      body: '  \tfunction test() {\n\t\tvar context = getContext();\n\t\tvar response = context.getResponse();\n\t\tresponse.setBody(\'Hello, World\');\n\t}\n'
+      id: resource_name
+    }
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2021-10-15' = {
+  parent: databaseAccount
+  name: 'c3ce1661-d0b9-3476-0a7c-2654ce2f3055'
+  properties: {
+    assignableScopes: [
+      databaseAccount.id
+    ]
+    permissions: [
+      {
+        dataActions: [
+          'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/read'
+        ]
+      }
+    ]
+    roleName: resource_name
+    type: 'CustomRole'
+  }
+}
+```
+Basic sample for Microsoft.DocumentDB/databaseAccounts/tables@2021-10-15.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  location: location
+  name: resource_name
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: [
+      {
+        name: 'EnableTable'
+      }
+    ]
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
+resource table 'Microsoft.DocumentDB/databaseAccounts/tables@2021-10-15' = {
+  parent: databaseAccount
+  name: resource_name
+  properties: {
+    options: {}
+    resource: {
+      id: resource_name
+    }
+  }
+}
+```
 ### Azure Verified Modules
 
 The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.

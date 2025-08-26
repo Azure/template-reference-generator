@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Orbital/spacecrafts",
+      "Path": "spacecrafts/main.bicep",
+      "Description": "Basic sample for Microsoft.Orbital/spacecrafts@2022-11-01."
+    }
+  ]
+}

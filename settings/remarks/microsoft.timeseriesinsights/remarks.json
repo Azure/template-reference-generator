@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.TimeSeriesInsights/environments",
+      "Path": "environments/main.bicep",
+      "Description": "Basic sample for Microsoft.TimeSeriesInsights/environments@2020-05-15."
+    },
+    {
+      "ResourceType": "Microsoft.TimeSeriesInsights/environments",
+      "Path": "environments/accesspolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.TimeSeriesInsights/environments/accessPolicies@2020-05-15."
+    },
+    {
+      "ResourceType": "Microsoft.TimeSeriesInsights/environments",
+      "Path": "environments/referencedatasets/main.bicep",
+      "Description": "Basic sample for Microsoft.TimeSeriesInsights/environments/referenceDataSets@2020-05-15."
+    }
+  ]
+}

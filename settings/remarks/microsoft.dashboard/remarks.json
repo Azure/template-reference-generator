@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Dashboard/grafana",
+      "Path": "grafana/main.bicep",
+      "Description": "Basic sample for Microsoft.Dashboard/grafana@2022-08-01."
+    }
+  ]
+}

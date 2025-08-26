@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DigitalTwins/digitalTwinsInstances",
+      "Path": "digitaltwinsinstances/main.bicep",
+      "Description": "Basic sample for Microsoft.DigitalTwins/digitalTwinsInstances@2020-12-01."
+    }
+  ]
+}

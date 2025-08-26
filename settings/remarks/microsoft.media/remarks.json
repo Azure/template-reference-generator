@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/accountfilters/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/accountFilters@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/assets/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/assets@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/assets/assetfilters/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/assets/assetFilters@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/contentkeypolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/contentKeyPolicies@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/liveevents/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/liveEvents@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/streamingendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/streamingEndpoints@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/streaminglocators/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/streamingLocators@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/streamingpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/streamingPolicies@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "mediaservices/transforms/main.bicep",
+      "Description": "Basic sample for Microsoft.Media/mediaServices/transforms@2022-07-01."
+    }
+  ]
+}

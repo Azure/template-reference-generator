@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Databricks/accessConnectors",
+      "Path": "accessconnectors/main.bicep",
+      "Description": "Basic sample for Microsoft.Databricks/accessConnectors@2022-10-01-preview."
+    }
+  ]
+}

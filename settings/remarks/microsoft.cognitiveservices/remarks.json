@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts",
+      "Path": "accounts/main.bicep",
+      "Description": "Basic sample for Microsoft.CognitiveServices/accounts@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts",
+      "Path": "accounts/deployments/main.bicep",
+      "Description": "Basic sample for Microsoft.CognitiveServices/accounts/deployments@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts",
+      "Path": "accounts/raipolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.CognitiveServices/accounts/raiPolicies@2024-10-01."
+    }
+  ]
+}

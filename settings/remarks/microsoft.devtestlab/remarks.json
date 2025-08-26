@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DevTestLab/labs",
+      "Path": "labs/main.bicep",
+      "Description": "Basic sample for Microsoft.DevTestLab/labs@2018-09-15."
+    },
+    {
+      "ResourceType": "Microsoft.DevTestLab/labs",
+      "Path": "labs/schedules/main.bicep",
+      "Description": "Basic sample for Microsoft.DevTestLab/labs/schedules@2018-09-15."
+    },
+    {
+      "ResourceType": "Microsoft.DevTestLab/schedules",
+      "Path": "schedules/main.bicep",
+      "Description": "Basic sample for Microsoft.DevTestLab/schedules@2018-09-15."
+    }
+  ]
+}

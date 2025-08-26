@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Security/advancedThreatProtectionSettings",
+      "Path": "advancedthreatprotectionsettings/main.bicep",
+      "Description": "Basic sample for Microsoft.Security/advancedThreatProtectionSettings@2019-01-01."
+    },
+    {
+      "ResourceType": "Microsoft.Security/defenderForStorageSettings",
+      "Path": "defenderforstoragesettings/main.bicep",
+      "Description": "Basic sample for Microsoft.Security/defenderForStorageSettings@2022-12-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Security/iotSecuritySolutions",
+      "Path": "iotsecuritysolutions/main.bicep",
+      "Description": "Basic sample for Microsoft.Security/iotSecuritySolutions@2019-08-01."
+    }
+  ]
+}
