@@ -6957,20 +6957,6 @@
       "HasBicep": false
     },
     {
-      "Title": "Deploy a simple Ubuntu Linux VM 20.04-LTS",
-      "Description": "This template deploys an Ubuntu Server with a few options for the VM. You can provide the VM Name, OS Version, VM size, and admin username and password. As default the VM size is Standard_D2s_v3 and OS version is 20.04-LTS.",
-      "Path": "quickstarts/microsoft.compute/vm-simple-linux",
-      "ResourceTypes": [
-        "Microsoft.Compute/virtualMachines",
-        "Microsoft.Compute/virtualMachines/extensions",
-        "Microsoft.Network/networkInterfaces",
-        "Microsoft.Network/networkSecurityGroups",
-        "Microsoft.Network/publicIPAddresses",
-        "Microsoft.Network/virtualNetworks"
-      ],
-      "HasBicep": true
-    },
-    {
       "Title": "Red Hat Enterprise Linux VM (RHEL 7.8 unmanaged)",
       "Description": "This template will deploy a Red Hat Enterprise Linux VM (RHEL 7.8), using the Pay-As-You-Go RHEL VM image for the selected version on Standard A1_v2 VM in the location of your chosen resource group with an additional 100 GiB data disk attached to the VM. Additional charges apply to this image - consult Azure VM Pricing page for details.",
       "Path": "quickstarts/microsoft.compute/vm-simple-rhel-unmanaged",
@@ -16008,6 +15994,13 @@
     },
     {
       "Type": "Terraform",
+      "Title": "Capacity Reservation Group",
+      "Description": "AVM Resource Module for Capacity Reservation Group",
+      "ResourceType": "Microsoft.Compute/capacityReservationGroups",
+      "RepoUrl": "https://github.com/Azure/terraform-azurerm-avm-res-compute-capacityreservationgroup"
+    },
+    {
+      "Type": "Terraform",
       "Title": "Compute Disk",
       "Description": "AVM Resource Module for Compute Disk",
       "ResourceType": "Microsoft.Compute/disks",
@@ -16173,6 +16166,13 @@
       "Description": "AVM Resource Module for CosmosDB Database Account",
       "ResourceType": "Microsoft.DocumentDB/databaseAccount",
       "RepoUrl": "https://github.com/Azure/terraform-azurerm-avm-res-documentdb-databaseaccount"
+    },
+    {
+      "Type": "Terraform",
+      "Title": "Cosmos DB for MongoDB (vCore)",
+      "Description": "AVM Resource Module for Cosmos DB for MongoDB (vCore)",
+      "ResourceType": "Microsoft.DocumentDB/mongoClusters",
+      "RepoUrl": "https://github.com/Azure/terraform-azurerm-avm-res-documentdb-mongocluster"
     },
     {
       "Type": "Terraform",
