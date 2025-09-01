@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces",
+      "Path": "samples/namespaces/main.tf",
+      "Description": "A basic example of deploying Notification Hub Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces/notificationHubs",
+      "Path": "samples/namespaces/notificationhubs/main.tf",
+      "Description": "A basic example of deploying Notification Hub within a Notification Hub Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules",
+      "Path": "samples/namespaces/notificationhubs/authorizationrules/main.tf",
+      "Description": "A basic example of deploying Authorization Rule associated with a Notification Hub within a Notification Hub Namespace."
+    }
+  ]
+}

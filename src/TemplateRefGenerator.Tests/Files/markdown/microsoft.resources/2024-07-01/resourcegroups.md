@@ -245,7 +245,7 @@ resource "azapi_resource" "symbolicname" {
 ## Usage Examples
 ### Terraform Samples
 
-A basic example of deploying a resource group.
+A basic example of deploying Resource Group.
 
 ```terraform
 terraform {
@@ -267,7 +267,7 @@ variable "resource_name" {
 
 variable "location" {
   type    = string
-  default = "westus"
+  default = "westeurope"
 }
 
 resource "azapi_resource" "resourceGroup" {

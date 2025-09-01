@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.AADIAM/diagnosticSettings",
+      "Path": "samples/diagnosticsettings/main.tf",
+      "Description": "A basic example of deploying Azure Active Directory Diagnostic Setting for Azure Monitor."
+    }
+  ]
+}

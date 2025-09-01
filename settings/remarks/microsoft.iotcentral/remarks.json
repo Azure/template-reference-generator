@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.IoTCentral/iotApps",
+      "Path": "samples/iotapps/main.tf",
+      "Description": "A basic example of deploying IotCentral Application."
+    }
+  ]
+}

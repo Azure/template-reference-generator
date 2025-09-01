@@ -2,10 +2,17 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "You can create a B2C tenant with an ARM template or Bicep file, but you can't update an existing B2C tenant. Also, you can't redeploy a template with the same tenant name. If you need to update a B2C tenant, use [B2C Tenants - Update](/rest/api/activedirectory/b2c-tenants/update).",
       "ResourceTypes": [
         "microsoft.azureactivedirectory/b2cdirectories"
-      ],
-      "Description": "You can create a B2C tenant with an ARM template or Bicep file, but you can't update an existing B2C tenant. Also, you can't redeploy a template with the same tenant name. If you need to update a B2C tenant, use [B2C Tenants - Update](/rest/api/activedirectory/b2c-tenants/update)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.AzureActiveDirectory/b2cDirectories",
+      "Path": "samples/b2cdirectories/main.tf",
+      "Description": "A basic example of deploying AAD B2C Directory."
     }
   ]
 }

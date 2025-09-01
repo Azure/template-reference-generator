@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.MixedReality/spatialAnchorsAccounts",
+      "Path": "samples/spatialanchorsaccounts/main.tf",
+      "Description": "A basic example of deploying Azure Spatial Anchors Account."
+    }
+  ]
+}

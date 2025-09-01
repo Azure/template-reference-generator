@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.KubernetesConfiguration/extensions",
+      "Path": "samples/extensions/main.tf",
+      "Description": "A basic example of deploying Kubernetes Cluster Extension."
+    },
+    {
+      "ResourceType": "Microsoft.KubernetesConfiguration/fluxConfigurations",
+      "Path": "samples/fluxconfigurations/main.tf",
+      "Description": "A basic example of deploying Kubernetes Flux Configuration."
+    }
+  ]
+}

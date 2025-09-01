@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Monitor/accounts",
+      "Path": "samples/accounts/main.tf",
+      "Description": "A basic example of deploying Azure Monitor Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.Monitor/accounts/privateEndpointConnections",
+      "Path": "samples/accounts/privateendpointconnections/main.tf",
+      "Description": "A basic example of deploying Monitor Accounts Private Endpoint Connections."
+    }
+  ]
+}

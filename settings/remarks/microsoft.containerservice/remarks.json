@@ -2,10 +2,37 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "For information about available add-ons, see [Add-ons, extensions, and other integrations with Azure Kubernetes Service](/azure/aks/integrations).",
       "ResourceTypes": [
         "microsoft.containerservice/managedclusters"
-      ],
-      "Description": "For information about available add-ons, see [Add-ons, extensions, and other integrations with Azure Kubernetes Service](/azure/aks/integrations)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ContainerService/fleets",
+      "Path": "samples/fleets/main.tf",
+      "Description": "A basic example of deploying Kubernetes Fleet Manager."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/fleets/members",
+      "Path": "samples/fleets/members/main.tf",
+      "Description": "A basic example of deploying Kubernetes Fleet Member."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters",
+      "Path": "samples/managedclusters/main.tf",
+      "Description": "A basic example of deploying managed Kubernetes Cluster (also known as AKS / Azure Kubernetes Service)."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters/agentPools",
+      "Path": "samples/managedclusters/agentpools/main.tf",
+      "Description": "A basic example of deploying Node Pool within a Kubernetes Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings",
+      "Path": "samples/managedclusters/trustedaccessrolebindings/main.tf",
+      "Description": "A basic example of deploying Kubernetes Cluster Trusted Access Role Binding."
     }
   ]
 }

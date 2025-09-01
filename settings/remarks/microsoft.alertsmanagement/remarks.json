@@ -2,10 +2,17 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "For guidance on deploying monitoring solutions, see [Create monitoring resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-monitoring).",
       "ResourceTypes": [
         "microsoft.alertsmanagement/smartdetectoralertrules"
-      ],
-      "Description": "For guidance on deploying monitoring solutions, see [Create monitoring resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-monitoring)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "microsoft.alertsManagement/smartDetectorAlertRules",
+      "Path": "samples/smartdetectoralertrules/main.tf",
+      "Description": "A basic example of deploying Monitor Smart Detector Alert Rule."
     }
   ]
 }

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.OperationsManagement/solutions",
+      "Path": "samples/solutions/main.tf",
+      "Description": "A basic example of deploying Log Analytics (formally Operational Insights) Solution."
+    }
+  ]
+}

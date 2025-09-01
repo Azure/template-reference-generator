@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ServiceLinker/linkers",
+      "Path": "samples/linkers/main.tf",
+      "Description": "A basic example of deploying service connector."
+    }
+  ]
+}

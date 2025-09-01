@@ -2,16 +2,73 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App containerApps](../../../microsoft.app/containerapps.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109).",
       "ResourceTypes": [
         "microsoft.web/containerapps"
-      ],
-      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App containerApps](../../../microsoft.app/containerapps.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109)."
+      ]
     },
     {
+      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App managedEnvironments](../../../Microsoft.App/managedEnvironments.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109).",
       "ResourceTypes": [
         "microsoft.web/kubeenvironments"
-      ],
-      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App managedEnvironments](../../../Microsoft.App/managedEnvironments.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Web/certificates",
+      "Path": "samples/certificates/main.tf",
+      "Description": "A basic example of deploying App Service certificate."
+    },
+    {
+      "ResourceType": "Microsoft.Web/connections",
+      "Path": "samples/connections/main.tf",
+      "Description": "A basic example of deploying API Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Web/serverfarms",
+      "Path": "samples/serverfarms/main.tf",
+      "Description": "A basic example of deploying App Service: Service Plan."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "samples/sites/main.tf",
+      "Description": "A basic example of deploying Function App, Web App, or Logic App."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/config",
+      "Path": "samples/sites/config/main.tf",
+      "Description": "A basic example of deploying App Service Virtual Network Association."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/publicCertificates",
+      "Path": "samples/sites/publiccertificates/main.tf",
+      "Description": "A basic example of deploying App Service Public Certificate."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/siteextensions",
+      "Path": "samples/sites/siteextensions/main.tf",
+      "Description": "A basic example of deploying Web Sites Site Extensions."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/slots",
+      "Path": "samples/sites/slots/main.tf",
+      "Description": "A basic example of deploying App Service Slot (within an App Service)."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/slots/config",
+      "Path": "samples/sites/slots/config/main.tf",
+      "Description": "A basic example of deploying App Service's Slot Virtual Network Association."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sourcecontrols",
+      "Path": "samples/sourcecontrols/main.tf",
+      "Description": "A basic example of deploying App Service GitHub Token."
+    },
+    {
+      "ResourceType": "Microsoft.Web/staticSites",
+      "Path": "samples/staticsites/main.tf",
+      "Description": "A basic example of deploying Static Web App."
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Solutions/applicationDefinitions",
+      "Path": "samples/applicationdefinitions/main.tf",
+      "Description": "A basic example of deploying Managed Application Definition."
+    },
+    {
+      "ResourceType": "Microsoft.Solutions/applications",
+      "Path": "samples/applications/main.tf",
+      "Description": "A basic example of deploying Managed Application."
+    }
+  ]
+}
