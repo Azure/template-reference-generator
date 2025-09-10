@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Compute/availabilitySets",
+      "Path": "availabilitysets/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/availabilitySets@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/capacityReservationGroups",
+      "Path": "capacityreservationgroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/capacityReservationGroups@2022-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/diskAccesses",
+      "Path": "diskaccesses/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/diskAccesses@2022-03-02."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/disks",
+      "Path": "disks/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/disks@2022-03-02."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/galleries",
+      "Path": "galleries/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/galleries@2022-03-03."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/galleries",
+      "Path": "galleries/applications/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/galleries/applications@2022-03-03."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/galleries",
+      "Path": "galleries/images/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/galleries/images@2022-03-03."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/hostGroups",
+      "Path": "hostgroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/hostGroups@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/hostGroups",
+      "Path": "hostgroups/hosts/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/hostGroups/hosts@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/proximityPlacementGroups",
+      "Path": "proximityplacementgroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/proximityPlacementGroups@2022-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/sshPublicKeys",
+      "Path": "sshpublickeys/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/sshPublicKeys@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachineScaleSets",
+      "Path": "virtualmachinescalesets/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/virtualMachineScaleSets@2023-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachineScaleSets",
+      "Path": "virtualmachinescalesets/extensions/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/virtualMachineScaleSets/extensions@2023-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachines",
+      "Path": "virtualmachines/extensions/main.bicep",
+      "Description": "Basic sample for Microsoft.Compute/virtualMachines/extensions@2023-03-01."
+    }
+  ]
+}

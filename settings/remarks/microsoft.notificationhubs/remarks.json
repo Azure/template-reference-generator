@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces",
+      "Path": "namespaces/main.bicep",
+      "Description": "Basic sample for Microsoft.NotificationHubs/namespaces@2017-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces",
+      "Path": "namespaces/notificationhubs/main.bicep",
+      "Description": "Basic sample for Microsoft.NotificationHubs/namespaces/notificationHubs@2017-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces",
+      "Path": "namespaces/notificationhubs/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules@2017-04-01."
+    }
+  ]
+}

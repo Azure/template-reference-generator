@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Monitor/accounts",
+      "Path": "accounts/main.bicep",
+      "Description": "Basic sample for Microsoft.Monitor/accounts@2023-04-03."
+    },
+    {
+      "ResourceType": "Microsoft.Monitor/accounts",
+      "Path": "accounts/privateendpointconnections/main.bicep",
+      "Description": "Basic sample for Microsoft.Monitor/accounts/privateEndpointConnections@2023-04-03."
+    }
+  ]
+}

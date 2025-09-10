@@ -7,5 +7,12 @@
       ],
       "Description": "For more information about creating dashboards, see [The structure of Azure dashboards](/azure/azure-portal/azure-portal-dashboards-structure)."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Portal/dashboards",
+      "Path": "dashboards/main.bicep",
+      "Description": "Basic sample for Microsoft.Portal/dashboards@2019-01-01-preview."
+    }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.CostManagement/scheduledActions",
+      "Path": "scheduledactions/main.bicep",
+      "Description": "Basic sample for Microsoft.CostManagement/scheduledActions@2022-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.CostManagement/views",
+      "Path": "views/main.bicep",
+      "Description": "Basic sample for Microsoft.CostManagement/views@2022-10-01."
+    }
+  ]
+}

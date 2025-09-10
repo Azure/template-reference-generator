@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Maps/accounts",
+      "Path": "accounts/main.bicep",
+      "Description": "Basic sample for Microsoft.Maps/accounts@2021-02-01."
+    },
+    {
+      "ResourceType": "Microsoft.Maps/accounts",
+      "Path": "accounts/creators/main.bicep",
+      "Description": "Basic sample for Microsoft.Maps/accounts/creators@2021-02-01."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "clusters/main.bicep",
+      "Description": "Basic sample for Microsoft.Kusto/clusters@2022-12-29."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "clusters/main.bicep",
+      "Description": "Basic sample for Microsoft.Kusto/clusters@2023-05-02."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "clusters/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.Kusto/clusters/databases@2022-12-29."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "clusters/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.Kusto/clusters/databases@2023-05-02."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "clusters/databases/scripts/main.bicep",
+      "Description": "Basic sample for Microsoft.Kusto/clusters/databases/scripts@2022-12-29."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "clusters/databases/scripts/main.bicep",
+      "Description": "Basic sample for Microsoft.Kusto/clusters/databases/scripts@2023-05-02."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "clusters/managedprivateendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Kusto/clusters/managedPrivateEndpoints@2023-05-02."
+    }
+  ]
+}

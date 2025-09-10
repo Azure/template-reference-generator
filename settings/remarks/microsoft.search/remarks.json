@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Search/searchServices",
+      "Path": "searchservices/main.bicep",
+      "Description": "Basic sample for Microsoft.Search/searchServices@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Search/searchServices",
+      "Path": "searchservices/sharedprivatelinkresources/main.bicep",
+      "Description": "Basic sample for Microsoft.Search/searchServices/sharedPrivateLinkResources@2022-09-01."
+    }
+  ]
+}

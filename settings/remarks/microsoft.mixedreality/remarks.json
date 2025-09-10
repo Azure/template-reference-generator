@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.MixedReality/spatialAnchorsAccounts",
+      "Path": "spatialanchorsaccounts/main.bicep",
+      "Description": "Basic sample for Microsoft.MixedReality/spatialAnchorsAccounts@2021-01-01."
+    }
+  ]
+}

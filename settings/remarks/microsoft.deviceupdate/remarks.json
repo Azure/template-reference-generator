@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DeviceUpdate/accounts",
+      "Path": "accounts/main.bicep",
+      "Description": "Basic sample for Microsoft.DeviceUpdate/accounts@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.DeviceUpdate/accounts",
+      "Path": "accounts/instances/main.bicep",
+      "Description": "Basic sample for Microsoft.DeviceUpdate/accounts/instances@2022-10-01."
+    }
+  ]
+}

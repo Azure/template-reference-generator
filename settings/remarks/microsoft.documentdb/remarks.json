@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/cassandrakeyspaces/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/gremlindatabases/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2023-04-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/gremlindatabases/graphs/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs@2023-04-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/mongodbdatabases/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/services/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/services@2022-05-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/sqldatabases/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/sqldatabases/containers/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/sqldatabases/containers/storedprocedures/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/sqldatabases/containers/triggers/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/sqldatabases/containers/userdefinedfunctions/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/sqlroledefinitions/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2021-10-15."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "databaseaccounts/tables/main.bicep",
+      "Description": "Basic sample for Microsoft.DocumentDB/databaseAccounts/tables@2021-10-15."
+    }
+  ]
+}

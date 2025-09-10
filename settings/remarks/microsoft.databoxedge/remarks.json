@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataBoxEdge/dataBoxEdgeDevices",
+      "Path": "databoxedgedevices/main.bicep",
+      "Description": "Basic sample for Microsoft.DataBoxEdge/dataBoxEdgeDevices@2022-03-01."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts",
+      "Path": "netappaccounts/main.bicep",
+      "Description": "Basic sample for Microsoft.NetApp/netAppAccounts@2022-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts",
+      "Path": "netappaccounts/capacitypools/main.bicep",
+      "Description": "Basic sample for Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts",
+      "Path": "netappaccounts/capacitypools/volumes/main.bicep",
+      "Description": "Basic sample for Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts",
+      "Path": "netappaccounts/capacitypools/volumes/snapshots/main.bicep",
+      "Description": "Basic sample for Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots@2022-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts",
+      "Path": "netappaccounts/snapshotpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.NetApp/netAppAccounts/snapshotPolicies@2022-05-01."
+    }
+  ]
+}

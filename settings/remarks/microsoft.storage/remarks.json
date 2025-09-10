@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "storageaccounts/blobservices/main.bicep",
+      "Description": "Basic sample for Microsoft.Storage/storageAccounts/blobServices@2021-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "storageaccounts/blobservices/containers/main.bicep",
+      "Description": "Basic sample for Microsoft.Storage/storageAccounts/blobServices/containers@2021-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "storageaccounts/blobservices/containers/immutabilitypolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies@2023-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "storageaccounts/fileservices/shares/main.bicep",
+      "Description": "Basic sample for Microsoft.Storage/storageAccounts/fileServices/shares@2021-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "storageaccounts/managementpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Storage/storageAccounts/managementPolicies@2021-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "storageaccounts/queueservices/queues/main.bicep",
+      "Description": "Basic sample for Microsoft.Storage/storageAccounts/queueServices/queues@2021-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "storageaccounts/tableservices/tables/main.bicep",
+      "Description": "Basic sample for Microsoft.Storage/storageAccounts/tableServices/tables@2021-09-01."
+    }
+  ]
+}

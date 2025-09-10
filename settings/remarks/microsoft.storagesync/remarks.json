@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.StorageSync/storageSyncServices",
+      "Path": "storagesyncservices/main.bicep",
+      "Description": "Basic sample for Microsoft.StorageSync/storageSyncServices@2020-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.StorageSync/storageSyncServices",
+      "Path": "storagesyncservices/syncgroups/main.bicep",
+      "Description": "Basic sample for Microsoft.StorageSync/storageSyncServices/syncGroups@2020-03-01."
+    }
+  ]
+}

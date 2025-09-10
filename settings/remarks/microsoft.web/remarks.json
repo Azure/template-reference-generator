@@ -13,5 +13,47 @@
       ],
       "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App managedEnvironments](../../../Microsoft.App/managedEnvironments.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109)."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Web/serverfarms",
+      "Path": "serverfarms/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/serverfarms@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "sites/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/sites@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "sites/config/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/sites/config@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "sites/publiccertificates/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/sites/publicCertificates@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "sites/siteextensions/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/sites/siteextensions@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "sites/slots/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/sites/slots@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "sites/slots/config/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/sites/slots/config@2022-09-01."
+    },
+    {
+      "ResourceType": "Microsoft.Web/staticSites",
+      "Path": "staticsites/main.bicep",
+      "Description": "Basic sample for Microsoft.Web/staticSites@2021-02-01."
+    }
   ]
 }

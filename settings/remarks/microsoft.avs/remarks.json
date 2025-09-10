@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AVS/privateClouds",
+      "Path": "privateclouds/main.bicep",
+      "Description": "Basic sample for Microsoft.AVS/privateClouds@2022-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.AVS/privateClouds",
+      "Path": "privateclouds/authorizations/main.bicep",
+      "Description": "Basic sample for Microsoft.AVS/privateClouds/authorizations@2022-05-01."
+    }
+  ]
+}

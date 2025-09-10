@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces@2022-01-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces/authorizationRules@2021-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/queues/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces/queues@2021-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/queues/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces/queues/authorizationRules@2021-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/topics/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces/topics@2021-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/topics/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces/topics/authorizationRules@2021-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/topics/subscriptions/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces/topics/subscriptions@2021-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "namespaces/topics/subscriptions/rules/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceBus/namespaces/topics/subscriptions/rules@2021-06-01-preview."
+    }
+  ]
+}

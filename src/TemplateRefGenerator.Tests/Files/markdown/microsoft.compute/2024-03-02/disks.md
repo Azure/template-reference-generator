@@ -299,6 +299,34 @@ resource symbolicname 'Microsoft.Compute/disks@2024-03-02' = {
 | diskControllerTypes | The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. | string |
 
 ## Usage Examples
+### Bicep Samples
+
+Basic sample for Microsoft.Compute/disks@2022-03-02.
+
+```bicep
+param location string = 'westeurope'
+param resource_name string = 'acctest0001'
+
+resource disk 'Microsoft.Compute/disks@2022-03-02' = {
+  location: location
+  name: resource_name
+  properties: {
+    creationData: {
+      createOption: 'Empty'
+    }
+    diskSizeGB: 10
+    encryption: {
+      type: 'EncryptionAtRestWithPlatformKey'
+    }
+    networkAccessPolicy: 'AllowAll'
+    osType: ''
+    publicNetworkAccess: 'Enabled'
+  }
+  sku: {
+    name: 'Standard_LRS'
+  }
+}
+```
 ### Azure Verified Modules
 
 The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.

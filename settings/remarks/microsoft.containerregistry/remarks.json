@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries",
+      "Path": "registries/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerRegistry/registries@2021-08-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries",
+      "Path": "registries/agentpools/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerRegistry/registries/agentPools@2019-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries",
+      "Path": "registries/scopemaps/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerRegistry/registries/scopeMaps@2021-08-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries",
+      "Path": "registries/taskruns/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerRegistry/registries/taskRuns@2019-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries",
+      "Path": "registries/tasks/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerRegistry/registries/tasks@2019-06-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries",
+      "Path": "registries/webhooks/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerRegistry/registries/webHooks@2021-08-01-preview."
+    }
+  ]
+}

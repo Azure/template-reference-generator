@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ServiceFabric/clusters",
+      "Path": "clusters/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceFabric/clusters@2021-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceFabric/managedClusters",
+      "Path": "managedclusters/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceFabric/managedClusters@2021-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceFabric/managedClusters",
+      "Path": "managedclusters/nodetypes/main.bicep",
+      "Description": "Basic sample for Microsoft.ServiceFabric/managedClusters/nodeTypes@2021-05-01."
+    }
+  ]
+}

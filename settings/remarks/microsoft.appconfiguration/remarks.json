@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AppConfiguration/configurationStores",
+      "Path": "configurationstores/main.bicep",
+      "Description": "Basic sample for Microsoft.AppConfiguration/configurationStores@2023-03-01."
+    }
+  ]
+}

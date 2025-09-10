@@ -1,0 +1,145 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/apiversionsets/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/apiVersionSets@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/apis/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/apis@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/apis/diagnostics/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/apis/diagnostics@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/apis/policies/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/apis/policies@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/apis/schemas/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/apis/schemas@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/authorizationservers/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/authorizationServers@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/backends/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/backends@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/certificates/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/certificates@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/diagnostics/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/diagnostics@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/gateways/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/gateways@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/gateways/certificateauthorities/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/gateways/certificateAuthorities@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/gateways/hostnameconfigurations/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/gateways/hostnameConfigurations@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/groups/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/groups@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/identityproviders/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/identityProviders@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/loggers/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/loggers@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/namedvalues/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/namedValues@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/openidconnectproviders/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/openidConnectProviders@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/policyfragments/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/policyFragments@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/portalsettings/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/portalsettings@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/products/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/products@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/products/policies/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/products/policies@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/products/tags/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/products/tags@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/schemas/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/schemas@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/subscriptions/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/subscriptions@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/tags/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/tags@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/templates/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/templates@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "service/users/main.bicep",
+      "Description": "Basic sample for Microsoft.ApiManagement/service/users@2021-08-01."
+    }
+  ]
+}

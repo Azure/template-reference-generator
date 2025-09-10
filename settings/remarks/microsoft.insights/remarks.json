@@ -13,5 +13,77 @@
       ],
       "Description": "For guidance on deploying monitoring solutions, see [Create monitoring resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-monitoring)."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Insights/actionGroups",
+      "Path": "actiongroups/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/actionGroups@2023-01-01."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/autoScaleSettings",
+      "Path": "autoscalesettings/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/autoScaleSettings@2022-10-01."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/components",
+      "Path": "components/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/components@2020-02-02."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/components",
+      "Path": "components/proactivedetectionconfigs/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/components/ProactiveDetectionConfigs@2015-05-01."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionEndpoints",
+      "Path": "datacollectionendpoints/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/dataCollectionEndpoints@2022-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionRules",
+      "Path": "datacollectionrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/dataCollectionRules@2022-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/metricAlerts",
+      "Path": "metricalerts/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/metricAlerts@2018-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/privateLinkScopes",
+      "Path": "privatelinkscopes/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/privateLinkScopes@2019-10-17-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/privateLinkScopes",
+      "Path": "privatelinkscopes/scopedresources/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/privateLinkScopes/scopedResources@2019-10-17-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/scheduledQueryRules",
+      "Path": "scheduledqueryrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/scheduledQueryRules@2018-04-16."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/scheduledQueryRules",
+      "Path": "scheduledqueryrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/scheduledQueryRules@2021-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/workbookTemplates",
+      "Path": "workbooktemplates/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/workbookTemplates@2020-11-20."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/workbooks",
+      "Path": "workbooks/main.bicep",
+      "Description": "Basic sample for Microsoft.Insights/workbooks@2022-04-01."
+    },
+    {
+      "ResourceType": "microsoft.insights/components",
+      "Path": "components/analyticsitems/main.bicep",
+      "Description": "Basic sample for microsoft.insights/components/analyticsItems@2015-05-01."
+    }
   ]
 }

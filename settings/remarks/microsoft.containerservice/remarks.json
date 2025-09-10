@@ -7,5 +7,17 @@
       ],
       "Description": "For information about available add-ons, see [Add-ons, extensions, and other integrations with Azure Kubernetes Service](/azure/aks/integrations)."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters",
+      "Path": "managedclusters/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerService/managedClusters@2023-04-02-preview."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters",
+      "Path": "managedclusters/agentpools/main.bicep",
+      "Description": "Basic sample for Microsoft.ContainerService/managedClusters/agentPools@2023-04-02-preview."
+    }
   ]
 }

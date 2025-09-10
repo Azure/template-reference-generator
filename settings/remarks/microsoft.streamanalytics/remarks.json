@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/clusters",
+      "Path": "clusters/main.bicep",
+      "Description": "Basic sample for Microsoft.StreamAnalytics/clusters@2020-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/streamingJobs",
+      "Path": "streamingjobs/main.bicep",
+      "Description": "Basic sample for Microsoft.StreamAnalytics/streamingJobs@2020-03-01."
+    },
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/streamingJobs",
+      "Path": "streamingjobs/functions/main.bicep",
+      "Description": "Basic sample for Microsoft.StreamAnalytics/streamingJobs/functions@2020-03-01."
+    }
+  ]
+}

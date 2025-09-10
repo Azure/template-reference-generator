@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.FluidRelay/fluidRelayServers",
+      "Path": "fluidrelayservers/main.bicep",
+      "Description": "Basic sample for Microsoft.FluidRelay/fluidRelayServers@2022-05-26."
+    }
+  ]
+}

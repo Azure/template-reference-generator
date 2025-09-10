@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.EventHub/clusters",
+      "Path": "clusters/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/clusters@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "namespaces/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/namespaces@2022-01-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "namespaces/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/namespaces/authorizationRules@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "namespaces/disasterrecoveryconfigs/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/namespaces/disasterRecoveryConfigs@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "namespaces/eventhubs/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/namespaces/eventhubs@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "namespaces/eventhubs/authorizationrules/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/namespaces/eventhubs/authorizationRules@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "namespaces/eventhubs/consumergroups/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/namespaces/eventhubs/consumerGroups@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "namespaces/schemagroups/main.bicep",
+      "Description": "Basic sample for Microsoft.EventHub/namespaces/schemaGroups@2021-11-01."
+    }
+  ]
+}

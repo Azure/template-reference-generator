@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataProtection/backupVaults",
+      "Path": "backupvaults/main.bicep",
+      "Description": "Basic sample for Microsoft.DataProtection/backupVaults@2022-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataProtection/backupVaults",
+      "Path": "backupvaults/backupinstances/main.bicep",
+      "Description": "Basic sample for Microsoft.DataProtection/backupVaults/backupInstances@2022-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataProtection/backupVaults",
+      "Path": "backupvaults/backuppolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.DataProtection/backupVaults/backupPolicies@2022-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataProtection/resourceGuards",
+      "Path": "resourceguards/main.bicep",
+      "Description": "Basic sample for Microsoft.DataProtection/resourceGuards@2022-04-01."
+    }
+  ]
+}

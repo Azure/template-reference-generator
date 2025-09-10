@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataShare/accounts",
+      "Path": "accounts/main.bicep",
+      "Description": "Basic sample for Microsoft.DataShare/accounts@2019-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.DataShare/accounts",
+      "Path": "accounts/shares/main.bicep",
+      "Description": "Basic sample for Microsoft.DataShare/accounts/shares@2019-11-01."
+    }
+  ]
+}

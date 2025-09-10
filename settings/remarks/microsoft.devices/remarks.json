@@ -7,5 +7,27 @@
       ],
       "Description": "Create and update is supported only on versions 2022-02-05 and later."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Devices/IotHubs",
+      "Path": "iothubs/main.bicep",
+      "Description": "Basic sample for Microsoft.Devices/IotHubs@2022-04-30-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/IotHubs",
+      "Path": "iothubs/certificates/main.bicep",
+      "Description": "Basic sample for Microsoft.Devices/IotHubs/certificates@2022-04-30-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/provisioningServices",
+      "Path": "provisioningservices/main.bicep",
+      "Description": "Basic sample for Microsoft.Devices/provisioningServices@2022-02-05."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/provisioningServices",
+      "Path": "provisioningservices/certificates/main.bicep",
+      "Description": "Basic sample for Microsoft.Devices/provisioningServices/certificates@2022-02-05."
+    }
   ]
 }

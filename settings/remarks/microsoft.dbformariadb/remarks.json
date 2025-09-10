@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers",
+      "Path": "servers/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMariaDB/servers@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers",
+      "Path": "servers/configurations/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMariaDB/servers/configurations@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers",
+      "Path": "servers/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMariaDB/servers/databases@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers",
+      "Path": "servers/firewallrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMariaDB/servers/firewallRules@2018-06-01."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers",
+      "Path": "servers/virtualnetworkrules/main.bicep",
+      "Description": "Basic sample for Microsoft.DBforMariaDB/servers/virtualNetworkRules@2018-06-01."
+    }
+  ]
+}

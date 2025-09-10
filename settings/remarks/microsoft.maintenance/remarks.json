@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Maintenance/maintenanceConfigurations",
+      "Path": "maintenanceconfigurations/main.bicep",
+      "Description": "Basic sample for Microsoft.Maintenance/maintenanceConfigurations@2022-07-01-preview."
+    }
+  ]
+}

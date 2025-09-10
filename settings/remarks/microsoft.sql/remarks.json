@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers@2021-02-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/auditingsettings/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/auditingSettings@2022-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/automatictuning/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/automaticTuning@2021-11-01."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/connectionpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/connectionPolicies@2014-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/databases/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/databases@2014-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/databases/securityalertpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/databases/securityAlertPolicies@2014-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/dnsaliases/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/dnsAliases@2020-11-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/elasticpools/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/elasticPools@2014-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/firewallrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/firewallRules@2014-04-01."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/firewallrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/firewallRules@2020-11-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/jobagents/credentials/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/jobAgents/credentials@2020-11-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/securityalertpolicies/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/securityAlertPolicies@2017-03-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/sqlvulnerabilityassessments/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/sqlVulnerabilityAssessments@2022-05-01-preview."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "servers/virtualnetworkrules/main.bicep",
+      "Description": "Basic sample for Microsoft.Sql/servers/virtualNetworkRules@2020-11-01-preview."
+    }
+  ]
+}

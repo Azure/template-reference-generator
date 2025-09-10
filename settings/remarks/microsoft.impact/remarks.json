@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Impact/workloadImpacts",
+      "Path": "workloadimpacts/main.bicep",
+      "Description": "Basic sample for Microsoft.Impact/workloadImpacts@2023-12-01-preview."
+    }
+  ]
+}

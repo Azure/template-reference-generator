@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.LabServices/labPlans",
+      "Path": "labplans/main.bicep",
+      "Description": "Basic sample for Microsoft.LabServices/labPlans@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.LabServices/labs",
+      "Path": "labs/main.bicep",
+      "Description": "Basic sample for Microsoft.LabServices/labs@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.LabServices/labs",
+      "Path": "labs/schedules/main.bicep",
+      "Description": "Basic sample for Microsoft.LabServices/labs/schedules@2022-08-01."
+    },
+    {
+      "ResourceType": "Microsoft.LabServices/labs",
+      "Path": "labs/users/main.bicep",
+      "Description": "Basic sample for Microsoft.LabServices/labs/users@2022-08-01."
+    }
+  ]
+}

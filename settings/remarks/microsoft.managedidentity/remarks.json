@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "Path": "userassignedidentities/main.bicep",
+      "Description": "Basic sample for Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31."
+    },
+    {
+      "ResourceType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "Path": "userassignedidentities/federatedidentitycredentials/main.bicep",
+      "Description": "Basic sample for Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials@2023-01-31."
+    }
+  ]
+}

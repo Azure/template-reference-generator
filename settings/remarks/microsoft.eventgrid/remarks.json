@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.EventGrid/domains",
+      "Path": "domains/main.bicep",
+      "Description": "Basic sample for Microsoft.EventGrid/domains@2021-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/domains",
+      "Path": "domains/topics/main.bicep",
+      "Description": "Basic sample for Microsoft.EventGrid/domains/topics@2021-12-01."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/topics",
+      "Path": "topics/main.bicep",
+      "Description": "Basic sample for Microsoft.EventGrid/topics@2021-12-01."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HealthBot/healthBots",
+      "Path": "healthbots/main.bicep",
+      "Description": "Basic sample for Microsoft.HealthBot/healthBots@2022-08-08."
+    }
+  ]
+}
