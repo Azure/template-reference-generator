@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.PolicyInsights/policyStates",
+      "Path": "samples/policystates/main.tf",
+      "Description": "A basic example of deploying Policy Insights Policy States."
+    },
+    {
+      "ResourceType": "Microsoft.PolicyInsights/remediations",
+      "Path": "samples/remediations/main.tf",
+      "Description": "A basic example of deploying Azure Policy Remediation."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Migrate/migrateProjects",
+      "Path": "samples/migrateprojects/main.tf",
+      "Description": "A basic example of deploying Migrate Projects."
+    },
+    {
+      "ResourceType": "Microsoft.Migrate/migrateProjects/solutions",
+      "Path": "samples/migrateprojects/solutions/main.tf",
+      "Description": "A basic example of deploying Migrate Project Solutions."
+    }
+  ]
+}

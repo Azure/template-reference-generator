@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.NetworkFunction/azureTrafficCollectors",
+      "Path": "samples/azuretrafficcollectors/main.tf",
+      "Description": "A basic example of deploying Network Function Azure Traffic Collector."
+    }
+  ]
+}

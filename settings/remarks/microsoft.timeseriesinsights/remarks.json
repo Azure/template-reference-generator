@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.TimeSeriesInsights/environments",
+      "Path": "samples/environments/main.tf",
+      "Description": "A basic example of deploying Time Series Insights Environments."
+    },
+    {
+      "ResourceType": "Microsoft.TimeSeriesInsights/environments/accessPolicies",
+      "Path": "samples/environments/accesspolicies/main.tf",
+      "Description": "A basic example of deploying Time Series Insights Environments Access Policies."
+    },
+    {
+      "ResourceType": "Microsoft.TimeSeriesInsights/environments/eventSources",
+      "Path": "samples/environments/eventsources/main.tf",
+      "Description": "A basic example of deploying Time Series Insights Environments Event Sources."
+    },
+    {
+      "ResourceType": "Microsoft.TimeSeriesInsights/environments/referenceDataSets",
+      "Path": "samples/environments/referencedatasets/main.tf",
+      "Description": "A basic example of deploying Time Series Insights Environments Reference Data Sets."
+    }
+  ]
+}

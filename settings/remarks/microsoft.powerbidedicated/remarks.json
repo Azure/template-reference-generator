@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.PowerBIDedicated/capacities",
+      "Path": "samples/capacities/main.tf",
+      "Description": "A basic example of deploying PowerBI Embedded."
+    }
+  ]
+}

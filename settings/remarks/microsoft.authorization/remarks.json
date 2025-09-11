@@ -2,11 +2,53 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "For guidance on creating role assignments and definitions, see [Create Azure RBAC resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-rbac).",
       "ResourceTypes": [
         "microsoft.authorization/roleassignments",
         "microsoft.authorization/roledefinitions"
-      ],
-      "Description": "For guidance on creating role assignments and definitions, see [Create Azure RBAC resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-rbac)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Authorization/locks",
+      "Path": "samples/locks/main.tf",
+      "Description": "A basic example of deploying Management Lock which is scoped to a Subscription, Resource Group or Resource."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policyAssignments",
+      "Path": "samples/policyassignments/main.tf",
+      "Description": "A basic example of deploying Policy Assignment."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policyDefinitions",
+      "Path": "samples/policydefinitions/main.tf",
+      "Description": "A basic example of deploying Authorization Policy Definitions."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policyExemptions",
+      "Path": "samples/policyexemptions/main.tf",
+      "Description": "A basic example of deploying Policy Exemption."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policySetDefinitions",
+      "Path": "samples/policysetdefinitions/main.tf",
+      "Description": "A basic example of deploying policy set definition."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/resourceManagementPrivateLinks",
+      "Path": "samples/resourcemanagementprivatelinks/main.tf",
+      "Description": "A basic example of deploying Resource Management Private Link to restrict access for managing resources in the tenant."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/roleAssignments",
+      "Path": "samples/roleassignments/main.tf",
+      "Description": "A basic example of deploying Assigns a given Principal (User or Group) to a given Role."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/roleDefinitions",
+      "Path": "samples/roledefinitions/main.tf",
+      "Description": "A basic example of deploying custom Role Definition."
     }
   ]
 }

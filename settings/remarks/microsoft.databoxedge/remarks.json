@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DataBoxEdge/dataBoxEdgeDevices",
+      "Path": "samples/databoxedgedevices/main.tf",
+      "Description": "A basic example of deploying Databox Edge Device."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+      "Path": "samples/guestconfigurationassignments/main.tf",
+      "Description": "A basic example of deploying Applies a Guest Configuration Policy to a Virtual Machine."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Databricks/accessConnectors",
+      "Path": "samples/accessconnectors/main.tf",
+      "Description": "A basic example of deploying Databricks Access Connector."
+    },
+    {
+      "ResourceType": "Microsoft.Databricks/workspaces",
+      "Path": "samples/workspaces/main.tf",
+      "Description": "A basic example of deploying Databricks Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.Databricks/workspaces/virtualNetworkPeerings",
+      "Path": "samples/workspaces/virtualnetworkpeerings/main.tf",
+      "Description": "A basic example of deploying Databricks Virtual Network Peering."
+    }
+  ]
+}

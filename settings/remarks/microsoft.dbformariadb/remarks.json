@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers",
+      "Path": "samples/servers/main.tf",
+      "Description": "A basic example of deploying Database for MariaDB Servers."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/configurations",
+      "Path": "samples/servers/configurations/main.tf",
+      "Description": "A basic example of deploying Database for MariaDB Servers Configurations."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/databases",
+      "Path": "samples/servers/databases/main.tf",
+      "Description": "A basic example of deploying Database for MariaDB Servers Databases."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/firewallRules",
+      "Path": "samples/servers/firewallrules/main.tf",
+      "Description": "A basic example of deploying Database for MariaDB Servers Firewall Rules."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/virtualNetworkRules",
+      "Path": "samples/servers/virtualnetworkrules/main.tf",
+      "Description": "A basic example of deploying Database for MariaDB Servers Virtual Network Rules."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.BotService/botServices",
+      "Path": "samples/botservices/main.tf",
+      "Description": "A basic example of deploying Azure Bot Service."
+    },
+    {
+      "ResourceType": "Microsoft.BotService/botServices/channels",
+      "Path": "samples/botservices/channels/main.tf",
+      "Description": "A basic example of deploying integration for a Bot Channel."
+    },
+    {
+      "ResourceType": "Microsoft.BotService/botServices/connections",
+      "Path": "samples/botservices/connections/main.tf",
+      "Description": "A basic example of deploying Bot Connection."
+    }
+  ]
+}

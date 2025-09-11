@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.HybridCompute/machines",
+      "Path": "samples/machines/main.tf",
+      "Description": "A basic example of deploying Hybrid Compute Machine."
+    },
+    {
+      "ResourceType": "Microsoft.HybridCompute/privateLinkScopes",
+      "Path": "samples/privatelinkscopes/main.tf",
+      "Description": "A basic example of deploying Azure Arc Private Link Scope."
+    }
+  ]
+}

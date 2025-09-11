@@ -2,6 +2,7 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "For guidance on deploying monitoring solutions, see [Create monitoring resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-monitoring).",
       "ResourceTypes": [
         "microsoft.insights/actiongroups",
         "microsoft.insights/activitylogalerts",
@@ -10,8 +11,99 @@
         "microsoft.insights/diagnosticsettings",
         "microsoft.insights/metricalerts",
         "microsoft.insights/scheduledqueryrules"
-      ],
-      "Description": "For guidance on deploying monitoring solutions, see [Create monitoring resources by using Bicep](/azure/azure-resource-manager/bicep/scenarios-monitoring)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Insights/actionGroups",
+      "Path": "samples/actiongroups/main.tf",
+      "Description": "A basic example of deploying Action Group within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/activityLogAlerts",
+      "Path": "samples/activitylogalerts/main.tf",
+      "Description": "A basic example of deploying Activity Log Alert within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/autoScaleSettings",
+      "Path": "samples/autoscalesettings/main.tf",
+      "Description": "A basic example of deploying AutoScale Setting which can be applied to Virtual Machine Scale Sets, App Services and other scalable resources."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/components",
+      "Path": "samples/components/main.tf",
+      "Description": "A basic example of deploying Application Insights component."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/components/ProactiveDetectionConfigs",
+      "Path": "samples/components/proactivedetectionconfigs/main.tf",
+      "Description": "A basic example of deploying Application Insights Smart Detection Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionEndpoints",
+      "Path": "samples/datacollectionendpoints/main.tf",
+      "Description": "A basic example of deploying Data Collection Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionRuleAssociations",
+      "Path": "samples/datacollectionruleassociations/main.tf",
+      "Description": "A basic example of deploying Data Collection Rule Association."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionRules",
+      "Path": "samples/datacollectionrules/main.tf",
+      "Description": "A basic example of deploying Data Collection Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/diagnosticSettings",
+      "Path": "samples/diagnosticsettings/main.tf",
+      "Description": "A basic example of deploying Insights Diagnostic Settings."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/logProfiles",
+      "Path": "samples/logprofiles/main.tf",
+      "Description": "A basic example of deploying Insights Log Profiles."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/metricAlerts",
+      "Path": "samples/metricalerts/main.tf",
+      "Description": "A basic example of deploying Metric Alert within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/privateLinkScopes",
+      "Path": "samples/privatelinkscopes/main.tf",
+      "Description": "A basic example of deploying Azure Monitor Private Link Scope."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/privateLinkScopes/scopedResources",
+      "Path": "samples/privatelinkscopes/scopedresources/main.tf",
+      "Description": "A basic example of deploying Azure Monitor Private Link Scoped Service."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/scheduledQueryRules",
+      "Path": "samples/scheduledqueryrules/main.tf",
+      "Description": "A basic example of deploying AlertingAction Scheduled Query Rules resource within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/scheduledQueryRules",
+      "Path": "samples/scheduledqueryrules/main.tf",
+      "Description": "A basic example of deploying AlertingAction Scheduled Query Rules resource within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/webTests",
+      "Path": "samples/webtests/main.tf",
+      "Description": "A basic example of deploying Application Insights Standard WebTest."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/workbookTemplates",
+      "Path": "samples/workbooktemplates/main.tf",
+      "Description": "A basic example of deploying Application Insights Workbook Template."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/workbooks",
+      "Path": "samples/workbooks/main.tf",
+      "Description": "A basic example of deploying Azure Workbook."
     }
   ]
 }

@@ -2,10 +2,32 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "Create and update is supported only on versions 2022-02-05 and later.",
       "ResourceTypes": [
         "microsoft.devices/provisioningservices/certificates"
-      ],
-      "Description": "Create and update is supported only on versions 2022-02-05 and later."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Devices/IotHubs",
+      "Path": "samples/iothubs/main.tf",
+      "Description": "A basic example of deploying IotHub."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/IotHubs/certificates",
+      "Path": "samples/iothubs/certificates/main.tf",
+      "Description": "A basic example of deploying IoTHub Certificate."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/provisioningServices",
+      "Path": "samples/provisioningservices/main.tf",
+      "Description": "A basic example of deploying IoT Device Provisioning Service."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/provisioningServices/certificates",
+      "Path": "samples/provisioningservices/certificates/main.tf",
+      "Description": "A basic example of deploying IoT Device Provisioning Service Certificate."
     }
   ]
 }

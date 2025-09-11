@@ -2,16 +2,73 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "Using a template to create a MySQL server with the **Replica** value is not idempotent. The server is created successfully the first time. However, deploying the template when the replica server already exists returns an error.",
       "ResourceTypes": [
         "microsoft.dbformysql/servers"
-      ],
-      "Description": "Using a template to create a MySQL server with the **Replica** value is not idempotent. The server is created successfully the first time. However, deploying the template when the replica server already exists returns an error."
+      ]
     },
     {
+      "Description": "Use the `maintenanceWindow` property only when updating an existing flexible server. When creating a new flexible servcer, don't specify values for this property.",
       "ResourceTypes": [
         "microsoft.dbformysql/flexibleservers"
-      ],
-      "Description": "Use the `maintenanceWindow` property only when updating an existing flexible server. When creating a new flexible servcer, don't specify values for this property."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers",
+      "Path": "samples/flexibleservers/main.tf",
+      "Description": "A basic example of deploying MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/administrators",
+      "Path": "samples/flexibleservers/administrators/main.tf",
+      "Description": "A basic example of deploying Active Directory administrator on a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/configurations",
+      "Path": "samples/flexibleservers/configurations/main.tf",
+      "Description": "A basic example of deploying Sets a MySQL Flexible Server Configuration value on a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/databases",
+      "Path": "samples/flexibleservers/databases/main.tf",
+      "Description": "A basic example of deploying MySQL Database within a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/firewallRules",
+      "Path": "samples/flexibleservers/firewallrules/main.tf",
+      "Description": "A basic example of deploying Firewall Rule for a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers",
+      "Path": "samples/servers/main.tf",
+      "Description": "A basic example of deploying Database for MySQL Servers."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/administrators",
+      "Path": "samples/servers/administrators/main.tf",
+      "Description": "A basic example of deploying Database for MySQL Servers Administrators."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/configurations",
+      "Path": "samples/servers/configurations/main.tf",
+      "Description": "A basic example of deploying Database for MySQL Servers Configurations."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/databases",
+      "Path": "samples/servers/databases/main.tf",
+      "Description": "A basic example of deploying Database for MySQL Servers Databases."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/firewallRules",
+      "Path": "samples/servers/firewallrules/main.tf",
+      "Description": "A basic example of deploying Database for MySQL Servers Firewall Rules."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/virtualNetworkRules",
+      "Path": "samples/servers/virtualnetworkrules/main.tf",
+      "Description": "A basic example of deploying Database for MySQL Servers Virtual Network Rules."
     }
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ElasticSan/elasticSans",
+      "Path": "samples/elasticsans/main.tf",
+      "Description": "A basic example of deploying Azure Elastic SAN (Storage Area Network) resource."
+    },
+    {
+      "ResourceType": "Microsoft.ElasticSan/elasticSans/volumeGroups",
+      "Path": "samples/elasticsans/volumegroups/main.tf",
+      "Description": "A basic example of deploying Elastic SAN Volume Group resource."
+    },
+    {
+      "ResourceType": "Microsoft.ElasticSan/elasticSans/volumeGroups/volumes",
+      "Path": "samples/elasticsans/volumegroups/volumes/main.tf",
+      "Description": "A basic example of deploying Elastic SAN Volume resource."
+    }
+  ]
+}

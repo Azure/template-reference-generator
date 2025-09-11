@@ -2,10 +2,17 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "For more information about creating dashboards, see [The structure of Azure dashboards](/azure/azure-portal/azure-portal-dashboards-structure).",
       "ResourceTypes": [
         "microsoft.portal/dashboards"
-      ],
-      "Description": "For more information about creating dashboards, see [The structure of Azure dashboards](/azure/azure-portal/azure-portal-dashboards-structure)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Portal/dashboards",
+      "Path": "samples/dashboards/main.tf",
+      "Description": "A basic example of deploying shared dashboard in the Azure Portal."
     }
   ]
 }

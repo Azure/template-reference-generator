@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.CostManagement/exports",
+      "Path": "samples/exports/main.tf",
+      "Description": "A basic example of deploying Azure Cost Management Export."
+    },
+    {
+      "ResourceType": "Microsoft.CostManagement/scheduledActions",
+      "Path": "samples/scheduledactions/main.tf",
+      "Description": "A basic example of deploying Azure Cost Management Scheduled Action."
+    },
+    {
+      "ResourceType": "Microsoft.CostManagement/scheduledActions",
+      "Path": "samples/scheduledactions/main.tf",
+      "Description": "A basic example of deploying Azure Cost Management Scheduled Action."
+    },
+    {
+      "ResourceType": "Microsoft.CostManagement/views",
+      "Path": "samples/views/main.tf",
+      "Description": "A basic example of deploying Azure Cost Management View."
+    }
+  ]
+}

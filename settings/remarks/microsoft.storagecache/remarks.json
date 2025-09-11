@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.StorageCache/amlFilesystems",
+      "Path": "samples/amlfilesystems/main.tf",
+      "Description": "A basic example of deploying Azure Managed Lustre File System."
+    },
+    {
+      "ResourceType": "Microsoft.StorageCache/caches",
+      "Path": "samples/caches/main.tf",
+      "Description": "A basic example of deploying HPC Cache."
+    }
+  ]
+}

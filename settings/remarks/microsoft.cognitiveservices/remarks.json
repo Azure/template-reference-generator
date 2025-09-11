@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts",
+      "Path": "samples/accounts/main.tf",
+      "Description": "A basic example of deploying AI Services Account."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/deployments",
+      "Path": "samples/accounts/deployments/main.tf",
+      "Description": "A basic example of deploying Cognitive Services Account Deployment."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/raiBlocklists",
+      "Path": "samples/accounts/raiblocklists/main.tf",
+      "Description": "A basic example of deploying Cognitive Services Accounts Responsible AI Blocklists."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/raiPolicies",
+      "Path": "samples/accounts/raipolicies/main.tf",
+      "Description": "A basic example of deploying Cognitive Services Accounts Responsible AI Policies."
+    }
+  ]
+}
