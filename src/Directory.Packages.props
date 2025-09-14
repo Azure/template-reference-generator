@@ -14,6 +14,6 @@
     <PackageVersion Include="Microsoft.PowerPlatform.ResourceStack" Version="7.0.0.2076" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
     <PackageVersion Include="MSTest" Version="3.10.4" />
-    <PackageVersion Include="System.IO.Abstractions" Version="22.0.15" />
+    <PackageVersion Include="System.IO.Abstractions" Version="22.0.16" />
   </ItemGroup>
 </Project>
