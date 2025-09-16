@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.AppConfiguration/configurationStores",
+      "Path": "samples/configurationstores/main.tf",
+      "Description": "A basic example of deploying Azure App Configuration."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.HealthcareApis/services",
+      "Path": "samples/services/main.tf",
+      "Description": "A basic example of deploying Healthcare Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces",
+      "Path": "samples/workspaces/main.tf",
+      "Description": "A basic example of deploying Healthcare Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/dicomServices",
+      "Path": "samples/workspaces/dicomservices/main.tf",
+      "Description": "A basic example of deploying Healthcare DICOM (Digital Imaging and Communications in Medicine) Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/fhirServices",
+      "Path": "samples/workspaces/fhirservices/main.tf",
+      "Description": "A basic example of deploying Healthcare FHIR (Fast Healthcare Interoperability Resources) Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/iotConnectors",
+      "Path": "samples/workspaces/iotconnectors/main.tf",
+      "Description": "A basic example of deploying Healthcare MedTech (Internet of Medical Things) devices Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/iotConnectors/fhirDestinations",
+      "Path": "samples/workspaces/iotconnectors/fhirdestinations/main.tf",
+      "Description": "A basic example of deploying Healthcare Med Tech (Internet of Medical Things) Service Fhir Destination."
+    }
+  ]
+}

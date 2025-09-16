@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.LabServices/labPlans",
+      "Path": "samples/labplans/main.tf",
+      "Description": "A basic example of deploying Lab Services Lab Plans."
+    },
+    {
+      "ResourceType": "Microsoft.LabServices/labs",
+      "Path": "samples/labs/main.tf",
+      "Description": "A basic example of deploying Lab Services Labs."
+    },
+    {
+      "ResourceType": "Microsoft.LabServices/labs/schedules",
+      "Path": "samples/labs/schedules/main.tf",
+      "Description": "A basic example of deploying Lab Services Labs Schedules."
+    },
+    {
+      "ResourceType": "Microsoft.LabServices/labs/users",
+      "Path": "samples/labs/users/main.tf",
+      "Description": "A basic example of deploying Lab Services Labs Users."
+    }
+  ]
+}

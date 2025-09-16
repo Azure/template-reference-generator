@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Security/advancedThreatProtectionSettings",
+      "Path": "samples/advancedthreatprotectionsettings/main.tf",
+      "Description": "A basic example of deploying resources Advanced Threat Protection setting."
+    },
+    {
+      "ResourceType": "Microsoft.Security/assessmentMetadata",
+      "Path": "samples/assessmentmetadata/main.tf",
+      "Description": "A basic example of deploying Security Center Assessment Metadata for Azure Security Center."
+    },
+    {
+      "ResourceType": "Microsoft.Security/assessments",
+      "Path": "samples/assessments/main.tf",
+      "Description": "A basic example of deploying Security Center Assessment for Azure Security Center."
+    },
+    {
+      "ResourceType": "Microsoft.Security/automations",
+      "Path": "samples/automations/main.tf",
+      "Description": "A basic example of deploying Security Center Automation and Continuous Export."
+    },
+    {
+      "ResourceType": "Microsoft.Security/defenderForStorageSettings",
+      "Path": "samples/defenderforstoragesettings/main.tf",
+      "Description": "A basic example of deploying Microsoft Defender for Storage."
+    },
+    {
+      "ResourceType": "Microsoft.Security/iotSecuritySolutions",
+      "Path": "samples/iotsecuritysolutions/main.tf",
+      "Description": "A basic example of deploying iot security solution."
+    },
+    {
+      "ResourceType": "Microsoft.Security/securityContacts",
+      "Path": "samples/securitycontacts/main.tf",
+      "Description": "A basic example of deploying subscription's Security Center Contact."
+    },
+    {
+      "ResourceType": "Microsoft.Security/workspaceSettings",
+      "Path": "samples/workspacesettings/main.tf",
+      "Description": "A basic example of deploying subscription's Security Center Workspace."
+    }
+  ]
+}

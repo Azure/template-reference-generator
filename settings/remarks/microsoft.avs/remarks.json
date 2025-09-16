@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.AVS/privateClouds",
+      "Path": "samples/privateclouds/main.tf",
+      "Description": "A basic example of deploying Azure VMware Solution Private Cloud."
+    },
+    {
+      "ResourceType": "Microsoft.AVS/privateClouds/authorizations",
+      "Path": "samples/privateclouds/authorizations/main.tf",
+      "Description": "A basic example of deploying Azure VMware Solution ExpressRoute Circuit Authorization."
+    }
+  ]
+}

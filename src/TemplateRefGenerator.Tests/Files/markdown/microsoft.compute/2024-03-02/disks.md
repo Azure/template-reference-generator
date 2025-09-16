@@ -883,6 +883,65 @@ resource "azapi_resource" "symbolicname" {
 | diskControllerTypes | The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. | string |
 
 ## Usage Examples
+### Terraform Samples
+
+A basic example of deploying Managed Disk.
+
+```terraform
+terraform {
+  required_providers {
+    azapi = {
+      source = "Azure/azapi"
+    }
+  }
+}
+
+provider "azapi" {
+  skip_provider_registration = false
+}
+
+variable "resource_name" {
+  type    = string
+  default = "acctest0001"
+}
+
+variable "location" {
+  type    = string
+  default = "westeurope"
+}
+
+resource "azapi_resource" "resourceGroup" {
+  type     = "Microsoft.Resources/resourceGroups@2020-06-01"
+  name     = var.resource_name
+  location = var.location
+}
+
+resource "azapi_resource" "disk" {
+  type      = "Microsoft.Compute/disks@2022-03-02"
+  parent_id = azapi_resource.resourceGroup.id
+  name      = var.resource_name
+  location  = var.location
+  body = {
+    properties = {
+      creationData = {
+        createOption = "Empty"
+      }
+      diskSizeGB = 10
+      encryption = {
+        type = "EncryptionAtRestWithPlatformKey"
+      }
+      networkAccessPolicy = "AllowAll"
+      osType              = ""
+      publicNetworkAccess = "Enabled"
+    }
+    sku = {
+      name = "Standard_LRS"
+    }
+  }
+  schema_validation_enabled = false
+  response_export_values    = ["*"]
+}
+```
 ### Azure Verified Modules
 
 The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.

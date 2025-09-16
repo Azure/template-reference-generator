@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/clusters",
+      "Path": "samples/clusters/main.tf",
+      "Description": "A basic example of deploying Stream Analytics Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/streamingJobs",
+      "Path": "samples/streamingjobs/main.tf",
+      "Description": "A basic example of deploying Stream Analytics Job."
+    },
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/streamingJobs/functions",
+      "Path": "samples/streamingjobs/functions/main.tf",
+      "Description": "A basic example of deploying JavaScript UDA Function within a Stream Analytics Streaming Job."
+    },
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/streamingJobs/inputs",
+      "Path": "samples/streamingjobs/inputs/main.tf",
+      "Description": "A basic example of deploying Stream Analytics Reference Input."
+    },
+    {
+      "ResourceType": "Microsoft.StreamAnalytics/streamingJobs/outputs",
+      "Path": "samples/streamingjobs/outputs/main.tf",
+      "Description": "A basic example of deploying Stream Analytics Output Table."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Relay/namespaces",
+      "Path": "samples/namespaces/main.tf",
+      "Description": "A basic example of deploying Azure Relay Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.Relay/namespaces/authorizationRules",
+      "Path": "samples/namespaces/authorizationrules/main.tf",
+      "Description": "A basic example of deploying Azure Relay Namespace Authorization Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Relay/namespaces/hybridConnections",
+      "Path": "samples/namespaces/hybridconnections/main.tf",
+      "Description": "A basic example of deploying Azure Relay Hybrid Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Relay/namespaces/hybridConnections/authorizationRules",
+      "Path": "samples/namespaces/hybridconnections/authorizationrules/main.tf",
+      "Description": "A basic example of deploying Azure Relay Hybrid Connection Authorization Rule."
+    }
+  ]
+}

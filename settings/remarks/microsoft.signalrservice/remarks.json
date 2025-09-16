@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.SignalRService/signalR",
+      "Path": "samples/signalr/main.tf",
+      "Description": "A basic example of deploying Azure SignalR service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/signalR/sharedPrivateLinkResources",
+      "Path": "samples/signalr/sharedprivatelinkresources/main.tf",
+      "Description": "A basic example of deploying Shared Private Link Resource for a Signalr service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub",
+      "Path": "samples/webpubsub/main.tf",
+      "Description": "A basic example of deploying Azure Web PubSub service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub/hubs",
+      "Path": "samples/webpubsub/hubs/main.tf",
+      "Description": "A basic example of deploying hub settings for a Web Pubsub service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources",
+      "Path": "samples/webpubsub/sharedprivatelinkresources/main.tf",
+      "Description": "A basic example of deploying Shared Private Link Resource for a Web Pubsub service."
+    }
+  ]
+}

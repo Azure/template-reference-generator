@@ -2,12 +2,39 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
+      "Description": "For guidance on using key vaults for secure values, see [Manage secrets by using Bicep](/azure/azure-resource-manager/bicep/scenarios-secrets).\n\nFor a quickstart on creating a secret, see [Quickstart: Set and retrieve a secret from Azure Key Vault using an ARM template](/azure/key-vault/secrets/quick-create-template).\n\nFor a quickstart on creating a key, see [Quickstart: Create an Azure key vault and a key by using ARM template](/azure/key-vault/keys/quick-create-template).",
       "ResourceTypes": [
         "microsoft.keyvault/vaults",
         "microsoft.keyvault/vaults/keys",
         "microsoft.keyvault/vaults/secrets"
-      ],
-      "Description": "For guidance on using key vaults for secure values, see [Manage secrets by using Bicep](/azure/azure-resource-manager/bicep/scenarios-secrets).\n\nFor a quickstart on creating a secret, see [Quickstart: Set and retrieve a secret from Azure Key Vault using an ARM template](/azure/key-vault/secrets/quick-create-template).\n\nFor a quickstart on creating a key, see [Quickstart: Create an Azure key vault and a key by using ARM template](/azure/key-vault/keys/quick-create-template)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.KeyVault/managedHSMs",
+      "Path": "samples/managedhsms/main.tf",
+      "Description": "A basic example of deploying Key Vault Managed Hardware Security Module."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults",
+      "Path": "samples/vaults/main.tf",
+      "Description": "A basic example of deploying Key Vault."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults/accessPolicies",
+      "Path": "samples/vaults/accesspolicies/main.tf",
+      "Description": "A basic example of deploying Key Vault Access Policies."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults/keys",
+      "Path": "samples/vaults/keys/main.tf",
+      "Description": "A basic example of deploying Key Vault Keys."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults/secrets",
+      "Path": "samples/vaults/secrets/main.tf",
+      "Description": "A basic example of deploying Key Vault Secrets."
     }
   ]
 }

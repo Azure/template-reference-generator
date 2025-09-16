@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ContainerInstance/containerGroups",
+      "Path": "samples/containergroups/main.tf",
+      "Description": "A basic example of deploying Azure Container Group instance."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Cache/redis",
+      "Path": "samples/redis/main.tf",
+      "Description": "A basic example of deploying Redis Cache."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/accessPolicies",
+      "Path": "samples/redis/accesspolicies/main.tf",
+      "Description": "A basic example of deploying Redis Cache Access Policy."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/accessPolicyAssignments",
+      "Path": "samples/redis/accesspolicyassignments/main.tf",
+      "Description": "A basic example of deploying Redis Cache Access Policy Assignment."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/firewallRules",
+      "Path": "samples/redis/firewallrules/main.tf",
+      "Description": "A basic example of deploying Firewall Rule associated with a Redis Cache."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/linkedServers",
+      "Path": "samples/redis/linkedservers/main.tf",
+      "Description": "A basic example of deploying Redis Linked Server."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redisEnterprise",
+      "Path": "samples/redisenterprise/main.tf",
+      "Description": "A basic example of deploying Redis Enterprise Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redisEnterprise/databases",
+      "Path": "samples/redisenterprise/databases/main.tf",
+      "Description": "A basic example of deploying Redis Enterprise Database."
+    }
+  ]
+}

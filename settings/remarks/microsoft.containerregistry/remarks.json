@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries",
+      "Path": "samples/registries/main.tf",
+      "Description": "A basic example of deploying Azure Container Registry."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/agentPools",
+      "Path": "samples/registries/agentpools/main.tf",
+      "Description": "A basic example of deploying Azure Container Registry Agent Pool."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/cacheRules",
+      "Path": "samples/registries/cacherules/main.tf",
+      "Description": "A basic example of deploying Azure Container Registry Cache Rule."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/connectedRegistries",
+      "Path": "samples/registries/connectedregistries/main.tf",
+      "Description": "A basic example of deploying Container Connected Registry."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/credentialSets",
+      "Path": "samples/registries/credentialsets/main.tf",
+      "Description": "A basic example of deploying Container Registry Credential Set."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/scopeMaps",
+      "Path": "samples/registries/scopemaps/main.tf",
+      "Description": "A basic example of deploying Azure Container Registry scope map."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/taskRuns",
+      "Path": "samples/registries/taskruns/main.tf",
+      "Description": "A basic example of deploying Container Registry Task Runs."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/tasks",
+      "Path": "samples/registries/tasks/main.tf",
+      "Description": "A basic example of deploying Container Registry Task."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/tokens",
+      "Path": "samples/registries/tokens/main.tf",
+      "Description": "A basic example of deploying Azure Container Registry token."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerRegistry/registries/webHooks",
+      "Path": "samples/registries/webhooks/main.tf",
+      "Description": "A basic example of deploying Azure Container Registry Webhook."
+    }
+  ]
+}

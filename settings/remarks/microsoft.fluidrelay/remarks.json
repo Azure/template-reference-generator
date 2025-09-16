@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.FluidRelay/fluidRelayServers",
+      "Path": "samples/fluidrelayservers/main.tf",
+      "Description": "A basic example of deploying Fluid Relay Server."
+    }
+  ]
+}

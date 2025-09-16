@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.HDInsight/clusters",
+      "Path": "samples/clusters/main.tf",
+      "Description": "A basic example of deploying HDInsight Cluster."
+    }
+  ]
+}

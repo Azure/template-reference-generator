@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DataProtection/backupVaults",
+      "Path": "samples/backupvaults/main.tf",
+      "Description": "A basic example of deploying Backup Vault."
+    },
+    {
+      "ResourceType": "Microsoft.DataProtection/backupVaults/backupInstances",
+      "Path": "samples/backupvaults/backupinstances/main.tf",
+      "Description": "A basic example of deploying Backup Instance."
+    },
+    {
+      "ResourceType": "Microsoft.DataProtection/backupVaults/backupPolicies",
+      "Path": "samples/backupvaults/backuppolicies/main.tf",
+      "Description": "A basic example of deploying Backup Policy."
+    },
+    {
+      "ResourceType": "Microsoft.DataProtection/resourceGuards",
+      "Path": "samples/resourceguards/main.tf",
+      "Description": "A basic example of deploying Resource Guard."
+    }
+  ]
+}

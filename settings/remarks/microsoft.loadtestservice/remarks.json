@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.LoadTestService/loadTests",
+      "Path": "samples/loadtests/main.tf",
+      "Description": "A basic example of deploying Load Test."
+    }
+  ]
+}

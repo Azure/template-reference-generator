@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ConfidentialLedger/ledgers",
+      "Path": "samples/ledgers/main.tf",
+      "Description": "A basic example of deploying Confidential Ledger."
+    }
+  ]
+}

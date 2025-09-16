@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DataShare/accounts",
+      "Path": "samples/accounts/main.tf",
+      "Description": "A basic example of deploying Data Share Account."
+    },
+    {
+      "ResourceType": "Microsoft.DataShare/accounts/shares",
+      "Path": "samples/accounts/shares/main.tf",
+      "Description": "A basic example of deploying Data Share."
+    },
+    {
+      "ResourceType": "Microsoft.DataShare/accounts/shares/dataSets",
+      "Path": "samples/accounts/shares/datasets/main.tf",
+      "Description": "A basic example of deploying Data Share Dataset."
+    }
+  ]
+}

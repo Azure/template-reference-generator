@@ -1,0 +1,25 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/applicationGroups",
+      "Path": "samples/applicationgroups/main.tf",
+      "Description": "A basic example of deploying Virtual Desktop Application Group."
+    },
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/applicationGroups/applications",
+      "Path": "samples/applicationgroups/applications/main.tf",
+      "Description": "A basic example of deploying Virtual Desktop Application."
+    },
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/scalingPlans/personalSchedules",
+      "Path": "samples/scalingplans/personalschedules/main.tf",
+      "Description": "A basic example of deploying Desktop Virtualization Scaling Plans Personal Schedules."
+    },
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/workspaces",
+      "Path": "samples/workspaces/main.tf",
+      "Description": "A basic example of deploying Virtual Desktop Workspace."
+    }
+  ]
+}

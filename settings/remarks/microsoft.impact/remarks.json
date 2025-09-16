@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Impact/connectors",
+      "Path": "samples/connectors/main.tf",
+      "Description": "A basic example of deploying Impact Connectors."
+    },
+    {
+      "ResourceType": "Microsoft.Impact/workloadImpacts",
+      "Path": "samples/workloadimpacts/main.tf",
+      "Description": "A basic example of deploying Impact Workload Impacts."
+    }
+  ]
+}

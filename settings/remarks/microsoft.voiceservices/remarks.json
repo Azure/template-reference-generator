@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.VoiceServices/communicationsGateways",
+      "Path": "samples/communicationsgateways/main.tf",
+      "Description": "A basic example of deploying Voice Services Communications Gateways."
+    },
+    {
+      "ResourceType": "Microsoft.VoiceServices/communicationsGateways/testLines",
+      "Path": "samples/communicationsgateways/testlines/main.tf",
+      "Description": "A basic example of deploying Voice Services Communications Gateway Test Line."
+    }
+  ]
+}

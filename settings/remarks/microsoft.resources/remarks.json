@@ -2,48 +2,58 @@
   "$schema": "../../schemas/remarks.schema.json",
   "BicepSamples": [
     {
-      "ResourceType": "microsoft.resources/resourceGroups",
+      "Description": "A basic example of deploying a resource group.",
       "Path": "samples/resourceGroups/basic.bicep",
-      "Description": "A basic example of deploying a resource group."
-    }
-  ],
-  "TerraformSamples": [
-    {
-      "ResourceType": "microsoft.resources/resourceGroups",
-      "Path": "samples/resourceGroups/main.tf",
-      "Description": "A basic example of deploying a resource group."
+      "ResourceType": "microsoft.resources/resourceGroups"
     }
   ],
   "ResourceRemarks": [
     {
+      "Description": "To learn about executing scripts during deployment, see [Use deployment scripts in Bicep](/azure/azure-resource-manager/bicep/deployment-script-bicep) or [Use deployment scripts in ARM templates](/azure/azure-resource-manager/templates/deployment-script-template).",
       "ResourceTypes": [
         "microsoft.resources/deploymentscripts"
-      ],
-      "Description": "To learn about executing scripts during deployment, see [Use deployment scripts in Bicep](/azure/azure-resource-manager/bicep/deployment-script-bicep) or [Use deployment scripts in ARM templates](/azure/azure-resource-manager/templates/deployment-script-template)."
+      ]
     },
     {
+      "Description": "For Bicep, consider [using modules](/azure/azure-resource-manager/bicep/modules) instead of this resource type.",
       "ResourceTypes": [
         "microsoft.resources/deployments"
-      ],
-      "Description": "For Bicep, consider [using modules](/azure/azure-resource-manager/bicep/modules) instead of this resource type."
+      ]
     },
     {
+      "Description": "To learn about applying tags through ARM templates or Bicep files, see [Use tags to organize your Azure resources and management hierarchy](/azure/azure-resource-manager/management/tag-resources?tabs=json#arm-templates).",
       "ResourceTypes": [
         "microsoft.resources/tags"
-      ],
-      "Description": "To learn about applying tags through ARM templates or Bicep files, see [Use tags to organize your Azure resources and management hierarchy](/azure/azure-resource-manager/management/tag-resources?tabs=json#arm-templates)."
+      ]
     },
     {
+      "Description": "Instead of using an ARM template or Bicep file to define the template spec, we recommend that you use [New-AzTemplateSpec](/powershell/module/az.resources/new-aztemplatespec) in Azure PowerShell or [az ts create](/cli/azure/ts#az-ts-create) in Azure CLI to create your template spec. Those commands automatically convert linked templates to artifacts connected to your main template. When you use an ARM template to create the template spec, you must manually add those linked templates as artifacts, which can be complicated. For more information, see [Quickstart: Create and deploy template spec](/azure/azure-resource-manager/templates/quickstart-create-template-specs).",
       "ResourceTypes": [
         "microsoft.resources/templatespecs"
-      ],
-      "Description": "Instead of using an ARM template or Bicep file to define the template spec, we recommend that you use [New-AzTemplateSpec](/powershell/module/az.resources/new-aztemplatespec) in Azure PowerShell or [az ts create](/cli/azure/ts#az-ts-create) in Azure CLI to create your template spec. Those commands automatically convert linked templates to artifacts connected to your main template. When you use an ARM template to create the template spec, you must manually add those linked templates as artifacts, which can be complicated. For more information, see [Quickstart: Create and deploy template spec](/azure/azure-resource-manager/templates/quickstart-create-template-specs)."
+      ]
     },
     {
+      "Description": "For information about creating portal forms, see [Tutorial: Create Azure portal forms for a template spec](/azure/azure-resource-manager/templates/template-specs-create-portal-forms).",
       "ResourceTypes": [
         "microsoft.resources/templatespecs/versions"
-      ],
-      "Description": "For information about creating portal forms, see [Tutorial: Create Azure portal forms for a template spec](/azure/azure-resource-manager/templates/template-specs-create-portal-forms)."
+      ]
+    }
+  ],
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Resources/deploymentScripts",
+      "Path": "samples/deploymentscripts/main.tf",
+      "Description": "A basic example of deploying Resource Deployment Script."
+    },
+    {
+      "ResourceType": "Microsoft.Resources/deployments",
+      "Path": "samples/deployments/main.tf",
+      "Description": "A basic example of deploying Template Deployment."
+    },
+    {
+      "ResourceType": "Microsoft.Resources/resourceGroups",
+      "Path": "samples/resourceGroups/main.tf",
+      "Description": "A basic example of deploying Resource Group."
     }
   ]
 }
