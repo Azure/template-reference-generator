@@ -203,6 +203,9 @@ The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy
 > | Module | Description |
 > | ----- | ----- |
 > | [Key Vault](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/key-vault/vault) | AVM Resource Module for Key Vault |
+> | [Key Vault - Access Policy](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/key-vault/vault/access-policy) | AVM Child Module for Key Vault - Access Policy |
+> | [Key Vault - Key](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/key-vault/vault/key) | AVM Child Module for Key Vault - Key |
+> | [Key Vault - Secret](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/key-vault/vault/secret) | AVM Child Module for Key Vault - Secret |
 
 ### Azure Quickstart Samples
 
