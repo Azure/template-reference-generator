@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DigitalTwins/digitalTwinsInstances",
+      "Path": "samples/digitaltwinsinstances/main.tf",
+      "Description": "A basic example of deploying Digital Twins instance."
+    },
+    {
+      "ResourceType": "Microsoft.DigitalTwins/digitalTwinsInstances/endpoints",
+      "Path": "samples/digitaltwinsinstances/endpoints/main.tf",
+      "Description": "A basic example of deploying Digital Twins Endpoint."
+    }
+  ]
+}

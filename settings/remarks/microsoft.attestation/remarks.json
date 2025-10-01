@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Attestation/attestationProviders",
+      "Path": "samples/attestationproviders/main.tf",
+      "Description": "A basic example of deploying Attestation Provider."
+    }
+  ]
+}

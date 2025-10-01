@@ -17,7 +17,7 @@ variable "resource_name" {
 
 variable "location" {
   type    = string
-  default = "westus"
+  default = "westeurope"
 }
 
 resource "azapi_resource" "resourceGroup" {
@@ -25,3 +25,4 @@ resource "azapi_resource" "resourceGroup" {
   name     = var.resource_name
   location = var.location
 }
+

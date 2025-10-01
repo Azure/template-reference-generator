@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.DeviceUpdate/accounts",
+      "Path": "samples/accounts/main.tf",
+      "Description": "A basic example of deploying IoT Hub Device Update Account."
+    },
+    {
+      "ResourceType": "Microsoft.DeviceUpdate/accounts/instances",
+      "Path": "samples/accounts/instances/main.tf",
+      "Description": "A basic example of deploying IoT Hub Device Update Instance."
+    }
+  ]
+}

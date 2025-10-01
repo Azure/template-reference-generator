@@ -1,0 +1,15 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Maps/accounts",
+      "Path": "samples/accounts/main.tf",
+      "Description": "A basic example of deploying Azure Maps Account."
+    },
+    {
+      "ResourceType": "Microsoft.Maps/accounts/creators",
+      "Path": "samples/accounts/creators/main.tf",
+      "Description": "A basic example of deploying Azure Maps Creator."
+    }
+  ]
+}

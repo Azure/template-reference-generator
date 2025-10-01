@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ResourceConnector/appliances",
+      "Path": "samples/appliances/main.tf",
+      "Description": "A basic example of deploying Arc Resource Bridge Appliance."
+    }
+  ]
+}

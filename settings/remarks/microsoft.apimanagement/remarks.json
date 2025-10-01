@@ -1,0 +1,170 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "samples/service/main.tf",
+      "Description": "A basic example of deploying API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apiVersionSets",
+      "Path": "samples/service/apiversionsets/main.tf",
+      "Description": "A basic example of deploying API Version Set within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis",
+      "Path": "samples/service/apis/main.tf",
+      "Description": "A basic example of deploying API within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/diagnostics",
+      "Path": "samples/service/apis/diagnostics/main.tf",
+      "Description": "A basic example of deploying API Management Service API Diagnostics Logs."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/operations",
+      "Path": "samples/service/apis/operations/main.tf",
+      "Description": "A basic example of deploying API Operation within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/policies",
+      "Path": "samples/service/apis/policies/main.tf",
+      "Description": "A basic example of deploying API Management Service APIs Policies."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/releases",
+      "Path": "samples/service/apis/releases/main.tf",
+      "Description": "A basic example of deploying API Management API Release."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/schemas",
+      "Path": "samples/service/apis/schemas/main.tf",
+      "Description": "A basic example of deploying API Schema within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/tagDescriptions",
+      "Path": "samples/service/apis/tagdescriptions/main.tf",
+      "Description": "A basic example of deploying API Tag Description within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/tags",
+      "Path": "samples/service/apis/tags/main.tf",
+      "Description": "A basic example of deploying API Management API Tag."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/authorizationServers",
+      "Path": "samples/service/authorizationservers/main.tf",
+      "Description": "A basic example of deploying Authorization Server within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/backends",
+      "Path": "samples/service/backends/main.tf",
+      "Description": "A basic example of deploying backend within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/caches",
+      "Path": "samples/service/caches/main.tf",
+      "Description": "A basic example of deploying API Management Redis Cache."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/certificates",
+      "Path": "samples/service/certificates/main.tf",
+      "Description": "A basic example of deploying Certificate within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/diagnostics",
+      "Path": "samples/service/diagnostics/main.tf",
+      "Description": "A basic example of deploying API Management Service Diagnostic."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/gateways",
+      "Path": "samples/service/gateways/main.tf",
+      "Description": "A basic example of deploying API Management Gateway."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/gateways/certificateAuthorities",
+      "Path": "samples/service/gateways/certificateauthorities/main.tf",
+      "Description": "A basic example of deploying API Management Gateway Certificate Authority."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/gateways/hostnameConfigurations",
+      "Path": "samples/service/gateways/hostnameconfigurations/main.tf",
+      "Description": "A basic example of deploying API Management Gateway Host Name Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/groups",
+      "Path": "samples/service/groups/main.tf",
+      "Description": "A basic example of deploying API Management Group."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/identityProviders",
+      "Path": "samples/service/identityproviders/main.tf",
+      "Description": "A basic example of deploying API Management Identity Provider."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/loggers",
+      "Path": "samples/service/loggers/main.tf",
+      "Description": "A basic example of deploying Logger within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/namedValues",
+      "Path": "samples/service/namedvalues/main.tf",
+      "Description": "A basic example of deploying API Management Named Value."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/openidConnectProviders",
+      "Path": "samples/service/openidconnectproviders/main.tf",
+      "Description": "A basic example of deploying OpenID Connect Provider within a API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/policyFragments",
+      "Path": "samples/service/policyfragments/main.tf",
+      "Description": "A basic example of deploying API Management Service Policy Fragments."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/portalsettings",
+      "Path": "samples/service/portalsettings/main.tf",
+      "Description": "A basic example of deploying API Management Service Portal Settings."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/products",
+      "Path": "samples/service/products/main.tf",
+      "Description": "A basic example of deploying API Management Product."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/products/policies",
+      "Path": "samples/service/products/policies/main.tf",
+      "Description": "A basic example of deploying API Management Service Products Policies."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/products/tags",
+      "Path": "samples/service/products/tags/main.tf",
+      "Description": "A basic example of deploying API Management Product tag."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/schemas",
+      "Path": "samples/service/schemas/main.tf",
+      "Description": "A basic example of deploying Global Schema within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/subscriptions",
+      "Path": "samples/service/subscriptions/main.tf",
+      "Description": "A basic example of deploying Subscription within a API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/tags",
+      "Path": "samples/service/tags/main.tf",
+      "Description": "A basic example of deploying API Management Tag."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/templates",
+      "Path": "samples/service/templates/main.tf",
+      "Description": "A basic example of deploying API Management Service Templates."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/users",
+      "Path": "samples/service/users/main.tf",
+      "Description": "A basic example of deploying API Management User."
+    }
+  ]
+}

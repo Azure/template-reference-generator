@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Billing/billingAccounts/billingProfiles",
+      "Path": "samples/billingaccounts/billingprofiles/main.tf",
+      "Description": "A basic example of deploying Billing Accounts Billing Profiles."
+    }
+  ]
+}

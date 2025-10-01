@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Qumulo.Storage/fileSystems",
+      "Path": "samples/filesystems/main.tf",
+      "Description": "A basic example of deploying Qumulo File System."
+    }
+  ]
+}

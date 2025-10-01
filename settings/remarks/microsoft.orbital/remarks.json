@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.Orbital/spacecrafts",
+      "Path": "samples/spacecrafts/main.tf",
+      "Description": "A basic example of deploying Spacecraft resource."
+    }
+  ]
+}
