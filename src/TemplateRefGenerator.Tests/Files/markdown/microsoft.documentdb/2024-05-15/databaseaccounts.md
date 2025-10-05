@@ -425,6 +425,8 @@ The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy
 > [!div class="mx-tableFixed"]
 > | Module | Description |
 > | ----- | ----- |
+> | [Cosmos DB - SQL Role Assignment](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/document-db/database-account/sql-role-assignment) | AVM Child Module for Cosmos DB - SQL Role Assignment |
+> | [Cosmos DB - SQL Role Definition](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/document-db/database-account/sql-role-definition) | AVM Child Module for Cosmos DB - SQL Role Definition |
 > | [Cosmos DB Database Account](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/document-db/database-account) | AVM Resource Module for Cosmos DB Database Account |
 
 ### Azure Quickstart Samples
