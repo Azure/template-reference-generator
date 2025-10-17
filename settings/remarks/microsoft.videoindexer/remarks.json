@@ -1,0 +1,10 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.VideoIndexer/accounts",
+      "Path": "samples/accounts/main.tf",
+      "Description": "A basic example of deploying Video Indexer Account."
+    }
+  ]
+}

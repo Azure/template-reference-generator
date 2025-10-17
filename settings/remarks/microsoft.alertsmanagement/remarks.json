@@ -10,7 +10,17 @@
   ],
   "TerraformSamples": [
     {
-      "ResourceType": "microsoft.alertsManagement/smartDetectorAlertRules",
+      "ResourceType": "Microsoft.AlertsManagement/actionRules",
+      "Path": "samples/actionrules/main.tf",
+      "Description": "A basic example of deploying Alert Processing Rule which apply action group."
+    },
+    {
+      "ResourceType": "Microsoft.AlertsManagement/prometheusRuleGroups",
+      "Path": "samples/prometheusrulegroups/main.tf",
+      "Description": "A basic example of deploying Alert Management Prometheus Rule Group."
+    },
+    {
+      "ResourceType": "Microsoft.AlertsManagement/smartDetectorAlertRules",
       "Path": "samples/smartdetectoralertrules/main.tf",
       "Description": "A basic example of deploying Monitor Smart Detector Alert Rule."
     }

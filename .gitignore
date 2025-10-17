@@ -21,6 +21,7 @@ mono_crash.*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+!settings/**/[Rr]eleases/
 x64/
 x86/
 [Ww][Ii][Nn]32/
@@ -256,6 +257,7 @@ Generated_Code/
 # because we have git ;-)
 _UpgradeReport_Files/
 Backup*/
+!settings/**/[Bb]ackup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 ServiceFabricBackup/

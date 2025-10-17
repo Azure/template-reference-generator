@@ -69,6 +69,11 @@
       "ResourceType": "Microsoft.Web/staticSites",
       "Path": "samples/staticsites/main.tf",
       "Description": "A basic example of deploying Static Web App."
+    },
+    {
+      "ResourceType": "Microsoft.Web/staticSites/customDomains",
+      "Path": "samples/staticsites/customdomains/main.tf",
+      "Description": "A basic example of deploying Static Web App Custom Domain."
     }
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Nginx.NginxPlus/nginxDeployments",
+      "Path": "samples/nginxdeployments/main.tf",
+      "Description": "A basic example of deploying NGINX Deployment."
+    },
+    {
+      "ResourceType": "Nginx.NginxPlus/nginxDeployments/certificates",
+      "Path": "samples/nginxdeployments/certificates/main.tf",
+      "Description": "A basic example of deploying Certificate for an NGINX Deployment."
+    },
+    {
+      "ResourceType": "Nginx.NginxPlus/nginxDeployments/configurations",
+      "Path": "samples/nginxdeployments/configurations/main.tf",
+      "Description": "A basic example of deploying configuration for a Nginx Deployment."
+    }
+  ]
+}

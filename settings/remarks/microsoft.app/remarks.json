@@ -34,7 +34,7 @@
     {
       "ResourceType": "Microsoft.App/managedEnvironments/privateEndpointConnections",
       "Path": "samples/managedenvironments/privateendpointconnections/main.tf",
-      "Description": "A basic example of deploying Container App Environment Private Endpoin."
+      "Description": "A basic example of deploying Container App Environment Private Endpoint Connection."
     },
     {
       "ResourceType": "Microsoft.App/managedEnvironments/storages",

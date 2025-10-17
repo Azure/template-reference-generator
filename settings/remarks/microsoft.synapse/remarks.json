@@ -47,6 +47,16 @@
       "Description": "A basic example of deploying Synapse SQL Pool."
     },
     {
+      "ResourceType": "Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings",
+      "Path": "samples/workspaces/sqlpools/extendedauditingsettings/main.tf",
+      "Description": "A basic example of deploying Synapse SQL Pool Extended Auditing Policy."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies",
+      "Path": "samples/workspaces/sqlpools/securityalertpolicies/main.tf",
+      "Description": "A basic example of deploying Security Alert Policy for a Synapse SQL Pool."
+    },
+    {
       "ResourceType": "Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments",
       "Path": "samples/workspaces/sqlpools/vulnerabilityassessments/main.tf",
       "Description": "A basic example of deploying Vulnerability Assessment for a Synapse SQL Pool."
@@ -60,6 +70,11 @@
       "ResourceType": "Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers",
       "Path": "samples/workspaces/sqlpools/workloadgroups/workloadclassifiers/main.tf",
       "Description": "A basic example of deploying Synapse SQL Pool Workload Classifier."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/vulnerabilityAssessments",
+      "Path": "samples/workspaces/vulnerabilityassessments/main.tf",
+      "Description": "A basic example of deploying Vulnerability Assessment for a Synapse Workspace."
     }
   ]
 }

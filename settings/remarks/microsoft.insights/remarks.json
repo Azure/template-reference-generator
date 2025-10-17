@@ -41,6 +41,11 @@
       "Description": "A basic example of deploying Application Insights Smart Detection Rule."
     },
     {
+      "ResourceType": "Microsoft.Insights/components/analyticsItems",
+      "Path": "samples/components/analyticsitems/main.tf",
+      "Description": "A basic example of deploying Application Insights Analytics Item component."
+    },
+    {
       "ResourceType": "Microsoft.Insights/dataCollectionEndpoints",
       "Path": "samples/datacollectionendpoints/main.tf",
       "Description": "A basic example of deploying Data Collection Endpoint."
