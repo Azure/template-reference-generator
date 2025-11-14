@@ -1,5 +1,127 @@
 {
   "$schema": "../../schemas/remarks.schema.json",
+  "ResourceRemarks": [
+    {
+      "Description": "Note: Azure Spring Apps (Microsoft.AppPlatform/Spring) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps API Portals (Microsoft.AppPlatform/Spring/apiPortals) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/apiportals"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps API Portal Domains (Microsoft.AppPlatform/Spring/apiPortals/domains) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/apiportals/domains"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Application Accelerators (Microsoft.AppPlatform/Spring/applicationAccelerators) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/applicationaccelerators"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Customized Accelerators (Microsoft.AppPlatform/Spring/applicationAccelerators/customizedAccelerators) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/applicationaccelerators/customizedaccelerators"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Application Live Views (Microsoft.AppPlatform/Spring/applicationLiveViews) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/applicationliveviews"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Applications (Microsoft.AppPlatform/Spring/apps) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/apps"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Application Bindings (Microsoft.AppPlatform/Spring/apps/bindings) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/apps/bindings"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Application Deployments (Microsoft.AppPlatform/Spring/apps/deployments) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/apps/deployments"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Build Services (Microsoft.AppPlatform/Spring/buildServices) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/buildservices"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Build Service Builders (Microsoft.AppPlatform/Spring/buildServices/builders) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/buildservices/builders"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Buildpack Bindings (Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/buildservices/builders/buildpackbindings"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Config Servers (Microsoft.AppPlatform/Spring/configServers) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/configservers"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Configuration Services (Microsoft.AppPlatform/Spring/configurationServices) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/configurationservices"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Dev Tool Portals (Microsoft.AppPlatform/Spring/DevToolPortals) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/devtoolportals"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Gateways (Microsoft.AppPlatform/Spring/gateways) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/gateways"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Gateway Domains (Microsoft.AppPlatform/Spring/gateways/domains) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/gateways/domains"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Gateway Route Configs (Microsoft.AppPlatform/Spring/gateways/routeConfigs) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/gateways/routeconfigs"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Monitoring Settings (Microsoft.AppPlatform/Spring/monitoringSettings) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/monitoringsettings"
+      ]
+    },
+    {
+      "Description": "Note: Azure Spring Apps Storages (Microsoft.AppPlatform/Spring/storages) is now deprecated and will be retired on 2028-05-31. See https://aka.ms/asaretirement for more information.",
+      "ResourceTypes": [
+        "microsoft.appplatform/spring/storages"
+      ]
+    }
+  ],
   "TerraformSamples": [
     {
       "ResourceType": "Microsoft.AppPlatform/Spring",
