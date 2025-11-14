@@ -85,6 +85,21 @@
       "ResourceType": "Microsoft.DocumentDB/databaseAccounts/tables",
       "Path": "samples/databaseaccounts/tables/main.tf",
       "Description": "A basic example of deploying Table within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/mongoClusters",
+      "Path": "samples/mongoclusters/main.tf",
+      "Description": "A basic example of deploying Azure Cosmos DB for MongoDB (vCore)."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/mongoClusters/firewallRules",
+      "Path": "samples/mongoclusters/firewallrules/main.tf",
+      "Description": "A basic example of deploying Azure Cosmos DB for MongoDB (vCore) Firewall Rule."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/mongoClusters/users",
+      "Path": "samples/mongoclusters/users/main.tf",
+      "Description": "A basic example of deploying Azure Cosmos DB for MongoDB (vCore) User."
     }
   ]
 }

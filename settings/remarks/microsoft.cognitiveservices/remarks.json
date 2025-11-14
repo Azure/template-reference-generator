@@ -4,12 +4,22 @@
     {
       "ResourceType": "Microsoft.CognitiveServices/accounts",
       "Path": "samples/accounts/main.tf",
-      "Description": "A basic example of deploying AI Services Account."
+      "Description": "A basic example of deploying Cognitive Services Account."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/connections",
+      "Path": "samples/accounts/connections/main.tf",
+      "Description": "A basic example of deploying Cognitive Services Account Connection."
     },
     {
       "ResourceType": "Microsoft.CognitiveServices/accounts/deployments",
       "Path": "samples/accounts/deployments/main.tf",
       "Description": "A basic example of deploying Cognitive Services Account Deployment."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/projects",
+      "Path": "samples/accounts/projects/main.tf",
+      "Description": "A basic example of deploying Cognitive Services Account Project."
     },
     {
       "ResourceType": "Microsoft.CognitiveServices/accounts/raiBlocklists",
