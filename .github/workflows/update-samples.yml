@@ -17,7 +17,7 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
 
@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-dotnet@v5
 
       - name: Clone quickstarts
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: Azure/azure-quickstart-templates
           path: workflow-temp/azure-quickstart-templates
