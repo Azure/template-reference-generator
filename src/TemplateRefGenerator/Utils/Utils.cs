@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Bicep.Types.Concrete;
 
 namespace TemplateRefGenerator;
 
@@ -46,4 +47,15 @@ public static class Utils
 
     public static string GetParentResource(string resourceType)
         => resourceType.Substring(0, resourceType.LastIndexOf('/'));
+
+    public static bool HasWritableScope(ResourceType resourceType, ScopeType targetScope)
+        => targetScope switch {
+            ScopeType.ResourceGroup => resourceType.WritableScopes.HasFlag(ScopeType.ResourceGroup),
+            ScopeType.Subscription => resourceType.WritableScopes.HasFlag(ScopeType.Subscription),
+            ScopeType.ManagementGroup => resourceType.WritableScopes.HasFlag(ScopeType.ManagementGroup),
+            ScopeType.Tenant => resourceType.WritableScopes.HasFlag(ScopeType.Tenant),
+            ScopeType.Extension => resourceType.WritableScopes.HasFlag(ScopeType.Extension),
+            ScopeType.None => resourceType.WritableScopes == ScopeType.None,
+            _ => throw new InvalidOperationException($"Unsupported scope type: {targetScope}"),
+        };
 }

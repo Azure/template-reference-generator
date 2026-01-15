@@ -8,9 +8,36 @@ ms.topic: reference
 
 This article describes the properties that changed in each API version for [microsoft.compute/disks](~/microsoft.compute/disks.md). It only covers properties that are available during deployments.
 
+## 2025-01-02
+
+Added:
+
+* [AvailabilityPolicy](~/microsoft.compute/2025-01-02/disks.md#availabilitypolicy)
+
+Updated:
+
+* [CreationData](~/microsoft.compute/2025-01-02/disks.md#creationdata): Added property 'instantAccessDurationMinutes'
+* [CreationData](~/microsoft.compute/2025-01-02/disks.md#creationdata): Added property 'securityMetadataUri'
+* [DiskProperties](~/microsoft.compute/2025-01-02/disks.md#diskproperties): Added property 'availabilityPolicy'
+* [SupportedCapabilities](~/microsoft.compute/2025-01-02/disks.md#supportedcapabilities): Added property 'supportedSecurityOption'
+
+
 ## 2024-03-02
 
-No properties added, updated or removed.
+Added:
+
+* [DiskPurchasePlan](~/microsoft.compute/2024-03-02/disks.md#diskpurchaseplan)
+* [TrackedResourceTags](~/microsoft.compute/2024-03-02/disks.md#trackedresourcetags)
+
+Removed:
+
+* PurchasePlan
+* ResourceTags
+
+Updated:
+
+* [Microsoft.Compute/disks](~/microsoft.compute/2024-03-02/disks.md#microsoftcomputedisks): Added property 'systemData'
+
 
 ## 2023-10-02
 

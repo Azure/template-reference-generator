@@ -933,6 +933,13 @@ No new or updated resource types.
 > |  | [databaseAccounts/tables](~/microsoft.documentdb/change-log/databaseaccounts/tables.md#2024-09-01-preview) |
 > |  | [databaseAccounts/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/tables/throughputsettings.md#2024-09-01-preview) |
 
+## 2024-10-01-preview
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> |  | [mongoClusters](~/microsoft.documentdb/change-log/mongoclusters.md#2024-10-01-preview) |
+
 ## 2024-11-15
 
 > [!div class="mx-tableFixed"]
@@ -993,4 +1000,148 @@ No new or updated resource types.
 > |  | [databaseAccounts/sqlDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/throughputsettings.md#2024-12-01-preview) |
 > |  | [databaseAccounts/tables](~/microsoft.documentdb/change-log/databaseaccounts/tables.md#2024-12-01-preview) |
 > |  | [databaseAccounts/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/tables/throughputsettings.md#2024-12-01-preview) |
+
+## 2025-04-01-preview
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> | [mongoClusters/users](~/microsoft.documentdb/change-log/mongoclusters/users.md#2025-04-01-preview) | [mongoClusters](~/microsoft.documentdb/change-log/mongoclusters.md#2025-04-01-preview) |
+
+## 2025-04-15
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> |  | [cassandraClusters](~/microsoft.documentdb/change-log/cassandraclusters.md#2025-04-15) |
+> |  | [databaseAccounts](~/microsoft.documentdb/change-log/databaseaccounts.md#2025-04-15) |
+> |  | [databaseAccounts/cassandraKeyspaces](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces.md#2025-04-15) |
+> |  | [databaseAccounts/cassandraKeyspaces/tables](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables.md#2025-04-15) |
+> |  | [databaseAccounts/cassandraKeyspaces/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/cassandraKeyspaces/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/gremlinDatabases](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases.md#2025-04-15) |
+> |  | [databaseAccounts/gremlinDatabases/graphs](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs.md#2025-04-15) |
+> |  | [databaseAccounts/gremlinDatabases/graphs/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/gremlinDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/mongodbDatabases](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases.md#2025-04-15) |
+> |  | [databaseAccounts/mongodbDatabases/collections](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections.md#2025-04-15) |
+> |  | [databaseAccounts/mongodbDatabases/collections/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/mongodbDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/privateEndpointConnections](~/microsoft.documentdb/change-log/databaseaccounts/privateendpointconnections.md#2025-04-15) |
+> |  | [databaseAccounts/sqlDatabases](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases.md#2025-04-15) |
+> |  | [databaseAccounts/sqlDatabases/containers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers.md#2025-04-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/storedProcedures](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/storedprocedures.md#2025-04-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/triggers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/triggers.md#2025-04-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/userDefinedFunctions](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md#2025-04-15) |
+> |  | [databaseAccounts/sqlDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/throughputsettings.md#2025-04-15) |
+> |  | [databaseAccounts/tables](~/microsoft.documentdb/change-log/databaseaccounts/tables.md#2025-04-15) |
+> |  | [databaseAccounts/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/tables/throughputsettings.md#2025-04-15) |
+
+## 2025-05-01-preview
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> | [databaseAccounts/cassandraRoleAssignments](~/microsoft.documentdb/change-log/databaseaccounts/cassandraroleassignments.md#2025-05-01-preview) | [cassandraClusters](~/microsoft.documentdb/change-log/cassandraclusters.md#2025-05-01-preview) |
+> | [databaseAccounts/cassandraRoleDefinitions](~/microsoft.documentdb/change-log/databaseaccounts/cassandraroledefinitions.md#2025-05-01-preview) | [databaseAccounts](~/microsoft.documentdb/change-log/databaseaccounts.md#2025-05-01-preview) |
+> | [databaseAccounts/copyJobs](~/microsoft.documentdb/change-log/databaseaccounts/copyjobs.md#2025-05-01-preview) | [databaseAccounts/cassandraKeyspaces](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces.md#2025-05-01-preview) |
+> | [databaseAccounts/gremlinRoleAssignments](~/microsoft.documentdb/change-log/databaseaccounts/gremlinroleassignments.md#2025-05-01-preview) | [databaseAccounts/cassandraKeyspaces/tables](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables.md#2025-05-01-preview) |
+> | [databaseAccounts/gremlinRoleDefinitions](~/microsoft.documentdb/change-log/databaseaccounts/gremlinroledefinitions.md#2025-05-01-preview) | [databaseAccounts/cassandraKeyspaces/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md#2025-05-01-preview) |
+> | [databaseAccounts/mongoMIRoleAssignments](~/microsoft.documentdb/change-log/databaseaccounts/mongomiroleassignments.md#2025-05-01-preview) | [databaseAccounts/cassandraKeyspaces/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/throughputsettings.md#2025-05-01-preview) |
+> | [databaseAccounts/mongoMIRoleDefinitions](~/microsoft.documentdb/change-log/databaseaccounts/mongomiroledefinitions.md#2025-05-01-preview) | [databaseAccounts/gremlinDatabases](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases.md#2025-05-01-preview) |
+> | [fleets](~/microsoft.documentdb/change-log/fleets.md#2025-05-01-preview) | [databaseAccounts/gremlinDatabases/graphs](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs.md#2025-05-01-preview) |
+> | [fleets/fleetAnalytics](~/microsoft.documentdb/change-log/fleets/fleetanalytics.md#2025-05-01-preview) | [databaseAccounts/gremlinDatabases/graphs/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs/throughputsettings.md#2025-05-01-preview) |
+> | [fleets/fleetspaces](~/microsoft.documentdb/change-log/fleets/fleetspaces.md#2025-05-01-preview) | [databaseAccounts/gremlinDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/throughputsettings.md#2025-05-01-preview) |
+> | [fleets/fleetspaces/fleetspaceAccounts](~/microsoft.documentdb/change-log/fleets/fleetspaces/fleetspaceaccounts.md#2025-05-01-preview) | [databaseAccounts/mongodbDatabases](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases.md#2025-05-01-preview) |
+> |  | [databaseAccounts/mongodbDatabases/collections](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections.md#2025-05-01-preview) |
+> |  | [databaseAccounts/mongodbDatabases/collections/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections/throughputsettings.md#2025-05-01-preview) |
+> |  | [databaseAccounts/mongodbDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/throughputsettings.md#2025-05-01-preview) |
+> |  | [databaseAccounts/sqlDatabases](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases.md#2025-05-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers.md#2025-05-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/storedProcedures](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/storedprocedures.md#2025-05-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/throughputsettings.md#2025-05-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/triggers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/triggers.md#2025-05-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/userDefinedFunctions](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md#2025-05-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/throughputsettings.md#2025-05-01-preview) |
+> |  | [databaseAccounts/tables](~/microsoft.documentdb/change-log/databaseaccounts/tables.md#2025-05-01-preview) |
+> |  | [databaseAccounts/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/tables/throughputsettings.md#2025-05-01-preview) |
+
+## 2025-07-01-preview
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> |  | [mongoClusters](~/microsoft.documentdb/change-log/mongoclusters.md#2025-07-01-preview) |
+
+## 2025-08-01-preview
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> |  | [mongoClusters](~/microsoft.documentdb/change-log/mongoclusters.md#2025-08-01-preview) |
+
+## 2025-09-01
+
+No new or updated resource types.
+
+## 2025-10-15
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> |  | [cassandraClusters](~/microsoft.documentdb/change-log/cassandraclusters.md#2025-10-15) |
+> |  | [databaseAccounts](~/microsoft.documentdb/change-log/databaseaccounts.md#2025-10-15) |
+> |  | [databaseAccounts/cassandraKeyspaces](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces.md#2025-10-15) |
+> |  | [databaseAccounts/cassandraKeyspaces/tables](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables.md#2025-10-15) |
+> |  | [databaseAccounts/cassandraKeyspaces/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/cassandraKeyspaces/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/gremlinDatabases](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases.md#2025-10-15) |
+> |  | [databaseAccounts/gremlinDatabases/graphs](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs.md#2025-10-15) |
+> |  | [databaseAccounts/gremlinDatabases/graphs/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/gremlinDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/mongodbDatabases](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases.md#2025-10-15) |
+> |  | [databaseAccounts/mongodbDatabases/collections](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections.md#2025-10-15) |
+> |  | [databaseAccounts/mongodbDatabases/collections/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/mongodbDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/sqlDatabases](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases.md#2025-10-15) |
+> |  | [databaseAccounts/sqlDatabases/containers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers.md#2025-10-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/storedProcedures](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/storedprocedures.md#2025-10-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/triggers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/triggers.md#2025-10-15) |
+> |  | [databaseAccounts/sqlDatabases/containers/userDefinedFunctions](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md#2025-10-15) |
+> |  | [databaseAccounts/sqlDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/throughputsettings.md#2025-10-15) |
+> |  | [databaseAccounts/tables](~/microsoft.documentdb/change-log/databaseaccounts/tables.md#2025-10-15) |
+> |  | [databaseAccounts/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/tables/throughputsettings.md#2025-10-15) |
+> |  | [fleets/fleetspaces](~/microsoft.documentdb/change-log/fleets/fleetspaces.md#2025-10-15) |
+
+## 2025-11-01-preview
+
+> [!div class="mx-tableFixed"]
+> | New | Updated |
+> |-----|---------|
+> | [garnetClusters](~/microsoft.documentdb/change-log/garnetclusters.md#2025-11-01-preview) | [databaseAccounts](~/microsoft.documentdb/change-log/databaseaccounts.md#2025-11-01-preview) |
+> |  | [databaseAccounts/cassandraKeyspaces](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces.md#2025-11-01-preview) |
+> |  | [databaseAccounts/cassandraKeyspaces/tables](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables.md#2025-11-01-preview) |
+> |  | [databaseAccounts/cassandraKeyspaces/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/cassandraKeyspaces/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/cassandraKeyspaces/views/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/cassandrakeyspaces/views/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/gremlinDatabases](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases.md#2025-11-01-preview) |
+> |  | [databaseAccounts/gremlinDatabases/graphs](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs.md#2025-11-01-preview) |
+> |  | [databaseAccounts/gremlinDatabases/graphs/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/graphs/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/gremlinDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/gremlindatabases/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/mongodbDatabases](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases.md#2025-11-01-preview) |
+> |  | [databaseAccounts/mongodbDatabases/collections](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections.md#2025-11-01-preview) |
+> |  | [databaseAccounts/mongodbDatabases/collections/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/collections/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/mongodbDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/mongodbdatabases/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/sqlDatabases](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases.md#2025-11-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers.md#2025-11-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/storedProcedures](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/storedprocedures.md#2025-11-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/triggers](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/triggers.md#2025-11-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/containers/userDefinedFunctions](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md#2025-11-01-preview) |
+> |  | [databaseAccounts/sqlDatabases/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/sqldatabases/throughputsettings.md#2025-11-01-preview) |
+> |  | [databaseAccounts/tables](~/microsoft.documentdb/change-log/databaseaccounts/tables.md#2025-11-01-preview) |
+> |  | [databaseAccounts/tables/throughputSettings](~/microsoft.documentdb/change-log/databaseaccounts/tables/throughputsettings.md#2025-11-01-preview) |
+> |  | [fleets/fleetspaces](~/microsoft.documentdb/change-log/fleets/fleetspaces.md#2025-11-01-preview) |
 

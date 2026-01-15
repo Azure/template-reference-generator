@@ -72,8 +72,14 @@
       items:
       - name: throughputSettings
         href: ./databaseaccounts/cassandrakeyspaces/views/throughputsettings.md
+  - name: cassandraRoleAssignments
+    href: ./databaseaccounts/cassandraroleassignments.md
+  - name: cassandraRoleDefinitions
+    href: ./databaseaccounts/cassandraroledefinitions.md
   - name: chaosFaults
     href: ./databaseaccounts/chaosfaults.md
+  - name: copyJobs
+    href: ./databaseaccounts/copyjobs.md
   - name: dataTransferJobs
     href: ./databaseaccounts/datatransferjobs.md
   - name: graphs
@@ -90,6 +96,10 @@
         href: ./databaseaccounts/gremlindatabases/graphs/throughputsettings.md
     - name: throughputSettings
       href: ./databaseaccounts/gremlindatabases/throughputsettings.md
+  - name: gremlinRoleAssignments
+    href: ./databaseaccounts/gremlinroleassignments.md
+  - name: gremlinRoleDefinitions
+    href: ./databaseaccounts/gremlinroledefinitions.md
   - name: mongodbDatabases
     href: ./databaseaccounts/mongodbdatabases.md
   - name: mongodbDatabases/
@@ -106,6 +116,10 @@
     href: ./databaseaccounts/mongodbroledefinitions.md
   - name: mongodbUserDefinitions
     href: ./databaseaccounts/mongodbuserdefinitions.md
+  - name: mongoMIRoleAssignments
+    href: ./databaseaccounts/mongomiroleassignments.md
+  - name: mongoMIRoleDefinitions
+    href: ./databaseaccounts/mongomiroledefinitions.md
   - name: networkSecurityPerimeterConfigurations
     href: ./databaseaccounts/networksecurityperimeterconfigurations.md
   - name: notebookWorkspaces
@@ -150,6 +164,20 @@
     items:
     - name: throughputSettings
       href: ./databaseaccounts/tables/throughputsettings.md
+- name: fleets
+  href: ./fleets.md
+- name: fleets/
+  items:
+  - name: fleetAnalytics
+    href: ./fleets/fleetanalytics.md
+  - name: fleetspaces
+    href: ./fleets/fleetspaces.md
+  - name: fleetspaces/
+    items:
+    - name: fleetspaceAccounts
+      href: ./fleets/fleetspaces/fleetspaceaccounts.md
+- name: garnetClusters
+  href: ./garnetclusters.md
 - name: locations
   href: ./locations.md
 - name: mongoClusters
@@ -160,6 +188,8 @@
     href: ./mongoclusters/firewallrules.md
   - name: privateEndpointConnections
     href: ./mongoclusters/privateendpointconnections.md
+  - name: users
+    href: ./mongoclusters/users.md
 - name: throughputPools
   href: ./throughputpools.md
 - name: throughputPools/
@@ -168,6 +198,534 @@
     href: ./throughputpools/throughputpoolaccounts.md
 - name: (Api versions)
   items:
+  - name: 2025-11-01-preview
+    items:
+    - name: cassandraClusters
+      href: ./2025-11-01-preview/cassandraclusters.md
+    - name: cassandraClusters/
+      items:
+      - name: dataCenters
+        href: ./2025-11-01-preview/cassandraclusters/datacenters.md
+    - name: databaseAccounts
+      href: ./2025-11-01-preview/databaseaccounts.md
+    - name: databaseAccounts/
+      items:
+      - name: cassandraKeyspaces
+        href: ./2025-11-01-preview/databaseaccounts/cassandrakeyspaces.md
+      - name: cassandraKeyspaces/
+        items:
+        - name: tables
+          href: ./2025-11-01-preview/databaseaccounts/cassandrakeyspaces/tables.md
+        - name: tables/
+          items:
+          - name: throughputSettings
+            href: ./2025-11-01-preview/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-11-01-preview/databaseaccounts/cassandrakeyspaces/throughputsettings.md
+        - name: views
+          href: ./2025-11-01-preview/databaseaccounts/cassandrakeyspaces/views.md
+        - name: views/
+          items:
+          - name: throughputSettings
+            href: ./2025-11-01-preview/databaseaccounts/cassandrakeyspaces/views/throughputsettings.md
+      - name: cassandraRoleAssignments
+        href: ./2025-11-01-preview/databaseaccounts/cassandraroleassignments.md
+      - name: cassandraRoleDefinitions
+        href: ./2025-11-01-preview/databaseaccounts/cassandraroledefinitions.md
+      - name: chaosFaults
+        href: ./2025-11-01-preview/databaseaccounts/chaosfaults.md
+      - name: copyJobs
+        href: ./2025-11-01-preview/databaseaccounts/copyjobs.md
+      - name: dataTransferJobs
+        href: ./2025-11-01-preview/databaseaccounts/datatransferjobs.md
+      - name: graphs
+        href: ./2025-11-01-preview/databaseaccounts/graphs.md
+      - name: gremlinDatabases
+        href: ./2025-11-01-preview/databaseaccounts/gremlindatabases.md
+      - name: gremlinDatabases/
+        items:
+        - name: graphs
+          href: ./2025-11-01-preview/databaseaccounts/gremlindatabases/graphs.md
+        - name: graphs/
+          items:
+          - name: throughputSettings
+            href: ./2025-11-01-preview/databaseaccounts/gremlindatabases/graphs/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-11-01-preview/databaseaccounts/gremlindatabases/throughputsettings.md
+      - name: gremlinRoleAssignments
+        href: ./2025-11-01-preview/databaseaccounts/gremlinroleassignments.md
+      - name: gremlinRoleDefinitions
+        href: ./2025-11-01-preview/databaseaccounts/gremlinroledefinitions.md
+      - name: mongodbDatabases
+        href: ./2025-11-01-preview/databaseaccounts/mongodbdatabases.md
+      - name: mongodbDatabases/
+        items:
+        - name: collections
+          href: ./2025-11-01-preview/databaseaccounts/mongodbdatabases/collections.md
+        - name: collections/
+          items:
+          - name: throughputSettings
+            href: ./2025-11-01-preview/databaseaccounts/mongodbdatabases/collections/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-11-01-preview/databaseaccounts/mongodbdatabases/throughputsettings.md
+      - name: mongodbRoleDefinitions
+        href: ./2025-11-01-preview/databaseaccounts/mongodbroledefinitions.md
+      - name: mongodbUserDefinitions
+        href: ./2025-11-01-preview/databaseaccounts/mongodbuserdefinitions.md
+      - name: mongoMIRoleAssignments
+        href: ./2025-11-01-preview/databaseaccounts/mongomiroleassignments.md
+      - name: mongoMIRoleDefinitions
+        href: ./2025-11-01-preview/databaseaccounts/mongomiroledefinitions.md
+      - name: networkSecurityPerimeterConfigurations
+        href: ./2025-11-01-preview/databaseaccounts/networksecurityperimeterconfigurations.md
+      - name: notebookWorkspaces
+        href: ./2025-11-01-preview/databaseaccounts/notebookworkspaces.md
+      - name: privateEndpointConnections
+        href: ./2025-11-01-preview/databaseaccounts/privateendpointconnections.md
+      - name: privateLinkResources
+        href: ./2025-11-01-preview/databaseaccounts/privatelinkresources.md
+      - name: services
+        href: ./2025-11-01-preview/databaseaccounts/services.md
+      - name: sqlDatabases
+        href: ./2025-11-01-preview/databaseaccounts/sqldatabases.md
+      - name: sqlDatabases/
+        items:
+        - name: clientEncryptionKeys
+          href: ./2025-11-01-preview/databaseaccounts/sqldatabases/clientencryptionkeys.md
+        - name: containers
+          href: ./2025-11-01-preview/databaseaccounts/sqldatabases/containers.md
+        - name: containers/
+          items:
+          - name: storedProcedures
+            href: ./2025-11-01-preview/databaseaccounts/sqldatabases/containers/storedprocedures.md
+          - name: throughputSettings
+            href: ./2025-11-01-preview/databaseaccounts/sqldatabases/containers/throughputsettings.md
+          - name: triggers
+            href: ./2025-11-01-preview/databaseaccounts/sqldatabases/containers/triggers.md
+          - name: userDefinedFunctions
+            href: ./2025-11-01-preview/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md
+        - name: throughputSettings
+          href: ./2025-11-01-preview/databaseaccounts/sqldatabases/throughputsettings.md
+      - name: sqlRoleAssignments
+        href: ./2025-11-01-preview/databaseaccounts/sqlroleassignments.md
+      - name: sqlRoleDefinitions
+        href: ./2025-11-01-preview/databaseaccounts/sqlroledefinitions.md
+      - name: tableRoleAssignments
+        href: ./2025-11-01-preview/databaseaccounts/tableroleassignments.md
+      - name: tableRoleDefinitions
+        href: ./2025-11-01-preview/databaseaccounts/tableroledefinitions.md
+      - name: tables
+        href: ./2025-11-01-preview/databaseaccounts/tables.md
+      - name: tables/
+        items:
+        - name: throughputSettings
+          href: ./2025-11-01-preview/databaseaccounts/tables/throughputsettings.md
+    - name: fleets
+      href: ./2025-11-01-preview/fleets.md
+    - name: fleets/
+      items:
+      - name: fleetAnalytics
+        href: ./2025-11-01-preview/fleets/fleetanalytics.md
+      - name: fleetspaces
+        href: ./2025-11-01-preview/fleets/fleetspaces.md
+      - name: fleetspaces/
+        items:
+        - name: fleetspaceAccounts
+          href: ./2025-11-01-preview/fleets/fleetspaces/fleetspaceaccounts.md
+    - name: garnetClusters
+      href: ./2025-11-01-preview/garnetclusters.md
+    - name: locations
+      href: ./2025-11-01-preview/locations.md
+    - name: throughputPools
+      href: ./2025-11-01-preview/throughputpools.md
+    - name: throughputPools/
+      items:
+      - name: throughputPoolAccounts
+        href: ./2025-11-01-preview/throughputpools/throughputpoolaccounts.md
+  - name: 2025-10-15
+    items:
+    - name: cassandraClusters
+      href: ./2025-10-15/cassandraclusters.md
+    - name: cassandraClusters/
+      items:
+      - name: dataCenters
+        href: ./2025-10-15/cassandraclusters/datacenters.md
+    - name: databaseAccounts
+      href: ./2025-10-15/databaseaccounts.md
+    - name: databaseAccounts/
+      items:
+      - name: cassandraKeyspaces
+        href: ./2025-10-15/databaseaccounts/cassandrakeyspaces.md
+      - name: cassandraKeyspaces/
+        items:
+        - name: tables
+          href: ./2025-10-15/databaseaccounts/cassandrakeyspaces/tables.md
+        - name: tables/
+          items:
+          - name: throughputSettings
+            href: ./2025-10-15/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-10-15/databaseaccounts/cassandrakeyspaces/throughputsettings.md
+      - name: gremlinDatabases
+        href: ./2025-10-15/databaseaccounts/gremlindatabases.md
+      - name: gremlinDatabases/
+        items:
+        - name: graphs
+          href: ./2025-10-15/databaseaccounts/gremlindatabases/graphs.md
+        - name: graphs/
+          items:
+          - name: throughputSettings
+            href: ./2025-10-15/databaseaccounts/gremlindatabases/graphs/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-10-15/databaseaccounts/gremlindatabases/throughputsettings.md
+      - name: mongodbDatabases
+        href: ./2025-10-15/databaseaccounts/mongodbdatabases.md
+      - name: mongodbDatabases/
+        items:
+        - name: collections
+          href: ./2025-10-15/databaseaccounts/mongodbdatabases/collections.md
+        - name: collections/
+          items:
+          - name: throughputSettings
+            href: ./2025-10-15/databaseaccounts/mongodbdatabases/collections/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-10-15/databaseaccounts/mongodbdatabases/throughputsettings.md
+      - name: mongodbRoleDefinitions
+        href: ./2025-10-15/databaseaccounts/mongodbroledefinitions.md
+      - name: mongodbUserDefinitions
+        href: ./2025-10-15/databaseaccounts/mongodbuserdefinitions.md
+      - name: notebookWorkspaces
+        href: ./2025-10-15/databaseaccounts/notebookworkspaces.md
+      - name: privateEndpointConnections
+        href: ./2025-10-15/databaseaccounts/privateendpointconnections.md
+      - name: privateLinkResources
+        href: ./2025-10-15/databaseaccounts/privatelinkresources.md
+      - name: services
+        href: ./2025-10-15/databaseaccounts/services.md
+      - name: sqlDatabases
+        href: ./2025-10-15/databaseaccounts/sqldatabases.md
+      - name: sqlDatabases/
+        items:
+        - name: clientEncryptionKeys
+          href: ./2025-10-15/databaseaccounts/sqldatabases/clientencryptionkeys.md
+        - name: containers
+          href: ./2025-10-15/databaseaccounts/sqldatabases/containers.md
+        - name: containers/
+          items:
+          - name: storedProcedures
+            href: ./2025-10-15/databaseaccounts/sqldatabases/containers/storedprocedures.md
+          - name: throughputSettings
+            href: ./2025-10-15/databaseaccounts/sqldatabases/containers/throughputsettings.md
+          - name: triggers
+            href: ./2025-10-15/databaseaccounts/sqldatabases/containers/triggers.md
+          - name: userDefinedFunctions
+            href: ./2025-10-15/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md
+        - name: throughputSettings
+          href: ./2025-10-15/databaseaccounts/sqldatabases/throughputsettings.md
+      - name: sqlRoleAssignments
+        href: ./2025-10-15/databaseaccounts/sqlroleassignments.md
+      - name: sqlRoleDefinitions
+        href: ./2025-10-15/databaseaccounts/sqlroledefinitions.md
+      - name: tables
+        href: ./2025-10-15/databaseaccounts/tables.md
+      - name: tables/
+        items:
+        - name: throughputSettings
+          href: ./2025-10-15/databaseaccounts/tables/throughputsettings.md
+    - name: fleets
+      href: ./2025-10-15/fleets.md
+    - name: fleets/
+      items:
+      - name: fleetspaces
+        href: ./2025-10-15/fleets/fleetspaces.md
+      - name: fleetspaces/
+        items:
+        - name: fleetspaceAccounts
+          href: ./2025-10-15/fleets/fleetspaces/fleetspaceaccounts.md
+    - name: locations
+      href: ./2025-10-15/locations.md
+  - name: 2025-09-01
+    items:
+    - name: mongoClusters
+      href: ./2025-09-01/mongoclusters.md
+    - name: mongoClusters/
+      items:
+      - name: firewallRules
+        href: ./2025-09-01/mongoclusters/firewallrules.md
+      - name: privateEndpointConnections
+        href: ./2025-09-01/mongoclusters/privateendpointconnections.md
+      - name: users
+        href: ./2025-09-01/mongoclusters/users.md
+  - name: 2025-08-01-preview
+    items:
+    - name: mongoClusters
+      href: ./2025-08-01-preview/mongoclusters.md
+    - name: mongoClusters/
+      items:
+      - name: firewallRules
+        href: ./2025-08-01-preview/mongoclusters/firewallrules.md
+      - name: privateEndpointConnections
+        href: ./2025-08-01-preview/mongoclusters/privateendpointconnections.md
+      - name: users
+        href: ./2025-08-01-preview/mongoclusters/users.md
+  - name: 2025-07-01-preview
+    items:
+    - name: mongoClusters
+      href: ./2025-07-01-preview/mongoclusters.md
+    - name: mongoClusters/
+      items:
+      - name: firewallRules
+        href: ./2025-07-01-preview/mongoclusters/firewallrules.md
+      - name: privateEndpointConnections
+        href: ./2025-07-01-preview/mongoclusters/privateendpointconnections.md
+      - name: users
+        href: ./2025-07-01-preview/mongoclusters/users.md
+  - name: 2025-05-01-preview
+    items:
+    - name: cassandraClusters
+      href: ./2025-05-01-preview/cassandraclusters.md
+    - name: cassandraClusters/
+      items:
+      - name: dataCenters
+        href: ./2025-05-01-preview/cassandraclusters/datacenters.md
+    - name: databaseAccounts
+      href: ./2025-05-01-preview/databaseaccounts.md
+    - name: databaseAccounts/
+      items:
+      - name: cassandraKeyspaces
+        href: ./2025-05-01-preview/databaseaccounts/cassandrakeyspaces.md
+      - name: cassandraKeyspaces/
+        items:
+        - name: tables
+          href: ./2025-05-01-preview/databaseaccounts/cassandrakeyspaces/tables.md
+        - name: tables/
+          items:
+          - name: throughputSettings
+            href: ./2025-05-01-preview/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-05-01-preview/databaseaccounts/cassandrakeyspaces/throughputsettings.md
+        - name: views
+          href: ./2025-05-01-preview/databaseaccounts/cassandrakeyspaces/views.md
+        - name: views/
+          items:
+          - name: throughputSettings
+            href: ./2025-05-01-preview/databaseaccounts/cassandrakeyspaces/views/throughputsettings.md
+      - name: cassandraRoleAssignments
+        href: ./2025-05-01-preview/databaseaccounts/cassandraroleassignments.md
+      - name: cassandraRoleDefinitions
+        href: ./2025-05-01-preview/databaseaccounts/cassandraroledefinitions.md
+      - name: chaosFaults
+        href: ./2025-05-01-preview/databaseaccounts/chaosfaults.md
+      - name: copyJobs
+        href: ./2025-05-01-preview/databaseaccounts/copyjobs.md
+      - name: dataTransferJobs
+        href: ./2025-05-01-preview/databaseaccounts/datatransferjobs.md
+      - name: graphs
+        href: ./2025-05-01-preview/databaseaccounts/graphs.md
+      - name: gremlinDatabases
+        href: ./2025-05-01-preview/databaseaccounts/gremlindatabases.md
+      - name: gremlinDatabases/
+        items:
+        - name: graphs
+          href: ./2025-05-01-preview/databaseaccounts/gremlindatabases/graphs.md
+        - name: graphs/
+          items:
+          - name: throughputSettings
+            href: ./2025-05-01-preview/databaseaccounts/gremlindatabases/graphs/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-05-01-preview/databaseaccounts/gremlindatabases/throughputsettings.md
+      - name: gremlinRoleAssignments
+        href: ./2025-05-01-preview/databaseaccounts/gremlinroleassignments.md
+      - name: gremlinRoleDefinitions
+        href: ./2025-05-01-preview/databaseaccounts/gremlinroledefinitions.md
+      - name: mongodbDatabases
+        href: ./2025-05-01-preview/databaseaccounts/mongodbdatabases.md
+      - name: mongodbDatabases/
+        items:
+        - name: collections
+          href: ./2025-05-01-preview/databaseaccounts/mongodbdatabases/collections.md
+        - name: collections/
+          items:
+          - name: throughputSettings
+            href: ./2025-05-01-preview/databaseaccounts/mongodbdatabases/collections/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-05-01-preview/databaseaccounts/mongodbdatabases/throughputsettings.md
+      - name: mongodbRoleDefinitions
+        href: ./2025-05-01-preview/databaseaccounts/mongodbroledefinitions.md
+      - name: mongodbUserDefinitions
+        href: ./2025-05-01-preview/databaseaccounts/mongodbuserdefinitions.md
+      - name: mongoMIRoleAssignments
+        href: ./2025-05-01-preview/databaseaccounts/mongomiroleassignments.md
+      - name: mongoMIRoleDefinitions
+        href: ./2025-05-01-preview/databaseaccounts/mongomiroledefinitions.md
+      - name: networkSecurityPerimeterConfigurations
+        href: ./2025-05-01-preview/databaseaccounts/networksecurityperimeterconfigurations.md
+      - name: notebookWorkspaces
+        href: ./2025-05-01-preview/databaseaccounts/notebookworkspaces.md
+      - name: privateEndpointConnections
+        href: ./2025-05-01-preview/databaseaccounts/privateendpointconnections.md
+      - name: privateLinkResources
+        href: ./2025-05-01-preview/databaseaccounts/privatelinkresources.md
+      - name: services
+        href: ./2025-05-01-preview/databaseaccounts/services.md
+      - name: sqlDatabases
+        href: ./2025-05-01-preview/databaseaccounts/sqldatabases.md
+      - name: sqlDatabases/
+        items:
+        - name: clientEncryptionKeys
+          href: ./2025-05-01-preview/databaseaccounts/sqldatabases/clientencryptionkeys.md
+        - name: containers
+          href: ./2025-05-01-preview/databaseaccounts/sqldatabases/containers.md
+        - name: containers/
+          items:
+          - name: storedProcedures
+            href: ./2025-05-01-preview/databaseaccounts/sqldatabases/containers/storedprocedures.md
+          - name: throughputSettings
+            href: ./2025-05-01-preview/databaseaccounts/sqldatabases/containers/throughputsettings.md
+          - name: triggers
+            href: ./2025-05-01-preview/databaseaccounts/sqldatabases/containers/triggers.md
+          - name: userDefinedFunctions
+            href: ./2025-05-01-preview/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md
+        - name: throughputSettings
+          href: ./2025-05-01-preview/databaseaccounts/sqldatabases/throughputsettings.md
+      - name: sqlRoleAssignments
+        href: ./2025-05-01-preview/databaseaccounts/sqlroleassignments.md
+      - name: sqlRoleDefinitions
+        href: ./2025-05-01-preview/databaseaccounts/sqlroledefinitions.md
+      - name: tableRoleAssignments
+        href: ./2025-05-01-preview/databaseaccounts/tableroleassignments.md
+      - name: tableRoleDefinitions
+        href: ./2025-05-01-preview/databaseaccounts/tableroledefinitions.md
+      - name: tables
+        href: ./2025-05-01-preview/databaseaccounts/tables.md
+      - name: tables/
+        items:
+        - name: throughputSettings
+          href: ./2025-05-01-preview/databaseaccounts/tables/throughputsettings.md
+    - name: fleets
+      href: ./2025-05-01-preview/fleets.md
+    - name: fleets/
+      items:
+      - name: fleetAnalytics
+        href: ./2025-05-01-preview/fleets/fleetanalytics.md
+      - name: fleetspaces
+        href: ./2025-05-01-preview/fleets/fleetspaces.md
+      - name: fleetspaces/
+        items:
+        - name: fleetspaceAccounts
+          href: ./2025-05-01-preview/fleets/fleetspaces/fleetspaceaccounts.md
+    - name: locations
+      href: ./2025-05-01-preview/locations.md
+    - name: throughputPools
+      href: ./2025-05-01-preview/throughputpools.md
+    - name: throughputPools/
+      items:
+      - name: throughputPoolAccounts
+        href: ./2025-05-01-preview/throughputpools/throughputpoolaccounts.md
+  - name: 2025-04-15
+    items:
+    - name: cassandraClusters
+      href: ./2025-04-15/cassandraclusters.md
+    - name: cassandraClusters/
+      items:
+      - name: dataCenters
+        href: ./2025-04-15/cassandraclusters/datacenters.md
+    - name: databaseAccounts
+      href: ./2025-04-15/databaseaccounts.md
+    - name: databaseAccounts/
+      items:
+      - name: cassandraKeyspaces
+        href: ./2025-04-15/databaseaccounts/cassandrakeyspaces.md
+      - name: cassandraKeyspaces/
+        items:
+        - name: tables
+          href: ./2025-04-15/databaseaccounts/cassandrakeyspaces/tables.md
+        - name: tables/
+          items:
+          - name: throughputSettings
+            href: ./2025-04-15/databaseaccounts/cassandrakeyspaces/tables/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-04-15/databaseaccounts/cassandrakeyspaces/throughputsettings.md
+      - name: gremlinDatabases
+        href: ./2025-04-15/databaseaccounts/gremlindatabases.md
+      - name: gremlinDatabases/
+        items:
+        - name: graphs
+          href: ./2025-04-15/databaseaccounts/gremlindatabases/graphs.md
+        - name: graphs/
+          items:
+          - name: throughputSettings
+            href: ./2025-04-15/databaseaccounts/gremlindatabases/graphs/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-04-15/databaseaccounts/gremlindatabases/throughputsettings.md
+      - name: mongodbDatabases
+        href: ./2025-04-15/databaseaccounts/mongodbdatabases.md
+      - name: mongodbDatabases/
+        items:
+        - name: collections
+          href: ./2025-04-15/databaseaccounts/mongodbdatabases/collections.md
+        - name: collections/
+          items:
+          - name: throughputSettings
+            href: ./2025-04-15/databaseaccounts/mongodbdatabases/collections/throughputsettings.md
+        - name: throughputSettings
+          href: ./2025-04-15/databaseaccounts/mongodbdatabases/throughputsettings.md
+      - name: mongodbRoleDefinitions
+        href: ./2025-04-15/databaseaccounts/mongodbroledefinitions.md
+      - name: mongodbUserDefinitions
+        href: ./2025-04-15/databaseaccounts/mongodbuserdefinitions.md
+      - name: notebookWorkspaces
+        href: ./2025-04-15/databaseaccounts/notebookworkspaces.md
+      - name: privateEndpointConnections
+        href: ./2025-04-15/databaseaccounts/privateendpointconnections.md
+      - name: privateLinkResources
+        href: ./2025-04-15/databaseaccounts/privatelinkresources.md
+      - name: services
+        href: ./2025-04-15/databaseaccounts/services.md
+      - name: sqlDatabases
+        href: ./2025-04-15/databaseaccounts/sqldatabases.md
+      - name: sqlDatabases/
+        items:
+        - name: clientEncryptionKeys
+          href: ./2025-04-15/databaseaccounts/sqldatabases/clientencryptionkeys.md
+        - name: containers
+          href: ./2025-04-15/databaseaccounts/sqldatabases/containers.md
+        - name: containers/
+          items:
+          - name: storedProcedures
+            href: ./2025-04-15/databaseaccounts/sqldatabases/containers/storedprocedures.md
+          - name: throughputSettings
+            href: ./2025-04-15/databaseaccounts/sqldatabases/containers/throughputsettings.md
+          - name: triggers
+            href: ./2025-04-15/databaseaccounts/sqldatabases/containers/triggers.md
+          - name: userDefinedFunctions
+            href: ./2025-04-15/databaseaccounts/sqldatabases/containers/userdefinedfunctions.md
+        - name: throughputSettings
+          href: ./2025-04-15/databaseaccounts/sqldatabases/throughputsettings.md
+      - name: sqlRoleAssignments
+        href: ./2025-04-15/databaseaccounts/sqlroleassignments.md
+      - name: sqlRoleDefinitions
+        href: ./2025-04-15/databaseaccounts/sqlroledefinitions.md
+      - name: tables
+        href: ./2025-04-15/databaseaccounts/tables.md
+      - name: tables/
+        items:
+        - name: throughputSettings
+          href: ./2025-04-15/databaseaccounts/tables/throughputsettings.md
+    - name: locations
+      href: ./2025-04-15/locations.md
+  - name: 2025-04-01-preview
+    items:
+    - name: mongoClusters
+      href: ./2025-04-01-preview/mongoclusters.md
+    - name: mongoClusters/
+      items:
+      - name: firewallRules
+        href: ./2025-04-01-preview/mongoclusters/firewallrules.md
+      - name: privateEndpointConnections
+        href: ./2025-04-01-preview/mongoclusters/privateendpointconnections.md
+      - name: users
+        href: ./2025-04-01-preview/mongoclusters/users.md
   - name: 2024-12-01-preview
     items:
     - name: cassandraClusters
@@ -376,6 +934,16 @@
           href: ./2024-11-15/databaseaccounts/tables/throughputsettings.md
     - name: locations
       href: ./2024-11-15/locations.md
+  - name: 2024-10-01-preview
+    items:
+    - name: mongoClusters
+      href: ./2024-10-01-preview/mongoclusters.md
+    - name: mongoClusters/
+      items:
+      - name: firewallRules
+        href: ./2024-10-01-preview/mongoclusters/firewallrules.md
+      - name: privateEndpointConnections
+        href: ./2024-10-01-preview/mongoclusters/privateendpointconnections.md
   - name: 2024-09-01-preview
     items:
     - name: cassandraClusters

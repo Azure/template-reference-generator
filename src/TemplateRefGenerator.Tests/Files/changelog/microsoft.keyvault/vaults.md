@@ -8,6 +8,18 @@ ms.topic: reference
 
 This article describes the properties that changed in each API version for [microsoft.keyvault/vaults](~/microsoft.keyvault/vaults.md). It only covers properties that are available during deployments.
 
+## 2025-05-01
+
+No properties added, updated or removed.
+
+## 2024-12-01-preview
+
+No properties added, updated or removed.
+
+## 2024-11-01
+
+No properties added, updated or removed.
+
 ## 2024-04-01-preview
 
 No properties added, updated or removed.

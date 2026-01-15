@@ -9,6 +9,8 @@ ms.topic: reference
 
 > [!div class="op_single_selector" title1="API Versions:"]
 > - [Latest](../exports.md)
+> - [2025-03-01](../2025-03-01/exports.md)
+> - [2024-10-01-preview](../2024-10-01-preview/exports.md)
 > - [2024-08-01](../2024-08-01/exports.md)
 > - [2023-11-01](../2023-11-01/exports.md)
 > - [2023-09-01](../2023-09-01/exports.md)
@@ -33,7 +35,7 @@ ms.topic: reference
 
 The exports resource type can be deployed with operations that target: 
 
-
+* **Tenant** - See [tenant deployment commands](/azure/azure-resource-manager/bicep/deploy-to-tenant)* **Management groups** - See [management group deployment commands](/azure/azure-resource-manager/bicep/deploy-to-management-group)* **Subscription** - See [subscription deployment commands](/azure/azure-resource-manager/bicep/deploy-to-subscription)* **Resource groups** - See [resource group deployment commands](/azure/azure-resource-manager/bicep/deploy-to-resource-group)
 
 For a list of changed properties in each API version, see [change log](~/microsoft.costmanagement/change-log/exports.md).
 
@@ -255,7 +257,7 @@ resource symbolicname 'Microsoft.CostManagement/exports@2019-01-01' = {
 
 The exports resource type can be deployed with operations that target: 
 
-
+* **Tenant** - See [tenant deployment commands](/azure/azure-resource-manager/templates/deploy-to-tenant)* **Management groups** - See [management group deployment commands](/azure/azure-resource-manager/templates/deploy-to-management-group)* **Subscription** - See [subscription deployment commands](/azure/azure-resource-manager/templates/deploy-to-subscription)* **Resource groups** - See [resource group deployment commands](/azure/azure-resource-manager/templates/deploy-to-resource-group)
 
 For a list of changed properties in each API version, see [change log](~/microsoft.costmanagement/change-log/exports.md).
 
@@ -474,7 +476,7 @@ To create a Microsoft.CostManagement/exports resource, add the following JSON to
 
 The exports resource type can be deployed with operations that target: 
 
-
+* **Tenant*** **Management groups*** **Subscription*** **Resource groups**
 
 For a list of changed properties in each API version, see [change log](~/microsoft.costmanagement/change-log/exports.md).
 

@@ -9,6 +9,9 @@ ms.topic: reference
 
 > [!div class="op_single_selector" title1="API Versions:"]
 > - [Latest](../vaults.md)
+> - [2025-05-01](../2025-05-01/vaults.md)
+> - [2024-12-01-preview](../2024-12-01-preview/vaults.md)
+> - [2024-11-01](../2024-11-01/vaults.md)
 > - [2024-04-01-preview](../2024-04-01-preview/vaults.md)
 > - [2023-07-01](../2023-07-01/vaults.md)
 > - [2023-02-01](../2023-02-01/vaults.md)

@@ -117,8 +117,7 @@ public class CodeSampleGenerator
                     {
                         AddProperty("parent", () => sb.Append($"resourceSymbolicName"));
                     }
-                    else if (resource.Type.ScopeType == ScopeType.Unknown ||
-                        resource.Type.ScopeType.HasFlag(ScopeType.Extension))
+                    else if (Utils.HasWritableScope(resource.Type, ScopeType.Extension))
                     {
                         AddProperty("scope", () => sb.Append($"resourceSymbolicName or scope"));
                     }
