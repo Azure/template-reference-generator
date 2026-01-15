@@ -36,14 +36,14 @@ Run `dotnet build` to build this project.
 After building the .NET solution, you can use the CLI by running:
 
 ```sh
-./src/TemplateRefGenerator/bin/Debug/net9.0/TemplateRefGenerator
+./src/TemplateRefGenerator/bin/Debug/net10.0/TemplateRefGenerator
 ```
 
 If you run this command without supplying any arguments, you will see a help message giving information on the supported arguments.
 
 Here's an example of how you can run the CLI tool:
 ```sh
-src/TemplateRefGenerator/bin/Debug/net9.0/TemplateRefGenerator --source-folder ../bicep-types-az/generated --output-folder ./generated
+src/TemplateRefGenerator/bin/Debug/net10.0/TemplateRefGenerator --source-folder ../bicep-types-az/generated --output-folder ./generated
 ```
 
 To get detailed logging, use the `--verbose` flag.

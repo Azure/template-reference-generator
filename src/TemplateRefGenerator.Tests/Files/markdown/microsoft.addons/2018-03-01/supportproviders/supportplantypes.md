@@ -39,7 +39,7 @@ resource symbolicname 'Microsoft.Addons/supportProviders/supportPlanTypes@2018-0
 | Name | Description | Value |
 | ---- | ----------- | ------------ |
 | name | The resource name | 'Advanced'<br />'Essential'<br />'Standard' (required) |
-| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.<br /><br />For more information, see [Child resource outside parent resource](/azure/azure-resource-manager/bicep/child-resource-name-type#outside-parent-resource). | Symbolic name for resource of type: [supportProviders](~/microsoft.addons/supportproviders.md) |
+| parent | In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.<br /><br />For more information, see [Child resource outside parent resource](/azure/azure-resource-manager/bicep/child-resource-name-type#outside-parent-resource). | Symbolic name for resource of type: supportProviders |
 
 
 ::: zone-end
@@ -105,7 +105,7 @@ resource "azapi_resource" "symbolicname" {
 | Name | Description | Value |
 | ---- | ----------- | ------------ |
 | name | The resource name | 'Advanced'<br />'Essential'<br />'Standard' (required) |
-| parent_id | The ID of the resource that is the parent for this resource. | ID for resource of type: [supportProviders](~/microsoft.addons/supportproviders.md) |
+| parent_id | The ID of the resource that is the parent for this resource. | ID for resource of type: supportProviders |
 | type | The resource type | "Microsoft.Addons/supportProviders/supportPlanTypes@2018-03-01" |
 
 
