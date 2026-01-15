@@ -38,6 +38,10 @@ public class MarkdownGenerator
                 .SelectMany(x => x.Value.Select(y => (type: y, version: x.Key)))
                 .GroupBy(x => x.type, x => x.version, StringComparer.OrdinalIgnoreCase)
                 .ToDictionary(x => x.Key, x => x.ToImmutableArray(), StringComparer.OrdinalIgnoreCase);
+
+        public bool HasType(string resourceType, string apiVersion)
+            => ResourceTypeByApiVersion.TryGetValue(apiVersion, out var types)
+            && types.Contains(resourceType, StringComparer.OrdinalIgnoreCase);
     }
 
     public record GenerateResult(
@@ -49,7 +53,9 @@ public class MarkdownGenerator
         string ResourceType,
         string UnqualifiedResourceType,
         string ApiVersion,
-        ResourceType Type);
+        ResourceType Type,
+        bool IsChildResource,
+        bool IsParentTypeAvailable);
 
     public record NamedType(string Name, TypeBase Type);
 
@@ -171,7 +177,7 @@ ms.topic: reference
         sb.Append($"""
 ### Azure Quickstart Samples
 
-The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep samples for deploying this resource type.
+The following {MarkdownUtils.GetLink("Azure Quickstart templates", "https://aka.ms/azqst")} contain Bicep samples for deploying this resource type.
 
 > [!div class="mx-tableFixed"]
 > | Bicep File | Description |
@@ -209,7 +215,7 @@ The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep s
         sb.Append($"""
 ### Azure Quickstart Templates
 
-The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this resource type.
+The following {MarkdownUtils.GetLink("Azure Quickstart templates", "https://aka.ms/azqst")} deploy this resource type.
 
 > [!div class="mx-tableFixed"]
 > | Template | Description |
@@ -250,7 +256,7 @@ The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this res
         sb.Append($"""
 ### Azure Verified Modules
 
-The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
+The following {MarkdownUtils.GetLink("Azure Verified Modules", "https://aka.ms/avm")} can be used to deploy this resource type.
 
 > [!div class="mx-tableFixed"]
 > | Module | Description |
@@ -288,28 +294,28 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
         if (resource.Type.ScopeType.HasFlag(ScopeType.Tenant))
         {
                     sb.Append($"""
-* **Tenant** - See [tenant deployment commands](/azure/azure-resource-manager/bicep/deploy-to-tenant)
+* **Tenant** - See {MarkdownUtils.GetLink("tenant deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-tenant")}
 """);
         }
 
         if (resource.Type.ScopeType.HasFlag(ScopeType.ManagementGroup))
         {
                     sb.Append($"""
-* **Management groups** - See [management group deployment commands](/azure/azure-resource-manager/bicep/deploy-to-management-group)
+* **Management groups** - See {MarkdownUtils.GetLink("management group deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-management-group")}
 """);
         }
 
         if (resource.Type.ScopeType.HasFlag(ScopeType.Subscription))
         {
                     sb.Append($"""
-* **Subscription** - See [subscription deployment commands](/azure/azure-resource-manager/bicep/deploy-to-subscription)
+* **Subscription** - See {MarkdownUtils.GetLink("subscription deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-subscription")}
 """);
         }
 
         if (resource.Type.ScopeType.HasFlag(ScopeType.ResourceGroup))
         {
                     sb.Append($"""
-* **Resource groups** - See [resource group deployment commands](/azure/azure-resource-manager/bicep/deploy-to-resource-group)
+* **Resource groups** - See {MarkdownUtils.GetLink("resource group deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-resource-group")}
 """);
         }
 
@@ -318,7 +324,7 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
         sb.Append($"""
 
 
-For a list of changed properties in each API version, see [change log](~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md).
+For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
 ## Resource format
 
@@ -417,28 +423,28 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
         if (resource.Type.ScopeType.HasFlag(ScopeType.Tenant))
         {
                     sb.Append($"""
-* **Tenant** - See [tenant deployment commands](/azure/azure-resource-manager/templates/deploy-to-tenant)
+* **Tenant** - See {MarkdownUtils.GetLink("tenant deployment commands", "/azure/azure-resource-manager/templates/deploy-to-tenant")}
 """);
         }
 
         if (resource.Type.ScopeType.HasFlag(ScopeType.ManagementGroup))
         {
                     sb.Append($"""
-* **Management groups** - See [management group deployment commands](/azure/azure-resource-manager/templates/deploy-to-management-group)
+* **Management groups** - See {MarkdownUtils.GetLink("management group deployment commands", "/azure/azure-resource-manager/templates/deploy-to-management-group")}
 """);
         }
 
         if (resource.Type.ScopeType.HasFlag(ScopeType.Subscription))
         {
                     sb.Append($"""
-* **Subscription** - See [subscription deployment commands](/azure/azure-resource-manager/templates/deploy-to-subscription)
+* **Subscription** - See {MarkdownUtils.GetLink("subscription deployment commands", "/azure/azure-resource-manager/templates/deploy-to-subscription")}
 """);
         }
 
         if (resource.Type.ScopeType.HasFlag(ScopeType.ResourceGroup))
         {
                     sb.Append($"""
-* **Resource groups** - See [resource group deployment commands](/azure/azure-resource-manager/templates/deploy-to-resource-group)
+* **Resource groups** - See {MarkdownUtils.GetLink("resource group deployment commands", "/azure/azure-resource-manager/templates/deploy-to-resource-group")}
 """);
         }
 
@@ -447,7 +453,7 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
         sb.Append($"""
 
 
-For a list of changed properties in each API version, see [change log](~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md).
+For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
 ## Resource format
 
@@ -548,7 +554,7 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
         sb.Append($"""
 
 
-For a list of changed properties in each API version, see [change log](~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md).
+For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
 ## Resource format
 
@@ -855,8 +861,8 @@ For **{discSample.DiscriminatorValue}**, use:
 
                         yield return new(
                             "parent",
-                            $"In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.{Br}{Br}For more information, see [Child resource outside parent resource](/azure/azure-resource-manager/bicep/child-resource-name-type#outside-parent-resource).",
-                            $"Symbolic name for resource of type: [{parentTypeUnqualified}](~/{parentType.ToLowerInvariant()}.md)");
+                            $"In Bicep, you can specify the parent resource for a child resource. You only need to add this property when the child resource is declared outside of the parent resource.{Br}{Br}For more information, see {MarkdownUtils.GetLink("Child resource outside parent resource", "/azure/azure-resource-manager/bicep/child-resource-name-type#outside-parent-resource")}.",
+                            $"Symbolic name for resource of type: {GetParentResourceNameWithOptionalLink(resource)}");
                     }
                     else if (resource.Type.ScopeType == ScopeType.Unknown ||
                         resource.Type.ScopeType.HasFlag(ScopeType.Extension))
@@ -864,7 +870,7 @@ For **{discSample.DiscriminatorValue}**, use:
                         yield return new(
                             "scope",
                             "Use when creating a resource at a scope that is different than the deployment scope.",
-                            "Set this property to the symbolic name of a resource to apply the [extension resource](/azure/azure-resource-manager/bicep/scope-extension-resources).");
+                            $"Set this property to the symbolic name of a resource to apply the {MarkdownUtils.GetLink("extension resource", "/azure/azure-resource-manager/bicep/scope-extension-resources")}.");
                     }
                     break;
                 case DeploymentType.Terraform:
@@ -876,7 +882,7 @@ For **{discSample.DiscriminatorValue}**, use:
                         yield return new(
                             "parent_id",
                             $"The ID of the resource that is the parent for this resource.",
-                            $"ID for resource of type: [{parentTypeUnqualified}](~/{parentType.ToLowerInvariant()}.md)");
+                            $"ID for resource of type: {GetParentResourceNameWithOptionalLink(resource)}");
                     }
                     else if (resource.Type.ScopeType == ScopeType.Unknown ||
                         resource.Type.ScopeType.HasFlag(ScopeType.Extension))
@@ -910,7 +916,7 @@ For **{discSample.DiscriminatorValue}**, use:
             if (isResourceType && propName == "tags")
             {
                 var tagsType = deploymentType != DeploymentType.Terraform ?
-                    "Dictionary of tag names and values. See [Tags in templates](/azure/azure-resource-manager/management/tag-resources#arm-templates)" :
+                    $"Dictionary of tag names and values. See {MarkdownUtils.GetLink("Tags in templates", "/azure/azure-resource-manager/management/tag-resources#arm-templates")}" :
                     "Dictionary of tag names and values.";
 
                 yield return new(
@@ -1016,13 +1022,17 @@ For **{discSample.DiscriminatorValue}**, use:
         var apiVersion = resourceType.Name.Split('@')[1];
         var providerNamespace = Utils.GetProviderNamespace(resourceTypeName);
         var unqualifiedResourceType = Utils.GetUnqualifiedType(resourceTypeName);
+        var isChildResource = Utils.IsChildResource(unqualifiedResourceType);
+        var isParentTypeAvailable = isChildResource && groupedTypes.HasType(Utils.GetParentResource(resourceTypeName), apiVersion);
 
         var resource = new ResourceMetadata(
             Provider: providerNamespace,
             ResourceType: resourceTypeName,
             UnqualifiedResourceType: unqualifiedResourceType,
             ApiVersion: apiVersion,
-            Type: resourceType);
+            Type: resourceType,
+            IsChildResource: isChildResource,
+            IsParentTypeAvailable: isParentTypeAvailable);
 
         var namedTypes = GetNamedTypes(resource);
         var remarks = remarksLoader.GetRemarks(providerNamespace);
@@ -1038,5 +1048,20 @@ For **{discSample.DiscriminatorValue}**, use:
 {GetArmTemplateZone(configLoader, resource, namedTypes, remarks, 1)}
 {GetTerraformZone(configLoader, remarksLoader, resource, namedTypes, remarks, 2)}
 """;
+    }
+
+    private static string GetParentResourceNameWithOptionalLink(ResourceMetadata resource)
+    {
+        if (!resource.IsChildResource)
+        {
+            throw new InvalidOperationException($"Resource {resource.ResourceType} is not a child resource");
+        }
+
+        var parentType = Utils.GetParentResource(resource.ResourceType);
+        var parentTypeUnqualified = Utils.GetParentResource(resource.UnqualifiedResourceType);
+
+        return resource.IsParentTypeAvailable ?
+            MarkdownUtils.GetLink(parentTypeUnqualified, $"~/{parentType.ToLowerInvariant()}.md") :
+            parentTypeUnqualified;
     }
 }
