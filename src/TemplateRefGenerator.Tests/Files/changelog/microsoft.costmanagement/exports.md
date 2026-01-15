@@ -8,6 +8,40 @@ ms.topic: reference
 
 This article describes the properties that changed in each API version for [microsoft.costmanagement/exports](~/microsoft.costmanagement/exports.md). It only covers properties that are available during deployments.
 
+## 2025-03-01
+
+Removed:
+
+* FabricLakehouse
+* FabricWorkspace
+* MicrosoftFabricDestinationSettings
+
+Updated:
+
+* [ExportDeliveryDestination](~/microsoft.costmanagement/2025-03-01/exports.md#exportdeliverydestination): Removed property 'microsoftFabricSettings'
+
+
+## 2024-10-01-preview
+
+Added:
+
+* [FabricLakehouse](~/microsoft.costmanagement/2024-10-01-preview/exports.md#fabriclakehouse)
+* [FabricWorkspace](~/microsoft.costmanagement/2024-10-01-preview/exports.md#fabricworkspace)
+* [FilterItems](~/microsoft.costmanagement/2024-10-01-preview/exports.md#filteritems)
+* [MicrosoftFabricDestinationSettings](~/microsoft.costmanagement/2024-10-01-preview/exports.md#microsoftfabricdestinationsettings)
+
+Updated:
+
+* [ExportDatasetConfiguration](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportdatasetconfiguration): Added property 'dataVersion'
+* [ExportDatasetConfiguration](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportdatasetconfiguration): Added property 'filters'
+* [ExportDeliveryDestination](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportdeliverydestination): Added property 'microsoftFabricSettings'
+* [ExportDeliveryDestination](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportdeliverydestination): Added property 'type'
+* [ExportProperties](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportproperties): Added property 'compressionMode'
+* [ExportProperties](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportproperties): Added property 'dataOverwriteBehavior'
+* [ExportProperties](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportproperties): Added property 'exportDescription'
+* [ExportProperties](~/microsoft.costmanagement/2024-10-01-preview/exports.md#exportproperties): Added property 'systemSuspensionContext'
+
+
 ## 2024-08-01
 
 No properties added, updated or removed.

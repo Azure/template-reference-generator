@@ -9,6 +9,7 @@ ms.topic: reference
 
 > [!div class="op_single_selector" title1="API Versions:"]
 > - [Latest](../disks.md)
+> - [2025-01-02](../2025-01-02/disks.md)
 > - [2024-03-02](../2024-03-02/disks.md)
 > - [2023-10-02](../2023-10-02/disks.md)
 > - [2023-04-02](../2023-04-02/disks.md)
@@ -153,7 +154,7 @@ resource symbolicname 'Microsoft.Compute/disks@2024-03-02' = {
 | Name | Description | Value |
 | ---- | ----------- | ------------ |
 | extendedLocation | The extended location where the disk will be created. Extended location cannot be changed. | [ExtendedLocation](#extendedlocation) |
-| location | Resource location | string (required) |
+| location | The geo-location where the resource lives | string (required) |
 | name | The resource name | string (required) |
 | properties | Disk resource properties. | [DiskProperties](#diskproperties) |
 | sku | The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. | [DiskSku](#disksku) |
@@ -199,11 +200,20 @@ resource symbolicname 'Microsoft.Compute/disks@2024-03-02' = {
 | optimizedForFrequentAttach | Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. | bool |
 | osType | The Operating System type. | 'Linux'<br />'Windows' |
 | publicNetworkAccess | Policy for controlling export on the disk. | 'Disabled'<br />'Enabled' |
-| purchasePlan | Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer} | [PurchasePlan](#purchaseplan) |
+| purchasePlan | Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer} | [DiskPurchasePlan](#diskpurchaseplan) |
 | securityProfile | Contains the security related information for the resource. | [DiskSecurityProfile](#disksecurityprofile) |
 | supportedCapabilities | List of supported capabilities for the image from which the OS disk was created. | [SupportedCapabilities](#supportedcapabilities) |
 | supportsHibernation | Indicates the OS on a disk supports hibernation. | bool |
 | tier | Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. | string |
+
+### DiskPurchasePlan
+
+| Name | Description | Value |
+| ---- | ----------- | ------------ |
+| name | The plan ID. | string (required) |
+| product | Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. | string (required) |
+| promotionCode | The Offer Promotion Code. | string |
+| publisher | The publisher ID. | string (required) |
 
 ### DiskSecurityProfile
 
@@ -270,20 +280,6 @@ resource symbolicname 'Microsoft.Compute/disks@2024-03-02' = {
 | secretUrl | Url pointing to a key or secret in KeyVault | string (required) |
 | sourceVault | Resource id of the KeyVault containing the key or secret | [SourceVault](#sourcevault) (required) |
 
-### PurchasePlan
-
-| Name | Description | Value |
-| ---- | ----------- | ------------ |
-| name | The plan ID. | string (required) |
-| product | Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. | string (required) |
-| promotionCode | The Offer Promotion Code. | string |
-| publisher | The publisher ID. | string (required) |
-
-### ResourceTags
-
-| Name | Description | Value |
-| ---- | ----------- | ------------ |
-
 ### SourceVault
 
 | Name | Description | Value |
@@ -297,6 +293,11 @@ resource symbolicname 'Microsoft.Compute/disks@2024-03-02' = {
 | acceleratedNetwork | True if the image from which the OS disk is created supports accelerated networking. | bool |
 | architecture | CPU architecture supported by an OS disk. | 'Arm64'<br />'x64' |
 | diskControllerTypes | The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. | string |
+
+### TrackedResourceTags
+
+| Name | Description | Value |
+| ---- | ----------- | ------------ |
 
 ## Usage Examples
 ### Azure Verified Modules
@@ -444,7 +445,7 @@ To create a Microsoft.Compute/disks resource, add the following JSON to your tem
 | ---- | ----------- | ------------ |
 | apiVersion | The api version | '2024-03-02' |
 | extendedLocation | The extended location where the disk will be created. Extended location cannot be changed. | [ExtendedLocation](#extendedlocation-1) |
-| location | Resource location | string (required) |
+| location | The geo-location where the resource lives | string (required) |
 | name | The resource name | string (required) |
 | properties | Disk resource properties. | [DiskProperties](#diskproperties-1) |
 | sku | The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. | [DiskSku](#disksku-1) |
@@ -491,11 +492,20 @@ To create a Microsoft.Compute/disks resource, add the following JSON to your tem
 | optimizedForFrequentAttach | Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. | bool |
 | osType | The Operating System type. | 'Linux'<br />'Windows' |
 | publicNetworkAccess | Policy for controlling export on the disk. | 'Disabled'<br />'Enabled' |
-| purchasePlan | Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer} | [PurchasePlan](#purchaseplan-1) |
+| purchasePlan | Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer} | [DiskPurchasePlan](#diskpurchaseplan-1) |
 | securityProfile | Contains the security related information for the resource. | [DiskSecurityProfile](#disksecurityprofile-1) |
 | supportedCapabilities | List of supported capabilities for the image from which the OS disk was created. | [SupportedCapabilities](#supportedcapabilities-1) |
 | supportsHibernation | Indicates the OS on a disk supports hibernation. | bool |
 | tier | Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. | string |
+
+### DiskPurchasePlan
+
+| Name | Description | Value |
+| ---- | ----------- | ------------ |
+| name | The plan ID. | string (required) |
+| product | Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. | string (required) |
+| promotionCode | The Offer Promotion Code. | string |
+| publisher | The publisher ID. | string (required) |
 
 ### DiskSecurityProfile
 
@@ -562,20 +572,6 @@ To create a Microsoft.Compute/disks resource, add the following JSON to your tem
 | secretUrl | Url pointing to a key or secret in KeyVault | string (required) |
 | sourceVault | Resource id of the KeyVault containing the key or secret | [SourceVault](#sourcevault-1) (required) |
 
-### PurchasePlan
-
-| Name | Description | Value |
-| ---- | ----------- | ------------ |
-| name | The plan ID. | string (required) |
-| product | Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. | string (required) |
-| promotionCode | The Offer Promotion Code. | string |
-| publisher | The publisher ID. | string (required) |
-
-### ResourceTags
-
-| Name | Description | Value |
-| ---- | ----------- | ------------ |
-
 ### SourceVault
 
 | Name | Description | Value |
@@ -589,6 +585,11 @@ To create a Microsoft.Compute/disks resource, add the following JSON to your tem
 | acceleratedNetwork | True if the image from which the OS disk is created supports accelerated networking. | bool |
 | architecture | CPU architecture supported by an OS disk. | 'Arm64'<br />'x64' |
 | diskControllerTypes | The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. | string |
+
+### TrackedResourceTags
+
+| Name | Description | Value |
+| ---- | ----------- | ------------ |
 
 ## Usage Examples
 ### Azure Quickstart Templates
@@ -736,7 +737,7 @@ resource "azapi_resource" "symbolicname" {
 | Name | Description | Value |
 | ---- | ----------- | ------------ |
 | extendedLocation | The extended location where the disk will be created. Extended location cannot be changed. | [ExtendedLocation](#extendedlocation-2) |
-| location | Resource location | string (required) |
+| location | The geo-location where the resource lives | string (required) |
 | name | The resource name | string (required) |
 | properties | Disk resource properties. | [DiskProperties](#diskproperties-2) |
 | sku | The disks sku name. Can be Standard_LRS, Premium_LRS, StandardSSD_LRS, UltraSSD_LRS, Premium_ZRS, StandardSSD_ZRS, or PremiumV2_LRS. | [DiskSku](#disksku-2) |
@@ -783,11 +784,20 @@ resource "azapi_resource" "symbolicname" {
 | optimizedForFrequentAttach | Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) by detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. | bool |
 | osType | The Operating System type. | 'Linux'<br />'Windows' |
 | publicNetworkAccess | Policy for controlling export on the disk. | 'Disabled'<br />'Enabled' |
-| purchasePlan | Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer} | [PurchasePlan](#purchaseplan-2) |
+| purchasePlan | Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer} | [DiskPurchasePlan](#diskpurchaseplan-2) |
 | securityProfile | Contains the security related information for the resource. | [DiskSecurityProfile](#disksecurityprofile-2) |
 | supportedCapabilities | List of supported capabilities for the image from which the OS disk was created. | [SupportedCapabilities](#supportedcapabilities-2) |
 | supportsHibernation | Indicates the OS on a disk supports hibernation. | bool |
 | tier | Performance tier of the disk (e.g, P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. | string |
+
+### DiskPurchasePlan
+
+| Name | Description | Value |
+| ---- | ----------- | ------------ |
+| name | The plan ID. | string (required) |
+| product | Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. | string (required) |
+| promotionCode | The Offer Promotion Code. | string |
+| publisher | The publisher ID. | string (required) |
 
 ### DiskSecurityProfile
 
@@ -854,20 +864,6 @@ resource "azapi_resource" "symbolicname" {
 | secretUrl | Url pointing to a key or secret in KeyVault | string (required) |
 | sourceVault | Resource id of the KeyVault containing the key or secret | [SourceVault](#sourcevault-2) (required) |
 
-### PurchasePlan
-
-| Name | Description | Value |
-| ---- | ----------- | ------------ |
-| name | The plan ID. | string (required) |
-| product | Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. | string (required) |
-| promotionCode | The Offer Promotion Code. | string |
-| publisher | The publisher ID. | string (required) |
-
-### ResourceTags
-
-| Name | Description | Value |
-| ---- | ----------- | ------------ |
-
 ### SourceVault
 
 | Name | Description | Value |
@@ -881,6 +877,11 @@ resource "azapi_resource" "symbolicname" {
 | acceleratedNetwork | True if the image from which the OS disk is created supports accelerated networking. | bool |
 | architecture | CPU architecture supported by an OS disk. | 'Arm64'<br />'x64' |
 | diskControllerTypes | The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. | string |
+
+### TrackedResourceTags
+
+| Name | Description | Value |
+| ---- | ----------- | ------------ |
 
 ## Usage Examples
 ### Terraform Samples

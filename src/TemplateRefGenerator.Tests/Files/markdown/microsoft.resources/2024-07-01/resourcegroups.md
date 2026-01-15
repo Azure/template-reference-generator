@@ -9,6 +9,9 @@ ms.topic: reference
 
 > [!div class="op_single_selector" title1="API Versions:"]
 > - [Latest](../resourcegroups.md)
+> - [2025-04-01](../2025-04-01/resourcegroups.md)
+> - [2025-03-01](../2025-03-01/resourcegroups.md)
+> - [2024-11-01](../2024-11-01/resourcegroups.md)
 > - [2024-07-01](../2024-07-01/resourcegroups.md)
 > - [2024-03-01](../2024-03-01/resourcegroups.md)
 > - [2023-07-01](../2023-07-01/resourcegroups.md)
