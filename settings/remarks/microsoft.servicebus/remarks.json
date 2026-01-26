@@ -46,5 +46,47 @@
       "Path": "samples/namespaces/topics/subscriptions/rules/main.tf",
       "Description": "A basic example of deploying ServiceBus Subscription Rule."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces",
+      "Path": "samples/namespaces/main.bicep",
+      "Description": "A basic example of deploying ServiceBus Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/authorizationRules",
+      "Path": "samples/namespaces/authorizationrules/main.bicep",
+      "Description": "A basic example of deploying ServiceBus Namespace authorization Rule within a ServiceBus."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/queues",
+      "Path": "samples/namespaces/queues/main.bicep",
+      "Description": "A basic example of deploying ServiceBus Queue."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/queues/authorizationRules",
+      "Path": "samples/namespaces/queues/authorizationrules/main.bicep",
+      "Description": "A basic example of deploying Authorization Rule for a ServiceBus Queue."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/topics",
+      "Path": "samples/namespaces/topics/main.bicep",
+      "Description": "A basic example of deploying ServiceBus Topic."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/topics/authorizationRules",
+      "Path": "samples/namespaces/topics/authorizationrules/main.bicep",
+      "Description": "A basic example of deploying ServiceBus Topic authorization Rule within a ServiceBus Topic."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/topics/subscriptions",
+      "Path": "samples/namespaces/topics/subscriptions/main.bicep",
+      "Description": "A basic example of deploying ServiceBus Subscription."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules",
+      "Path": "samples/namespaces/topics/subscriptions/rules/main.bicep",
+      "Description": "A basic example of deploying ServiceBus Subscription Rule."
+    }
   ]
 }

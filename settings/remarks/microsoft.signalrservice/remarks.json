@@ -26,5 +26,32 @@
       "Path": "samples/webpubsub/sharedprivatelinkresources/main.tf",
       "Description": "A basic example of deploying Shared Private Link Resource for a Web Pubsub service."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.SignalRService/signalR",
+      "Path": "samples/signalr/main.bicep",
+      "Description": "A basic example of deploying Azure SignalR service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/signalR/sharedPrivateLinkResources",
+      "Path": "samples/signalr/sharedprivatelinkresources/main.bicep",
+      "Description": "A basic example of deploying Shared Private Link Resource for a Signalr service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub",
+      "Path": "samples/webpubsub/main.bicep",
+      "Description": "A basic example of deploying Azure Web PubSub service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub/hubs",
+      "Path": "samples/webpubsub/hubs/main.bicep",
+      "Description": "A basic example of deploying hub settings for a Web Pubsub service."
+    },
+    {
+      "ResourceType": "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources",
+      "Path": "samples/webpubsub/sharedprivatelinkresources/main.bicep",
+      "Description": "A basic example of deploying Shared Private Link Resource for a Web Pubsub service."
+    }
   ]
 }

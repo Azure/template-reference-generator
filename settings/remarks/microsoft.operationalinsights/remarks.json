@@ -74,5 +74,72 @@
       "Path": "samples/workspaces/tables/datacollectionlogs/main.tf",
       "Description": "A datacollectionlogs example of deploying Operational Insights Workspaces Tables."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.OperationalInsights/clusters",
+      "Path": "samples/clusters/main.bicep",
+      "Description": "A basic example of deploying Log Analytics Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/queryPacks",
+      "Path": "samples/querypacks/main.bicep",
+      "Description": "A basic example of deploying Log Analytics Query Pack."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/queryPacks/queries",
+      "Path": "samples/querypacks/queries/main.bicep",
+      "Description": "A basic example of deploying Log Analytics Query Pack Query."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces",
+      "Path": "samples/workspaces/main.bicep",
+      "Description": "A basic example of deploying Log Analytics (formally Operational Insights) Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/dataExports",
+      "Path": "samples/workspaces/dataexports/main.bicep",
+      "Description": "A basic example of deploying log analytics Data Export Rule."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/dataSources",
+      "Path": "samples/workspaces/datasources/main.bicep",
+      "Description": "A basic example of deploying Log Analytics (formally Operational Insights) DataSource."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/linkedServices",
+      "Path": "samples/workspaces/linkedservices/main.bicep",
+      "Description": "A basic example of deploying Log Analytics Linked Service."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts",
+      "Path": "samples/workspaces/linkedstorageaccounts/main.bicep",
+      "Description": "A basic example of deploying Log Analytics Linked Storage Account."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/savedSearches",
+      "Path": "samples/workspaces/savedsearches/main.bicep",
+      "Description": "A basic example of deploying Log Analytics (formally Operational Insights) Saved Search."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/storageInsightConfigs",
+      "Path": "samples/workspaces/storageinsightconfigs/main.bicep",
+      "Description": "A basic example of deploying Log Analytics Storage Insights resource."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/tables",
+      "Path": "samples/workspaces/tables/auditlog/main.bicep",
+      "Description": "A auditlog example of deploying Operational Insights Workspaces Tables."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/tables",
+      "Path": "samples/workspaces/tables/basic/main.bicep",
+      "Description": "A basic example of deploying Operational Insights Workspaces Tables."
+    },
+    {
+      "ResourceType": "Microsoft.OperationalInsights/workspaces/tables",
+      "Path": "samples/workspaces/tables/datacollectionlogs/main.bicep",
+      "Description": "A datacollectionlogs example of deploying Operational Insights Workspaces Tables."
+    }
   ]
 }

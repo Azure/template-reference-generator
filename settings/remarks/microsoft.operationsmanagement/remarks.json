@@ -6,5 +6,12 @@
       "Path": "samples/solutions/main.tf",
       "Description": "A basic example of deploying Log Analytics (formally Operational Insights) Solution."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.OperationsManagement/solutions",
+      "Path": "samples/solutions/main.bicep",
+      "Description": "A basic example of deploying Log Analytics (formally Operational Insights) Solution."
+    }
   ]
 }

@@ -66,5 +66,72 @@
       "Path": "samples/servers/virtualnetworkrules/main.tf",
       "Description": "A basic example of deploying PostgreSQL Virtual Network Rule."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers",
+      "Path": "samples/flexibleservers/main.bicep",
+      "Description": "A basic example of deploying PostgreSQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers/administrators",
+      "Path": "samples/flexibleservers/administrators/main.bicep",
+      "Description": "A basic example of deploying Active Directory administrator on a PostgreSQL Flexible server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers/configurations",
+      "Path": "samples/flexibleservers/configurations/main.bicep",
+      "Description": "A basic example of deploying Sets a PostgreSQL Configuration value on a Azure PostgreSQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers/databases",
+      "Path": "samples/flexibleservers/databases/main.bicep",
+      "Description": "A basic example of deploying PostgreSQL Flexible Server Database."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers/firewallRules",
+      "Path": "samples/flexibleservers/firewallrules/main.bicep",
+      "Description": "A basic example of deploying PostgreSQL Flexible Server Firewall Rule."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/flexibleServers/virtualEndpoints",
+      "Path": "samples/flexibleservers/virtualendpoints/main.bicep",
+      "Description": "A basic example of deploying Virtual Endpoint on a PostgreSQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/serverGroupsv2",
+      "Path": "samples/servergroupsv2/main.bicep",
+      "Description": "A basic example of deploying Azure Cosmos DB for PostgreSQL Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers",
+      "Path": "samples/servers/main.bicep",
+      "Description": "A basic example of deploying PostgreSQL Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers/administrators",
+      "Path": "samples/servers/administrators/main.bicep",
+      "Description": "A basic example of deploying Database for PostgreSQL Servers Administrators."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers/configurations",
+      "Path": "samples/servers/configurations/main.bicep",
+      "Description": "A basic example of deploying Sets a PostgreSQL Configuration value on a PostgreSQL Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers/databases",
+      "Path": "samples/servers/databases/main.bicep",
+      "Description": "A basic example of deploying PostgreSQL Database within a PostgreSQL Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers/firewallRules",
+      "Path": "samples/servers/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Firewall Rule for a PostgreSQL Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules",
+      "Path": "samples/servers/virtualnetworkrules/main.bicep",
+      "Description": "A basic example of deploying PostgreSQL Virtual Network Rule."
+    }
   ]
 }

@@ -31,5 +31,37 @@
       "Path": "samples/schedules/main.tf",
       "Description": "A basic example of deploying automated shutdown schedules for Azure Resource Manager VMs outside of Dev Test Labs."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DevTestLab/labs",
+      "Path": "samples/labs/main.bicep",
+      "Description": "A basic example of deploying Dev Test Lab."
+    },
+    {
+      "ResourceType": "Microsoft.DevTestLab/labs/policySets/policies",
+      "Path": "samples/labs/policysets/policies/main.bicep",
+      "Description": "A basic example of deploying Policy within a Dev Test Policy Set."
+    },
+    {
+      "ResourceType": "Microsoft.DevTestLab/labs/schedules",
+      "Path": "samples/labs/schedules/main.bicep",
+      "Description": "A basic example of deploying automated startup and shutdown schedules for Azure Dev Test Lab."
+    },
+    {
+      "ResourceType": "Microsoft.DevTestLab/labs/virtualMachines",
+      "Path": "samples/labs/virtualmachines/main.bicep",
+      "Description": "A basic example of deploying Virtual Machine within a Dev Test Lab."
+    },
+    {
+      "ResourceType": "Microsoft.DevTestLab/labs/virtualNetworks",
+      "Path": "samples/labs/virtualnetworks/main.bicep",
+      "Description": "A basic example of deploying Virtual Network within a DevTest Lab."
+    },
+    {
+      "ResourceType": "Microsoft.DevTestLab/schedules",
+      "Path": "samples/schedules/main.bicep",
+      "Description": "A basic example of deploying automated shutdown schedules for Azure Resource Manager VMs outside of Dev Test Labs."
+    }
   ]
 }

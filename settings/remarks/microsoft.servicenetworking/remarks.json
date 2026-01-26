@@ -16,5 +16,22 @@
       "Path": "samples/trafficcontrollers/frontends/main.tf",
       "Description": "A basic example of deploying Application Gateway for Containers Frontend."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ServiceNetworking/trafficControllers",
+      "Path": "samples/trafficcontrollers/main.bicep",
+      "Description": "A basic example of deploying Application Gateway for Containers (ALB)."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceNetworking/trafficControllers/associations",
+      "Path": "samples/trafficcontrollers/associations/main.bicep",
+      "Description": "A basic example of deploying association between an Application Gateway for Containers and a Subnet."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceNetworking/trafficControllers/frontends",
+      "Path": "samples/trafficcontrollers/frontends/main.bicep",
+      "Description": "A basic example of deploying Application Gateway for Containers Frontend."
+    }
   ]
 }

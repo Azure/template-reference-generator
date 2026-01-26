@@ -36,5 +36,42 @@
       "Path": "samples/topics/main.tf",
       "Description": "A basic example of deploying EventGrid Topic."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.EventGrid/domains",
+      "Path": "samples/domains/main.bicep",
+      "Description": "A basic example of deploying EventGrid Domain."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/domains/topics",
+      "Path": "samples/domains/topics/main.bicep",
+      "Description": "A basic example of deploying EventGrid Domain Topic."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/eventSubscriptions",
+      "Path": "samples/eventsubscriptions/main.bicep",
+      "Description": "A basic example of deploying EventGrid Event Subscription."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/namespaces",
+      "Path": "samples/namespaces/main.bicep",
+      "Description": "A basic example of deploying EventGrid Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/systemTopics",
+      "Path": "samples/systemtopics/main.bicep",
+      "Description": "A basic example of deploying Event Grid System Topic."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/systemTopics/eventSubscriptions",
+      "Path": "samples/systemtopics/eventsubscriptions/main.bicep",
+      "Description": "A basic example of deploying EventGrid System Topic Event Subscription."
+    },
+    {
+      "ResourceType": "Microsoft.EventGrid/topics",
+      "Path": "samples/topics/main.bicep",
+      "Description": "A basic example of deploying EventGrid Topic."
+    }
   ]
 }

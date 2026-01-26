@@ -26,5 +26,32 @@
       "Path": "samples/servers/virtualnetworkrules/main.tf",
       "Description": "A basic example of deploying Database for MariaDB Servers Virtual Network Rules."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers",
+      "Path": "samples/servers/main.bicep",
+      "Description": "A basic example of deploying Database for MariaDB Servers."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/configurations",
+      "Path": "samples/servers/configurations/main.bicep",
+      "Description": "A basic example of deploying Database for MariaDB Servers Configurations."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/databases",
+      "Path": "samples/servers/databases/main.bicep",
+      "Description": "A basic example of deploying Database for MariaDB Servers Databases."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/firewallRules",
+      "Path": "samples/servers/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Database for MariaDB Servers Firewall Rules."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMariaDB/servers/virtualNetworkRules",
+      "Path": "samples/servers/virtualnetworkrules/main.bicep",
+      "Description": "A basic example of deploying Database for MariaDB Servers Virtual Network Rules."
+    }
   ]
 }

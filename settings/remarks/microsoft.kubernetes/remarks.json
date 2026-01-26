@@ -6,5 +6,12 @@
       "Path": "samples/connectedclusters/main.tf",
       "Description": "A basic example of deploying Arc Kubernetes Cluster."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Kubernetes/connectedClusters",
+      "Path": "samples/connectedclusters/main.bicep",
+      "Description": "A basic example of deploying Arc Kubernetes Cluster."
+    }
   ]
 }
