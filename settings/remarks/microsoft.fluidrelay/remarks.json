@@ -6,5 +6,12 @@
       "Path": "samples/fluidrelayservers/main.tf",
       "Description": "A basic example of deploying Fluid Relay Server."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.FluidRelay/fluidRelayServers",
+      "Path": "samples/fluidrelayservers/main.bicep",
+      "Description": "A basic example of deploying Fluid Relay Server."
+    }
   ]
 }

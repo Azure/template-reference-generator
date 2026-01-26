@@ -11,5 +11,17 @@
       "Path": "samples/accounts/privateendpointconnections/main.tf",
       "Description": "A basic example of deploying Monitor Accounts Private Endpoint Connections."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Monitor/accounts",
+      "Path": "samples/accounts/main.bicep",
+      "Description": "A basic example of deploying Azure Monitor Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.Monitor/accounts/privateEndpointConnections",
+      "Path": "samples/accounts/privateendpointconnections/main.bicep",
+      "Description": "A basic example of deploying Monitor Accounts Private Endpoint Connections."
+    }
   ]
 }

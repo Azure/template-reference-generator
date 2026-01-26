@@ -6,5 +6,12 @@
       "Path": "samples/azuretrafficcollectors/main.tf",
       "Description": "A basic example of deploying Network Function Azure Traffic Collector."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.NetworkFunction/azureTrafficCollectors",
+      "Path": "samples/azuretrafficcollectors/main.bicep",
+      "Description": "A basic example of deploying Network Function Azure Traffic Collector."
+    }
   ]
 }

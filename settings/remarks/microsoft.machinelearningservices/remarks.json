@@ -26,5 +26,22 @@
       "Path": "samples/workspaces/outboundrules/main.tf",
       "Description": "A basic example of deploying Azure Machine Learning Workspace FQDN Network Outbound Rule."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.MachineLearningServices/workspaces",
+      "Path": "samples/workspaces/main.bicep",
+      "Description": "A basic example of deploying Azure Machine Learning Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.MachineLearningServices/workspaces/computes",
+      "Path": "samples/workspaces/computes/main.bicep",
+      "Description": "A basic example of deploying Machine Learning Compute."
+    },
+    {
+      "ResourceType": "Microsoft.MachineLearningServices/workspaces/dataStores",
+      "Path": "samples/workspaces/datastores/main.bicep",
+      "Description": "A basic example of deploying Machine Learning DataStore."
+    }
   ]
 }

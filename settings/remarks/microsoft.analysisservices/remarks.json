@@ -6,5 +6,12 @@
       "Path": "samples/servers/main.tf",
       "Description": "A basic example of deploying Analysis Services Server."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AnalysisServices/servers",
+      "Path": "samples/servers/main.bicep",
+      "Description": "A basic example of deploying Analysis Services Server."
+    }
   ]
 }

@@ -16,5 +16,22 @@
       "Path": "samples/storagemovers/projects/main.tf",
       "Description": "A basic example of deploying Storage Mover Project."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.StorageMover/storageMovers",
+      "Path": "samples/storagemovers/main.bicep",
+      "Description": "A basic example of deploying Storage Mover."
+    },
+    {
+      "ResourceType": "Microsoft.StorageMover/storageMovers/endpoints",
+      "Path": "samples/storagemovers/endpoints/main.bicep",
+      "Description": "A basic example of deploying Storage Mover Source Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.StorageMover/storageMovers/projects",
+      "Path": "samples/storagemovers/projects/main.bicep",
+      "Description": "A basic example of deploying Storage Mover Project."
+    }
   ]
 }

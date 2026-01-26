@@ -11,5 +11,17 @@
       "Path": "samples/services/projects/main.tf",
       "Description": "A basic example of deploying Azure Database Migration Project instance."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataMigration/services",
+      "Path": "samples/services/main.bicep",
+      "Description": "A basic example of deploying Azure Database Migration Service."
+    },
+    {
+      "ResourceType": "Microsoft.DataMigration/services/projects",
+      "Path": "samples/services/projects/main.bicep",
+      "Description": "A basic example of deploying Azure Database Migration Project instance."
+    }
   ]
 }

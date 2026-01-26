@@ -11,5 +11,17 @@
       "Path": "samples/communicationsgateways/testlines/main.tf",
       "Description": "A basic example of deploying Voice Services Communications Gateway Test Line."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.VoiceServices/communicationsGateways",
+      "Path": "samples/communicationsgateways/main.bicep",
+      "Description": "A basic example of deploying Voice Services Communications Gateways."
+    },
+    {
+      "ResourceType": "Microsoft.VoiceServices/communicationsGateways/testLines",
+      "Path": "samples/communicationsgateways/testlines/main.bicep",
+      "Description": "A basic example of deploying Voice Services Communications Gateway Test Line."
+    }
   ]
 }

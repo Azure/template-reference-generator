@@ -16,5 +16,17 @@
       "Path": "samples/accounts/shares/datasets/main.tf",
       "Description": "A basic example of deploying Data Share Dataset."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataShare/accounts",
+      "Path": "samples/accounts/main.bicep",
+      "Description": "A basic example of deploying Data Share Account."
+    },
+    {
+      "ResourceType": "Microsoft.DataShare/accounts/shares",
+      "Path": "samples/accounts/shares/main.bicep",
+      "Description": "A basic example of deploying Data Share."
+    }
   ]
 }

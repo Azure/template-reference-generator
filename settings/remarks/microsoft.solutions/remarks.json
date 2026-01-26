@@ -11,5 +11,12 @@
       "Path": "samples/applications/main.tf",
       "Description": "A basic example of deploying Managed Application."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Solutions/applications",
+      "Path": "samples/applications/main.bicep",
+      "Description": "A basic example of deploying Managed Application."
+    }
   ]
 }

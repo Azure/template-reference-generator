@@ -223,5 +223,102 @@
       "Path": "samples/spring/storages/main.tf",
       "Description": "A basic example of deploying Spring Cloud Storage."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring",
+      "Path": "samples/spring/main.bicep",
+      "Description": "A basic example of deploying Azure Spring Cloud Service."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/DevToolPortals",
+      "Path": "samples/spring/devtoolportals/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Dev Tool Portal."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/apiPortals",
+      "Path": "samples/spring/apiportals/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud API Portal."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/apiPortals/domains",
+      "Path": "samples/spring/apiportals/domains/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud API Portal Domain."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/applicationAccelerators",
+      "Path": "samples/spring/applicationaccelerators/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Accelerator."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/applicationAccelerators/customizedAccelerators",
+      "Path": "samples/spring/applicationaccelerators/customizedaccelerators/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Customized Accelerator."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/applicationLiveViews",
+      "Path": "samples/spring/applicationliveviews/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Application Live View."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/apps",
+      "Path": "samples/spring/apps/main.bicep",
+      "Description": "A basic example of deploying an Azure Spring Cloud Application."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/apps/bindings",
+      "Path": "samples/spring/apps/bindings/main.bicep",
+      "Description": "A basic example of deploying Associates a Spring Cloud Application with a resource."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/apps/deployments",
+      "Path": "samples/spring/apps/deployments/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Deployment."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/buildServices/builders",
+      "Path": "samples/spring/buildservices/builders/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Builder."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings",
+      "Path": "samples/spring/buildservices/builders/buildpackbindings/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Build Pack Binding."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/configServers",
+      "Path": "samples/spring/configservers/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Config Server."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/configurationServices",
+      "Path": "samples/spring/configurationservices/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Configuration Service."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/gateways",
+      "Path": "samples/spring/gateways/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Gateway."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/gateways/domains",
+      "Path": "samples/spring/gateways/domains/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Gateway Custom Domain."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/gateways/routeConfigs",
+      "Path": "samples/spring/gateways/routeconfigs/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Gateway Route Config."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/monitoringSettings",
+      "Path": "samples/spring/monitoringsettings/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Monitoring Settings."
+    },
+    {
+      "ResourceType": "Microsoft.AppPlatform/Spring/storages",
+      "Path": "samples/spring/storages/main.bicep",
+      "Description": "A basic example of deploying Spring Cloud Storage."
+    }
   ]
 }

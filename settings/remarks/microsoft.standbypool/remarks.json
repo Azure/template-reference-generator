@@ -11,5 +11,12 @@
       "Path": "samples/standbyvirtualmachinepools/main.tf",
       "Description": "A basic example of deploying Microsoft Standby pools for Virtual Machine Scale Sets."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.StandbyPool/standbyContainerGroupPools",
+      "Path": "samples/standbycontainergrouppools/basic/main.bicep",
+      "Description": "A basic example of deploying Microsoft Standby pools for Container Groups."
+    }
   ]
 }

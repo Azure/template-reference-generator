@@ -151,5 +151,112 @@
       "Path": "samples/servers/vulnerabilityassessments/main.tf",
       "Description": "A basic example of deploying Vulnerability Assessment for an MS SQL Server."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Sql/instancePools",
+      "Path": "samples/instancepools/main.bicep",
+      "Description": "A basic example of deploying SQL Instance Pools."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers",
+      "Path": "samples/servers/main.bicep",
+      "Description": "A basic example of deploying Microsoft SQL Azure Database Server."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/administrators",
+      "Path": "samples/servers/administrators/main.bicep",
+      "Description": "A basic example of deploying SQL Server Administrators."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/auditingSettings",
+      "Path": "samples/servers/auditingsettings/main.bicep",
+      "Description": "A basic example of deploying SQL Server Auditing Settings."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/connectionPolicies",
+      "Path": "samples/servers/connectionpolicies/main.bicep",
+      "Description": "A basic example of deploying SQL Server Connection Policies."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/databases",
+      "Path": "samples/servers/databases/main.bicep",
+      "Description": "A basic example of deploying MS SQL Database."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/databases/securityAlertPolicies",
+      "Path": "samples/servers/databases/securityalertpolicies/main.bicep",
+      "Description": "A basic example of deploying SQL Server Databases Security Alert Policies."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/databases/transparentDataEncryption",
+      "Path": "samples/servers/databases/transparentdataencryption/main.bicep",
+      "Description": "A basic example of deploying SQL Server Databases Transparent Data Encryption."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/dnsAliases",
+      "Path": "samples/servers/dnsaliases/main.bicep",
+      "Description": "A basic example of deploying MS SQL Server DNS Alias."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/elasticPools",
+      "Path": "samples/servers/elasticpools/main.bicep",
+      "Description": "A basic example of deploying Azure SQL Elastic Pool."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/encryptionProtector",
+      "Path": "samples/servers/encryptionprotector/main.bicep",
+      "Description": "A basic example of deploying transparent data encryption configuration for a MSSQL Server."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/failoverGroups",
+      "Path": "samples/servers/failovergroups/main.bicep",
+      "Description": "A basic example of deploying Microsoft Azure SQL Failover Group."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/firewallRules",
+      "Path": "samples/servers/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Azure SQL Firewall Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/jobAgents",
+      "Path": "samples/servers/jobagents/main.bicep",
+      "Description": "A basic example of deploying Elastic Job Agent."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/jobAgents/credentials",
+      "Path": "samples/servers/jobagents/credentials/main.bicep",
+      "Description": "A basic example of deploying Elastic Job Credential."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/jobAgents/jobs",
+      "Path": "samples/servers/jobagents/jobs/main.bicep",
+      "Description": "A basic example of deploying Elastic Job."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/jobAgents/targetGroups",
+      "Path": "samples/servers/jobagents/targetgroups/main.bicep",
+      "Description": "A basic example of deploying Elastic Job Target Group."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/outboundFirewallRules",
+      "Path": "samples/servers/outboundfirewallrules/main.bicep",
+      "Description": "A basic example of deploying Azure SQL Outbound Firewall Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/securityAlertPolicies",
+      "Path": "samples/servers/securityalertpolicies/main.bicep",
+      "Description": "A basic example of deploying Security Alert Policy for a MS SQL Server."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/sqlVulnerabilityAssessments",
+      "Path": "samples/servers/sqlvulnerabilityassessments/main.bicep",
+      "Description": "A basic example of deploying SQL Server Vulnerability Assessments."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/virtualNetworkRules",
+      "Path": "samples/servers/virtualnetworkrules/main.bicep",
+      "Description": "A basic example of deploying Azure SQL Virtual Network Rule."
+    }
   ]
 }
