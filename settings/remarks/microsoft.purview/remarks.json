@@ -6,5 +6,12 @@
       "Path": "samples/accounts/main.tf",
       "Description": "A basic example of deploying Purview Account."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Purview/accounts",
+      "Path": "samples/accounts/main.bicep",
+      "Description": "A basic example of deploying Purview Account."
+    }
   ]
 }

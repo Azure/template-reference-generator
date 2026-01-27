@@ -11,5 +11,17 @@
       "Path": "samples/accounts/instances/main.tf",
       "Description": "A basic example of deploying IoT Hub Device Update Instance."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DeviceUpdate/accounts",
+      "Path": "samples/accounts/main.bicep",
+      "Description": "A basic example of deploying IoT Hub Device Update Account."
+    },
+    {
+      "ResourceType": "Microsoft.DeviceUpdate/accounts/instances",
+      "Path": "samples/accounts/instances/main.bicep",
+      "Description": "A basic example of deploying IoT Hub Device Update Instance."
+    }
   ]
 }

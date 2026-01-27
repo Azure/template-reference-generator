@@ -11,5 +11,12 @@
       "Path": "samples/workloadimpacts/main.tf",
       "Description": "A basic example of deploying Impact Workload Impacts."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Impact/connectors",
+      "Path": "samples/connectors/main.bicep",
+      "Description": "A basic example of deploying Impact Connectors."
+    }
   ]
 }

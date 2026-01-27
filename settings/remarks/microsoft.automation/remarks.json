@@ -101,5 +101,92 @@
       "Path": "samples/automationaccounts/webhooks/main.tf",
       "Description": "A basic example of deploying Automation Runbook's Webhook."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts",
+      "Path": "samples/automationaccounts/main.bicep",
+      "Description": "A basic example of deploying Automation Account."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/certificates",
+      "Path": "samples/automationaccounts/certificates/main.bicep",
+      "Description": "A basic example of deploying Automation Certificate."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/configurations",
+      "Path": "samples/automationaccounts/configurations/main.bicep",
+      "Description": "A basic example of deploying Automation DSC Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/connectionTypes",
+      "Path": "samples/automationaccounts/connectiontypes/main.bicep",
+      "Description": "A basic example of deploying Automation Connection Type."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/connections",
+      "Path": "samples/automationaccounts/connections/main.bicep",
+      "Description": "A basic example of deploying Automation Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/credentials",
+      "Path": "samples/automationaccounts/credentials/main.bicep",
+      "Description": "A basic example of deploying Automation Credential."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups",
+      "Path": "samples/automationaccounts/hybridrunbookworkergroups/main.bicep",
+      "Description": "A basic example of deploying Automation Account Runbook Worker Group."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers",
+      "Path": "samples/automationaccounts/hybridrunbookworkergroups/hybridrunbookworkers/main.bicep",
+      "Description": "A basic example of deploying Automation."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/modules",
+      "Path": "samples/automationaccounts/modules/main.bicep",
+      "Description": "A basic example of deploying Automation Module."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/powershell72Modules",
+      "Path": "samples/automationaccounts/powershell72modules/main.bicep",
+      "Description": "A basic example of deploying Automation Powershell 7.2 Module."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/python3Packages",
+      "Path": "samples/automationaccounts/python3packages/main.bicep",
+      "Description": "A basic example of deploying Automation Python3 Package."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/runbooks",
+      "Path": "samples/automationaccounts/runbooks/main.bicep",
+      "Description": "A basic example of deploying Automation Runbook."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/runbooks/draft",
+      "Path": "samples/automationaccounts/runbooks/draft/main.bicep",
+      "Description": "A basic example of deploying Automation Accounts Runbooks Draft."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/schedules",
+      "Path": "samples/automationaccounts/schedules/main.bicep",
+      "Description": "A basic example of deploying Automation Schedule."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/softwareUpdateConfigurations",
+      "Path": "samples/automationaccounts/softwareupdateconfigurations/main.bicep",
+      "Description": "A basic example of deploying Automation Software Update Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/sourceControls",
+      "Path": "samples/automationaccounts/sourcecontrols/main.bicep",
+      "Description": "A basic example of deploying Automation Source Control."
+    },
+    {
+      "ResourceType": "Microsoft.Automation/automationAccounts/variables",
+      "Path": "samples/automationaccounts/variables/main.bicep",
+      "Description": "A basic example of deploying variable in Azure Automation."
+    }
   ]
 }

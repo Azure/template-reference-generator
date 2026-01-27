@@ -41,5 +41,37 @@
       "Path": "samples/workspacesettings/main.tf",
       "Description": "A basic example of deploying subscription's Security Center Workspace."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Security/advancedThreatProtectionSettings",
+      "Path": "samples/advancedthreatprotectionsettings/main.bicep",
+      "Description": "A basic example of deploying resources Advanced Threat Protection setting."
+    },
+    {
+      "ResourceType": "Microsoft.Security/assessmentMetadata",
+      "Path": "samples/assessmentmetadata/main.bicep",
+      "Description": "A basic example of deploying Security Center Assessment Metadata for Azure Security Center."
+    },
+    {
+      "ResourceType": "Microsoft.Security/automations",
+      "Path": "samples/automations/main.bicep",
+      "Description": "A basic example of deploying Security Center Automation and Continuous Export."
+    },
+    {
+      "ResourceType": "Microsoft.Security/defenderForStorageSettings",
+      "Path": "samples/defenderforstoragesettings/main.bicep",
+      "Description": "A basic example of deploying Microsoft Defender for Storage."
+    },
+    {
+      "ResourceType": "Microsoft.Security/iotSecuritySolutions",
+      "Path": "samples/iotsecuritysolutions/main.bicep",
+      "Description": "A basic example of deploying iot security solution."
+    },
+    {
+      "ResourceType": "Microsoft.Security/securityContacts",
+      "Path": "samples/securitycontacts/main.bicep",
+      "Description": "A basic example of deploying subscription's Security Center Contact."
+    }
   ]
 }

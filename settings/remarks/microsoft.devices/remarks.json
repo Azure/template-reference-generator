@@ -29,5 +29,27 @@
       "Path": "samples/provisioningservices/certificates/main.tf",
       "Description": "A basic example of deploying IoT Device Provisioning Service Certificate."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Devices/IotHubs",
+      "Path": "samples/iothubs/main.bicep",
+      "Description": "A basic example of deploying IotHub."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/IotHubs/certificates",
+      "Path": "samples/iothubs/certificates/main.bicep",
+      "Description": "A basic example of deploying IoTHub Certificate."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/provisioningServices",
+      "Path": "samples/provisioningservices/main.bicep",
+      "Description": "A basic example of deploying IoT Device Provisioning Service."
+    },
+    {
+      "ResourceType": "Microsoft.Devices/provisioningServices/certificates",
+      "Path": "samples/provisioningservices/certificates/main.bicep",
+      "Description": "A basic example of deploying IoT Device Provisioning Service Certificate."
+    }
   ]
 }

@@ -31,5 +31,32 @@
       "Path": "samples/accounts/raipolicies/main.tf",
       "Description": "A basic example of deploying Cognitive Services Accounts Responsible AI Policies."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts",
+      "Path": "samples/accounts/main.bicep",
+      "Description": "A basic example of deploying Cognitive Services Account."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/deployments",
+      "Path": "samples/accounts/deployments/main.bicep",
+      "Description": "A basic example of deploying Cognitive Services Account Deployment."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/projects",
+      "Path": "samples/accounts/projects/main.bicep",
+      "Description": "A basic example of deploying Cognitive Services Account Project."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/raiBlocklists",
+      "Path": "samples/accounts/raiblocklists/main.bicep",
+      "Description": "A basic example of deploying Cognitive Services Accounts Responsible AI Blocklists."
+    },
+    {
+      "ResourceType": "Microsoft.CognitiveServices/accounts/raiPolicies",
+      "Path": "samples/accounts/raipolicies/main.bicep",
+      "Description": "A basic example of deploying Cognitive Services Accounts Responsible AI Policies."
+    }
   ]
 }

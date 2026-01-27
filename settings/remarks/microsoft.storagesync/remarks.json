@@ -11,5 +11,17 @@
       "Path": "samples/storagesyncservices/syncgroups/main.tf",
       "Description": "A basic example of deploying Storage Sync Group."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.StorageSync/storageSyncServices",
+      "Path": "samples/storagesyncservices/main.bicep",
+      "Description": "A basic example of deploying Storage Sync."
+    },
+    {
+      "ResourceType": "Microsoft.StorageSync/storageSyncServices/syncGroups",
+      "Path": "samples/storagesyncservices/syncgroups/main.bicep",
+      "Description": "A basic example of deploying Storage Sync Group."
+    }
   ]
 }

@@ -21,5 +21,27 @@
       "Path": "samples/emailservices/domains/senderusernames/main.tf",
       "Description": "A basic example of deploying Communication Email Services Domains Sender Usernames."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Communication/communicationServices",
+      "Path": "samples/communicationservices/main.bicep",
+      "Description": "A basic example of deploying Communication Service."
+    },
+    {
+      "ResourceType": "Microsoft.Communication/emailServices",
+      "Path": "samples/emailservices/main.bicep",
+      "Description": "A basic example of deploying Email Communication Service."
+    },
+    {
+      "ResourceType": "Microsoft.Communication/emailServices/domains",
+      "Path": "samples/emailservices/domains/main.bicep",
+      "Description": "A basic example of deploying Email Communication Service Domain."
+    },
+    {
+      "ResourceType": "Microsoft.Communication/emailServices/domains/senderUsernames",
+      "Path": "samples/emailservices/domains/senderusernames/main.bicep",
+      "Description": "A basic example of deploying Communication Email Services Domains Sender Usernames."
+    }
   ]
 }

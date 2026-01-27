@@ -528,5 +528,492 @@
       "Path": "samples/vpnsites/main.tf",
       "Description": "A basic example of deploying VPN Site."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies",
+      "Path": "samples/applicationgatewaywebapplicationfirewallpolicies/main.bicep",
+      "Description": "A basic example of deploying Azure Web Application Firewall Policy instance."
+    },
+    {
+      "ResourceType": "Microsoft.Network/ExpressRoutePorts",
+      "Path": "samples/expressrouteports/main.bicep",
+      "Description": "A basic example of deploying Express Route Port."
+    },
+    {
+      "ResourceType": "Microsoft.Network/FrontDoorWebApplicationFirewallPolicies",
+      "Path": "samples/frontdoorwebapplicationfirewallpolicies/main.bicep",
+      "Description": "A basic example of deploying Front Door Firewall Policy instance."
+    },
+    {
+      "ResourceType": "Microsoft.Network/applicationGateways",
+      "Path": "samples/applicationgateways/main.bicep",
+      "Description": "A basic example of deploying Application Gateway."
+    },
+    {
+      "ResourceType": "Microsoft.Network/applicationSecurityGroups",
+      "Path": "samples/applicationsecuritygroups/main.bicep",
+      "Description": "A basic example of deploying Application Security Group."
+    },
+    {
+      "ResourceType": "Microsoft.Network/azureFirewalls",
+      "Path": "samples/azurefirewalls/main.bicep",
+      "Description": "A basic example of deploying Azure Firewall."
+    },
+    {
+      "ResourceType": "Microsoft.Network/bastionHosts",
+      "Path": "samples/bastionhosts/main.bicep",
+      "Description": "A basic example of deploying Bastion Host."
+    },
+    {
+      "ResourceType": "Microsoft.Network/ddosProtectionPlans",
+      "Path": "samples/ddosprotectionplans/main.bicep",
+      "Description": "A basic example of deploying Azure Network DDoS Protection Plan."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsForwardingRulesets",
+      "Path": "samples/dnsforwardingrulesets/main.bicep",
+      "Description": "A basic example of deploying Private DNS Resolver Dns Forwarding Ruleset."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsForwardingRulesets/forwardingRules",
+      "Path": "samples/dnsforwardingrulesets/forwardingrules/main.bicep",
+      "Description": "A basic example of deploying Private DNS Resolver Forwarding Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsForwardingRulesets/virtualNetworkLinks",
+      "Path": "samples/dnsforwardingrulesets/virtualnetworklinks/main.bicep",
+      "Description": "A basic example of deploying Private DNS Resolver Virtual Network Link."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsResolvers",
+      "Path": "samples/dnsresolvers/main.bicep",
+      "Description": "A basic example of deploying Private DNS Resolver."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsResolvers/inboundEndpoints",
+      "Path": "samples/dnsresolvers/inboundendpoints/main.bicep",
+      "Description": "A basic example of deploying Private DNS Resolver Inbound Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsResolvers/outboundEndpoints",
+      "Path": "samples/dnsresolvers/outboundendpoints/main.bicep",
+      "Description": "A basic example of deploying Private DNS Resolver Outbound Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones",
+      "Path": "samples/dnszones/main.bicep",
+      "Description": "A basic example of deploying DNS Zone."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/A",
+      "Path": "samples/dnszones/a/main.bicep",
+      "Description": "A basic example of deploying DNS A Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/AAAA",
+      "Path": "samples/dnszones/aaaa/main.bicep",
+      "Description": "A basic example of deploying DNS AAAA Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/CAA",
+      "Path": "samples/dnszones/caa/main.bicep",
+      "Description": "A basic example of deploying DNS CAA Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/CNAME",
+      "Path": "samples/dnszones/cname/main.bicep",
+      "Description": "A basic example of deploying DNS CNAME Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/MX",
+      "Path": "samples/dnszones/mx/main.bicep",
+      "Description": "A basic example of deploying DNS MX Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/NS",
+      "Path": "samples/dnszones/ns/main.bicep",
+      "Description": "A basic example of deploying DNS NS Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/PTR",
+      "Path": "samples/dnszones/ptr/main.bicep",
+      "Description": "A basic example of deploying DNS PTR Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/SRV",
+      "Path": "samples/dnszones/srv/main.bicep",
+      "Description": "A basic example of deploying DNS SRV Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/dnsZones/TXT",
+      "Path": "samples/dnszones/txt/main.bicep",
+      "Description": "A basic example of deploying DNS TXT Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits",
+      "Path": "samples/expressroutecircuits/main.bicep",
+      "Description": "A basic example of deploying ExpressRoute circuit."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits/authorizations",
+      "Path": "samples/expressroutecircuits/authorizations/main.bicep",
+      "Description": "A basic example of deploying ExpressRoute Circuit Authorization."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits/peerings",
+      "Path": "samples/expressroutecircuits/peerings/main.bicep",
+      "Description": "A basic example of deploying ExpressRoute Circuit Peering."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteCircuits/peerings/connections",
+      "Path": "samples/expressroutecircuits/peerings/connections/main.bicep",
+      "Description": "A basic example of deploying Express Route Circuit Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteGateways",
+      "Path": "samples/expressroutegateways/main.bicep",
+      "Description": "A basic example of deploying ExpressRoute gateway."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRouteGateways/expressRouteConnections",
+      "Path": "samples/expressroutegateways/expressrouteconnections/main.bicep",
+      "Description": "A basic example of deploying Express Route Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Network/expressRoutePorts/authorizations",
+      "Path": "samples/expressrouteports/authorizations/main.bicep",
+      "Description": "A basic example of deploying ExpressRoute Port Authorization."
+    },
+    {
+      "ResourceType": "Microsoft.Network/firewallPolicies",
+      "Path": "samples/firewallpolicies/main.bicep",
+      "Description": "A basic example of deploying Firewall Policy."
+    },
+    {
+      "ResourceType": "Microsoft.Network/firewallPolicies/ruleCollectionGroups",
+      "Path": "samples/firewallpolicies/rulecollectiongroups/main.bicep",
+      "Description": "A basic example of deploying Firewall Policy Rule Collection Group."
+    },
+    {
+      "ResourceType": "Microsoft.Network/ipGroups",
+      "Path": "samples/ipgroups/main.bicep",
+      "Description": "A basic example of deploying IP group which contains a list of CIDRs and/or IP addresses."
+    },
+    {
+      "ResourceType": "Microsoft.Network/loadBalancers",
+      "Path": "samples/loadbalancers/main.bicep",
+      "Description": "A basic example of deploying Load Balancer Resource."
+    },
+    {
+      "ResourceType": "Microsoft.Network/loadBalancers/backendAddressPools",
+      "Path": "samples/loadbalancers/backendaddresspools/main.bicep",
+      "Description": "A basic example of deploying Load Balancer Backend Address Pool."
+    },
+    {
+      "ResourceType": "Microsoft.Network/localNetworkGateways",
+      "Path": "samples/localnetworkgateways/main.bicep",
+      "Description": "A basic example of deploying local network gateway connection over which specific connections can be configured."
+    },
+    {
+      "ResourceType": "Microsoft.Network/natGateways",
+      "Path": "samples/natgateways/main.bicep",
+      "Description": "A basic example of deploying Azure NAT Gateway."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkInterfaces",
+      "Path": "samples/networkinterfaces/main.bicep",
+      "Description": "A basic example of deploying Network Interface."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers",
+      "Path": "samples/networkmanagers/main.bicep",
+      "Description": "A basic example of deploying Network Manager."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/connectivityConfigurations",
+      "Path": "samples/networkmanagers/connectivityconfigurations/main.bicep",
+      "Description": "A basic example of deploying Network Manager Connectivity Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/ipamPools",
+      "Path": "samples/networkmanagers/ipampools/main.bicep",
+      "Description": "A basic example of deploying Network Managers IPAM Pools."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/ipamPools/staticCidr",
+      "Path": "samples/networkmanagers/ipampools/staticcidr/main.bicep",
+      "Description": "A basic example of deploying Network Managers IPAM Pools Static CIDR."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/networkGroups",
+      "Path": "samples/networkmanagers/networkgroups/main.bicep",
+      "Description": "A basic example of deploying Network Manager Network Group."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/networkGroups/staticMembers",
+      "Path": "samples/networkmanagers/networkgroups/staticmembers/main.bicep",
+      "Description": "A basic example of deploying Network Manager Static Member."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/scopeConnections",
+      "Path": "samples/networkmanagers/scopeconnections/main.bicep",
+      "Description": "A basic example of deploying Network Manager Scope Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/securityAdminConfigurations",
+      "Path": "samples/networkmanagers/securityadminconfigurations/main.bicep",
+      "Description": "A basic example of deploying Network Manager Security Admin Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections",
+      "Path": "samples/networkmanagers/securityadminconfigurations/rulecollections/main.bicep",
+      "Description": "A basic example of deploying Network Manager Admin Rule Collection."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules",
+      "Path": "samples/networkmanagers/securityadminconfigurations/rulecollections/rules/main.bicep",
+      "Description": "A basic example of deploying Network Manager Admin Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/verifierWorkspace",
+      "Path": "samples/networkmanagers/verifierworkspace/main.bicep",
+      "Description": "A basic example of deploying Network Managers Verifier Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/verifierWorkspace/reachabilityAnalysisIntent",
+      "Path": "samples/networkmanagers/verifierworkspace/reachabilityanalysisintent/main.bicep",
+      "Description": "A basic example of deploying Network Managers Verifier Workspace Reachability Analysis Intent."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagers/verifierWorkspace/reachabilityAnalysisIntent/reachabilityAnalysisRun",
+      "Path": "samples/networkmanagers/verifierworkspace/reachabilityanalysisintent/reachabilityanalysisrun/main.bicep",
+      "Description": "A basic example of deploying Network Managers Verifier Workspace Reachability Analysis Run."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkProfiles",
+      "Path": "samples/networkprofiles/main.bicep",
+      "Description": "A basic example of deploying Network Profile."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkSecurityGroups",
+      "Path": "samples/networksecuritygroups/main.bicep",
+      "Description": "A basic example of deploying network security group that contains a list of network security rules. Network security groups enable inbound or outbound traffic to be enabled or denied."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkSecurityGroups/securityRules",
+      "Path": "samples/networksecuritygroups/securityrules/main.bicep",
+      "Description": "A basic example of deploying Network Security Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkWatchers/flowLogs",
+      "Path": "samples/networkwatchers/flowlogs/main.bicep",
+      "Description": "A basic example of deploying Network Watcher Flow Log."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkWatchers/packetCaptures",
+      "Path": "samples/networkwatchers/packetcaptures/main.bicep",
+      "Description": "A basic example of deploying Configures Packet Capturing against a Virtual Machine using a Network Watcher."
+    },
+    {
+      "ResourceType": "Microsoft.Network/p2svpnGateways",
+      "Path": "samples/p2svpngateways/main.bicep",
+      "Description": "A basic example of deploying Point-to-Site VPN Gateway."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones",
+      "Path": "samples/privatednszones/main.bicep",
+      "Description": "A basic example of deploying Private DNS Zone."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/A",
+      "Path": "samples/privatednszones/a/main.bicep",
+      "Description": "A basic example of deploying Private DNS A Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/AAAA",
+      "Path": "samples/privatednszones/aaaa/main.bicep",
+      "Description": "A basic example of deploying Private DNS AAAA Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/CNAME",
+      "Path": "samples/privatednszones/cname/main.bicep",
+      "Description": "A basic example of deploying Private DNS CNAME Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/MX",
+      "Path": "samples/privatednszones/mx/main.bicep",
+      "Description": "A basic example of deploying Private DNS Zones MX."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/PTR",
+      "Path": "samples/privatednszones/ptr/main.bicep",
+      "Description": "A basic example of deploying Private DNS PTR Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/SRV",
+      "Path": "samples/privatednszones/srv/main.bicep",
+      "Description": "A basic example of deploying Private DNS SRV Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/TXT",
+      "Path": "samples/privatednszones/txt/main.bicep",
+      "Description": "A basic example of deploying Private DNS TXT Record."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+      "Path": "samples/privatednszones/virtualnetworklinks/main.bicep",
+      "Description": "A basic example of deploying Private DNS Zone Virtual Network Link."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateEndpoints",
+      "Path": "samples/privateendpoints/main.bicep",
+      "Description": "A basic example of deploying Private Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.Network/privateLinkServices",
+      "Path": "samples/privatelinkservices/main.bicep",
+      "Description": "A basic example of deploying Private Link Service."
+    },
+    {
+      "ResourceType": "Microsoft.Network/publicIPAddresses",
+      "Path": "samples/publicipaddresses/main.bicep",
+      "Description": "A basic example of deploying Public IP Address."
+    },
+    {
+      "ResourceType": "Microsoft.Network/publicIPPrefixes",
+      "Path": "samples/publicipprefixes/main.bicep",
+      "Description": "A basic example of deploying Public IP Prefix."
+    },
+    {
+      "ResourceType": "Microsoft.Network/routeFilters",
+      "Path": "samples/routefilters/main.bicep",
+      "Description": "A basic example of deploying Route Filter."
+    },
+    {
+      "ResourceType": "Microsoft.Network/routeTables",
+      "Path": "samples/routetables/main.bicep",
+      "Description": "A basic example of deploying Route Table."
+    },
+    {
+      "ResourceType": "Microsoft.Network/routeTables/routes",
+      "Path": "samples/routetables/routes/main.bicep",
+      "Description": "A basic example of deploying Route within a Route Table."
+    },
+    {
+      "ResourceType": "Microsoft.Network/securityPartnerProviders",
+      "Path": "samples/securitypartnerproviders/main.bicep",
+      "Description": "A basic example of deploying Security Partner Provider which could be associated to virtual hub."
+    },
+    {
+      "ResourceType": "Microsoft.Network/serviceEndpointPolicies",
+      "Path": "samples/serviceendpointpolicies/main.bicep",
+      "Description": "A basic example of deploying Subnet Service Endpoint Storage Policy."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles",
+      "Path": "samples/trafficmanagerprofiles/main.bicep",
+      "Description": "A basic example of deploying Traffic Manager Profile."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles/AzureEndpoints",
+      "Path": "samples/trafficmanagerprofiles/azureendpoints/main.bicep",
+      "Description": "A basic example of deploying Azure Endpoint within a Traffic Manager Profile."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles/ExternalEndpoints",
+      "Path": "samples/trafficmanagerprofiles/externalendpoints/main.bicep",
+      "Description": "A basic example of deploying External Endpoint within a Traffic Manager Profile."
+    },
+    {
+      "ResourceType": "Microsoft.Network/trafficManagerProfiles/NestedEndpoints",
+      "Path": "samples/trafficmanagerprofiles/nestedendpoints/main.bicep",
+      "Description": "A basic example of deploying Nested Endpoint within a Traffic Manager Profile."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualHubs",
+      "Path": "samples/virtualhubs/main.bicep",
+      "Description": "A basic example of deploying Virtual Hub within a Virtual WAN."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections",
+      "Path": "samples/virtualhubs/hubvirtualnetworkconnections/main.bicep",
+      "Description": "A basic example of deploying Connection for a Virtual Hub."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualHubs/ipConfigurations",
+      "Path": "samples/virtualhubs/ipconfigurations/main.bicep",
+      "Description": "A basic example of deploying Virtual Hub IP. This resource is also known as a Route Server."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworkGateways",
+      "Path": "samples/virtualnetworkgateways/main.bicep",
+      "Description": "A basic example of deploying virtual network gateway to establish secure, cross-premises connectivity."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworkGateways/natRules",
+      "Path": "samples/virtualnetworkgateways/natrules/main.bicep",
+      "Description": "A basic example of deploying Virtual Network Gateway Nat Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworks",
+      "Path": "samples/virtualnetworks/main.bicep",
+      "Description": "A basic example of deploying virtual network including any configured subnets."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworks",
+      "Path": "samples/virtualnetworks/withipampool/main.bicep",
+      "Description": "A withipampool example of deploying virtual network including any configured subnets."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworks/subnets",
+      "Path": "samples/virtualnetworks/subnets/main.bicep",
+      "Description": "A basic example of deploying subnet which represent network segments within the IP space defined by the virtual network."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworks/subnets",
+      "Path": "samples/virtualnetworks/subnets/withipampool/main.bicep",
+      "Description": "A withipampool example of deploying subnet which represent network segments within the IP space defined by the virtual network."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+      "Path": "samples/virtualnetworks/virtualnetworkpeerings/main.bicep",
+      "Description": "A basic example of deploying virtual network peering which allows resources to access other."
+    },
+    {
+      "ResourceType": "Microsoft.Network/virtualWans",
+      "Path": "samples/virtualwans/main.bicep",
+      "Description": "A basic example of deploying Virtual WAN."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnGateways",
+      "Path": "samples/vpngateways/main.bicep",
+      "Description": "A basic example of deploying VPN Gateway within a Virtual Hub."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnGateways/natRules",
+      "Path": "samples/vpngateways/natrules/main.bicep",
+      "Description": "A basic example of deploying VPN Gateway NAT Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnGateways/vpnConnections",
+      "Path": "samples/vpngateways/vpnconnections/main.bicep",
+      "Description": "A basic example of deploying VPN Gateway Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnServerConfigurations",
+      "Path": "samples/vpnserverconfigurations/main.bicep",
+      "Description": "A basic example of deploying VPN Server Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups",
+      "Path": "samples/vpnserverconfigurations/configurationpolicygroups/main.bicep",
+      "Description": "A basic example of deploying VPN Server Configuration Policy Group."
+    },
+    {
+      "ResourceType": "Microsoft.Network/vpnSites",
+      "Path": "samples/vpnsites/main.bicep",
+      "Description": "A basic example of deploying VPN Site."
+    }
   ]
 }

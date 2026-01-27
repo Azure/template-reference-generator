@@ -21,5 +21,17 @@
       "Path": "samples/views/main.tf",
       "Description": "A basic example of deploying Azure Cost Management View."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.CostManagement/scheduledActions",
+      "Path": "samples/scheduledactions/main.bicep",
+      "Description": "A basic example of deploying Azure Cost Management Scheduled Action."
+    },
+    {
+      "ResourceType": "Microsoft.CostManagement/views",
+      "Path": "samples/views/main.bicep",
+      "Description": "A basic example of deploying Azure Cost Management View."
+    }
   ]
 }

@@ -14,5 +14,12 @@
       "Path": "samples/b2cdirectories/main.tf",
       "Description": "A basic example of deploying AAD B2C Directory."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AzureActiveDirectory/b2cDirectories",
+      "Path": "samples/b2cdirectories/main.bicep",
+      "Description": "A basic example of deploying AAD B2C Directory."
+    }
   ]
 }

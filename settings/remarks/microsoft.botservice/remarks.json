@@ -16,5 +16,17 @@
       "Path": "samples/botservices/connections/main.tf",
       "Description": "A basic example of deploying Bot Connection."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.BotService/botServices",
+      "Path": "samples/botservices/main.bicep",
+      "Description": "A basic example of deploying Azure Bot Service."
+    },
+    {
+      "ResourceType": "Microsoft.BotService/botServices/channels",
+      "Path": "samples/botservices/channels/main.bicep",
+      "Description": "A basic example of deploying integration for a Bot Channel."
+    }
   ]
 }

@@ -16,5 +16,22 @@
       "Path": "samples/managedclusters/nodetypes/main.tf",
       "Description": "A basic example of deploying Service Fabric Managed Clusters Node Types."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ServiceFabric/clusters",
+      "Path": "samples/clusters/main.bicep",
+      "Description": "A basic example of deploying Service Fabric Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceFabric/managedClusters",
+      "Path": "samples/managedclusters/main.bicep",
+      "Description": "A basic example of deploying Resource Group."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceFabric/managedClusters/nodeTypes",
+      "Path": "samples/managedclusters/nodetypes/main.bicep",
+      "Description": "A basic example of deploying Service Fabric Managed Clusters Node Types."
+    }
   ]
 }

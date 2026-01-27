@@ -16,5 +16,22 @@
       "Path": "samples/namespaces/notificationhubs/authorizationrules/main.tf",
       "Description": "A basic example of deploying Authorization Rule associated with a Notification Hub within a Notification Hub Namespace."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces",
+      "Path": "samples/namespaces/main.bicep",
+      "Description": "A basic example of deploying Notification Hub Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces/notificationHubs",
+      "Path": "samples/namespaces/notificationhubs/main.bicep",
+      "Description": "A basic example of deploying Notification Hub within a Notification Hub Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules",
+      "Path": "samples/namespaces/notificationhubs/authorizationrules/main.bicep",
+      "Description": "A basic example of deploying Authorization Rule associated with a Notification Hub within a Notification Hub Namespace."
+    }
   ]
 }

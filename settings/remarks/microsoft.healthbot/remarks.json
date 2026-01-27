@@ -6,5 +6,12 @@
       "Path": "samples/healthbots/main.tf",
       "Description": "A basic example of deploying Healthbot Service."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HealthBot/healthBots",
+      "Path": "samples/healthbots/main.bicep",
+      "Description": "A basic example of deploying Healthbot Service."
+    }
   ]
 }

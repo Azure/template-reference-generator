@@ -46,5 +46,47 @@
       "Path": "samples/projects/environmenttypes/main.tf",
       "Description": "A basic example of deploying Dev Center Project Environment Type."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DevCenter/devCenters",
+      "Path": "samples/devcenters/main.bicep",
+      "Description": "A basic example of deploying Dev Center."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/devCenters/catalogs",
+      "Path": "samples/devcenters/catalogs/main.bicep",
+      "Description": "A basic example of deploying Dev Center Catalog."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/devCenters/environmentTypes",
+      "Path": "samples/devcenters/environmenttypes/main.bicep",
+      "Description": "A basic example of deploying Dev Center Environment Type."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/devcenters/attachednetworks",
+      "Path": "samples/devcenters/attachednetworks/main.bicep",
+      "Description": "A basic example of deploying Dev Center Attached Network."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/devcenters/devboxdefinitions",
+      "Path": "samples/devcenters/devboxdefinitions/main.bicep",
+      "Description": "A basic example of deploying Dev Center Dev Box Definition."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/networkConnections",
+      "Path": "samples/networkconnections/main.bicep",
+      "Description": "A basic example of deploying Dev Center Network Connection."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/projects",
+      "Path": "samples/projects/main.bicep",
+      "Description": "A basic example of deploying Dev Center Project."
+    },
+    {
+      "ResourceType": "Microsoft.DevCenter/projects/environmentTypes",
+      "Path": "samples/projects/environmenttypes/main.bicep",
+      "Description": "A basic example of deploying Dev Center Project Environment Type."
+    }
   ]
 }

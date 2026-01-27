@@ -14,5 +14,12 @@
       "Path": "samples/dashboards/main.tf",
       "Description": "A basic example of deploying shared dashboard in the Azure Portal."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Portal/dashboards",
+      "Path": "samples/dashboards/main.bicep",
+      "Description": "A basic example of deploying shared dashboard in the Azure Portal."
+    }
   ]
 }

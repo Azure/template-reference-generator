@@ -70,5 +70,62 @@
       "Path": "samples/servers/virtualnetworkrules/main.tf",
       "Description": "A basic example of deploying Database for MySQL Servers Virtual Network Rules."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers",
+      "Path": "samples/flexibleservers/main.bicep",
+      "Description": "A basic example of deploying MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/administrators",
+      "Path": "samples/flexibleservers/administrators/main.bicep",
+      "Description": "A basic example of deploying Active Directory administrator on a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/configurations",
+      "Path": "samples/flexibleservers/configurations/main.bicep",
+      "Description": "A basic example of deploying Sets a MySQL Flexible Server Configuration value on a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/databases",
+      "Path": "samples/flexibleservers/databases/main.bicep",
+      "Description": "A basic example of deploying MySQL Database within a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/flexibleServers/firewallRules",
+      "Path": "samples/flexibleservers/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Firewall Rule for a MySQL Flexible Server."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers",
+      "Path": "samples/servers/main.bicep",
+      "Description": "A basic example of deploying Database for MySQL Servers."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/administrators",
+      "Path": "samples/servers/administrators/main.bicep",
+      "Description": "A basic example of deploying Database for MySQL Servers Administrators."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/configurations",
+      "Path": "samples/servers/configurations/main.bicep",
+      "Description": "A basic example of deploying Database for MySQL Servers Configurations."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/databases",
+      "Path": "samples/servers/databases/main.bicep",
+      "Description": "A basic example of deploying Database for MySQL Servers Databases."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/firewallRules",
+      "Path": "samples/servers/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Database for MySQL Servers Firewall Rules."
+    },
+    {
+      "ResourceType": "Microsoft.DBforMySQL/servers/virtualNetworkRules",
+      "Path": "samples/servers/virtualnetworkrules/main.bicep",
+      "Description": "A basic example of deploying Database for MySQL Servers Virtual Network Rules."
+    }
   ]
 }

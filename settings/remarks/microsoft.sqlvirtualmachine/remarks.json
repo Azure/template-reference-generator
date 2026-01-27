@@ -16,5 +16,17 @@
       "Path": "samples/sqlvirtualmachines/sqlbestpracticesassessment/main.tf",
       "Description": "A sqlbestpracticesassessment example of deploying Microsoft SQL Virtual Machine."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups",
+      "Path": "samples/sqlvirtualmachinegroups/main.bicep",
+      "Description": "A basic example of deploying Microsoft SQL Virtual Machine Group."
+    },
+    {
+      "ResourceType": "Microsoft.SqlVirtualMachine/sqlVirtualMachines",
+      "Path": "samples/sqlvirtualmachines/basic/main.bicep",
+      "Description": "A basic example of deploying Microsoft SQL Virtual Machine."
+    }
   ]
 }

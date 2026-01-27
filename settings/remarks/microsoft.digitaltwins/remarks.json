@@ -11,5 +11,17 @@
       "Path": "samples/digitaltwinsinstances/endpoints/main.tf",
       "Description": "A basic example of deploying Digital Twins Endpoint."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DigitalTwins/digitalTwinsInstances",
+      "Path": "samples/digitaltwinsinstances/main.bicep",
+      "Description": "A basic example of deploying Digital Twins instance."
+    },
+    {
+      "ResourceType": "Microsoft.DigitalTwins/digitalTwinsInstances/endpoints",
+      "Path": "samples/digitaltwinsinstances/endpoints/main.bicep",
+      "Description": "A basic example of deploying Digital Twins Endpoint."
+    }
   ]
 }

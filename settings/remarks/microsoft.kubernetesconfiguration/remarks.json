@@ -11,5 +11,17 @@
       "Path": "samples/fluxconfigurations/main.tf",
       "Description": "A basic example of deploying Kubernetes Flux Configuration."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.KubernetesConfiguration/extensions",
+      "Path": "samples/extensions/main.bicep",
+      "Description": "A basic example of deploying Kubernetes Cluster Extension."
+    },
+    {
+      "ResourceType": "Microsoft.KubernetesConfiguration/fluxConfigurations",
+      "Path": "samples/fluxconfigurations/main.bicep",
+      "Description": "A basic example of deploying Kubernetes Flux Configuration."
+    }
   ]
 }

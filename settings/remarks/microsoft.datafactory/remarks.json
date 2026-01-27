@@ -51,5 +51,57 @@
       "Path": "samples/factories/triggers/main.tf",
       "Description": "A basic example of deploying Trigger inside an Azure Data Factory."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DataFactory/factories",
+      "Path": "samples/factories/main.bicep",
+      "Description": "A basic example of deploying Azure Data Factory (Version 2)."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/credentials",
+      "Path": "samples/factories/credentials/main.bicep",
+      "Description": "A basic example of deploying Data Factory credential resource."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/dataflows",
+      "Path": "samples/factories/dataflows/main.bicep",
+      "Description": "A basic example of deploying Data Flow inside an Azure Data Factory."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/datasets",
+      "Path": "samples/factories/datasets/main.bicep",
+      "Description": "A basic example of deploying Dataset inside an Azure Data Factory."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/integrationRuntimes",
+      "Path": "samples/factories/integrationruntimes/main.bicep",
+      "Description": "A basic example of deploying Data Factory Azure Integration Runtime."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/linkedservices",
+      "Path": "samples/factories/linkedservices/main.bicep",
+      "Description": "A basic example of deploying Linked Service (connection) between a resource and Azure Data Factory."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+      "Path": "samples/factories/managedvirtualnetworks/main.bicep",
+      "Description": "A basic example of deploying Data Factory Managed Virtual Networks."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+      "Path": "samples/factories/managedvirtualnetworks/managedprivateendpoints/main.bicep",
+      "Description": "A basic example of deploying Data Factory Managed Private Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/pipelines",
+      "Path": "samples/factories/pipelines/main.bicep",
+      "Description": "A basic example of deploying Pipeline inside a Azure Data Factory."
+    },
+    {
+      "ResourceType": "Microsoft.DataFactory/factories/triggers",
+      "Path": "samples/factories/triggers/main.bicep",
+      "Description": "A basic example of deploying Trigger inside an Azure Data Factory."
+    }
   ]
 }

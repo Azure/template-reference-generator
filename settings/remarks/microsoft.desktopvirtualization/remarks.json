@@ -21,5 +21,22 @@
       "Path": "samples/workspaces/main.tf",
       "Description": "A basic example of deploying Virtual Desktop Workspace."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/applicationGroups",
+      "Path": "samples/applicationgroups/main.bicep",
+      "Description": "A basic example of deploying Virtual Desktop Application Group."
+    },
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/applicationGroups/applications",
+      "Path": "samples/applicationgroups/applications/main.bicep",
+      "Description": "A basic example of deploying Virtual Desktop Application."
+    },
+    {
+      "ResourceType": "Microsoft.DesktopVirtualization/workspaces",
+      "Path": "samples/workspaces/main.bicep",
+      "Description": "A basic example of deploying Virtual Desktop Workspace."
+    }
   ]
 }

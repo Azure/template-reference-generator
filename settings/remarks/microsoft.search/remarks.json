@@ -11,5 +11,17 @@
       "Path": "samples/searchservices/sharedprivatelinkresources/main.tf",
       "Description": "A basic example of deploying Shared Private Link Service for an Azure Search Service."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Search/searchServices",
+      "Path": "samples/searchservices/main.bicep",
+      "Description": "A basic example of deploying Search Service."
+    },
+    {
+      "ResourceType": "Microsoft.Search/searchServices/sharedPrivateLinkResources",
+      "Path": "samples/searchservices/sharedprivatelinkresources/main.bicep",
+      "Description": "A basic example of deploying Shared Private Link Service for an Azure Search Service."
+    }
   ]
 }

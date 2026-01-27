@@ -46,5 +46,52 @@
       "Path": "samples/simgroups/main.tf",
       "Description": "A basic example of deploying Mobile Network Sim Group."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks",
+      "Path": "samples/mobilenetworks/main.bicep",
+      "Description": "A basic example of deploying Azure Mobile Network."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks/dataNetworks",
+      "Path": "samples/mobilenetworks/datanetworks/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Data Network."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks/services",
+      "Path": "samples/mobilenetworks/services/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Service."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks/simPolicies",
+      "Path": "samples/mobilenetworks/simpolicies/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Sim Policy."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks/sites",
+      "Path": "samples/mobilenetworks/sites/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Site."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/mobileNetworks/slices",
+      "Path": "samples/mobilenetworks/slices/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Slice."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/packetCoreControlPlanes",
+      "Path": "samples/packetcorecontrolplanes/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Packet Core Control Plane."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/packetCoreControlPlanes/packetCoreDataPlanes",
+      "Path": "samples/packetcorecontrolplanes/packetcoredataplanes/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Packet Core Data Plane."
+    },
+    {
+      "ResourceType": "Microsoft.MobileNetwork/simGroups",
+      "Path": "samples/simgroups/main.bicep",
+      "Description": "A basic example of deploying Mobile Network Sim Group."
+    }
   ]
 }

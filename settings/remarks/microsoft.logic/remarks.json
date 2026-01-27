@@ -46,5 +46,52 @@
       "Path": "samples/workflows/main.tf",
       "Description": "A basic example of deploying Logic App Workflow."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts",
+      "Path": "samples/integrationaccounts/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts/agreements",
+      "Path": "samples/integrationaccounts/agreements/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account Agreement."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts/assemblies",
+      "Path": "samples/integrationaccounts/assemblies/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account Assembly."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts/batchConfigurations",
+      "Path": "samples/integrationaccounts/batchconfigurations/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account Batch Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts/maps",
+      "Path": "samples/integrationaccounts/maps/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account Map."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts/partners",
+      "Path": "samples/integrationaccounts/partners/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account Partner."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts/schemas",
+      "Path": "samples/integrationaccounts/schemas/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account Schema."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/integrationAccounts/sessions",
+      "Path": "samples/integrationaccounts/sessions/main.bicep",
+      "Description": "A basic example of deploying Logic App Integration Account Session."
+    },
+    {
+      "ResourceType": "Microsoft.Logic/workflows",
+      "Path": "samples/workflows/main.bicep",
+      "Description": "A basic example of deploying Logic App Workflow."
+    }
   ]
 }

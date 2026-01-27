@@ -166,5 +166,162 @@
       "Path": "samples/service/users/main.tf",
       "Description": "A basic example of deploying API Management User."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ApiManagement/service",
+      "Path": "samples/service/main.bicep",
+      "Description": "A basic example of deploying API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apiVersionSets",
+      "Path": "samples/service/apiversionsets/main.bicep",
+      "Description": "A basic example of deploying API Version Set within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis",
+      "Path": "samples/service/apis/main.bicep",
+      "Description": "A basic example of deploying API within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/diagnostics",
+      "Path": "samples/service/apis/diagnostics/main.bicep",
+      "Description": "A basic example of deploying API Management Service API Diagnostics Logs."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/operations",
+      "Path": "samples/service/apis/operations/main.bicep",
+      "Description": "A basic example of deploying API Operation within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/policies",
+      "Path": "samples/service/apis/policies/main.bicep",
+      "Description": "A basic example of deploying API Management Service APIs Policies."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/schemas",
+      "Path": "samples/service/apis/schemas/main.bicep",
+      "Description": "A basic example of deploying API Schema within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/tagDescriptions",
+      "Path": "samples/service/apis/tagdescriptions/main.bicep",
+      "Description": "A basic example of deploying API Tag Description within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/apis/tags",
+      "Path": "samples/service/apis/tags/main.bicep",
+      "Description": "A basic example of deploying API Management API Tag."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/authorizationServers",
+      "Path": "samples/service/authorizationservers/main.bicep",
+      "Description": "A basic example of deploying Authorization Server within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/backends",
+      "Path": "samples/service/backends/main.bicep",
+      "Description": "A basic example of deploying backend within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/caches",
+      "Path": "samples/service/caches/main.bicep",
+      "Description": "A basic example of deploying API Management Redis Cache."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/certificates",
+      "Path": "samples/service/certificates/main.bicep",
+      "Description": "A basic example of deploying Certificate within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/diagnostics",
+      "Path": "samples/service/diagnostics/main.bicep",
+      "Description": "A basic example of deploying API Management Service Diagnostic."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/gateways",
+      "Path": "samples/service/gateways/main.bicep",
+      "Description": "A basic example of deploying API Management Gateway."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/gateways/certificateAuthorities",
+      "Path": "samples/service/gateways/certificateauthorities/main.bicep",
+      "Description": "A basic example of deploying API Management Gateway Certificate Authority."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/gateways/hostnameConfigurations",
+      "Path": "samples/service/gateways/hostnameconfigurations/main.bicep",
+      "Description": "A basic example of deploying API Management Gateway Host Name Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/groups",
+      "Path": "samples/service/groups/main.bicep",
+      "Description": "A basic example of deploying API Management Group."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/identityProviders",
+      "Path": "samples/service/identityproviders/main.bicep",
+      "Description": "A basic example of deploying API Management Identity Provider."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/loggers",
+      "Path": "samples/service/loggers/main.bicep",
+      "Description": "A basic example of deploying Logger within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/namedValues",
+      "Path": "samples/service/namedvalues/main.bicep",
+      "Description": "A basic example of deploying API Management Named Value."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/openidConnectProviders",
+      "Path": "samples/service/openidconnectproviders/main.bicep",
+      "Description": "A basic example of deploying OpenID Connect Provider within a API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/policyFragments",
+      "Path": "samples/service/policyfragments/main.bicep",
+      "Description": "A basic example of deploying API Management Service Policy Fragments."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/portalsettings",
+      "Path": "samples/service/portalsettings/main.bicep",
+      "Description": "A basic example of deploying API Management Service Portal Settings."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/products",
+      "Path": "samples/service/products/main.bicep",
+      "Description": "A basic example of deploying API Management Product."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/products/policies",
+      "Path": "samples/service/products/policies/main.bicep",
+      "Description": "A basic example of deploying API Management Service Products Policies."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/products/tags",
+      "Path": "samples/service/products/tags/main.bicep",
+      "Description": "A basic example of deploying API Management Product tag."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/schemas",
+      "Path": "samples/service/schemas/main.bicep",
+      "Description": "A basic example of deploying Global Schema within an API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/subscriptions",
+      "Path": "samples/service/subscriptions/main.bicep",
+      "Description": "A basic example of deploying Subscription within a API Management Service."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/tags",
+      "Path": "samples/service/tags/main.bicep",
+      "Description": "A basic example of deploying API Management Tag."
+    },
+    {
+      "ResourceType": "Microsoft.ApiManagement/service/users",
+      "Path": "samples/service/users/main.bicep",
+      "Description": "A basic example of deploying API Management User."
+    }
   ]
 }

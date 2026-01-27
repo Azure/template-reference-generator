@@ -11,5 +11,17 @@
       "Path": "samples/migrateprojects/solutions/main.tf",
       "Description": "A basic example of deploying Migrate Project Solutions."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Migrate/migrateProjects",
+      "Path": "samples/migrateprojects/main.bicep",
+      "Description": "A basic example of deploying Migrate Projects."
+    },
+    {
+      "ResourceType": "Microsoft.Migrate/migrateProjects/solutions",
+      "Path": "samples/migrateprojects/solutions/main.bicep",
+      "Description": "A basic example of deploying Migrate Project Solutions."
+    }
   ]
 }

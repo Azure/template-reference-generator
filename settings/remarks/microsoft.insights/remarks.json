@@ -110,5 +110,87 @@
       "Path": "samples/workbooks/main.tf",
       "Description": "A basic example of deploying Azure Workbook."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Insights/actionGroups",
+      "Path": "samples/actiongroups/main.bicep",
+      "Description": "A basic example of deploying Action Group within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/activityLogAlerts",
+      "Path": "samples/activitylogalerts/main.bicep",
+      "Description": "A basic example of deploying Activity Log Alert within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/autoScaleSettings",
+      "Path": "samples/autoscalesettings/main.bicep",
+      "Description": "A basic example of deploying AutoScale Setting which can be applied to Virtual Machine Scale Sets, App Services and other scalable resources."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/components",
+      "Path": "samples/components/main.bicep",
+      "Description": "A basic example of deploying Application Insights component."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/components/analyticsItems",
+      "Path": "samples/components/analyticsitems/main.bicep",
+      "Description": "A basic example of deploying Application Insights Analytics Item component."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionEndpoints",
+      "Path": "samples/datacollectionendpoints/main.bicep",
+      "Description": "A basic example of deploying Data Collection Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionRuleAssociations",
+      "Path": "samples/datacollectionruleassociations/main.bicep",
+      "Description": "A basic example of deploying Data Collection Rule Association."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/dataCollectionRules",
+      "Path": "samples/datacollectionrules/main.bicep",
+      "Description": "A basic example of deploying Data Collection Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/diagnosticSettings",
+      "Path": "samples/diagnosticsettings/main.bicep",
+      "Description": "A basic example of deploying Insights Diagnostic Settings."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/metricAlerts",
+      "Path": "samples/metricalerts/main.bicep",
+      "Description": "A basic example of deploying Metric Alert within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/privateLinkScopes",
+      "Path": "samples/privatelinkscopes/main.bicep",
+      "Description": "A basic example of deploying Azure Monitor Private Link Scope."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/privateLinkScopes/scopedResources",
+      "Path": "samples/privatelinkscopes/scopedresources/main.bicep",
+      "Description": "A basic example of deploying Azure Monitor Private Link Scoped Service."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/scheduledQueryRules",
+      "Path": "samples/scheduledqueryrules/main.bicep",
+      "Description": "A basic example of deploying AlertingAction Scheduled Query Rules resource within Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/webTests",
+      "Path": "samples/webtests/main.bicep",
+      "Description": "A basic example of deploying Application Insights Standard WebTest."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/workbookTemplates",
+      "Path": "samples/workbooktemplates/main.bicep",
+      "Description": "A basic example of deploying Application Insights Workbook Template."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/workbooks",
+      "Path": "samples/workbooks/main.bicep",
+      "Description": "A basic example of deploying Azure Workbook."
+    }
   ]
 }

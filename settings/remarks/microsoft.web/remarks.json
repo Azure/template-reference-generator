@@ -75,5 +75,52 @@
       "Path": "samples/staticsites/customdomains/main.tf",
       "Description": "A basic example of deploying Static Web App Custom Domain."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Web/serverfarms",
+      "Path": "samples/serverfarms/main.bicep",
+      "Description": "A basic example of deploying App Service: Service Plan."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites",
+      "Path": "samples/sites/main.bicep",
+      "Description": "A basic example of deploying Function App, Web App, or Logic App."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/config",
+      "Path": "samples/sites/config/main.bicep",
+      "Description": "A basic example of deploying App Service Virtual Network Association."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/publicCertificates",
+      "Path": "samples/sites/publiccertificates/main.bicep",
+      "Description": "A basic example of deploying App Service Public Certificate."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/siteextensions",
+      "Path": "samples/sites/siteextensions/main.bicep",
+      "Description": "A basic example of deploying Web Sites Site Extensions."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/slots",
+      "Path": "samples/sites/slots/main.bicep",
+      "Description": "A basic example of deploying App Service Slot (within an App Service)."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sites/slots/config",
+      "Path": "samples/sites/slots/config/main.bicep",
+      "Description": "A basic example of deploying App Service's Slot Virtual Network Association."
+    },
+    {
+      "ResourceType": "Microsoft.Web/staticSites",
+      "Path": "samples/staticsites/main.bicep",
+      "Description": "A basic example of deploying Static Web App."
+    },
+    {
+      "ResourceType": "Microsoft.Web/staticSites/customDomains",
+      "Path": "samples/staticsites/customdomains/main.bicep",
+      "Description": "A basic example of deploying Static Web App Custom Domain."
+    }
   ]
 }

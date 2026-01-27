@@ -56,5 +56,57 @@
       "Path": "samples/profiles/securitypolicies/main.tf",
       "Description": "A basic example of deploying Front Door (standard/premium) Security Policy."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Cdn/profiles",
+      "Path": "samples/profiles/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Profile."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/afdEndpoints",
+      "Path": "samples/profiles/afdendpoints/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/afdEndpoints/routes",
+      "Path": "samples/profiles/afdendpoints/routes/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Route."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/customDomains",
+      "Path": "samples/profiles/customdomains/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Custom Domain."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/endpoints",
+      "Path": "samples/profiles/endpoints/main.bicep",
+      "Description": "A basic example of deploying CDN Endpoint."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/originGroups",
+      "Path": "samples/profiles/origingroups/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Origin Group."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/originGroups/origins",
+      "Path": "samples/profiles/origingroups/origins/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Origin."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/ruleSets",
+      "Path": "samples/profiles/rulesets/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Rule Set."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/ruleSets/rules",
+      "Path": "samples/profiles/rulesets/rules/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Cdn/profiles/securityPolicies",
+      "Path": "samples/profiles/securitypolicies/main.bicep",
+      "Description": "A basic example of deploying Front Door (standard/premium) Security Policy."
+    }
   ]
 }

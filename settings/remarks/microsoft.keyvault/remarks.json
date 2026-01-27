@@ -36,5 +36,32 @@
       "Path": "samples/vaults/secrets/main.tf",
       "Description": "A basic example of deploying Key Vault Secrets."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.KeyVault/managedHSMs",
+      "Path": "samples/managedhsms/main.bicep",
+      "Description": "A basic example of deploying Key Vault Managed Hardware Security Module."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults",
+      "Path": "samples/vaults/main.bicep",
+      "Description": "A basic example of deploying Key Vault."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults/accessPolicies",
+      "Path": "samples/vaults/accesspolicies/main.bicep",
+      "Description": "A basic example of deploying Key Vault Access Policies."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults/keys",
+      "Path": "samples/vaults/keys/main.bicep",
+      "Description": "A basic example of deploying Key Vault Keys."
+    },
+    {
+      "ResourceType": "Microsoft.KeyVault/vaults/secrets",
+      "Path": "samples/vaults/secrets/main.bicep",
+      "Description": "A basic example of deploying Key Vault Secrets."
+    }
   ]
 }

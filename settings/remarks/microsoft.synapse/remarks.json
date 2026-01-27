@@ -76,5 +76,67 @@
       "Path": "samples/workspaces/vulnerabilityassessments/main.tf",
       "Description": "A basic example of deploying Vulnerability Assessment for a Synapse Workspace."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Synapse/privateLinkHubs",
+      "Path": "samples/privatelinkhubs/main.bicep",
+      "Description": "A basic example of deploying Synapse Private Link Hub."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces",
+      "Path": "samples/workspaces/main.bicep",
+      "Description": "A basic example of deploying Synapse Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/azureADOnlyAuthentications",
+      "Path": "samples/workspaces/azureadonlyauthentications/main.bicep",
+      "Description": "A basic example of deploying Synapse Workspaces Azure AD Only Authentications."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/bigDataPools",
+      "Path": "samples/workspaces/bigdatapools/main.bicep",
+      "Description": "A basic example of deploying Synapse Spark Pool."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/firewallRules",
+      "Path": "samples/workspaces/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Synapse Firewall Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/integrationRuntimes",
+      "Path": "samples/workspaces/integrationruntimes/main.bicep",
+      "Description": "A basic example of deploying Synapse Azure Integration Runtime."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings",
+      "Path": "samples/workspaces/managedidentitysqlcontrolsettings/main.bicep",
+      "Description": "A basic example of deploying Synapse Workspaces Managed Identity SQL Control Settings."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/securityAlertPolicies",
+      "Path": "samples/workspaces/securityalertpolicies/main.bicep",
+      "Description": "A basic example of deploying Security Alert Policy for a Synapse Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/sqlPools",
+      "Path": "samples/workspaces/sqlpools/main.bicep",
+      "Description": "A basic example of deploying Synapse SQL Pool."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments",
+      "Path": "samples/workspaces/sqlpools/vulnerabilityassessments/main.bicep",
+      "Description": "A basic example of deploying Vulnerability Assessment for a Synapse SQL Pool."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/sqlPools/workloadGroups",
+      "Path": "samples/workspaces/sqlpools/workloadgroups/main.bicep",
+      "Description": "A basic example of deploying Synapse SQL Pool Workload Group."
+    },
+    {
+      "ResourceType": "Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers",
+      "Path": "samples/workspaces/sqlpools/workloadgroups/workloadclassifiers/main.bicep",
+      "Description": "A basic example of deploying Synapse SQL Pool Workload Classifier."
+    }
   ]
 }
