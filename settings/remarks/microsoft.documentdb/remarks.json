@@ -101,5 +101,102 @@
       "Path": "samples/mongoclusters/users/main.tf",
       "Description": "A basic example of deploying Azure Cosmos DB for MongoDB (vCore) User."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts",
+      "Path": "samples/databaseaccounts/main.bicep",
+      "Description": "A basic example of deploying CosmosDB (formally DocumentDB) Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces",
+      "Path": "samples/databaseaccounts/cassandrakeyspaces/main.bicep",
+      "Description": "A basic example of deploying Cassandra KeySpace within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables",
+      "Path": "samples/databaseaccounts/cassandrakeyspaces/tables/main.bicep",
+      "Description": "A basic example of deploying Cassandra Table within a Cosmos DB Cassandra Keyspace."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases",
+      "Path": "samples/databaseaccounts/gremlindatabases/main.bicep",
+      "Description": "A basic example of deploying Gremlin Database within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs",
+      "Path": "samples/databaseaccounts/gremlindatabases/graphs/main.bicep",
+      "Description": "A basic example of deploying Gremlin Graph within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases",
+      "Path": "samples/databaseaccounts/mongodbdatabases/main.bicep",
+      "Description": "A basic example of deploying Mongo Database within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions",
+      "Path": "samples/databaseaccounts/mongodbroledefinitions/main.bicep",
+      "Description": "A basic example of deploying Cosmos DB Mongo Role Definition."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions",
+      "Path": "samples/databaseaccounts/mongodbuserdefinitions/main.bicep",
+      "Description": "A basic example of deploying Cosmos DB Mongo User Definition."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/services",
+      "Path": "samples/databaseaccounts/services/main.bicep",
+      "Description": "A basic example of deploying SQL Dedicated Gateway within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+      "Path": "samples/databaseaccounts/sqldatabases/main.bicep",
+      "Description": "A basic example of deploying SQL Database within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "Path": "samples/databaseaccounts/sqldatabases/containers/main.bicep",
+      "Description": "A basic example of deploying SQL Container within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures",
+      "Path": "samples/databaseaccounts/sqldatabases/containers/storedprocedures/main.bicep",
+      "Description": "A basic example of deploying SQL Stored Procedure within a Cosmos DB Account SQL Database."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers",
+      "Path": "samples/databaseaccounts/sqldatabases/containers/triggers/main.bicep",
+      "Description": "A basic example of deploying SQL Trigger."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions",
+      "Path": "samples/databaseaccounts/sqldatabases/containers/userdefinedfunctions/main.bicep",
+      "Description": "A basic example of deploying SQL User Defined Function."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments",
+      "Path": "samples/databaseaccounts/sqlroleassignments/main.bicep",
+      "Description": "A basic example of deploying Cosmos DB SQL Role Assignment."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions",
+      "Path": "samples/databaseaccounts/sqlroledefinitions/main.bicep",
+      "Description": "A basic example of deploying Cosmos DB SQL Role Definition."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/databaseAccounts/tables",
+      "Path": "samples/databaseaccounts/tables/main.bicep",
+      "Description": "A basic example of deploying Table within a Cosmos DB Account."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/mongoClusters/firewallRules",
+      "Path": "samples/mongoclusters/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Azure Cosmos DB for MongoDB (vCore) Firewall Rule."
+    },
+    {
+      "ResourceType": "Microsoft.DocumentDB/mongoClusters/users",
+      "Path": "samples/mongoclusters/users/main.bicep",
+      "Description": "A basic example of deploying Azure Cosmos DB for MongoDB (vCore) User."
+    }
   ]
 }

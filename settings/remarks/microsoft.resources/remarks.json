@@ -5,6 +5,16 @@
       "Description": "A basic example of deploying a resource group.",
       "Path": "samples/resourceGroups/basic.bicep",
       "ResourceType": "microsoft.resources/resourceGroups"
+    },
+    {
+      "ResourceType": "Microsoft.Resources/deploymentScripts",
+      "Path": "samples/deploymentscripts/main.bicep",
+      "Description": "A basic example of deploying Resource Deployment Script."
+    },
+    {
+      "ResourceType": "Microsoft.Resources/resourceGroups",
+      "Path": "samples/resourceGroups/main.bicep",
+      "Description": "A basic example of deploying Resource Group."
     }
   ],
   "ResourceRemarks": [

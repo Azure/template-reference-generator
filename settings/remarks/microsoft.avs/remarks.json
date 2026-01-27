@@ -11,5 +11,17 @@
       "Path": "samples/privateclouds/authorizations/main.tf",
       "Description": "A basic example of deploying Azure VMware Solution ExpressRoute Circuit Authorization."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AVS/privateClouds",
+      "Path": "samples/privateclouds/main.bicep",
+      "Description": "A basic example of deploying Azure VMware Solution Private Cloud."
+    },
+    {
+      "ResourceType": "Microsoft.AVS/privateClouds/authorizations",
+      "Path": "samples/privateclouds/authorizations/main.bicep",
+      "Description": "A basic example of deploying Azure VMware Solution ExpressRoute Circuit Authorization."
+    }
   ]
 }

@@ -11,5 +11,17 @@
       "Path": "samples/grafana/managedprivateendpoints/main.tf",
       "Description": "A basic example of deploying Dashboard Grafana Managed Private Endpoint."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Dashboard/grafana",
+      "Path": "samples/grafana/main.bicep",
+      "Description": "A basic example of deploying Dashboard Grafana."
+    },
+    {
+      "ResourceType": "Microsoft.Dashboard/grafana/managedPrivateEndpoints",
+      "Path": "samples/grafana/managedprivateendpoints/main.bicep",
+      "Description": "A basic example of deploying Dashboard Grafana Managed Private Endpoint."
+    }
   ]
 }

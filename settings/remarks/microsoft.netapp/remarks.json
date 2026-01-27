@@ -41,5 +41,47 @@
       "Path": "samples/netappaccounts/snapshotpolicies/main.tf",
       "Description": "A basic example of deploying NetApp Snapshot Policy."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts",
+      "Path": "samples/netappaccounts/main.bicep",
+      "Description": "A basic example of deploying NetApp Account."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts/backupPolicies",
+      "Path": "samples/netappaccounts/backuppolicies/main.bicep",
+      "Description": "A basic example of deploying NetApp Backup Policy."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts/backupVaults",
+      "Path": "samples/netappaccounts/backupvaults/main.bicep",
+      "Description": "A basic example of deploying NetApp Backup Vault."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts/capacityPools",
+      "Path": "samples/netappaccounts/capacitypools/main.bicep",
+      "Description": "A basic example of deploying Pool within a NetApp Account."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes",
+      "Path": "samples/netappaccounts/capacitypools/volumes/main.bicep",
+      "Description": "A basic example of deploying NetApp Volume."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots",
+      "Path": "samples/netappaccounts/capacitypools/volumes/snapshots/main.bicep",
+      "Description": "A basic example of deploying NetApp Snapshot."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules",
+      "Path": "samples/netappaccounts/capacitypools/volumes/volumequotarules/main.bicep",
+      "Description": "A basic example of deploying Volume Quota Rule."
+    },
+    {
+      "ResourceType": "Microsoft.NetApp/netAppAccounts/snapshotPolicies",
+      "Path": "samples/netappaccounts/snapshotpolicies/main.bicep",
+      "Description": "A basic example of deploying NetApp Snapshot Policy."
+    }
   ]
 }

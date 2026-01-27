@@ -41,5 +41,42 @@
       "Path": "samples/managedenvironments/storages/main.tf",
       "Description": "A basic example of deploying Container App Environment Storage."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.App/containerApps",
+      "Path": "samples/containerapps/main.bicep",
+      "Description": "A basic example of deploying Container App."
+    },
+    {
+      "ResourceType": "Microsoft.App/jobs",
+      "Path": "samples/jobs/main.bicep",
+      "Description": "A basic example of deploying Container App Job."
+    },
+    {
+      "ResourceType": "Microsoft.App/managedEnvironments",
+      "Path": "samples/managedenvironments/main.bicep",
+      "Description": "A basic example of deploying Container App Environment."
+    },
+    {
+      "ResourceType": "Microsoft.App/managedEnvironments/certificates",
+      "Path": "samples/managedenvironments/certificates/main.bicep",
+      "Description": "A basic example of deploying Container App Environment Certificate."
+    },
+    {
+      "ResourceType": "Microsoft.App/managedEnvironments/daprComponents",
+      "Path": "samples/managedenvironments/daprcomponents/main.bicep",
+      "Description": "A basic example of deploying Dapr Component for a Container App Environment."
+    },
+    {
+      "ResourceType": "Microsoft.App/managedEnvironments/dotNetComponents",
+      "Path": "samples/managedenvironments/dotnetcomponents/main.bicep",
+      "Description": "A basic example of deploying App Managed Environments .NET Components."
+    },
+    {
+      "ResourceType": "Microsoft.App/managedEnvironments/storages",
+      "Path": "samples/managedenvironments/storages/main.bicep",
+      "Description": "A basic example of deploying Container App Environment Storage."
+    }
   ]
 }

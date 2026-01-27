@@ -61,5 +61,52 @@
       "Path": "samples/storageaccounts/tableservices/tables/main.tf",
       "Description": "A basic example of deploying Table within Azure Storage."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts",
+      "Path": "samples/storageaccounts/basic/main.bicep",
+      "Description": "A basic example of deploying Azure Storage Account."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/blobServices",
+      "Path": "samples/storageaccounts/blobservices/main.bicep",
+      "Description": "A basic example of deploying Blob Service within Azure Storage."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "Path": "samples/storageaccounts/blobservices/containers/main.bicep",
+      "Description": "A basic example of deploying Blob Container within Azure Storage."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies",
+      "Path": "samples/storageaccounts/blobservices/containers/immutabilitypolicies/main.bicep",
+      "Description": "A basic example of deploying Immutability Policy for a Container within an Azure Storage Account."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "Path": "samples/storageaccounts/fileservices/shares/main.bicep",
+      "Description": "A basic example of deploying File Share within Azure Storage."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/localUsers",
+      "Path": "samples/storageaccounts/localusers/basic/main.bicep",
+      "Description": "A basic example of deploying Storage Account Local User."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/managementPolicies",
+      "Path": "samples/storageaccounts/managementpolicies/main.bicep",
+      "Description": "A basic example of deploying Azure Storage Account Management Policy."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/queueServices/queues",
+      "Path": "samples/storageaccounts/queueservices/queues/main.bicep",
+      "Description": "A basic example of deploying Queue within Azure Storage."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/tableServices/tables",
+      "Path": "samples/storageaccounts/tableservices/tables/main.bicep",
+      "Description": "A basic example of deploying Table within Azure Storage."
+    }
   ]
 }

@@ -11,5 +11,17 @@
       "Path": "samples/maintenanceconfigurations/main.tf",
       "Description": "A basic example of deploying Maintenance Configuration."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Maintenance/configurationAssignments",
+      "Path": "samples/configurationassignments/main.bicep",
+      "Description": "A basic example of deploying Maintenance Assignment."
+    },
+    {
+      "ResourceType": "Microsoft.Maintenance/maintenanceConfigurations",
+      "Path": "samples/maintenanceconfigurations/main.bicep",
+      "Description": "A basic example of deploying Maintenance Configuration."
+    }
   ]
 }

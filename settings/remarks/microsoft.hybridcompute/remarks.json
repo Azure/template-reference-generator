@@ -11,5 +11,17 @@
       "Path": "samples/privatelinkscopes/main.tf",
       "Description": "A basic example of deploying Azure Arc Private Link Scope."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HybridCompute/machines",
+      "Path": "samples/machines/main.bicep",
+      "Description": "A basic example of deploying Hybrid Compute Machine."
+    },
+    {
+      "ResourceType": "Microsoft.HybridCompute/privateLinkScopes",
+      "Path": "samples/privatelinkscopes/main.bicep",
+      "Description": "A basic example of deploying Azure Arc Private Link Scope."
+    }
   ]
 }

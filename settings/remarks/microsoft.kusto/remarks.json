@@ -46,5 +46,37 @@
       "Path": "samples/clusters/principalassignments/main.tf",
       "Description": "A basic example of deploying Kusto Cluster Principal Assignment."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Kusto/clusters",
+      "Path": "samples/clusters/main.bicep",
+      "Description": "A basic example of deploying Kusto (also known as Azure Data Explorer) Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters/databases",
+      "Path": "samples/clusters/databases/main.bicep",
+      "Description": "A basic example of deploying Kusto / Data Explorer Database."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters/databases/principalAssignments",
+      "Path": "samples/clusters/databases/principalassignments/main.bicep",
+      "Description": "A basic example of deploying Kusto / Data Explorer Database Principal Assignment."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters/databases/scripts",
+      "Path": "samples/clusters/databases/scripts/main.bicep",
+      "Description": "A basic example of deploying Kusto Script."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters/managedPrivateEndpoints",
+      "Path": "samples/clusters/managedprivateendpoints/main.bicep",
+      "Description": "A basic example of deploying Managed Private Endpoint for a Kusto Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.Kusto/clusters/principalAssignments",
+      "Path": "samples/clusters/principalassignments/main.bicep",
+      "Description": "A basic example of deploying Kusto Cluster Principal Assignment."
+    }
   ]
 }

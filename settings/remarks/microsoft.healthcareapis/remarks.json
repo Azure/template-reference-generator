@@ -31,5 +31,37 @@
       "Path": "samples/workspaces/iotconnectors/fhirdestinations/main.tf",
       "Description": "A basic example of deploying Healthcare Med Tech (Internet of Medical Things) Service Fhir Destination."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HealthcareApis/services",
+      "Path": "samples/services/main.bicep",
+      "Description": "A basic example of deploying Healthcare Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces",
+      "Path": "samples/workspaces/main.bicep",
+      "Description": "A basic example of deploying Healthcare Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/dicomServices",
+      "Path": "samples/workspaces/dicomservices/main.bicep",
+      "Description": "A basic example of deploying Healthcare DICOM (Digital Imaging and Communications in Medicine) Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/fhirServices",
+      "Path": "samples/workspaces/fhirservices/main.bicep",
+      "Description": "A basic example of deploying Healthcare FHIR (Fast Healthcare Interoperability Resources) Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/iotConnectors",
+      "Path": "samples/workspaces/iotconnectors/main.bicep",
+      "Description": "A basic example of deploying Healthcare MedTech (Internet of Medical Things) devices Service."
+    },
+    {
+      "ResourceType": "Microsoft.HealthcareApis/workspaces/iotConnectors/fhirDestinations",
+      "Path": "samples/workspaces/iotconnectors/fhirdestinations/main.bicep",
+      "Description": "A basic example of deploying Healthcare Med Tech (Internet of Medical Things) Service Fhir Destination."
+    }
   ]
 }

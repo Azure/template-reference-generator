@@ -44,5 +44,37 @@
       "Path": "samples/redisenterprise/databases/main.tf",
       "Description": "A basic example of deploying Redis Enterprise Database."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Cache/redis",
+      "Path": "samples/redis/main.bicep",
+      "Description": "A basic example of deploying Redis Cache."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/accessPolicies",
+      "Path": "samples/redis/accesspolicies/main.bicep",
+      "Description": "A basic example of deploying Redis Cache Access Policy."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/accessPolicyAssignments",
+      "Path": "samples/redis/accesspolicyassignments/main.bicep",
+      "Description": "A basic example of deploying Redis Cache Access Policy Assignment."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/firewallRules",
+      "Path": "samples/redis/firewallrules/main.bicep",
+      "Description": "A basic example of deploying Firewall Rule associated with a Redis Cache."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redisEnterprise",
+      "Path": "samples/redisenterprise/main.bicep",
+      "Description": "A basic example of deploying Redis Enterprise Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redisEnterprise/databases",
+      "Path": "samples/redisenterprise/databases/main.bicep",
+      "Description": "A basic example of deploying Redis Enterprise Database."
+    }
   ]
 }
