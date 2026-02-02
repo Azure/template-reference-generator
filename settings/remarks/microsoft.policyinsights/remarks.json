@@ -11,5 +11,12 @@
       "Path": "samples/remediations/main.tf",
       "Description": "A basic example of deploying Azure Policy Remediation."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.PolicyInsights/remediations",
+      "Path": "samples/remediations/main.bicep",
+      "Description": "A basic example of deploying Azure Policy Remediation."
+    }
   ]
 }

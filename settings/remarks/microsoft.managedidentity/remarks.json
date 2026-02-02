@@ -11,5 +11,17 @@
       "Path": "samples/userassignedidentities/federatedidentitycredentials/main.tf",
       "Description": "A basic example of deploying Federated Identity Credential."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "Path": "samples/userassignedidentities/main.bicep",
+      "Description": "A basic example of deploying User Assigned Identity."
+    },
+    {
+      "ResourceType": "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials",
+      "Path": "samples/userassignedidentities/federatedidentitycredentials/main.bicep",
+      "Description": "A basic example of deploying Federated Identity Credential."
+    }
   ]
 }

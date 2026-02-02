@@ -51,5 +51,57 @@
       "Path": "samples/mediaservices/transforms/main.tf",
       "Description": "A basic example of deploying Media Services Transforms."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Media/mediaServices",
+      "Path": "samples/mediaservices/main.bicep",
+      "Description": "A basic example of deploying Media Services."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/accountFilters",
+      "Path": "samples/mediaservices/accountfilters/main.bicep",
+      "Description": "A basic example of deploying Media Services Account Filters."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/assets",
+      "Path": "samples/mediaservices/assets/main.bicep",
+      "Description": "A basic example of deploying Media Services Assets."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/assets/assetFilters",
+      "Path": "samples/mediaservices/assets/assetfilters/main.bicep",
+      "Description": "A basic example of deploying Media Services Asset Filters."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/contentKeyPolicies",
+      "Path": "samples/mediaservices/contentkeypolicies/main.bicep",
+      "Description": "A basic example of deploying Media Services Content Key Policies."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/liveEvents",
+      "Path": "samples/mediaservices/liveevents/main.bicep",
+      "Description": "A basic example of deploying Media Services Live Events."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/streamingEndpoints",
+      "Path": "samples/mediaservices/streamingendpoints/main.bicep",
+      "Description": "A basic example of deploying Media Services Streaming Endpoints."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/streamingLocators",
+      "Path": "samples/mediaservices/streaminglocators/main.bicep",
+      "Description": "A basic example of deploying Media Services Streaming Locators."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/streamingPolicies",
+      "Path": "samples/mediaservices/streamingpolicies/main.bicep",
+      "Description": "A basic example of deploying Media Services Streaming Policies."
+    },
+    {
+      "ResourceType": "Microsoft.Media/mediaServices/transforms",
+      "Path": "samples/mediaservices/transforms/main.bicep",
+      "Description": "A basic example of deploying Media Services Transforms."
+    }
   ]
 }

@@ -6,5 +6,12 @@
       "Path": "samples/budgets/main.tf",
       "Description": "A basic example of deploying Consumption Budget."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Consumption/budgets",
+      "Path": "samples/budgets/main.bicep",
+      "Description": "A basic example of deploying Consumption Budget."
+    }
   ]
 }

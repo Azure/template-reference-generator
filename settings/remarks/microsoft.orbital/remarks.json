@@ -6,5 +6,12 @@
       "Path": "samples/spacecrafts/main.tf",
       "Description": "A basic example of deploying Spacecraft resource."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Orbital/spacecrafts",
+      "Path": "samples/spacecrafts/main.bicep",
+      "Description": "A basic example of deploying Spacecraft resource."
+    }
   ]
 }

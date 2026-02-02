@@ -16,5 +16,17 @@
       "Path": "samples/nginxdeployments/configurations/main.tf",
       "Description": "A basic example of deploying configuration for a Nginx Deployment."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Nginx.NginxPlus/nginxDeployments",
+      "Path": "samples/nginxdeployments/main.bicep",
+      "Description": "A basic example of deploying NGINX Deployment."
+    },
+    {
+      "ResourceType": "Nginx.NginxPlus/nginxDeployments/configurations",
+      "Path": "samples/nginxdeployments/configurations/main.bicep",
+      "Description": "A basic example of deploying configuration for a Nginx Deployment."
+    }
   ]
 }

@@ -61,5 +61,57 @@
       "Path": "samples/vaults/replicationpolicies/main.tf",
       "Description": "A basic example of deploying Azure Site Recovery replication policy on Azure."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults",
+      "Path": "samples/vaults/main.bicep",
+      "Description": "A basic example of deploying Recovery Services Vault."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/backupPolicies",
+      "Path": "samples/vaults/backuppolicies/main.bicep",
+      "Description": "A basic example of deploying Backup Policy."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/backupResourceGuardProxies",
+      "Path": "samples/vaults/backupresourceguardproxies/main.bicep",
+      "Description": "A basic example of deploying association of a Resource Guard and Recovery Services Vault."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/backupStorageConfig",
+      "Path": "samples/vaults/backupstorageconfig/main.bicep",
+      "Description": "A basic example of deploying Azure Backup Storage Configuration."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/backupconfig",
+      "Path": "samples/vaults/backupconfig/main.bicep",
+      "Description": "A basic example of deploying Recovery Services Vaults Backup Config."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/replicationFabrics",
+      "Path": "samples/vaults/replicationfabrics/main.bicep",
+      "Description": "A basic example of deploying Site Recovery Replication Fabric on Azure."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings",
+      "Path": "samples/vaults/replicationfabrics/replicationnetworks/replicationnetworkmappings/main.bicep",
+      "Description": "A basic example of deploying site recovery network mapping on Azure."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers",
+      "Path": "samples/vaults/replicationfabrics/replicationprotectioncontainers/main.bicep",
+      "Description": "A basic example of deploying site recovery services protection container on Azure."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionContainerMappings",
+      "Path": "samples/vaults/replicationfabrics/replicationprotectioncontainers/replicationprotectioncontainermappings/main.bicep",
+      "Description": "A basic example of deploying Site Recovery protection container mapping on Azure."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/replicationPolicies",
+      "Path": "samples/vaults/replicationpolicies/main.bicep",
+      "Description": "A basic example of deploying Azure Site Recovery replication policy on Azure."
+    }
   ]
 }

@@ -36,5 +36,42 @@
       "Path": "samples/watchlists/watchlistitems/main.tf",
       "Description": "A basic example of deploying Sentinel Watchlist Item."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.SecurityInsights/alertRules",
+      "Path": "samples/alertrules/main.bicep",
+      "Description": "A basic example of deploying Sentinel Alert Rule."
+    },
+    {
+      "ResourceType": "Microsoft.SecurityInsights/automationRules",
+      "Path": "samples/automationrules/main.bicep",
+      "Description": "A basic example of deploying Sentinel Automation Rule."
+    },
+    {
+      "ResourceType": "Microsoft.SecurityInsights/dataConnectors",
+      "Path": "samples/dataconnectors/main.bicep",
+      "Description": "A basic example of deploying Data Connector."
+    },
+    {
+      "ResourceType": "Microsoft.SecurityInsights/metadata",
+      "Path": "samples/metadata/main.bicep",
+      "Description": "A basic example of deploying Sentinel Metadata."
+    },
+    {
+      "ResourceType": "Microsoft.SecurityInsights/onboardingStates",
+      "Path": "samples/onboardingstates/main.bicep",
+      "Description": "A basic example of deploying Security Insights Sentinel Onboarding States."
+    },
+    {
+      "ResourceType": "Microsoft.SecurityInsights/watchlists",
+      "Path": "samples/watchlists/main.bicep",
+      "Description": "A basic example of deploying Sentinel Watchlist."
+    },
+    {
+      "ResourceType": "Microsoft.SecurityInsights/watchlists/watchlistItems",
+      "Path": "samples/watchlists/watchlistitems/main.bicep",
+      "Description": "A basic example of deploying Sentinel Watchlist Item."
+    }
   ]
 }

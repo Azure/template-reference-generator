@@ -50,5 +50,42 @@
       "Path": "samples/roledefinitions/main.tf",
       "Description": "A basic example of deploying custom Role Definition."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Authorization/locks",
+      "Path": "samples/locks/main.bicep",
+      "Description": "A basic example of deploying Management Lock which is scoped to a Subscription, Resource Group or Resource."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policyAssignments",
+      "Path": "samples/policyassignments/main.bicep",
+      "Description": "A basic example of deploying Policy Assignment."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policyDefinitions",
+      "Path": "samples/policydefinitions/main.bicep",
+      "Description": "A basic example of deploying Authorization Policy Definitions."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policyExemptions",
+      "Path": "samples/policyexemptions/main.bicep",
+      "Description": "A basic example of deploying Policy Exemption."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/policySetDefinitions",
+      "Path": "samples/policysetdefinitions/main.bicep",
+      "Description": "A basic example of deploying policy set definition."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/resourceManagementPrivateLinks",
+      "Path": "samples/resourcemanagementprivatelinks/main.bicep",
+      "Description": "A basic example of deploying Resource Management Private Link to restrict access for managing resources in the tenant."
+    },
+    {
+      "ResourceType": "Microsoft.Authorization/roleDefinitions",
+      "Path": "samples/roledefinitions/main.bicep",
+      "Description": "A basic example of deploying custom Role Definition."
+    }
   ]
 }

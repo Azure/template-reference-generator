@@ -126,5 +126,127 @@
       "Path": "samples/virtualmachines/runcommands/main.tf",
       "Description": "A basic example of deploying Virtual Machine Run Command."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Compute/availabilitySets",
+      "Path": "samples/availabilitysets/main.bicep",
+      "Description": "A basic example of deploying Availability Set for Virtual Machines."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/capacityReservationGroups",
+      "Path": "samples/capacityreservationgroups/main.bicep",
+      "Description": "A basic example of deploying Capacity Reservation Group."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/capacityReservationGroups/capacityReservations",
+      "Path": "samples/capacityreservationgroups/capacityreservations/main.bicep",
+      "Description": "A basic example of deploying Capacity Reservation within a Capacity Reservation Group."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/diskAccesses",
+      "Path": "samples/diskaccesses/main.bicep",
+      "Description": "A basic example of deploying Disk Access."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/diskEncryptionSets",
+      "Path": "samples/diskencryptionsets/main.bicep",
+      "Description": "A basic example of deploying Disk Encryption Set."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/disks",
+      "Path": "samples/disks/main.bicep",
+      "Description": "A basic example of deploying Managed Disk."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/galleries",
+      "Path": "samples/galleries/main.bicep",
+      "Description": "A basic example of deploying Shared Image Gallery."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/galleries/applications",
+      "Path": "samples/galleries/applications/main.bicep",
+      "Description": "A basic example of deploying Gallery Application."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/galleries/applications/versions",
+      "Path": "samples/galleries/applications/versions/main.bicep",
+      "Description": "A basic example of deploying Gallery Application Version."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/galleries/images",
+      "Path": "samples/galleries/images/main.bicep",
+      "Description": "A basic example of deploying Shared Image within a Shared Image Gallery."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/hostGroups",
+      "Path": "samples/hostgroups/main.bicep",
+      "Description": "A basic example of deploying Dedicated Host Group."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/hostGroups/hosts",
+      "Path": "samples/hostgroups/hosts/main.bicep",
+      "Description": "A basic example of deploying Dedicated Host within a Dedicated Host Group."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/proximityPlacementGroups",
+      "Path": "samples/proximityplacementgroups/main.bicep",
+      "Description": "A basic example of deploying proximity placement group for virtual machines, virtual machine scale sets and availability sets."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/restorePointCollections",
+      "Path": "samples/restorepointcollections/main.bicep",
+      "Description": "A basic example of deploying Virtual Machine Restore Point Collection."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/restorePointCollections/restorePoints",
+      "Path": "samples/restorepointcollections/restorepoints/main.bicep",
+      "Description": "A basic example of deploying Virtual Machine Restore Point."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/snapshots",
+      "Path": "samples/snapshots/main.bicep",
+      "Description": "A basic example of deploying Disk Snapshot."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/sshPublicKeys",
+      "Path": "samples/sshpublickeys/main.bicep",
+      "Description": "A basic example of deploying SSH Public Key."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachineScaleSets",
+      "Path": "samples/virtualmachinescalesets/main.bicep",
+      "Description": "A basic example of deploying Virtual Machine scale set."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachineScaleSets/extensions",
+      "Path": "samples/virtualmachinescalesets/extensions/main.bicep",
+      "Description": "A basic example of deploying Extension for a Virtual Machine Scale Set."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachines",
+      "Path": "samples/virtualmachines/attachdatadisk/main.bicep",
+      "Description": "A attachdatadisk example of deploying Virtual Machine."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachines",
+      "Path": "samples/virtualmachines/attachosdisk/main.bicep",
+      "Description": "A attachosdisk example of deploying Virtual Machine."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachines",
+      "Path": "samples/virtualmachines/basic/main.bicep",
+      "Description": "A basic example of deploying Virtual Machine."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachines/extensions",
+      "Path": "samples/virtualmachines/extensions/main.bicep",
+      "Description": "A basic example of deploying Virtual Machine Extension to provide post deployment."
+    },
+    {
+      "ResourceType": "Microsoft.Compute/virtualMachines/runCommands",
+      "Path": "samples/virtualmachines/runcommands/main.bicep",
+      "Description": "A basic example of deploying Virtual Machine Run Command."
+    }
   ]
 }

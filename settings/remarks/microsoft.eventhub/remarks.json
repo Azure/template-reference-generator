@@ -41,5 +41,47 @@
       "Path": "samples/namespaces/schemagroups/main.tf",
       "Description": "A basic example of deploying Schema Group for a EventHub Namespace."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.EventHub/clusters",
+      "Path": "samples/clusters/main.bicep",
+      "Description": "A basic example of deploying EventHub Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces",
+      "Path": "samples/namespaces/main.bicep",
+      "Description": "A basic example of deploying EventHub Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces/authorizationRules",
+      "Path": "samples/namespaces/authorizationrules/main.bicep",
+      "Description": "A basic example of deploying Authorization Rule for an Event Hub Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces/disasterRecoveryConfigs",
+      "Path": "samples/namespaces/disasterrecoveryconfigs/main.bicep",
+      "Description": "A basic example of deploying Disaster Recovery Config for an Event Hub Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces/eventhubs",
+      "Path": "samples/namespaces/eventhubs/main.bicep",
+      "Description": "A basic example of deploying Event Hubs as a nested resource within an Event Hubs namespace."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces/eventhubs/authorizationRules",
+      "Path": "samples/namespaces/eventhubs/authorizationrules/main.bicep",
+      "Description": "A basic example of deploying Event Hubs authorization Rule within an Event Hub."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces/eventhubs/consumerGroups",
+      "Path": "samples/namespaces/eventhubs/consumergroups/main.bicep",
+      "Description": "A basic example of deploying Event Hubs Consumer Group as a nested resource within an Event Hub."
+    },
+    {
+      "ResourceType": "Microsoft.EventHub/namespaces/schemaGroups",
+      "Path": "samples/namespaces/schemagroups/main.bicep",
+      "Description": "A basic example of deploying Schema Group for a EventHub Namespace."
+    }
   ]
 }

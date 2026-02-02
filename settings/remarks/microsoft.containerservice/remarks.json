@@ -34,5 +34,32 @@
       "Path": "samples/managedclusters/trustedaccessrolebindings/main.tf",
       "Description": "A basic example of deploying Kubernetes Cluster Trusted Access Role Binding."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.ContainerService/fleets",
+      "Path": "samples/fleets/main.bicep",
+      "Description": "A basic example of deploying Kubernetes Fleet Manager."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/fleets/members",
+      "Path": "samples/fleets/members/main.bicep",
+      "Description": "A basic example of deploying Kubernetes Fleet Member."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters",
+      "Path": "samples/managedclusters/main.bicep",
+      "Description": "A basic example of deploying managed Kubernetes Cluster (also known as AKS / Azure Kubernetes Service)."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters/agentPools",
+      "Path": "samples/managedclusters/agentpools/main.bicep",
+      "Description": "A basic example of deploying Node Pool within a Kubernetes Cluster."
+    },
+    {
+      "ResourceType": "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings",
+      "Path": "samples/managedclusters/trustedaccessrolebindings/main.bicep",
+      "Description": "A basic example of deploying Kubernetes Cluster Trusted Access Role Binding."
+    }
   ]
 }

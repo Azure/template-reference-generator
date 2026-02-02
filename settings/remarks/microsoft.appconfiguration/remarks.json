@@ -6,5 +6,12 @@
       "Path": "samples/configurationstores/main.tf",
       "Description": "A basic example of deploying Azure App Configuration."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.AppConfiguration/configurationStores",
+      "Path": "samples/configurationstores/main.bicep",
+      "Description": "A basic example of deploying Azure App Configuration."
+    }
   ]
 }

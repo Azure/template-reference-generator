@@ -98,6 +98,19 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   }
 }
 ```
+A basic example of deploying Resource Group.
+
+```bicep
+targetScope = 'subscription'
+
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
+
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: resourceName
+  location: location
+}
+```
 ### Azure Verified Modules
 
 The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
