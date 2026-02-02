@@ -92,6 +92,37 @@ resource symbolicname 'Microsoft.Authorization/roleDefinitions@2022-04-01' = {
 | type | The role type. | string |
 
 ## Usage Examples
+### Bicep Samples
+
+A basic example of deploying custom Role Definition.
+
+```bicep
+targetScope = 'subscription'
+
+param resourceName string = 'acctest0001'
+
+resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' = {
+  name: '6faae21a-0cd6-4536-8c23-a278823d12ed'
+  properties: {
+    assignableScopes: [
+      subscription().id
+    ]
+    description: ''
+    permissions: [
+      {
+        actions: [
+          '*'
+        ]
+        dataActions: []
+        notActions: []
+        notDataActions: []
+      }
+    ]
+    roleName: 'acctest0001'
+    type: 'CustomRole'
+  }
+}
+```
 ### Azure Quickstart Samples
 
 The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep samples for deploying this resource type.
