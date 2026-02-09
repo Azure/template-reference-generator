@@ -2,13 +2,13 @@
   "$schema": "../../schemas/remarks.schema.json",
   "ResourceRemarks": [
     {
-      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App containerApps](../../../microsoft.app/containerapps.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109).",
+      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App containerApps](/azure/templates/microsoft.app/containerapps.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109).",
       "ResourceTypes": [
         "microsoft.web/containerapps"
       ]
     },
     {
-      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App managedEnvironments](../../../Microsoft.App/managedEnvironments.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109).",
+      "Description": "This resource type has migrated to the **Microsoft.App** namespace. For the new resource type, see [Microsoft.App managedEnvironments](/azure/templates/microsoft.app/managedenvironments.md).\n\nFor information about the migration, see [Action Required: Namespace migration from Microsoft.Web to Microsoft.App in March 2022](https://github.com/microsoft/azure-container-apps/issues/109).",
       "ResourceTypes": [
         "microsoft.web/kubeenvironments"
       ]
