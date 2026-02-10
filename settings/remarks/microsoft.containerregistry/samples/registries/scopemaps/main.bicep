@@ -4,14 +4,11 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Premium'
+    name: 'Premium'
+  }
   properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
-    dataEndpointEnabled: false
-    encryption: {
-      status: 'disabled'
-    }
-    networkRuleBypassOptions: 'AzureServices'
     policies: {
       exportPolicy: {
         status: 'enabled'
@@ -26,18 +23,21 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
         status: 'disabled'
       }
     }
-    publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Premium'
-    tier: 'Premium'
+    adminUserEnabled: false
+    anonymousPullEnabled: false
+    dataEndpointEnabled: false
+    publicNetworkAccess: 'Enabled'
+    encryption: {
+      status: 'disabled'
+    }
+    networkRuleBypassOptions: 'AzureServices'
   }
 }
 
 resource scopeMap 'Microsoft.ContainerRegistry/registries/scopeMaps@2021-08-01-preview' = {
-  parent: registry
   name: resourceName
+  parent: registry
   properties: {
     actions: [
       'repositories/testrepo/content/read'

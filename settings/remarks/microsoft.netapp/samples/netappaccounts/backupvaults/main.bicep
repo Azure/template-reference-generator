@@ -8,7 +8,7 @@ resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
 }
 
 resource backupVault 'Microsoft.NetApp/netAppAccounts/backupVaults@2025-01-01' = {
-  parent: netAppAccount
   name: '${resourceName}-backupvault'
   location: location
+  parent: netAppAccount
 }

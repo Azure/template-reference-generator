@@ -3,18 +3,12 @@ param location string = 'westeurope'
 
 resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
   name: 'ExportToWorkspace'
+  location: 'azapi_resource.resourceGroup.location'
   properties: {
-    actions: [
-      {
-        actionType: 'Workspace'
-        workspaceResourceId: workspace.id
-      }
-    ]
     isEnabled: true
     scopes: [
       {
         description: 'Security Export for the subscription'
-        scopePath: resourceGroup().id
       }
     ]
     sources: [
@@ -24,10 +18,10 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
           {
             rules: [
               {
-                expectedValue: 'Microsoft.Security/assessments'
-                operator: 'Contains'
                 propertyJPath: 'type'
                 propertyType: 'String'
+                expectedValue: 'Microsoft.Security/assessments'
+                operator: 'Contains'
               }
             ]
           }
@@ -39,10 +33,10 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
           {
             rules: [
               {
-                expectedValue: 'Microsoft.Security/assessments'
-                operator: 'Contains'
                 propertyJPath: 'type'
                 propertyType: 'String'
+                expectedValue: 'Microsoft.Security/assessments'
+                operator: 'Contains'
               }
             ]
           }
@@ -55,49 +49,49 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
         eventSource: 'SubAssessmentsSnapshot'
       }
       {
-        eventSource: 'Alerts'
         ruleSets: [
           {
             rules: [
               {
-                expectedValue: 'low'
                 operator: 'Equals'
                 propertyJPath: 'Severity'
                 propertyType: 'String'
+                expectedValue: 'low'
               }
             ]
           }
           {
             rules: [
               {
+                propertyType: 'String'
                 expectedValue: 'medium'
                 operator: 'Equals'
                 propertyJPath: 'Severity'
-                propertyType: 'String'
               }
             ]
           }
           {
             rules: [
               {
-                expectedValue: 'high'
                 operator: 'Equals'
                 propertyJPath: 'Severity'
                 propertyType: 'String'
+                expectedValue: 'high'
               }
             ]
           }
           {
             rules: [
               {
+                propertyType: 'String'
                 expectedValue: 'informational'
                 operator: 'Equals'
                 propertyJPath: 'Severity'
-                propertyType: 'String'
               }
             ]
           }
         ]
+        eventSource: 'Alerts'
       }
       {
         eventSource: 'SecureScores'
@@ -118,6 +112,11 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
         eventSource: 'RegulatoryComplianceAssessmentSnapshot'
       }
     ]
+    actions: [
+      {
+        actionType: 'Workspace'
+      }
+    ]
   }
 }
 
@@ -125,6 +124,12 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    sku: {
+      name: 'PerGB2018'
+    }
+    workspaceCapping: {
+      dailyQuotaGb: -1
+    }
     features: {
       disableLocalAuth: false
       enableLogAccessUsingOnlyResourcePermissions: true
@@ -132,11 +137,5 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
-    }
-    workspaceCapping: {
-      dailyQuotaGb: -1
-    }
   }
 }

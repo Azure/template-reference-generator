@@ -1,13 +1,14 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
   name: '${resourceName}.com'
   location: 'global'
 }
 
-resource aaaa 'Microsoft.Network/privateDnsZones/AAAA@2018-09-01' = {
-  parent: privateDnsZone
+resource aAAA 'Microsoft.Network/privateDnsZones/AAAA@2018-09-01' = {
   name: resourceName
+  parent: privateDnsZone
   properties: {
     aaaaRecords: [
       {

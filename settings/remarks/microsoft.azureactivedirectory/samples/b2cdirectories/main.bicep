@@ -10,15 +10,14 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 
 resource b2cDirectory 'Microsoft.AzureActiveDirectory/b2cDirectories@2021-04-01-preview' = {
   name: '${resourceName}.onmicrosoft.com'
-  location: 'United States'
-  properties: {
-    createTenantProperties: {
-      countryCode: 'US'
-      displayName: 'acctest0003'
-    }
-  }
   sku: {
     name: 'PremiumP1'
     tier: 'A0'
+  }
+  properties: {
+    createTenantProperties: {
+      countryCode: 'US'
+      displayName: '${resourceName}'
+    }
   }
 }

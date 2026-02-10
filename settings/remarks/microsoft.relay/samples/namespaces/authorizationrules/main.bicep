@@ -4,16 +4,16 @@ param location string = 'westeurope'
 resource namespace 'Microsoft.Relay/namespaces@2017-04-01' = {
   name: resourceName
   location: location
-  properties: {}
   sku: {
     name: 'Standard'
     tier: 'Standard'
   }
+  properties: {}
 }
 
 resource authorizationRule 'Microsoft.Relay/namespaces/authorizationRules@2017-04-01' = {
-  parent: namespace
   name: resourceName
+  parent: namespace
   properties: {
     rights: [
       'Listen'

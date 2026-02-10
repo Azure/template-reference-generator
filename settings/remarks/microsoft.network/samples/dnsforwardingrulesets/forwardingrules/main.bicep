@@ -1,25 +1,11 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource dnsForwardingRuleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    dnsResolverOutboundEndpoints: [
-      {
-        id: outboundEndpoint.id
-      }
-    ]
-  }
-}
-
 resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    virtualNetwork: {
-      id: virtualNetwork.id
-    }
+    virtualNetwork: {}
   }
 }
 
@@ -27,6 +13,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
@@ -35,13 +22,22 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     dhcpOptions: {
       dnsServers: []
     }
-    subnets: []
+  }
+}
+
+resource dnsForwardingRuleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    dnsResolverOutboundEndpoints: [
+      {}
+    ]
   }
 }
 
 resource forwardingRule 'Microsoft.Network/dnsForwardingRulesets/forwardingRules@2022-07-01' = {
-  parent: dnsForwardingRuleset
   name: resourceName
+  parent: dnsForwardingRuleset
   properties: {
     domainName: 'onprem.local.'
     forwardingRuleState: 'Enabled'
@@ -56,20 +52,21 @@ resource forwardingRule 'Microsoft.Network/dnsForwardingRulesets/forwardingRules
 }
 
 resource outboundEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-01' = {
-  parent: dnsResolver
   name: resourceName
   location: location
+  parent: dnsResolver
   properties: {
-    subnet: {
-      id: subnet.id
-    }
+    subnet: {}
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'outbounddns'
+  parent: virtualNetwork
   properties: {
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
     addressPrefix: '10.0.0.64/28'
     delegations: [
       {
@@ -80,8 +77,5 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
       }
     ]
     privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

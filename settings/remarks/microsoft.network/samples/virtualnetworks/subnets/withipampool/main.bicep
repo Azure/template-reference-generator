@@ -5,14 +5,14 @@ resource networkManager 'Microsoft.Network/networkManagers@2024-05-01' = {
   name: resourceName
   location: location
   properties: {
-    description: ''
-    networkManagerScopeAccesses: []
     networkManagerScopes: {
       managementGroups: []
       subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
+        '/subscriptions/${subscription().subscriptionId}'
       ]
     }
+    description: ''
+    networkManagerScopeAccesses: []
   }
 }
 
@@ -24,9 +24,7 @@ resource vnetWithipam 'Microsoft.Network/virtualNetworks@2024-05-01' = {
       ipamPoolPrefixAllocations: [
         {
           numberOfIpAddresses: '100'
-          pool: {
-            id: ipamPool.id
-          }
+          pool: {}
         }
       ]
     }
@@ -34,22 +32,22 @@ resource vnetWithipam 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource ipamPool 'Microsoft.Network/networkManagers/ipamPools@2024-05-01' = {
-  parent: networkManager
   name: resourceName
   location: location
+  parent: networkManager
   properties: {
+    parentPoolName: ''
     addressPrefixes: [
       '10.0.0.0/24'
     ]
     description: 'Test description.'
     displayName: 'testDisplayName'
-    parentPoolName: ''
   }
 }
 
 resource subnetWithipam 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: vnetWithipam
   name: resourceName
+  parent: vnetWithipam
   properties: {
     ipamPoolPrefixAllocations: [
       {

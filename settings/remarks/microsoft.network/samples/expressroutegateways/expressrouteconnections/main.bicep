@@ -4,7 +4,7 @@ param location string = 'westeurope'
 @description('The shared key for the ExpressRoute connection')
 param sharedKey string
 
-resource expressrouteport 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
+resource expressRoutePort 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
@@ -17,17 +17,17 @@ resource expressrouteport 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
 resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Premium'
+    family: 'MeteredData'
+    name: 'Premium_MeteredData'
+  }
   properties: {
     authorizationKey: ''
     bandwidthInGbps: 5
     expressRoutePort: {
-      id: expressrouteport.id
+      id: expressRoutePort.id
     }
-  }
-  sku: {
-    family: 'MeteredData'
-    name: 'Premium_MeteredData'
-    tier: 'Premium'
   }
 }
 
@@ -41,9 +41,7 @@ resource expressRouteGateway 'Microsoft.Network/expressRouteGateways@2022-07-01'
         min: 1
       }
     }
-    virtualHub: {
-      id: virtualHub.id
-    }
+    virtualHub: {}
   }
 }
 
@@ -51,14 +49,12 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    addressPrefix: '10.0.1.0/24'
     hubRoutingPreference: 'ExpressRoute'
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {
-      id: virtualWan.id
-    }
+    virtualWan: {}
+    addressPrefix: '10.0.1.0/24'
   }
 }
 
@@ -66,21 +62,19 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    type: 'Standard'
     allowBranchToBranchTraffic: true
     disableVpnEncryption: false
     office365LocalBreakoutCategory: 'None'
-    type: 'Standard'
   }
 }
 
 resource expressRouteConnection 'Microsoft.Network/expressRouteGateways/expressRouteConnections@2022-07-01' = {
-  parent: expressRouteGateway
   name: resourceName
+  parent: expressRouteGateway
   properties: {
     enableInternetSecurity: false
-    expressRouteCircuitPeering: {
-      id: peering.id
-    }
+    expressRouteCircuitPeering: {}
     expressRouteGatewayBypass: false
     routingConfiguration: {}
     routingWeight: 0
@@ -88,17 +82,17 @@ resource expressRouteConnection 'Microsoft.Network/expressRouteGateways/expressR
 }
 
 resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = {
-  parent: expressRouteCircuit
   name: 'AzurePrivatePeering'
+  parent: expressRouteCircuit
   properties: {
     azureASN: 12076
-    gatewayManagerEtag: ''
     peerASN: 100
     peeringType: 'AzurePrivatePeering'
     primaryPeerAddressPrefix: '192.168.1.0/30'
-    secondaryPeerAddressPrefix: '192.168.2.0/30'
-    sharedKey: null
     state: 'Enabled'
+    gatewayManagerEtag: ''
+    secondaryPeerAddressPrefix: '192.168.2.0/30'
+    sharedKey: '${sharedKey}'
     vlanId: 100
   }
 }

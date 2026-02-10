@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'msincredible'
-    administratorLoginPassword: null
+    administratorLoginPassword: '${adminPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Enabled'
@@ -18,7 +18,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource outboundFirewallRule 'Microsoft.Sql/servers/outboundFirewallRules@2021-02-01-preview' = {
-  parent: server
   name: 'sql230630033612934212.database.windows.net'
+  parent: server
   properties: {}
 }

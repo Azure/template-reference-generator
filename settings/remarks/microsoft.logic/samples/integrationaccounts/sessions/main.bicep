@@ -4,19 +4,16 @@ param location string = 'westeurope'
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: resourceName
   location: location
-  properties: {}
   sku: {
     name: 'Basic'
   }
+  properties: {}
 }
 
 resource session 'Microsoft.Logic/integrationAccounts/sessions@2019-05-01' = {
-  parent: integrationAccount
   name: resourceName
+  parent: integrationAccount
   properties: {
-    content: '''	{
-       "controlNumber": "1234"
-    }
-'''
+    content: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
   }
 }

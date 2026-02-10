@@ -5,36 +5,36 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: resourceName
   location: location
   properties: {
-    accessPolicies: [
-      {
-        objectId: deployer().objectId
-        permissions: {
-          certificates: [
-            'ManageContacts'
-          ]
-          keys: [
-            'Create'
-          ]
-          secrets: [
-            'Set'
-          ]
-          storage: []
-        }
-        tenantId: deployer().tenantId
-      }
-    ]
-    createMode: 'default'
-    enableRbacAuthorization: false
-    enableSoftDelete: true
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
     sku: {
       family: 'A'
       name: 'standard'
     }
     softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
+    tenantId: tenant().tenantId
+    accessPolicies: [
+      {
+        objectId: deployer().objectId
+        permissions: {
+          secrets: [
+            'Set'
+          ]
+          storage: []
+          certificates: [
+            'ManageContacts'
+          ]
+          keys: [
+            'Create'
+          ]
+        }
+        tenantId: tenant().tenantId
+      }
+    ]
+    enableRbacAuthorization: false
+    enabledForDeployment: false
+    enabledForDiskEncryption: false
+    enabledForTemplateDeployment: false
+    createMode: 'default'
+    enableSoftDelete: true
   }
 }

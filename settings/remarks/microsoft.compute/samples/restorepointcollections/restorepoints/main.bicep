@@ -1,35 +1,11 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: '${resourceName}-nic'
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
 resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
   name: '${resourceName}-rpc'
   location: location
   properties: {
-    source: {
-      id: virtualMachine.id
-    }
+    source: {}
   }
 }
 
@@ -37,7 +13,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: '${resourceName}-vm'
   location: location
   properties: {
-    additionalCapabilities: {}
     applicationProfile: {
       galleryApplications: []
     }
@@ -46,10 +21,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         enabled: false
         storageUri: ''
       }
-    }
-    extensionsTimeBudget: 'PT1H30M'
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
     }
     networkProfile: {
       networkInterfaces: [
@@ -61,10 +32,12 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         }
       ]
     }
+    additionalCapabilities: {}
+    extensionsTimeBudget: 'PT1H30M'
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
+    }
     osProfile: {
-      adminUsername: 'adminuser'
-      allowExtensionOperations: true
-      computerName: 'acctest0001-vm'
       linuxConfiguration: {
         disablePasswordAuthentication: true
         patchSettings: {
@@ -82,6 +55,9 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         }
       }
       secrets: []
+      adminUsername: 'adminuser'
+      allowExtensionOperations: true
+      computerName: '${resourceName}-vm'
     }
     priority: 'Regular'
     storageProfile: {
@@ -123,21 +99,41 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource restorePoint 'Microsoft.Compute/restorePointCollections/restorePoints@2024-03-01' = {
-  parent: restorePointCollection
   name: '${resourceName}-rp'
+  parent: restorePointCollection
   properties: {}
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.0.0/24'
-    defaultOutboundAccess: true
-    delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.0.0/24'
+    defaultOutboundAccess: true
+    delegations: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: '${resourceName}-nic'
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+        }
+        name: 'internal'
+      }
+    ]
   }
 }

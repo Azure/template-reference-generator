@@ -1,9 +1,11 @@
 targetScope = 'subscription'
 
+param location string = 'eastus'
 param resourceName string = 'acctest0001'
 
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
   name: resourceName
+  scope: subscription()
   properties: {
     displayName: ''
     enforcementMode: 'Default'
@@ -23,12 +25,13 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01'
 
 resource remediation 'Microsoft.PolicyInsights/remediations@2021-10-01' = {
   name: resourceName
+  scope: subscription()
   properties: {
+    resourceDiscoveryMode: 'ExistingNonCompliant'
     filters: {
       locations: []
     }
     policyAssignmentId: policyAssignment.id
     policyDefinitionReferenceId: ''
-    resourceDiscoveryMode: 'ExistingNonCompliant'
   }
 }

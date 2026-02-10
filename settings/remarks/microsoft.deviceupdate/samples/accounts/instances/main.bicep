@@ -1,10 +1,39 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
-resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+resource account 'Microsoft.DeviceUpdate/accounts@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    publicNetworkAccess: 'Enabled'
+    sku: 'Standard'
+  }
+}
+
+resource instance 'Microsoft.DeviceUpdate/accounts/instances@2022-10-01' = {
+  name: resourceName
+  location: location
+  parent: account
+  properties: {
+    accountName: account.name
+    enableDiagnostics: false
+    iotHubs: [
+      {
+        resourceId: iotHub.id
+      }
+    ]
+  }
+}
+
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+  name: resourceName
+  location: location
+  sku: {
+    capacity: 1
+    name: 'S1'
+  }
+  properties: {
+    storageEndpoints: {}
     cloudToDevice: {}
     enableFileUploadNotifications: false
     messagingEndpoints: {}
@@ -18,34 +47,5 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
         source: 'DeviceMessages'
       }
     }
-    storageEndpoints: {}
-  }
-  sku: {
-    capacity: 1
-    name: 'S1'
-  }
-}
-
-resource account 'Microsoft.DeviceUpdate/accounts@2022-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-    sku: 'Standard'
-  }
-}
-
-resource instance 'Microsoft.DeviceUpdate/accounts/instances@2022-10-01' = {
-  parent: account
-  name: resourceName
-  location: location
-  properties: {
-    accountName: account.name
-    enableDiagnostics: false
-    iotHubs: [
-      {
-        resourceId: iothub.id
-      }
-    ]
   }
 }

@@ -7,11 +7,11 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
   properties: {
     dataFlows: [
       {
-        destinations: [
-          'test-destination-metrics'
-        ]
         streams: [
           'Microsoft-InsightsMetrics'
+        ]
+        destinations: [
+          'test-destination-metrics'
         ]
       }
     ]

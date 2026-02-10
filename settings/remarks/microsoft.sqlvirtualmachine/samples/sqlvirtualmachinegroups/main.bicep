@@ -8,14 +8,14 @@ resource sqlVirtualMachineGroup 'Microsoft.SqlVirtualMachine/sqlVirtualMachineGr
     sqlImageOffer: 'SQL2017-WS2016'
     sqlImageSku: 'Developer'
     wsfcDomainProfile: {
-      clusterBootstrapAccount: ''
       clusterOperatorAccount: ''
-      clusterSubnetType: 'SingleSubnet'
-      domainFqdn: 'testdomain.com'
       ouPath: ''
       sqlServiceAccount: ''
-      storageAccountPrimaryKey: ''
       storageAccountUrl: ''
+      clusterBootstrapAccount: ''
+      clusterSubnetType: 'SingleSubnet'
+      domainFqdn: 'testdomain.com'
+      storageAccountPrimaryKey: ''
     }
   }
 }

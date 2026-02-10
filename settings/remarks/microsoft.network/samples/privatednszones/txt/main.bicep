@@ -1,15 +1,15 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
   name: '${resourceName}.com'
   location: 'global'
 }
 
-resource txt 'Microsoft.Network/privateDnsZones/TXT@2018-09-01' = {
-  parent: privateDnsZone
+resource tXT 'Microsoft.Network/privateDnsZones/TXT@2018-09-01' = {
   name: resourceName
+  parent: privateDnsZone
   properties: {
-    metadata: {}
     ttl: 300
     txtRecords: [
       {
@@ -25,5 +25,6 @@ resource txt 'Microsoft.Network/privateDnsZones/TXT@2018-09-01' = {
         ]
       }
     ]
+    metadata: {}
   }
 }

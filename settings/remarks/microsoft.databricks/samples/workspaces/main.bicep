@@ -4,8 +4,11 @@ param location string = 'eastus2'
 resource workspace 'Microsoft.Databricks/workspaces@2023-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'premium'
+  }
   properties: {
-    managedResourceGroupId: resourceId('Microsoft.Resources/resourceGroups', 'databricks-rg-${resourceName}')
+    managedResourceGroupId: resourceGroup().id
     parameters: {
       prepareEncryption: {
         value: true
@@ -15,8 +18,5 @@ resource workspace 'Microsoft.Databricks/workspaces@2023-02-01' = {
       }
     }
     publicNetworkAccess: 'Enabled'
-  }
-  sku: {
-    name: 'premium'
   }
 }

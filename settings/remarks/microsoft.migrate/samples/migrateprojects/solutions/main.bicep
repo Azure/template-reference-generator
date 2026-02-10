@@ -1,54 +1,53 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource project 'Microsoft.Migrate/migrateProjects@2020-05-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-    utilityStorageAccountId: storageAccount.id
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
     allowBlobPublicAccess: true
+    defaultToOAuthAuthentication: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        queue: {
+        table: {
           keyType: 'Service'
         }
-        table: {
+        queue: {
           keyType: 'Service'
         }
       }
     }
     isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
   }
-  sku: {
-    name: 'Standard_LRS'
+}
+
+resource project 'Microsoft.Migrate/migrateProjects@2020-05-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource solution 'Microsoft.Migrate/migrateProjects/solutions@2018-09-01-preview' = {
-  parent: project
   name: resourceName
+  parent: project
   properties: {
     summary: {
       instanceType: 'Servers'

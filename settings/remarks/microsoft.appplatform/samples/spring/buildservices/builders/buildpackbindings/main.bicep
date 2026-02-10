@@ -4,17 +4,17 @@ param location string = 'westeurope'
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    zoneRedundant: false
-  }
   sku: {
     name: 'E0'
+  }
+  properties: {
+    zoneRedundant: false
   }
 }
 
 resource buildService 'Microsoft.AppPlatform/Spring/buildServices@2023-05-01-preview' = {
-  parent: spring
   name: 'default'
+  parent: spring
   properties: {}
 }
 
@@ -39,8 +39,8 @@ resource builder 'Microsoft.AppPlatform/Spring/buildServices/builders@2023-05-01
 }
 
 resource buildpackBinding 'Microsoft.AppPlatform/Spring/buildServices/builders/buildpackBindings@2023-05-01-preview' = {
-  parent: builder
   name: resourceName
+  parent: builder
   properties: {
     bindingType: 'ApplicationInsights'
   }

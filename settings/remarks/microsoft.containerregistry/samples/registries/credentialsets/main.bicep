@@ -7,36 +7,15 @@ param credentialUsername string = 'testuser'
 @description('The password for the container registry credential')
 param credentialPassword string
 
-resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
-  name: resourceName
-  location: location
-  properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
-    dataEndpointEnabled: false
-    networkRuleBypassOptions: 'AzureServices'
-    policies: {
-      exportPolicy: {
-        status: 'enabled'
-      }
-      quarantinePolicy: {
-        status: 'disabled'
-      }
-      retentionPolicy: {}
-      trustPolicy: {}
-    }
-    publicNetworkAccess: 'Enabled'
-    zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Basic'
-  }
-}
-
 resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: '${resourceName}vault'
   location: location
   properties: {
+    enableRbacAuthorization: false
+    enableSoftDelete: true
+    enabledForTemplateDeployment: false
+    publicNetworkAccess: 'Enabled'
+    tenantId: tenant().tenantId
     accessPolicies: [
       {
         objectId: deployer().objectId
@@ -51,34 +30,55 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant().tenantId
       }
     ]
-    createMode: 'default'
-    enableRbacAuthorization: false
-    enableSoftDelete: true
     enabledForDeployment: false
     enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
-    publicNetworkAccess: 'Enabled'
     sku: {
       family: 'A'
       name: 'standard'
     }
     softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
+    createMode: 'default'
+  }
+}
+
+resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Basic'
+  }
+  properties: {
+    networkRuleBypassOptions: 'AzureServices'
+    policies: {
+      exportPolicy: {
+        status: 'enabled'
+      }
+      quarantinePolicy: {
+        status: 'disabled'
+      }
+      retentionPolicy: {}
+      trustPolicy: {}
+    }
+    publicNetworkAccess: 'Enabled'
+    zoneRedundancy: 'Disabled'
+    adminUserEnabled: false
+    anonymousPullEnabled: false
+    dataEndpointEnabled: false
   }
 }
 
 resource credentialSet 'Microsoft.ContainerRegistry/registries/credentialSets@2023-07-01' = {
-  parent: registry
   name: '${resourceName}-acr-credential-set'
+  parent: registry
   properties: {
     authCredentials: [
       {
+        usernameSecretIdentifier: 'https://${resourceName}vault.vault.azure.net/secrets/username'
         name: 'Credential1'
-        passwordSecretIdentifier: 'https://acctest0001vault.vault.azure.net/secrets/password'
-        usernameSecretIdentifier: 'https://acctest0001vault.vault.azure.net/secrets/username'
+        passwordSecretIdentifier: 'https://${resourceName}vault.vault.azure.net/secrets/password'
       }
     ]
     loginServer: 'docker.io'
@@ -86,17 +86,17 @@ resource credentialSet 'Microsoft.ContainerRegistry/registries/credentialSets@20
 }
 
 resource passwordSecret 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vault
   name: 'password'
+  parent: vault
   properties: {
-    value: null
+    value: '${credentialPassword}'
   }
 }
 
 resource usernameSecret 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vault
   name: 'username'
+  parent: vault
   properties: {
-    value: 'testuser'
+    value: '${credentialUsername}'
   }
 }

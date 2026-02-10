@@ -11,22 +11,22 @@ resource project 'Microsoft.DevCenter/projects@2025-02-01' = {
   name: '${resourceName}-proj'
   location: location
   properties: {
-    description: ''
     devCenterId: devCenter.id
     maxDevBoxesPerUser: 0
+    description: ''
   }
 }
 
 resource environmentType 'Microsoft.DevCenter/devCenters/environmentTypes@2025-02-01' = {
-  parent: devCenter
   name: '${resourceName}-envtype'
+  parent: devCenter
 }
 
 resource environmenttype1 'Microsoft.DevCenter/projects/environmentTypes@2025-02-01' = {
+  name: 'azapi_resource.environmentType.name'
   parent: project
-  name: 'environmentType.name'
   properties: {
-    deploymentTargetId: '/subscriptions/subscription().subscriptionId'
+    deploymentTargetId: '/subscriptions/${subscription().subscriptionId}'
     status: 'Enabled'
   }
 }
