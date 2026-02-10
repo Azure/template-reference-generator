@@ -2,22 +2,13 @@ param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
-}
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  properties: {}
-  sku: {
-    name: 'Standard_LRS'
-  }
+  parent: storageAccount
 }
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
   name: resourceName
+  parent: blobService
   properties: {
     metadata: {
       key: 'value'
@@ -26,10 +17,19 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
 }
 
 resource immutabilityPolicy 'Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies@2023-05-01' = {
-  parent: container
   name: 'default'
+  parent: container
   properties: {
     allowProtectedAppendWrites: false
     immutabilityPeriodSinceCreationInDays: 4
   }
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {}
 }

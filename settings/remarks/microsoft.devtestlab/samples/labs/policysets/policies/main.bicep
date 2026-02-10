@@ -6,15 +6,8 @@ resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
   location: location
 }
 
-// The policy set is a singleton named 'default' under the lab
-resource policySet 'Microsoft.DevTestLab/labs/policySets@2018-09-15' existing = {
-  parent: lab
-  name: 'default'
-}
-
 resource policy 'Microsoft.DevTestLab/labs/policySets/policies@2018-09-15' = {
-  parent: policySet
-  name: 'LabVmCount'
+  name: 'policySets/default/LabVmCount'
   properties: {
     description: ''
     evaluatorType: 'MaxValuePolicy'

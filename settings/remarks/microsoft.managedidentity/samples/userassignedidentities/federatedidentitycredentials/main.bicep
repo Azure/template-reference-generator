@@ -7,14 +7,14 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 }
 
 resource federatedIdentityCredential 'Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials@2022-01-31-preview' = {
-  parent: userAssignedIdentity
   name: resourceName
   location: location
+  parent: userAssignedIdentity
   properties: {
+    issuer: 'https://foo'
+    subject: 'foo'
     audiences: [
       'foo'
     ]
-    issuer: 'https://foo'
-    subject: 'foo'
   }
 }

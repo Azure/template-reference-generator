@@ -6,11 +6,10 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   location: location
   properties: {
     appLogsConfiguration: {
-      destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: workspace.properties.customerId
         sharedKey: workspace.listKeys().primarySharedKey
       }
+      destination: 'log-analytics'
     }
     vnetConfiguration: {}
   }

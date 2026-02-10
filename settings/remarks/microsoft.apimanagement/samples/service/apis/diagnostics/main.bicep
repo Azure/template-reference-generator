@@ -6,28 +6,32 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
-    Application_Type: 'web'
-    DisableIpMasking: false
     DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
     RetentionInDays: 90
-    SamplingPercentage: 100
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
+    Application_Type: 'web'
+    DisableIpMasking: false
+    ForceCustomerStorageForProfiler: false
+    SamplingPercentage: 100
   }
 }
 
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
-      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
@@ -35,15 +39,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
-  parent: service
   name: '${resourceName};rev=1'
+  parent: service
   properties: {
     apiType: 'http'
     apiVersion: ''
@@ -55,23 +55,23 @@ resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
 }
 
 resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
+    isBuffered: true
+    loggerType: 'applicationInsights'
     credentials: {
       instrumentationKey: component.properties.InstrumentationKey
     }
     description: ''
-    isBuffered: true
-    loggerType: 'applicationInsights'
   }
 }
 
 resource diagnostic 'Microsoft.ApiManagement/service/apis/diagnostics@2021-08-01' = {
-  parent: api
   name: 'applicationinsights'
+  parent: api
   properties: {
-    loggerId: logger.id
     operationNameFormat: 'Name'
+    loggerId: logger.id
   }
 }

@@ -10,15 +10,15 @@ resource hostGroup 'Microsoft.Compute/hostGroups@2021-11-01' = {
 }
 
 resource host 'Microsoft.Compute/hostGroups/hosts@2021-11-01' = {
-  parent: hostGroup
   name: resourceName
   location: location
-  properties: {
-    autoReplaceOnFailure: true
-    licenseType: 'None'
-    platformFaultDomain: 1
-  }
+  parent: hostGroup
   sku: {
     name: 'DSv3-Type1'
+  }
+  properties: {
+    licenseType: 'None'
+    platformFaultDomain: 1
+    autoReplaceOnFailure: true
   }
 }

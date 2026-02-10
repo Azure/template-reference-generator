@@ -8,7 +8,6 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
     publicNetworkAccess: 'Enabled'
     storageAccounts: [
       {
-        id: storageAccount.id
         type: 'Primary'
       }
     ]
@@ -18,10 +17,21 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_GRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
+    isNfsV3Enabled: false
+    isSftpEnabled: false
     allowBlobPublicAccess: true
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
@@ -37,31 +47,20 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       }
     }
     isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_GRS'
   }
 }
 
 resource asset 'Microsoft.Media/mediaServices/assets@2022-08-01' = {
-  parent: mediaService
   name: resourceName
+  parent: mediaService
   properties: {
     description: ''
   }
 }
 
 resource streamingLocator 'Microsoft.Media/mediaServices/streamingLocators@2022-08-01' = {
-  parent: mediaService
   name: resourceName
+  parent: mediaService
   properties: {
     assetName: asset.name
     streamingPolicyName: 'Predefined_ClearStreamingOnly'

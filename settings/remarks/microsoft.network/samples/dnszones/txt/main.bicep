@@ -1,3 +1,4 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
@@ -5,9 +6,9 @@ resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
   location: 'global'
 }
 
-resource txt 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
-  parent: dnsZone
+resource tXT 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
   name: resourceName
+  parent: dnsZone
   properties: {
     TTL: 300
     TXTRecords: [

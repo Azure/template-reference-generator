@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource devCenter 'Microsoft.DevCenter/devcenters@2023-04-01' = {
   name: resourceName
@@ -11,9 +11,9 @@ resource devCenter 'Microsoft.DevCenter/devcenters@2023-04-01' = {
 }
 
 resource devBoxDefinition 'Microsoft.DevCenter/devcenters/devboxdefinitions@2024-10-01-preview' = {
-  parent: devCenter
   name: resourceName
   location: location
+  parent: devCenter
   properties: {
     hibernateSupport: 'Enabled'
     imageReference: {

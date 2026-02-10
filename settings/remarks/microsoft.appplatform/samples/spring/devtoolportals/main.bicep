@@ -1,21 +1,22 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    zoneRedundant: false
-  }
   sku: {
     name: 'E0'
   }
+  properties: {
+    zoneRedundant: false
+  }
 }
 
-resource devtoolportal 'Microsoft.AppPlatform/Spring/DevToolPortals@2023-05-01-preview' = {
-  parent: spring
+resource devToolPortal 'Microsoft.AppPlatform/Spring/DevToolPortals@2023-05-01-preview' = {
   name: 'default'
+  parent: spring
   properties: {
+    public: false
     features: {
       applicationAccelerator: {
         state: 'Disabled'
@@ -24,6 +25,5 @@ resource devtoolportal 'Microsoft.AppPlatform/Spring/DevToolPortals@2023-05-01-p
         state: 'Disabled'
       }
     }
-    public: false
   }
 }

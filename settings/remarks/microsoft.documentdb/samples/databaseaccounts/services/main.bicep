@@ -1,44 +1,44 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypassResourceIds: []
     capabilities: []
     consistencyPolicy: {
       defaultConsistencyLevel: 'BoundedStaleness'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
+    publicNetworkAccess: 'Enabled'
     databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
     enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
     enableMultipleWriteLocations: false
     ipRules: []
-    isVirtualNetworkFilterEnabled: false
+    virtualNetworkRules: []
+    defaultIdentity: 'FirstPartyIdentity'
+    enableAutomaticFailover: false
+    enableFreeTier: false
     locations: [
       {
+        locationName: 'West Europe'
         failoverPriority: 0
         isZoneRedundant: false
-        locationName: 'West Europe'
       }
     ]
     networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
   }
 }
 
 resource service 'Microsoft.DocumentDB/databaseAccounts/services@2022-05-15' = {
-  parent: databaseAccount
   name: 'SqlDedicatedGateway'
+  parent: databaseAccount
   properties: {
     instanceCount: 1
     instanceSize: 'Cosmos.D4s'

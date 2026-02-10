@@ -22,8 +22,8 @@ resource mongoClusterSSDv2 'Microsoft.DocumentDB/mongoClusters@2025-09-01' = {
       shardCount: 1
     }
     storage: {
-      sizeGb: 64
       type: 'PremiumSSDv2'
+      sizeGb: 64
     }
   }
 }
@@ -34,8 +34,8 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 }
 
 resource mongouserEntraserviceprincipal 'Microsoft.DocumentDB/mongoClusters/users@2025-09-01' = {
+  name: 'azapi_resource.userAssignedIdentity.output.properties.principalId'
   parent: mongoClusterSSDv2
-  name: 'userAssignedIdentity.properties.principalId'
   properties: {
     identityProvider: {
       properties: {
@@ -45,8 +45,8 @@ resource mongouserEntraserviceprincipal 'Microsoft.DocumentDB/mongoClusters/user
     }
     roles: [
       {
-        db: 'admin'
         role: 'root'
+        db: 'admin'
       }
     ]
   }

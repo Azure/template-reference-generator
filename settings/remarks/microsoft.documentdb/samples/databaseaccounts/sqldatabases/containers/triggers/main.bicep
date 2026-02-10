@@ -1,59 +1,59 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: []
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
+    isVirtualNetworkFilterEnabled: false
+    ipRules: []
+    publicNetworkAccess: 'Enabled'
     disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
     enableAutomaticFailover: false
     enableFreeTier: false
-    enableMultipleWriteLocations: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
     locations: [
       {
-        failoverPriority: 0
         isZoneRedundant: false
         locationName: 'West Europe'
+        failoverPriority: 0
       }
     ]
     networkAclBypass: 'None'
     networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
     virtualNetworkRules: []
+    capabilities: []
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableMultipleWriteLocations: false
   }
 }
 
 resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }
 
 resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
-  parent: sqlDatabase
   name: resourceName
+  parent: sqlDatabase
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
       partitionKey: {
         kind: 'Hash'
         paths: [
@@ -65,13 +65,13 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
 }
 
 resource trigger 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/triggers@2021-10-15' = {
-  parent: container
   name: resourceName
+  parent: container
   properties: {
     options: {}
     resource: {
       body: 'function trigger(){}'
-      id: 'acctest0001'
+      id: '${resourceName}'
       triggerOperation: 'All'
       triggerType: 'Pre'
     }

@@ -19,22 +19,22 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
 }
 
 resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {}
 }
 
 resource securityAdminConfiguration 'Microsoft.Network/networkManagers/securityAdminConfigurations@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {
     applyOnNetworkIntentPolicyBasedServices: []
   }
 }
 
 resource ruleCollection 'Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections@2022-09-01' = {
-  parent: securityAdminConfiguration
   name: resourceName
+  parent: securityAdminConfiguration
   properties: {
     appliesToGroups: [
       {
@@ -45,17 +45,17 @@ resource ruleCollection 'Microsoft.Network/networkManagers/securityAdminConfigur
 }
 
 resource rule 'Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules@2022-09-01' = {
-  parent: ruleCollection
   name: resourceName
+  parent: ruleCollection
   kind: 'Custom'
   properties: {
-    access: 'Deny'
     destinationPortRanges: []
     destinations: []
     direction: 'Outbound'
     priority: 1
-    protocol: 'Tcp'
     sourcePortRanges: []
+    protocol: 'Tcp'
     sources: []
+    access: 'Deny'
   }
 }

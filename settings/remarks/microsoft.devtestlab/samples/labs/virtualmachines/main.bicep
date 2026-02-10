@@ -13,11 +13,10 @@ resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
 }
 
 resource virtualMachine 'Microsoft.DevTestLab/labs/virtualMachines@2018-09-15' = {
-  parent: lab
   name: resourceName
   location: location
+  parent: lab
   properties: {
-    allowClaim: true
     disallowPublicIpAddress: false
     galleryImageReference: {
       offer: 'WindowsServer'
@@ -26,28 +25,33 @@ resource virtualMachine 'Microsoft.DevTestLab/labs/virtualMachines@2018-09-15' =
       sku: '2012-Datacenter'
       version: 'latest'
     }
-    isAuthenticationWithSshKey: false
-    labSubnetName: '\'${resourceName}Subnet\''
-    labVirtualNetworkId: virtualNetwork.id
     networkInterface: {}
-    notes: ''
     osType: 'Windows'
-    password: null
+    password: vmPassword
     size: 'Standard_F2'
+    allowClaim: true
+    isAuthenticationWithSshKey: false
+    labSubnetName: '${resourceName}Subnet'
+    notes: ''
     storageType: 'Standard'
     userName: 'acct5stU5er'
   }
 }
 
 resource virtualNetwork 'Microsoft.DevTestLab/labs/virtualNetworks@2018-09-15' = {
-  parent: lab
   name: resourceName
+  parent: lab
   properties: {
     description: ''
     subnetOverrides: [
       {
-        labSubnetName: '\'${resourceName}Subnet\''
-        resourceId: resourceId('Microsoft.Network/virtualNetworks/subnets', resourceName, '${resourceName}Subnet')
+        labSubnetName: '${resourceName}Subnet'
+        resourceId: resourceId(
+          'Microsoft.Network/virtualNetworks/subnets',
+          resourceGroup().name,
+          resourceName,
+          '${resourceName}Subnet'
+        )
         useInVmCreationPermission: 'Allow'
         usePublicIpAddressPermission: 'Allow'
       }

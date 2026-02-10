@@ -8,18 +8,18 @@ resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: '${administratorLoginPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
+    administratorLogin: 'mradministrator'
   }
 }
 
 resource encryptionProtector 'Microsoft.Sql/servers/encryptionProtector@2023-08-01-preview' = {
-  parent: server
   name: 'current'
+  parent: server
   properties: {
     autoRotationEnabled: false
     serverKeyName: ''

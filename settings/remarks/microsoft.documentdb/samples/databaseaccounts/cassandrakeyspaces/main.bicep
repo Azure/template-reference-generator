@@ -6,25 +6,16 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
+    virtualNetworkRules: []
     capabilities: [
       {
         name: 'EnableCassandra'
       }
     ]
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
+    enableFreeTier: false
     databaseAccountOfferType: 'Standard'
     defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
     enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
-    ipRules: []
     isVirtualNetworkFilterEnabled: false
     locations: [
       {
@@ -33,20 +24,29 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
+    publicNetworkAccess: 'Enabled'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAutomaticFailover: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
     networkAclBypass: 'None'
     networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
   }
 }
 
 resource cassandraKeyspace 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }

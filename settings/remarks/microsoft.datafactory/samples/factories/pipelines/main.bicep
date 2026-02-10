@@ -11,8 +11,8 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
 }
 
 resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     annotations: []
     description: ''

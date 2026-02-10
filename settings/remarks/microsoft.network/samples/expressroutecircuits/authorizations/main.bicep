@@ -4,18 +4,18 @@ param location string = 'westeurope'
 resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
   name: resourceName
   location: location
-  properties: {
-    authorizationKey: ''
-    serviceProviderProperties: {
-      bandwidthInMbps: 50
-      peeringLocation: 'Silicon Valley'
-      serviceProviderName: 'Equinix'
-    }
-  }
   sku: {
     family: 'MeteredData'
     name: 'Standard_MeteredData'
     tier: 'Standard'
+  }
+  properties: {
+    authorizationKey: ''
+    serviceProviderProperties: {
+      serviceProviderName: 'Equinix'
+      bandwidthInMbps: 50
+      peeringLocation: 'Silicon Valley'
+    }
   }
   tags: {
     Environment: 'production'
@@ -24,7 +24,7 @@ resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01'
 }
 
 resource authorization 'Microsoft.Network/expressRouteCircuits/authorizations@2022-07-01' = {
-  parent: expressRouteCircuit
   name: resourceName
+  parent: expressRouteCircuit
   properties: {}
 }

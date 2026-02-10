@@ -20,27 +20,19 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 resource workspace 'Microsoft.Databricks/workspaces@2023-02-01' = {
   name: resourceName
   location: location
-  properties: {
-    managedResourceGroupId: resourceId('Microsoft.Resources/resourceGroups', 'databricks-rg-${resourceName}')
-    publicNetworkAccess: 'Enabled'
-  }
   sku: {
     name: 'standard'
+  }
+  properties: {
+    publicNetworkAccess: 'Enabled'
+    managedResourceGroupId: resourceGroup().id
   }
 }
 
 resource virtualNetworkPeering 'Microsoft.Databricks/workspaces/virtualNetworkPeerings@2023-02-01' = {
-  parent: workspace
   name: resourceName
+  parent: workspace
   properties: {
-    allowForwardedTraffic: false
-    allowGatewayTransit: false
-    allowVirtualNetworkAccess: true
-    databricksAddressSpace: {
-      addressPrefixes: [
-        '10.139.0.0/16'
-      ]
-    }
     remoteAddressSpace: {
       addressPrefixes: [
         '10.0.1.0/24'
@@ -50,5 +42,13 @@ resource virtualNetworkPeering 'Microsoft.Databricks/workspaces/virtualNetworkPe
       id: virtualNetwork.id
     }
     useRemoteGateways: false
+    allowForwardedTraffic: false
+    allowGatewayTransit: false
+    allowVirtualNetworkAccess: true
+    databricksAddressSpace: {
+      addressPrefixes: [
+        '10.139.0.0/16'
+      ]
+    }
   }
 }

@@ -1,12 +1,58 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource diagnosticSetting 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-  scope: vault
+resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
+  location: location
+  sku: {
+    capacity: 1
+    name: 'Basic'
+    tier: 'Basic'
+  }
   properties: {
-    eventHubAuthorizationRuleId: authorizationRule.id
-    eventHubName: namespace.name
+    disableLocalAuth: false
+    isAutoInflateEnabled: false
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
+  }
+}
+
+resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    accessPolicies: []
+    createMode: 'default'
+    enableSoftDelete: true
+    enabledForDeployment: false
+    enabledForDiskEncryption: false
+    publicNetworkAccess: 'Enabled'
+    sku: {
+      name: 'standard'
+      family: 'A'
+    }
+    tenantId: tenant().tenantId
+    enableRbacAuthorization: false
+    enabledForTemplateDeployment: false
+  }
+}
+
+resource authorizationRule 'Microsoft.EventHub/namespaces/authorizationRules@2021-11-01' = {
+  name: 'example'
+  parent: namespace
+  properties: {
+    rights: [
+      'Listen'
+      'Send'
+      'Manage'
+    ]
+  }
+}
+
+resource diagnosticSetting 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: resourceName
+  scope: vault
+  properties: {
     logs: [
       {
         categoryGroup: 'Audit'
@@ -26,54 +72,6 @@ resource diagnosticSetting 'Microsoft.Insights/diagnosticSettings@2021-05-01-pre
           enabled: false
         }
       }
-    ]
-  }
-}
-
-resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
-  name: resourceName
-  location: location
-  properties: {
-    disableLocalAuth: false
-    isAutoInflateEnabled: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
-  sku: {
-    capacity: 1
-    name: 'Basic'
-    tier: 'Basic'
-  }
-}
-
-resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    accessPolicies: []
-    createMode: 'default'
-    enableRbacAuthorization: false
-    enableSoftDelete: true
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
-    publicNetworkAccess: 'Enabled'
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    tenantId: deployer().tenantId
-  }
-}
-
-resource authorizationRule 'Microsoft.EventHub/namespaces/authorizationRules@2021-11-01' = {
-  parent: namespace
-  name: 'example'
-  properties: {
-    rights: [
-      'Listen'
-      'Send'
-      'Manage'
     ]
   }
 }

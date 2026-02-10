@@ -4,14 +4,19 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
   properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
-    dataEndpointEnabled: false
     encryption: {
       status: 'disabled'
     }
     networkRuleBypassOptions: 'AzureServices'
+    publicNetworkAccess: 'Enabled'
+    adminUserEnabled: false
+    anonymousPullEnabled: false
+    dataEndpointEnabled: false
     policies: {
       exportPolicy: {
         status: 'enabled'
@@ -26,19 +31,14 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
         status: 'disabled'
       }
     }
-    publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Standard'
   }
 }
 
 resource taskRun 'Microsoft.ContainerRegistry/registries/taskRuns@2019-06-01-preview' = {
-  parent: registry
   name: resourceName
   location: location
+  parent: registry
   properties: {
     runRequest: {
       dockerFilePath: 'Dockerfile'

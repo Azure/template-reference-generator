@@ -1,13 +1,18 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @secure()
 @description('The Base64 encoded certificate content for the IoT Hub')
 param certificateContent string
+param resourceName string = 'acctest0001'
 
-resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'B1'
+  }
   properties: {
+    storageEndpoints: {}
     cloudToDevice: {}
     enableFileUploadNotifications: false
     messagingEndpoints: {}
@@ -21,19 +26,14 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
         source: 'DeviceMessages'
       }
     }
-    storageEndpoints: {}
-  }
-  sku: {
-    capacity: 1
-    name: 'B1'
   }
 }
 
 resource certificate 'Microsoft.Devices/IotHubs/certificates@2022-04-30-preview' = {
-  parent: iothub
   name: resourceName
+  parent: iotHub
   properties: {
-    certificate: null
+    certificate: '${certificateContent}'
     isVerified: false
   }
 }

@@ -13,13 +13,13 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-p
         vmSize: 'Standard_DS2_v2'
       }
     ]
-    dnsPrefix: 'acctest0001'
+    dnsPrefix: '${resourceName}'
   }
 }
 
 resource agentPool 'Microsoft.ContainerService/managedClusters/agentPools@2023-04-02-preview' = {
-  parent: managedCluster
   name: 'internal'
+  parent: managedCluster
   properties: {
     count: 1
     mode: 'User'

@@ -4,36 +4,36 @@ param location string = 'westeurope'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        queue: {
+        table: {
           keyType: 'Service'
         }
-        table: {
+        queue: {
           keyType: 'Service'
         }
       }
     }
-    isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    accessTier: 'Hot'
   }
   tags: {
     environment: 'production'
@@ -41,8 +41,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
 }
 
 resource updateAdvancedthreatprotectionsetting 'Microsoft.Security/advancedThreatProtectionSettings@2019-01-01' = {
-  scope: storageAccount
   name: 'current'
+  scope: storageAccount
   properties: {
     isEnabled: true
   }

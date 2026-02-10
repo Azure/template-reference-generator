@@ -1,24 +1,28 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
 @secure()
 @description('The administrator login password for the PostgreSQL flexible server')
 param administratorLoginPassword string
+param resourceName string = 'acctest0001'
 
 resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
   name: '${resourceName}-primary'
   location: location
+  sku: {
+    name: 'Standard_D2ads_v5'
+    tier: 'GeneralPurpose'
+  }
   properties: {
-    administratorLogin: 'psqladmin'
-    administratorLoginPassword: null
-    availabilityZone: '1'
-    backup: {
-      geoRedundantBackup: 'Disabled'
-    }
+    administratorLoginPassword: '${administratorLoginPassword}'
     highAvailability: {
       mode: 'Disabled'
     }
     network: {
       publicNetworkAccess: 'Disabled'
+    }
+    administratorLogin: 'psqladmin'
+    availabilityZone: '1'
+    backup: {
+      geoRedundantBackup: 'Disabled'
     }
     storage: {
       autoGrow: 'Disabled'
@@ -26,10 +30,6 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' =
       tier: 'P30'
     }
     version: '16'
-  }
-  sku: {
-    name: 'Standard_D2ads_v5'
-    tier: 'GeneralPurpose'
   }
 }
 
@@ -38,9 +38,6 @@ resource flexibleserver1 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' 
   location: location
   properties: {
     availabilityZone: '1'
-    backup: {
-      geoRedundantBackup: 'Disabled'
-    }
     createMode: 'Replica'
     highAvailability: {
       mode: 'Disabled'
@@ -48,19 +45,22 @@ resource flexibleserver1 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' 
     network: {
       publicNetworkAccess: 'Disabled'
     }
-    sourceServerResourceId: flexibleServer.id
     storage: {
-      autoGrow: 'Disabled'
       storageSizeGB: 32
       tier: 'P30'
+      autoGrow: 'Disabled'
     }
     version: '16'
+    backup: {
+      geoRedundantBackup: 'Disabled'
+    }
+    sourceServerResourceId: flexibleServer.id
   }
 }
 
 resource virtualEndpoint 'Microsoft.DBforPostgreSQL/flexibleServers/virtualEndpoints@2024-08-01' = {
-  parent: flexibleServer
   name: resourceName
+  parent: flexibleServer
   properties: {
     endpointType: 'ReadWrite'
     members: [

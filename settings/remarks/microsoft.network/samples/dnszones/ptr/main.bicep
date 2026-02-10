@@ -1,14 +1,17 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
   name: '${resourceName}.com'
   location: 'global'
 }
 
-resource ptr 'Microsoft.Network/dnsZones/PTR@2018-05-01' = {
-  parent: dnsZone
+resource pTR 'Microsoft.Network/dnsZones/PTR@2018-05-01' = {
   name: resourceName
+  parent: dnsZone
   properties: {
+    TTL: 300
+    metadata: {}
     PTRRecords: [
       {
         ptrdname: 'hashicorp.com'
@@ -17,7 +20,5 @@ resource ptr 'Microsoft.Network/dnsZones/PTR@2018-05-01' = {
         ptrdname: 'microsoft.com'
       }
     ]
-    TTL: 300
-    metadata: {}
   }
 }

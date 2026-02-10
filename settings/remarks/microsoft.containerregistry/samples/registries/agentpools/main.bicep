@@ -4,14 +4,18 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Premium'
+    tier: 'Premium'
+  }
   properties: {
+    dataEndpointEnabled: false
+    networkRuleBypassOptions: 'AzureServices'
     adminUserEnabled: false
     anonymousPullEnabled: false
-    dataEndpointEnabled: false
     encryption: {
       status: 'disabled'
     }
-    networkRuleBypassOptions: 'AzureServices'
     policies: {
       exportPolicy: {
         status: 'enabled'
@@ -29,16 +33,12 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
   }
-  sku: {
-    name: 'Premium'
-    tier: 'Premium'
-  }
 }
 
 resource agentPool 'Microsoft.ContainerRegistry/registries/agentPools@2019-06-01-preview' = {
-  parent: registry
   name: resourceName
   location: location
+  parent: registry
   properties: {
     count: 1
     os: 'Linux'

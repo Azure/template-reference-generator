@@ -10,16 +10,32 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   }
 }
 
+resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
+  name: resourceName
+  parent: factory
+  properties: {
+    type: 'AzureBlobStorage'
+    typeProperties: {
+      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
+    }
+    description: ''
+  }
+}
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
     allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -31,29 +47,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
-  }
-}
-
-resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-  parent: factory
-  name: resourceName
-  properties: {
-    description: ''
-    type: 'AzureBlobStorage'
-    typeProperties: {
-      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
-    }
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
   }
 }

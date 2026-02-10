@@ -10,18 +10,18 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
+    administratorLogin: '${administratorLogin}'
+    administratorLoginPassword: '${administratorLoginPassword}'
   }
 }
 
 resource connectionPolicy 'Microsoft.Sql/servers/connectionPolicies@2014-04-01' = {
-  parent: server
   name: 'default'
+  parent: server
   properties: {
     connectionType: 'Default'
   }

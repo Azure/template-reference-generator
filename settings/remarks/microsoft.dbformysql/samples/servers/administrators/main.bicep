@@ -6,16 +6,23 @@ param administratorLogin string
 @description('The administrator login password for the MySQL server')
 param administratorLoginPassword string
 
+param clientId string
+
 resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'GP_Gen5_2'
+    tier: 'GeneralPurpose'
+    capacity: 2
+    family: 'Gen5'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
     createMode: 'Default'
+    publicNetworkAccess: 'Enabled'
+    administratorLoginPassword: '${administratorLoginPassword}'
     infrastructureEncryption: 'Disabled'
     minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
     sslEnforcement: 'Enabled'
     storageProfile: {
       backupRetentionDays: 7
@@ -23,22 +30,17 @@ resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
       storageMB: 51200
     }
     version: '5.7'
-  }
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'GP_Gen5_2'
-    tier: 'GeneralPurpose'
+    administratorLogin: '${administratorLogin}'
   }
 }
 
 resource administrator 'Microsoft.DBforMySQL/servers/administrators@2017-12-01' = {
-  parent: server
   name: 'activeDirectory'
+  parent: server
   properties: {
     administratorType: 'ActiveDirectory'
     login: 'sqladmin'
-    sid: deployer().objectId
-    tenantId: deployer().tenantId
+    sid: clientId
+    tenantId: tenant().tenantId
   }
 }

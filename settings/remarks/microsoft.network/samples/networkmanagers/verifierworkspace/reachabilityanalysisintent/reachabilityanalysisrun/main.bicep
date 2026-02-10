@@ -14,12 +14,10 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
       {
         name: 'testconfiguration1'
         properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
           primary: true
           privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
         }
       }
     ]
@@ -37,7 +35,7 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
     networkManagerScopes: {
       managementGroups: []
       subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
+        '/subscriptions/${subscription().subscriptionId}'
       ]
     }
   }
@@ -47,6 +45,28 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
+    osProfile: {
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+      }
+      adminPassword: vmAdminPassword
+      adminUsername: 'testadmin'
+      computerName: 'hostname230630032848831819'
+    }
+    storageProfile: {
+      osDisk: {
+        name: 'myosdisk1'
+        writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+      }
+      imageReference: {
+        publisher: 'Canonical'
+        sku: '16.04-LTS'
+        version: 'latest'
+        offer: 'UbuntuServer'
+      }
+    }
     hardwareProfile: {
       vmSize: 'Standard_F2'
     }
@@ -60,28 +80,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         }
       ]
     }
-    osProfile: {
-      adminPassword: null
-      adminUsername: 'testadmin'
-      computerName: 'hostname230630032848831819'
-      linuxConfiguration: {
-        disablePasswordAuthentication: false
-      }
-    }
-    storageProfile: {
-      imageReference: {
-        offer: 'UbuntuServer'
-        publisher: 'Canonical'
-        sku: '16.04-LTS'
-        version: 'latest'
-      }
-      osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        name: 'myosdisk1'
-        writeAcceleratorEnabled: false
-      }
-    }
   }
 }
 
@@ -89,44 +87,45 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
       ]
     }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
   }
 }
 
 resource verifierWorkspace 'Microsoft.Network/networkManagers/verifierWorkspaces@2024-01-01-preview' = {
-  parent: networkManager
   name: resourceName
   location: location
+  parent: networkManager
   properties: {
     description: 'A sample workspace'
   }
 }
 
 resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents@2024-01-01-preview' = {
-  parent: verifierWorkspace
   name: resourceName
+  parent: verifierWorkspace
   properties: {
+    sourceResourceId: virtualMachine.id
     description: 'A sample reachability analysis intent'
     destinationResourceId: virtualMachine.id
     ipTraffic: {
@@ -146,6 +145,5 @@ resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierW
         '0'
       ]
     }
-    sourceResourceId: virtualMachine.id
   }
 }

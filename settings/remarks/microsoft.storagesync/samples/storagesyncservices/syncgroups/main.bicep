@@ -10,6 +10,6 @@ resource storageSyncService 'Microsoft.StorageSync/storageSyncServices@2020-03-0
 }
 
 resource syncGroup 'Microsoft.StorageSync/storageSyncServices/syncGroups@2020-03-01' = {
-  parent: storageSyncService
   name: resourceName
+  parent: storageSyncService
 }

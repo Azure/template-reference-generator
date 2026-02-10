@@ -4,11 +4,12 @@ param location string = 'westeurope'
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_F2'
+    tier: 'Standard'
+  }
   properties: {
-    additionalCapabilities: {}
-    doNotRunExtensionsOnOverprovisionedVMs: false
-    orchestrationMode: 'Uniform'
-    overprovision: true
     scaleInPolicy: {
       forceDeletion: false
       rules: [
@@ -16,10 +17,50 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       ]
     }
     singlePlacementGroup: true
+    additionalCapabilities: {}
+    doNotRunExtensionsOnOverprovisionedVMs: false
+    orchestrationMode: 'Uniform'
+    overprovision: true
     upgradePolicy: {
       mode: 'Manual'
     }
     virtualMachineProfile: {
+      osProfile: {
+        adminUsername: 'adminuser'
+        computerNamePrefix: resourceName
+        linuxConfiguration: {
+          ssh: {
+            publicKeys: [
+              {
+                keyData: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com'
+                path: '/home/adminuser/.ssh/authorized_keys'
+              }
+            ]
+          }
+          disablePasswordAuthentication: true
+          provisionVMAgent: true
+        }
+        secrets: []
+      }
+      priority: 'Regular'
+      storageProfile: {
+        dataDisks: []
+        imageReference: {
+          version: 'latest'
+          offer: 'UbuntuServer'
+          publisher: 'Canonical'
+          sku: '16.04-LTS'
+        }
+        osDisk: {
+          writeAcceleratorEnabled: false
+          caching: 'ReadWrite'
+          createOption: 'FromImage'
+          managedDisk: {
+            storageAccountType: 'Standard_LRS'
+          }
+          osType: 'Linux'
+        }
+      }
       diagnosticsProfile: {
         bootDiagnostics: {
           enabled: false
@@ -43,15 +84,13 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
                 {
                   name: 'internal'
                   properties: {
-                    applicationGatewayBackendAddressPools: []
-                    applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
                     primary: true
                     privateIPAddressVersion: 'IPv4'
-                    subnet: {
-                      id: subnet.id
-                    }
+                    subnet: {}
+                    applicationGatewayBackendAddressPools: []
+                    applicationSecurityGroups: []
                   }
                 }
               ]
@@ -60,48 +99,7 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           }
         ]
       }
-      osProfile: {
-        adminUsername: 'adminuser'
-        computerNamePrefix: 'acctest0001'
-        linuxConfiguration: {
-          disablePasswordAuthentication: true
-          provisionVMAgent: true
-          ssh: {
-            publicKeys: [
-              {
-                keyData: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com'
-                path: '/home/adminuser/.ssh/authorized_keys'
-              }
-            ]
-          }
-        }
-        secrets: []
-      }
-      priority: 'Regular'
-      storageProfile: {
-        dataDisks: []
-        imageReference: {
-          offer: 'UbuntuServer'
-          publisher: 'Canonical'
-          sku: '16.04-LTS'
-          version: 'latest'
-        }
-        osDisk: {
-          caching: 'ReadWrite'
-          createOption: 'FromImage'
-          managedDisk: {
-            storageAccountType: 'Standard_LRS'
-          }
-          osType: 'Linux'
-          writeAcceleratorEnabled: false
-        }
-      }
     }
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard_F2'
-    tier: 'Standard'
   }
 }
 
@@ -122,8 +120,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []

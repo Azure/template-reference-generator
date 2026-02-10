@@ -7,51 +7,39 @@ param sqlAdministratorLogin string
 param sqlAdministratorLoginPassword string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
-}
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  kind: 'StorageV2'
-  properties: {}
-  sku: {
-    name: 'Standard_LRS'
-  }
+  parent: storageAccount
 }
 
 resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   name: resourceName
   location: location
   properties: {
-    defaultDataLakeStorage: {
-      accountUrl: storageAccount.properties.primaryEndpoints.dfs
-      filesystem: container.name
-    }
-
     managedVirtualNetwork: ''
     publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
     sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
+    defaultDataLakeStorage: {
+      accountUrl: storageAccount.properties.primaryEndpoints.dfs
+    }
   }
 }
 
 resource sqlPool 'Microsoft.Synapse/workspaces/sqlPools@2021-06-01' = {
-  parent: workspace
   name: resourceName
   location: location
-  properties: {
-    createMode: 'Default'
-  }
+  parent: workspace
   sku: {
     name: 'DW100c'
+  }
+  properties: {
+    createMode: 'Default'
   }
 }
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
   name: resourceName
+  parent: blobService
   properties: {
     metadata: {
       key: 'value'
@@ -60,21 +48,31 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
 }
 
 resource workloadGroup 'Microsoft.Synapse/workspaces/sqlPools/workloadGroups@2021-06-01' = {
-  parent: sqlPool
   name: resourceName
+  parent: sqlPool
   properties: {
+    minResourcePercent: 0
+    minResourcePercentPerRequest: 3
     importance: 'normal'
     maxResourcePercent: 100
     maxResourcePercentPerRequest: 3
-    minResourcePercent: 0
-    minResourcePercentPerRequest: 3
   }
 }
 
 resource workloadClassifier 'Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers@2021-06-01' = {
-  parent: workloadGroup
   name: resourceName
+  parent: workloadGroup
   properties: {
     memberName: 'dbo'
   }
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {}
 }

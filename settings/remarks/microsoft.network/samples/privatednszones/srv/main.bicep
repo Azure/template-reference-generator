@@ -1,3 +1,4 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
@@ -5,9 +6,9 @@ resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
   location: 'global'
 }
 
-resource srv 'Microsoft.Network/privateDnsZones/SRV@2018-09-01' = {
-  parent: privateDnsZone
+resource sRV 'Microsoft.Network/privateDnsZones/SRV@2018-09-01' = {
   name: resourceName
+  parent: privateDnsZone
   properties: {
     metadata: {}
     srvRecords: [

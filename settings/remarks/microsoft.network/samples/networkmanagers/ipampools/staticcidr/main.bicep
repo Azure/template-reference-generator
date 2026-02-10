@@ -5,23 +5,23 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
   location: location
   properties: {
+    networkManagerScopes: {
+      managementGroups: []
+      subscriptions: [
+        '/subscriptions/${subscription().subscriptionId}'
+      ]
+    }
     description: ''
     networkManagerScopeAccesses: [
       'SecurityAdmin'
     ]
-    networkManagerScopes: {
-      managementGroups: []
-      subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
-      ]
-    }
   }
 }
 
 resource ipamPool 'Microsoft.Network/networkManagers/ipamPools@2024-01-01-preview' = {
-  parent: networkManager
   name: resourceName
   location: location
+  parent: networkManager
   properties: {
     addressPrefixes: [
       '10.0.0.0/24'
@@ -33,8 +33,8 @@ resource ipamPool 'Microsoft.Network/networkManagers/ipamPools@2024-01-01-previe
 }
 
 resource staticCidr 'Microsoft.Network/networkManagers/ipamPools/staticCidrs@2024-01-01-preview' = {
-  parent: ipamPool
   name: resourceName
+  parent: ipamPool
   properties: {
     addressPrefixes: [
       '10.0.0.0/25'

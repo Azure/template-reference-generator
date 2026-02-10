@@ -15,8 +15,8 @@ resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
 }
 
 resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022-04-01' = {
-  parent: backupVault
   name: resourceName
+  parent: backupVault
   properties: {
     datasourceTypes: [
       'Microsoft.DBforPostgreSQL/servers/databases'
@@ -24,14 +24,6 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
     objectType: 'BackupPolicy'
     policyRules: [
       {
-        backupParameters: {
-          backupType: 'Full'
-          objectType: 'AzureBackupParams'
-        }
-        dataStore: {
-          dataStoreType: 'VaultStore'
-          objectType: 'DataStoreInfoBase'
-        }
         name: 'BackupIntervals'
         objectType: 'AzureBackupRule'
         trigger: {
@@ -43,14 +35,22 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
           }
           taggingCriteria: [
             {
-              isDefault: true
               tagInfo: {
-                id: 'Default_'
                 tagName: 'Default'
+                id: 'Default_'
               }
               taggingPriority: 99
+              isDefault: true
             }
           ]
+        }
+        backupParameters: {
+          backupType: 'Full'
+          objectType: 'AzureBackupParams'
+        }
+        dataStore: {
+          objectType: 'DataStoreInfoBase'
+          dataStoreType: 'VaultStore'
         }
       }
       {
@@ -58,8 +58,8 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
         lifecycles: [
           {
             deleteAfter: {
-              duration: 'P4M'
               objectType: 'AbsoluteDeleteOption'
+              duration: 'P4M'
             }
             sourceDataStore: {
               dataStoreType: 'VaultStore'

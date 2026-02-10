@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource routeTable 'Microsoft.Network/routeTables@2022-09-01' = {
   name: resourceName
@@ -10,10 +10,10 @@ resource routeTable 'Microsoft.Network/routeTables@2022-09-01' = {
 }
 
 resource route 'Microsoft.Network/routeTables/routes@2022-09-01' = {
-  parent: routeTable
   name: resourceName
+  parent: routeTable
   properties: {
-    addressPrefix: '10.1.0.0/16'
     nextHopType: 'VnetLocal'
+    addressPrefix: '10.1.0.0/16'
   }
 }

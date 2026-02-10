@@ -8,19 +8,19 @@ resource ledger 'Microsoft.ConfidentialLedger/ledgers@2022-05-13' = {
   name: resourceName
   location: location
   properties: {
-    aadBasedSecurityPrincipals: [
-      {
-        ledgerRoleName: 'Administrator'
-        principalId: deployer().objectId
-        tenantId: deployer().tenantId
-      }
-    ]
     certBasedSecurityPrincipals: [
       {
-        cert: null
+        cert: ledgerCertificate
         ledgerRoleName: 'Administrator'
       }
     ]
     ledgerType: 'Private'
+    aadBasedSecurityPrincipals: [
+      {
+        ledgerRoleName: 'Administrator'
+        principalId: deployer().objectId
+        tenantId: tenant().tenantId
+      }
+    ]
   }
 }
