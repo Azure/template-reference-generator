@@ -1,20 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
-  name: '${resourceName}-acct'
-  location: location
-  properties: {}
-}
-
-resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
-  name: '${resourceName}-nsg'
-  location: location
-  properties: {
-    securityRules: []
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: '${resourceName}-vnet'
   location: location
@@ -31,22 +17,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   }
 }
 
-resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2025-01-01' = {
-  parent: netAppAccount
-  name: '${resourceName}-pool'
-  location: location
-  properties: {
-    coolAccess: false
-    encryptionType: 'Single'
-    qosType: 'Auto'
-    serviceLevel: 'Standard'
-    size: 4398046511104
-  }
-}
-
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.88.2.0/24'
     defaultOutboundAccess: true
@@ -58,22 +31,41 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
         }
       }
     ]
+    serviceEndpointPolicies: []
     networkSecurityGroup: {
       id: networkSecurityGroup.id
     }
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
     serviceEndpoints: []
   }
 }
 
+resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
+  name: '${resourceName}-acct'
+  location: location
+  properties: {}
+}
+
+resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2025-01-01' = {
+  name: '${resourceName}-pool'
+  location: location
+  parent: netAppAccount
+  properties: {
+    qosType: 'Auto'
+    serviceLevel: 'Standard'
+    size: 4398046511104
+    coolAccess: false
+    encryptionType: 'Single'
+  }
+}
+
 resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-01' = {
-  parent: capacityPool
   name: '${resourceName}-vol'
   location: location
+  parent: capacityPool
   properties: {
-    creationToken: 'acctest0001-path'
+    creationToken: '${resourceName}-path'
     dataProtection: {}
     exportPolicy: {
       rules: []
@@ -83,16 +75,24 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-0
     ]
     serviceLevel: 'Standard'
     subnetId: subnet.id
-    usageThreshold: 107374182400
+    usageThreshold: any('1.073741824e+11')
   }
 }
 
 resource volumeQuotaRule 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules@2025-01-01' = {
-  parent: volume
   name: '${resourceName}-quota'
   location: location
+  parent: volume
   properties: {
     quotaSizeInKiBs: 2048
     quotaType: 'DefaultGroupQuota'
+  }
+}
+
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
+  name: '${resourceName}-nsg'
+  location: location
+  properties: {
+    securityRules: []
   }
 }

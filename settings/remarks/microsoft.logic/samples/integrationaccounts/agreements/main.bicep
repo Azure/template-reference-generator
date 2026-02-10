@@ -4,26 +4,62 @@ param location string = 'westeurope'
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: resourceName
   location: location
-  properties: {}
   sku: {
     name: 'Standard'
   }
+  properties: {}
 }
 
 resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' = {
-  parent: integrationAccount
   name: resourceName
+  parent: integrationAccount
   properties: {
     agreementType: 'AS2'
     content: {
       aS2: {
         receiveAgreement: {
           protocolSettings: {
+            mdnSettings: {
+              sendInboundMDNToMessageBox: true
+              sendMDNAsynchronously: false
+              signMDN: false
+              signOutboundMDNIfOptional: false
+              dispositionNotificationTo: 'http://localhost'
+              micHashingAlgorithm: 'SHA1'
+              needMDN: false
+            }
+            messageConnectionSettings: {
+              ignoreCertificateNameMismatch: false
+              keepHttpConnectionAlive: true
+              supportHttpStatusCodeContinue: true
+              unfoldHttpHeaders: true
+            }
+            securitySettings: {
+              enableNRRForInboundEncodedMessages: false
+              enableNRRForInboundMDN: false
+              enableNRRForOutboundDecodedMessages: false
+              enableNRRForOutboundEncodedMessages: false
+              enableNRRForOutboundMDN: false
+              overrideGroupSigningCertificate: false
+              enableNRRForInboundDecodedMessages: false
+            }
+            validationSettings: {
+              interchangeDuplicatesValidityDays: 5
+              overrideMessageProperties: false
+              signingAlgorithm: 'Default'
+              checkCertificateRevocationListOnReceive: false
+              checkCertificateRevocationListOnSend: false
+              checkDuplicateMessage: false
+              compressMessage: false
+              encryptionAlgorithm: 'DES3'
+              signMessage: false
+              encryptMessage: false
+            }
             acknowledgementConnectionSettings: {
+              unfoldHttpHeaders: false
               ignoreCertificateNameMismatch: false
               keepHttpConnectionAlive: false
               supportHttpStatusCodeContinue: false
-              unfoldHttpHeaders: false
             }
             envelopeSettings: {
               autogenerateFileName: false
@@ -35,42 +71,6 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
             errorSettings: {
               resendIfMDNNotReceived: false
               suspendDuplicateMessage: false
-            }
-            mdnSettings: {
-              dispositionNotificationTo: 'http://localhost'
-              micHashingAlgorithm: 'SHA1'
-              needMDN: false
-              sendInboundMDNToMessageBox: true
-              sendMDNAsynchronously: false
-              signMDN: false
-              signOutboundMDNIfOptional: false
-            }
-            messageConnectionSettings: {
-              ignoreCertificateNameMismatch: false
-              keepHttpConnectionAlive: true
-              supportHttpStatusCodeContinue: true
-              unfoldHttpHeaders: true
-            }
-            securitySettings: {
-              enableNRRForInboundDecodedMessages: false
-              enableNRRForInboundEncodedMessages: false
-              enableNRRForInboundMDN: false
-              enableNRRForOutboundDecodedMessages: false
-              enableNRRForOutboundEncodedMessages: false
-              enableNRRForOutboundMDN: false
-              overrideGroupSigningCertificate: false
-            }
-            validationSettings: {
-              checkCertificateRevocationListOnReceive: false
-              checkCertificateRevocationListOnSend: false
-              checkDuplicateMessage: false
-              compressMessage: false
-              encryptMessage: false
-              encryptionAlgorithm: 'DES3'
-              interchangeDuplicatesValidityDays: 5
-              overrideMessageProperties: false
-              signMessage: false
-              signingAlgorithm: 'Default'
             }
           }
           receiverBusinessIdentity: {
@@ -83,32 +83,27 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
           }
         }
         sendAgreement: {
+          receiverBusinessIdentity: {
+            qualifier: 'AS2Identity'
+            value: 'FabrikamDC'
+          }
+          senderBusinessIdentity: {
+            qualifier: 'AS2Identity'
+            value: 'FabrikamNY'
+          }
           protocolSettings: {
-            acknowledgementConnectionSettings: {
-              ignoreCertificateNameMismatch: false
-              keepHttpConnectionAlive: false
-              supportHttpStatusCodeContinue: false
-              unfoldHttpHeaders: false
-            }
-            envelopeSettings: {
-              autogenerateFileName: false
-              fileNameTemplate: '%FILE().ReceivedFileName%'
-              messageContentType: 'text/plain'
-              suspendMessageOnFileNameGenerationError: true
-              transmitFileNameInMimeHeader: false
-            }
             errorSettings: {
-              resendIfMDNNotReceived: false
               suspendDuplicateMessage: false
+              resendIfMDNNotReceived: false
             }
             mdnSettings: {
-              dispositionNotificationTo: 'http://localhost'
               micHashingAlgorithm: 'SHA1'
               needMDN: false
               sendInboundMDNToMessageBox: true
               sendMDNAsynchronously: false
               signMDN: false
               signOutboundMDNIfOptional: false
+              dispositionNotificationTo: 'http://localhost'
             }
             messageConnectionSettings: {
               ignoreCertificateNameMismatch: false
@@ -126,63 +121,66 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
               overrideGroupSigningCertificate: false
             }
             validationSettings: {
-              checkCertificateRevocationListOnReceive: false
-              checkCertificateRevocationListOnSend: false
               checkDuplicateMessage: false
               compressMessage: false
-              encryptMessage: false
-              encryptionAlgorithm: 'DES3'
-              interchangeDuplicatesValidityDays: 5
               overrideMessageProperties: false
               signMessage: false
               signingAlgorithm: 'Default'
+              checkCertificateRevocationListOnReceive: false
+              checkCertificateRevocationListOnSend: false
+              encryptMessage: false
+              encryptionAlgorithm: 'DES3'
+              interchangeDuplicatesValidityDays: 5
             }
-          }
-          receiverBusinessIdentity: {
-            qualifier: 'AS2Identity'
-            value: 'FabrikamDC'
-          }
-          senderBusinessIdentity: {
-            qualifier: 'AS2Identity'
-            value: 'FabrikamNY'
+            acknowledgementConnectionSettings: {
+              ignoreCertificateNameMismatch: false
+              keepHttpConnectionAlive: false
+              supportHttpStatusCodeContinue: false
+              unfoldHttpHeaders: false
+            }
+            envelopeSettings: {
+              autogenerateFileName: false
+              fileNameTemplate: '%FILE().ReceivedFileName%'
+              messageContentType: 'text/plain'
+              suspendMessageOnFileNameGenerationError: true
+              transmitFileNameInMimeHeader: false
+            }
           }
         }
       }
     }
     guestIdentity: {
-      qualifier: 'AS2Identity'
       value: 'FabrikamDC'
+      qualifier: 'AS2Identity'
     }
-    guestPartner: partner2.name
     hostIdentity: {
       qualifier: 'AS2Identity'
       value: 'FabrikamNY'
     }
-    hostPartner: partner.name
   }
 }
 
 resource partner 'Microsoft.Logic/integrationAccounts/partners@2019-05-01' = {
-  parent: integrationAccount
   name: resourceName
+  parent: integrationAccount
   properties: {
+    partnerType: 'B2B'
     content: {
       b2b: {
         businessIdentities: [
           {
-            qualifier: 'AS2Identity'
             value: 'FabrikamNY'
+            qualifier: 'AS2Identity'
           }
         ]
       }
     }
-    partnerType: 'B2B'
   }
 }
 
 resource partner2 'Microsoft.Logic/integrationAccounts/partners@2019-05-01' = {
-  parent: integrationAccount
   name: '${resourceName}another'
+  parent: integrationAccount
   properties: {
     content: {
       b2b: {

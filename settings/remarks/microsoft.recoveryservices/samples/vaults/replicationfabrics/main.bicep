@@ -4,21 +4,21 @@ param location string = 'westus2'
 resource vault 'Microsoft.RecoveryServices/vaults@2022-10-01' = {
   name: resourceName
   location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-  }
   sku: {
     name: 'Standard'
+  }
+  properties: {
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource replicationFabric2 'Microsoft.RecoveryServices/vaults/replicationFabrics@2022-10-01' = {
-  parent: vault
   name: resourceName
+  parent: vault
   properties: {
     customDetails: {
+      location: '${location}'
       instanceType: 'Azure'
-      location: 'westus2'
     }
   }
 }

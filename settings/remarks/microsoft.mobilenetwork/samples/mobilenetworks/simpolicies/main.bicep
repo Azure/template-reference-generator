@@ -13,16 +13,16 @@ resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
 }
 
 resource dataNetwork 'Microsoft.MobileNetwork/mobileNetworks/dataNetworks@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {}
 }
 
 resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
     pccRules: [
       {
@@ -30,8 +30,6 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
         rulePrecedence: 1
         serviceDataFlowTemplates: [
           {
-            direction: 'Uplink'
-            ports: []
             protocol: [
               'ip'
             ]
@@ -39,6 +37,8 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
               '10.3.4.0/24'
             ]
             templateName: 'IP-to-server'
+            direction: 'Uplink'
+            ports: []
           }
         ]
         trafficControl: 'Enabled'
@@ -49,51 +49,47 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
 }
 
 resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
-    defaultSlice: {
-      id: slice.id
-    }
     registrationTimer: 3240
     sliceConfigurations: [
       {
         dataNetworkConfigurations: [
           {
-            '5qi': 9
-            additionalAllowedSessionTypes: null
-            allocationAndRetentionPriorityLevel: 9
             allowedServices: [
               {
                 id: service.id
               }
             ]
-            dataNetwork: {
-              id: dataNetwork.id
-            }
             defaultSessionType: 'IPv4'
-            maximumNumberOfBufferedPackets: 10
             preemptionCapability: 'NotPreempt'
-            preemptionVulnerability: 'Preemptable'
             sessionAmbr: {
               downlink: '1 Gbps'
               uplink: '500 Mbps'
             }
+            '5qi': 9
+            additionalAllowedSessionTypes: null
+            allocationAndRetentionPriorityLevel: 9
+            dataNetwork: {
+              id: dataNetwork.id
+            }
+            maximumNumberOfBufferedPackets: 10
+            preemptionVulnerability: 'Preemptable'
           }
         ]
         defaultDataNetwork: {
           id: dataNetwork.id
         }
-        slice: {
-          id: slice.id
-        }
+        slice: {}
       }
     ]
     ueAmbr: {
-      downlink: '1 Gbps'
       uplink: '500 Mbps'
+      downlink: '1 Gbps'
     }
+    defaultSlice: {}
   }
   tags: {
     key: 'value'
@@ -101,9 +97,9 @@ resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-0
 }
 
 resource slice 'Microsoft.MobileNetwork/mobileNetworks/slices@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
     snssai: {
       sst: 1

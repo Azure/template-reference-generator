@@ -5,15 +5,13 @@ resource expressRouteGateway 'Microsoft.Network/expressRouteGateways@2022-07-01'
   name: resourceName
   location: location
   properties: {
-    allowNonVirtualWanTraffic: false
     autoScaleConfiguration: {
       bounds: {
         min: 1
       }
     }
-    virtualHub: {
-      id: virtualHub.id
-    }
+    virtualHub: {}
+    allowNonVirtualWanTraffic: false
   }
 }
 
@@ -26,9 +24,7 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {
-      id: virtualWan.id
-    }
+    virtualWan: {}
   }
 }
 
@@ -36,9 +32,9 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    allowBranchToBranchTraffic: true
-    disableVpnEncryption: false
     office365LocalBreakoutCategory: 'None'
     type: 'Standard'
+    allowBranchToBranchTraffic: true
+    disableVpnEncryption: false
   }
 }

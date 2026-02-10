@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
@@ -11,21 +11,9 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         name: 'EnableGremlin'
       }
     ]
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
     enableAnalyticalStorage: false
-    enableAutomaticFailover: false
     enableFreeTier: false
-    enableMultipleWriteLocations: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
     locations: [
       {
         failoverPriority: 0
@@ -33,39 +21,51 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    networkAclBypass: 'None'
+    virtualNetworkRules: []
+    consistencyPolicy: {
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+      defaultConsistencyLevel: 'Strong'
+    }
+    databaseAccountOfferType: 'Standard'
+    disableKeyBasedMetadataWriteAccess: false
+    enableAutomaticFailover: false
+    enableMultipleWriteLocations: false
+    ipRules: []
     networkAclBypassResourceIds: []
     publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
+    defaultIdentity: 'FirstPartyIdentity'
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypass: 'None'
   }
 }
 
 resource gremlinDatabase 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2023-04-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }
 
 resource graph 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs@2023-04-15' = {
-  parent: gremlinDatabase
   name: resourceName
+  parent: gremlinDatabase
   properties: {
     options: {
       throughput: 400
     }
     resource: {
-      id: 'acctest0001'
       partitionKey: {
         kind: 'Hash'
         paths: [
           '/test'
         ]
       }
+      id: '${resourceName}'
     }
   }
 }

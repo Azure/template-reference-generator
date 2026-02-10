@@ -1,52 +1,46 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    publicNetworkAccess: 'Enabled'
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        queue: {
+        table: {
           keyType: 'Service'
         }
-        table: {
+        queue: {
           keyType: 'Service'
         }
       }
     }
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
-    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
   }
 }
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2021-09-01' = {
-  parent: storageAccount
   name: 'default'
+  parent: storageAccount
   properties: {
-    changeFeed: {
-      enabled: true
-    }
-    containerDeleteRetentionPolicy: {
-      enabled: false
-    }
     cors: {}
     deleteRetentionPolicy: {
       enabled: false
@@ -56,6 +50,12 @@ resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2021-09-01'
       enable: false
     }
     restorePolicy: {
+      enabled: false
+    }
+    changeFeed: {
+      enabled: true
+    }
+    containerDeleteRetentionPolicy: {
       enabled: false
     }
   }

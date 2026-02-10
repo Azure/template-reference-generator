@@ -1,4 +1,12 @@
+targetScope = 'subscription'
+
 param resourceName string = 'acctest0001'
+param location string = 'westus'
+
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: resourceName
+  location: location
+}
 
 resource budget 'Microsoft.Consumption/budgets@2019-10-01' = {
   name: resourceName
@@ -7,25 +15,25 @@ resource budget 'Microsoft.Consumption/budgets@2019-10-01' = {
     category: 'Cost'
     filter: {
       tags: {
-        name: 'foo'
-        operator: 'In'
         values: [
           'bar'
         ]
+        name: 'foo'
+        operator: 'In'
       }
     }
     notifications: {
       'Actual_EqualTo_90.000000_Percent': {
+        enabled: true
+        operator: 'EqualTo'
+        threshold: 90
+        thresholdType: 'Actual'
         contactEmails: [
           'foo@example.com'
           'bar@example.com'
         ]
         contactGroups: []
         contactRoles: []
-        enabled: true
-        operator: 'EqualTo'
-        threshold: 90
-        thresholdType: 'Actual'
       }
     }
     timeGrain: 'Monthly'

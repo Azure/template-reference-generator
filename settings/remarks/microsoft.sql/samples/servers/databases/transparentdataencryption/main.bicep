@@ -8,37 +8,37 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: '${administratorLoginPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
+    administratorLogin: 'mradministrator'
   }
 }
 
 resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
-  parent: server
   name: resourceName
   location: location
+  parent: server
   properties: {
+    zoneRedundant: false
     autoPauseDelay: 0
     createMode: 'Default'
-    elasticPoolId: ''
     highAvailabilityReplicaCount: 0
-    isLedgerOn: false
     licenseType: 'LicenseIncluded'
+    readScale: 'Disabled'
+    elasticPoolId: ''
+    isLedgerOn: false
     maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
     minCapacity: 0
-    readScale: 'Disabled'
     requestedBackupStorageRedundancy: 'Geo'
-    zoneRedundant: false
   }
 }
 
 resource transparentDataEncryption 'Microsoft.Sql/servers/databases/transparentDataEncryption@2014-04-01' = {
-  parent: database
   name: 'current'
+  parent: database
   properties: {
     status: 'Enabled'
   }

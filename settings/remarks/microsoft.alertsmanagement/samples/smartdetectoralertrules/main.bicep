@@ -5,19 +5,19 @@ resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
   name: resourceName
   location: 'global'
   properties: {
-    armRoleReceivers: []
-    automationRunbookReceivers: []
     azureAppPushReceivers: []
     azureFunctionReceivers: []
+    logicAppReceivers: []
+    smsReceivers: []
+    webhookReceivers: []
+    armRoleReceivers: []
+    automationRunbookReceivers: []
     emailReceivers: []
     enabled: true
     eventHubReceivers: []
     groupShortName: 'acctestag'
     itsmReceivers: []
-    logicAppReceivers: []
-    smsReceivers: []
     voiceReceivers: []
-    webhookReceivers: []
   }
 }
 
@@ -26,14 +26,14 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
+    SamplingPercentage: 100
     Application_Type: 'web'
     DisableIpMasking: false
-    DisableLocalAuth: false
     ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
-    SamplingPercentage: 100
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
+    DisableLocalAuth: false
+    RetentionInDays: 90
   }
 }
 
@@ -41,13 +41,6 @@ resource smartDetectorAlertRule 'microsoft.alertsManagement/smartDetectorAlertRu
   name: resourceName
   location: 'global'
   properties: {
-    actionGroups: {
-      customEmailSubject: ''
-      customWebhookPayload: ''
-      groupIds: [
-        actionGroup.id
-      ]
-    }
     description: ''
     detector: {
       id: 'FailureAnomaliesDetector'
@@ -58,5 +51,12 @@ resource smartDetectorAlertRule 'microsoft.alertsManagement/smartDetectorAlertRu
     ]
     severity: 'Sev0'
     state: 'Enabled'
+    actionGroups: {
+      customEmailSubject: ''
+      customWebhookPayload: ''
+      groupIds: [
+        actionGroup.id
+      ]
+    }
   }
 }

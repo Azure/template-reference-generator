@@ -1,40 +1,40 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @secure()
 @description('The RADIUS server secret for VPN authentication')
 param radiusServerSecret string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource vpnServerConfiguration 'Microsoft.Network/vpnServerConfigurations@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    radiusClientRootCertificates: []
-    radiusServerAddress: ''
-    radiusServerRootCertificates: []
+    vpnProtocols: [
+      'OpenVPN'
+      'IkeV2'
+    ]
     radiusServerSecret: ''
     radiusServers: [
       {
         radiusServerAddress: '10.105.1.1'
         radiusServerScore: 15
-        radiusServerSecret: null
+        radiusServerSecret: '${radiusServerSecret}'
       }
     ]
     vpnAuthenticationTypes: [
       'Radius'
     ]
-    vpnClientIpsecPolicies: []
     vpnClientRevokedCertificates: []
     vpnClientRootCertificates: []
-    vpnProtocols: [
-      'OpenVPN'
-      'IkeV2'
-    ]
+    radiusClientRootCertificates: []
+    radiusServerAddress: ''
+    radiusServerRootCertificates: []
+    vpnClientIpsecPolicies: []
   }
 }
 
 resource configurationPolicyGroup 'Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups@2022-07-01' = {
-  parent: vpnServerConfiguration
   name: resourceName
+  parent: vpnServerConfiguration
   properties: {
     isDefault: false
     policyMembers: [

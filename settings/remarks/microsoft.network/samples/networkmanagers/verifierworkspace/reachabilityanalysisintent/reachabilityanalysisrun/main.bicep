@@ -4,70 +4,10 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param vmAdminPassword string
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
-resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    description: ''
-    networkManagerScopeAccesses: [
-      'SecurityAdmin'
-    ]
-    networkManagerScopes: {
-      managementGroups: []
-      subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
-      ]
-    }
-  }
-}
-
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: false
-          }
-        }
-      ]
-    }
-    osProfile: {
-      adminPassword: null
-      adminUsername: 'testadmin'
-      computerName: 'hostname230630032848831819'
-      linuxConfiguration: {
-        disablePasswordAuthentication: false
-      }
-    }
     storageProfile: {
       imageReference: {
         offer: 'UbuntuServer'
@@ -82,6 +22,27 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         writeAcceleratorEnabled: false
       }
     }
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+          properties: {
+            primary: false
+          }
+        }
+      ]
+    }
+    osProfile: {
+      computerName: 'hostname230630032848831819'
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+      }
+      adminPassword: vmAdminPassword
+      adminUsername: 'testadmin'
+    }
   }
 }
 
@@ -89,6 +50,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
@@ -97,13 +59,12 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     dhcpOptions: {
       dnsServers: []
     }
-    subnets: []
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -114,18 +75,35 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   }
 }
 
-resource verifierWorkspace 'Microsoft.Network/networkManagers/verifierWorkspaces@2024-01-01-preview' = {
-  parent: networkManager
+resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
   location: location
+  properties: {
+    description: ''
+    networkManagerScopeAccesses: [
+      'SecurityAdmin'
+    ]
+    networkManagerScopes: {
+      managementGroups: []
+      subscriptions: [
+        '/subscriptions/${subscription()}'
+      ]
+    }
+  }
+}
+
+resource verifierWorkspace 'Microsoft.Network/networkManagers/verifierWorkspaces@2024-01-01-preview' = {
+  name: resourceName
+  location: location
+  parent: networkManager
   properties: {
     description: 'A sample workspace'
   }
 }
 
 resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents@2024-01-01-preview' = {
-  parent: verifierWorkspace
   name: resourceName
+  parent: verifierWorkspace
   properties: {
     description: 'A sample reachability analysis intent'
     destinationResourceId: virtualMachine.id
@@ -147,5 +125,25 @@ resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierW
       ]
     }
     sourceResourceId: virtualMachine.id
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration1'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
+        }
+      }
+    ]
   }
 }

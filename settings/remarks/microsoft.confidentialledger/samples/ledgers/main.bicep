@@ -12,12 +12,12 @@ resource ledger 'Microsoft.ConfidentialLedger/ledgers@2022-05-13' = {
       {
         ledgerRoleName: 'Administrator'
         principalId: deployer().objectId
-        tenantId: deployer().tenantId
+        tenantId: tenant()
       }
     ]
     certBasedSecurityPrincipals: [
       {
-        cert: null
+        cert: ledgerCertificate
         ledgerRoleName: 'Administrator'
       }
     ]

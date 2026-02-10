@@ -5,7 +5,6 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
   location: location
   properties: {
-    description: ''
     networkManagerScopeAccesses: [
       'SecurityAdmin'
     ]
@@ -15,14 +14,15 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
         subscription().id
       ]
     }
+    description: ''
   }
 }
 
 resource scopeConnection 'Microsoft.Network/networkManagers/scopeConnections@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {
     resourceId: subscription().id
-    tenantId: tenant().tenantId
+    tenantId: subscription().tenantId
   }
 }

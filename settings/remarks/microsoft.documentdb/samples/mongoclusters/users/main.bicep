@@ -34,8 +34,8 @@ resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@
 }
 
 resource mongouserEntraserviceprincipal 'Microsoft.DocumentDB/mongoClusters/users@2025-09-01' = {
+  name: 'azapi_resource.userAssignedIdentity.output.properties.principalId'
   parent: mongoClusterSSDv2
-  name: 'userAssignedIdentity.properties.principalId'
   properties: {
     identityProvider: {
       properties: {

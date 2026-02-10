@@ -4,17 +4,17 @@ param location string = 'westeurope'
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Regional'
+    name: 'Basic'
+  }
   properties: {
+    publicIPAllocationMethod: 'Dynamic'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Dynamic'
-  }
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
   }
 }
 
@@ -46,13 +46,11 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07
       {
         name: 'vnetGatewayConfig'
         properties: {
-          privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
             id: publicIPAddress.id
           }
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
+          privateIPAllocationMethod: 'Dynamic'
         }
       }
     ]
@@ -65,9 +63,10 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07
 }
 
 resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' = {
-  parent: virtualNetworkGateway
   name: resourceName
+  parent: virtualNetworkGateway
   properties: {
+    type: 'Static'
     externalMappings: [
       {
         addressSpace: '10.1.0.0/26'
@@ -79,19 +78,18 @@ resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' 
       }
     ]
     mode: 'EgressSnat'
-    type: 'Static'
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'GatewaySubnet'
+  parent: virtualNetwork
   properties: {
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
     addressPrefix: '10.0.1.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

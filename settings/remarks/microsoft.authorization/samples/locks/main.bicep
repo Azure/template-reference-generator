@@ -1,18 +1,13 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource lock 'Microsoft.Authorization/locks@2020-05-01' = {
-  scope: publicIPAddress
-  name: resourceName
-  properties: {
-    level: 'CanNotDelete'
-    notes: ''
-  }
-}
-
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -21,8 +16,13 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
   }
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
+}
+
+resource lock 'Microsoft.Authorization/locks@2020-05-01' = {
+  name: resourceName
+  scope: publicIPAddress
+  properties: {
+    level: 'CanNotDelete'
+    notes: ''
   }
 }

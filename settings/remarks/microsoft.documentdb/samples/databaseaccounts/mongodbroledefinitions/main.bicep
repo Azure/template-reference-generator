@@ -1,16 +1,42 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
-var accountName = toLower(replace(resourceName, '-', ''))
-var dbName = '${toLower(resourceName)}db'
-var roleName = '${toLower(resourceName)}role'
+var dbName = 'resourcenamedb'
+var roleName = 'resourcenamerole'
+var accountName = 'resourcename'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   name: accountName
   location: location
   kind: 'MongoDB'
   properties: {
+    minimalTlsVersion: 'Tls12'
+    virtualNetworkRules: []
     backupPolicy: null
+    disableKeyBasedMetadataWriteAccess: false
+    enableAutomaticFailover: false
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypassResourceIds: []
+    consistencyPolicy: {
+      maxStalenessPrefix: 100
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+    }
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableFreeTier: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: '${location}'
+      }
+    ]
+    publicNetworkAccess: 'Enabled'
+    defaultIdentity: 'FirstPartyIdentity'
+    enableBurstCapacity: false
+    enablePartitionMerge: false
+    networkAclBypass: 'None'
     capabilities: [
       {
         name: 'EnableMongoRoleBasedAccessControl'
@@ -19,58 +45,32 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
         name: 'EnableMongo'
       }
     ]
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
     databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableBurstCapacity: false
-    enableFreeTier: false
     enableMultipleWriteLocations: false
-    enablePartitionMerge: false
     ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'eastus'
-      }
-    ]
-    minimalTlsVersion: 'Tls12'
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
   }
 }
 
 resource mongodbDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: dbName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: dbName
+      id: '${dbName}'
     }
   }
 }
 
 resource mongodbRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions@2022-11-15' = {
-  parent: databaseAccount
   name: '${dbName}.${roleName}'
-  properties: {
-    databaseName: dbName
-    roleName: roleName
-    type: 1
-  }
+  parent: databaseAccount
   dependsOn: [
     mongodbDatabase
   ]
+  properties: {
+    databaseName: '${dbName}'
+    roleName: '${roleName}'
+    type: 1
+  }
 }

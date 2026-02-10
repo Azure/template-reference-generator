@@ -9,13 +9,13 @@ resource sqlVirtualMachineGroup 'Microsoft.SqlVirtualMachine/sqlVirtualMachineGr
     sqlImageSku: 'Developer'
     wsfcDomainProfile: {
       clusterBootstrapAccount: ''
-      clusterOperatorAccount: ''
       clusterSubnetType: 'SingleSubnet'
-      domainFqdn: 'testdomain.com'
       ouPath: ''
+      storageAccountUrl: ''
+      clusterOperatorAccount: ''
+      domainFqdn: 'testdomain.com'
       sqlServiceAccount: ''
       storageAccountPrimaryKey: ''
-      storageAccountUrl: ''
     }
   }
 }

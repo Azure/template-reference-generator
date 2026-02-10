@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
@@ -19,8 +19,8 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
 }
 
 resource securityAdminConfiguration 'Microsoft.Network/networkManagers/securityAdminConfigurations@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {
     applyOnNetworkIntentPolicyBasedServices: []
   }

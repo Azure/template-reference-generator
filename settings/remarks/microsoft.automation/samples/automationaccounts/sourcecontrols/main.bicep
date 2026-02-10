@@ -8,29 +8,29 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' 
   name: resourceName
   location: location
   properties: {
-    encryption: {
-      keySource: 'Microsoft.Automation'
-    }
     publicNetworkAccess: true
     sku: {
       name: 'Basic'
+    }
+    encryption: {
+      keySource: 'Microsoft.Automation'
     }
   }
 }
 
 resource sourceControl 'Microsoft.Automation/automationAccounts/sourceControls@2023-11-01' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
-    autoSync: false
     branch: 'master'
     folderPath: '/'
     publishRunbook: false
     repoUrl: 'https://github.com/Azure-Samples/acr-build-helloworld-node.git'
     securityToken: {
-      accessToken: null
+      accessToken: '${pat}'
       tokenType: 'PersonalAccessToken'
     }
     sourceType: 'GitHub'
+    autoSync: false
   }
 }

@@ -10,16 +10,16 @@ resource cluster 'Microsoft.ServiceFabric/clusters@2021-06-01' = {
     managementEndpoint: 'http://example:80'
     nodeTypes: [
       {
-        capacities: {}
-        clientConnectionEndpointPort: 2020
-        durabilityLevel: 'Bronze'
+        isStateless: false
         httpGatewayEndpointPort: 80
         isPrimary: true
-        isStateless: false
         multipleAvailabilityZones: false
         name: 'first'
         placementProperties: {}
         vmInstanceCount: 3
+        capacities: {}
+        clientConnectionEndpointPort: 2020
+        durabilityLevel: 'Bronze'
       }
     ]
     reliabilityLevel: 'Bronze'

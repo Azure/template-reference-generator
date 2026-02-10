@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource spacecraft 'Microsoft.Orbital/spacecrafts@2022-11-01' = {
   name: resourceName
@@ -7,11 +7,11 @@ resource spacecraft 'Microsoft.Orbital/spacecrafts@2022-11-01' = {
   properties: {
     links: [
       {
-        bandwidthMHz: 100
         centerFrequencyMHz: 101
         direction: 'Uplink'
         name: 'linkname'
         polarization: 'LHCP'
+        bandwidthMHz: 100
       }
     ]
     noradId: '12345'

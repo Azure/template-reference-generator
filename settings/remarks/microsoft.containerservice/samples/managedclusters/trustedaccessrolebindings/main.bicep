@@ -1,41 +1,24 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource component 'Microsoft.Insights/components@2020-02-02' = {
-  name: 'ai-${resourceName}'
-  location: location
-  kind: 'web'
-  properties: {
-    Application_Type: 'web'
-    DisableIpMasking: false
-    DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
-    SamplingPercentage: 100
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-  }
-}
-
 resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' = {
   name: 'aks-${resourceName}'
   location: location
+  sku: {
+    name: 'Base'
+    tier: 'Free'
+  }
   properties: {
+    securityProfile: {}
+    servicePrincipalProfile: {
+      clientId: 'msi'
+    }
     addonProfiles: {}
     agentPoolProfiles: [
       {
-        count: 1
-        enableAutoScaling: false
-        enableEncryptionAtHost: false
         enableFIPS: false
-        enableNodePublicIP: false
         enableUltraSSD: false
-        kubeletDiskType: ''
         mode: 'System'
-        name: 'default'
-        nodeLabels: {}
-        osDiskType: 'Managed'
-        osType: 'Linux'
         scaleDownMode: 'Delete'
         tags: {}
         type: 'VirtualMachineScaleSets'
@@ -44,14 +27,18 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
           maxSurge: '10%'
           nodeSoakDurationInMinutes: 0
         }
+        name: 'default'
         vmSize: 'Standard_B2s'
+        enableEncryptionAtHost: false
+        enableNodePublicIP: false
+        osType: 'Linux'
+        count: 1
+        enableAutoScaling: false
+        kubeletDiskType: ''
+        nodeLabels: {}
+        osDiskType: 'Managed'
       }
     ]
-    apiServerAccessProfile: {
-      disableRunCommand: false
-      enablePrivateCluster: false
-      enablePrivateClusterPublicFQDN: false
-    }
     autoUpgradeProfile: {
       nodeOSUpgradeChannel: 'NodeImage'
       upgradeChannel: 'none'
@@ -61,39 +48,44 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
         enabled: false
       }
     }
-    disableLocalAccounts: false
-    dnsPrefix: 'aks-acctest0001'
-    enableRBAC: true
     kubernetesVersion: ''
     metricsProfile: {
       costAnalysis: {
         enabled: false
       }
     }
-    nodeResourceGroup: ''
-    securityProfile: {}
-    servicePrincipalProfile: {
-      clientId: 'msi'
-    }
     supportPlan: 'KubernetesOfficial'
-  }
-  sku: {
-    name: 'Base'
-    tier: 'Free'
+    apiServerAccessProfile: {
+      enablePrivateClusterPublicFQDN: false
+      disableRunCommand: false
+      enablePrivateCluster: false
+    }
+    disableLocalAccounts: false
+    dnsPrefix: 'aks-${resourceName}'
+    enableRBAC: true
+    nodeResourceGroup: ''
   }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: 'st${resourceName}'
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
     allowBlobPublicAccess: true
+    isSftpEnabled: false
     allowCrossTenantReplication: false
+    minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
+    isHnsEnabled: false
+    isNfsV3Enabled: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -105,11 +97,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
         }
       }
     }
-    isHnsEnabled: false
     isLocalUserEnabled: true
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Allow'
@@ -117,11 +105,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       resourceAccessRules: []
       virtualNetworkRules: []
     }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    accessTier: 'Hot'
   }
 }
 
@@ -133,6 +117,8 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
     createMode: 'default'
     enableRbacAuthorization: false
     enabledForDeployment: false
+    softDeleteRetentionInDays: 7
+    tenantId: tenant()
     enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
@@ -140,14 +126,16 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
       family: 'A'
       name: 'standard'
     }
-    softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
   }
 }
 
 resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
   name: 'mlw-${resourceName}'
   location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Basic'
+  }
   kind: 'Default'
   properties: {
     applicationInsights: component.id
@@ -156,19 +144,31 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
     storageAccount: storageAccount.id
     v1LegacyMode: false
   }
-  sku: {
-    name: 'Basic'
-    tier: 'Basic'
-  }
 }
 
 resource trustedAccessRoleBinding 'Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings@2025-02-01' = {
-  parent: managedCluster
   name: 'tarb-${resourceName}'
+  parent: managedCluster
   properties: {
     roles: [
       'Microsoft.MachineLearningServices/workspaces/mlworkload'
     ]
     sourceResourceId: workspace.id
+  }
+}
+
+resource component 'Microsoft.Insights/components@2020-02-02' = {
+  name: 'ai-${resourceName}'
+  location: location
+  kind: 'web'
+  properties: {
+    publicNetworkAccessForIngestion: 'Enabled'
+    DisableIpMasking: false
+    DisableLocalAuth: false
+    ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
+    publicNetworkAccessForQuery: 'Enabled'
+    Application_Type: 'web'
+    SamplingPercentage: 100
   }
 }

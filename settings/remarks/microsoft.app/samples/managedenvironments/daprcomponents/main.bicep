@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: resourceName
@@ -8,7 +8,6 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: workspace.properties.customerId
         sharedKey: workspace.listKeys().primarySharedKey
       }
     }
@@ -20,12 +19,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
     sku: {
       name: 'PerGB2018'
@@ -33,12 +26,18 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     workspaceCapping: {
       dailyQuotaGb: -1
     }
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
   }
 }
 
 resource daprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
-  parent: managedEnvironment
   name: resourceName
+  parent: managedEnvironment
   properties: {
     componentType: 'state.azure.blobstorage'
     ignoreErrors: false

@@ -4,9 +4,12 @@ param location string = 'westeurope'
 resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_S1'
+  }
   properties: {
     cors: {}
-    disableAadAuth: false
     disableLocalAuth: false
     features: [
       {
@@ -27,35 +30,32 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
       }
     ]
     publicNetworkAccess: 'Enabled'
+    serverless: {
+      connectionTimeoutInSeconds: 30
+    }
+    upstream: {
+      templates: []
+    }
+    disableAadAuth: false
     resourceLogConfiguration: {
       categories: [
         {
-          enabled: 'false'
           name: 'MessagingLogs'
+          enabled: 'false'
         }
         {
           enabled: 'false'
           name: 'ConnectivityLogs'
         }
         {
-          enabled: 'false'
           name: 'HttpRequestLogs'
+          enabled: 'false'
         }
       ]
-    }
-    serverless: {
-      connectionTimeoutInSeconds: 30
     }
     tls: {
       clientCertEnabled: false
     }
-    upstream: {
-      templates: []
-    }
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard_S1'
   }
 }
 
@@ -63,6 +63,11 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: resourceName
   location: location
   properties: {
+    tenantId: tenant()
+    createMode: 'default'
+    enabledForDeployment: false
+    enabledForDiskEncryption: false
+    softDeleteRetentionInDays: 7
     accessPolicies: [
       {
         objectId: deployer().objectId
@@ -78,31 +83,26 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant()
       }
     ]
-    createMode: 'default'
     enableRbacAuthorization: false
     enableSoftDelete: true
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
     sku: {
       family: 'A'
       name: 'standard'
     }
-    softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
   }
 }
 
 resource sharedPrivateLinkResource 'Microsoft.SignalRService/signalR/sharedPrivateLinkResources@2023-02-01' = {
-  parent: signalR
   name: resourceName
+  parent: signalR
   properties: {
+    requestMessage: 'please approve'
     groupId: 'vault'
     privateLinkResourceId: vault.id
-    requestMessage: 'please approve'
   }
 }

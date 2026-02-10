@@ -4,27 +4,6 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource configurationAssignment 'Microsoft.Maintenance/configurationAssignments@2022-07-01-preview' = {
-  scope: virtualMachine
-  name: resourceName
-  location: 'westeurope'
-  properties: {
-    maintenanceConfigurationId: maintenanceConfiguration.id
-    resourceId: virtualMachine.id
-  }
-}
-
-resource maintenanceConfiguration 'Microsoft.Maintenance/maintenanceConfigurations@2022-07-01-preview' = {
-  name: resourceName
-  location: location
-  properties: {
-    extensionProperties: {}
-    maintenanceScope: 'SQLDB'
-    namespace: 'Microsoft.Maintenance'
-    visibility: 'Custom'
-  }
-}
-
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: resourceName
   location: location
@@ -35,12 +14,10 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
       {
         name: 'testconfiguration1'
         properties: {
-          primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
+          primary: true
         }
       }
     ]
@@ -51,35 +28,19 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    additionalCapabilities: {}
-    applicationProfile: {
-      galleryApplications: []
-    }
     diagnosticsProfile: {
       bootDiagnostics: {
         enabled: false
         storageUri: ''
       }
     }
-    extensionsTimeBudget: 'PT1H30M'
     hardwareProfile: {
       vmSize: 'Standard_F2'
     }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: true
-          }
-        }
-      ]
-    }
     osProfile: {
-      adminPassword: null
       adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001'
+      computerName: resourceName
       linuxConfiguration: {
         disablePasswordAuthentication: false
         patchSettings: {
@@ -92,8 +53,21 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         }
       }
       secrets: []
+      adminPassword: adminPassword
     }
     priority: 'Regular'
+    additionalCapabilities: {}
+    extensionsTimeBudget: 'PT1H30M'
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+          properties: {
+            primary: true
+          }
+        }
+      ]
+    }
     storageProfile: {
       dataDisks: []
       imageReference: {
@@ -103,14 +77,17 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         version: 'latest'
       }
       osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
         osType: 'Linux'
         writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
       }
+    }
+    applicationProfile: {
+      galleryApplications: []
     }
   }
 }
@@ -132,14 +109,31 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
+  }
+}
+
+resource configurationAssignment 'Microsoft.Maintenance/configurationAssignments@2022-07-01-preview' = {
+  name: resourceName
+  scope: virtualMachine
+  properties: {}
+}
+
+resource maintenanceConfiguration 'Microsoft.Maintenance/maintenanceConfigurations@2022-07-01-preview' = {
+  name: resourceName
+  location: location
+  properties: {
+    extensionProperties: {}
+    maintenanceScope: 'SQLDB'
+    namespace: 'Microsoft.Maintenance'
+    visibility: 'Custom'
   }
 }

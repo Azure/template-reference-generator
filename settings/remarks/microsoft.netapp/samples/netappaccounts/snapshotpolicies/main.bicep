@@ -10,9 +10,9 @@ resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2022-05-01' = {
 }
 
 resource snapshotPolicy 'Microsoft.NetApp/netAppAccounts/snapshotPolicies@2022-05-01' = {
-  parent: netAppAccount
   name: resourceName
   location: location
+  parent: netAppAccount
   properties: {
     dailySchedule: {
       hour: 22

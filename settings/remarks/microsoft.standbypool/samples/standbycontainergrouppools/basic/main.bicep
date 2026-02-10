@@ -5,9 +5,20 @@ resource containerGroupProfile 'Microsoft.ContainerInstance/containerGroupProfil
   name: '${resourceName}-contianerGroup'
   location: location
   properties: {
+    imageRegistryCredentials: []
+    ipAddress: {
+      ports: [
+        {
+          port: 8000
+          protocol: 'TCP'
+        }
+      ]
+      type: 'Public'
+    }
+    osType: 'Linux'
+    sku: 'Standard'
     containers: [
       {
-        name: 'mycontainergroupprofile'
         properties: {
           command: []
           environmentVariables: []
@@ -24,37 +35,23 @@ resource containerGroupProfile 'Microsoft.ContainerInstance/containerGroupProfil
             }
           }
         }
+        name: 'mycontainergroupprofile'
       }
     ]
-    imageRegistryCredentials: []
-    ipAddress: {
-      ports: [
-        {
-          port: 8000
-          protocol: 'TCP'
-        }
-      ]
-      type: 'Public'
-    }
-    osType: 'Linux'
-    sku: 'Standard'
   }
 }
 
 resource standbyContainerGroupPool 'Microsoft.StandbyPool/standbyContainerGroupPools@2025-03-01' = {
   name: '${resourceName}-CGPool'
-  location: 'eastus'
   properties: {
     containerGroupProperties: {
+      subnetIds: [
+        {}
+      ]
       containerGroupProfile: {
         id: containerGroupProfile.id
         revision: 1
       }
-      subnetIds: [
-        {
-          id: subnet.id
-        }
-      ]
     }
     elasticityProfile: {
       maxReadyCapacity: 5
@@ -85,14 +82,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
   }
 }

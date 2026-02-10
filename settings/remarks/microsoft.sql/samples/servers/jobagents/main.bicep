@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: '4dministr4t0r'
-    administratorLoginPassword: null
+    administratorLoginPassword: '${sqlAdministratorPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,9 +18,9 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
-  parent: server
   name: resourceName
   location: location
+  parent: server
   properties: {
     autoPauseDelay: 0
     collation: 'SQL_Latin1_General_CP1_CI_AS'
@@ -28,8 +28,8 @@ resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
     elasticPoolId: ''
     highAvailabilityReplicaCount: 0
     isLedgerOn: false
-    maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
     minCapacity: 0
+    maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
     readScale: 'Disabled'
     requestedBackupStorageRedundancy: 'Geo'
     zoneRedundant: false
@@ -37,9 +37,9 @@ resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
 }
 
 resource jobAgent 'Microsoft.Sql/servers/jobAgents@2020-11-01-preview' = {
-  parent: server
   name: resourceName
   location: location
+  parent: server
   properties: {
     databaseId: database.id
   }

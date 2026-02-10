@@ -112,6 +112,11 @@
       "ResourceType": "Microsoft.RecoveryServices/vaults/replicationPolicies",
       "Path": "samples/vaults/replicationpolicies/main.bicep",
       "Description": "A basic example of deploying Azure Site Recovery replication policy on Azure."
+    },
+    {
+      "ResourceType": "Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems",
+      "Path": "samples/vaults/backupfabrics/protectioncontainers/protecteditems/main.bicep",
+      "Description": "A basic example of deploying Azure Backup Protected Item."
     }
   ]
 }

@@ -5,18 +5,29 @@ resource batchAccount 'Microsoft.Batch/batchAccounts@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    publicNetworkAccess: 'Enabled'
     encryption: {
       keySource: 'Microsoft.Batch'
     }
     poolAllocationMode: 'BatchService'
-    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource pool 'Microsoft.Batch/batchAccounts/pools@2022-10-01' = {
-  parent: batchAccount
   name: resourceName
+  parent: batchAccount
   properties: {
+    interNodeCommunication: 'Enabled'
+    scaleSettings: {
+      fixedScale: {
+        targetDedicatedNodes: 1
+        targetLowPriorityNodes: 0
+        nodeDeallocationOption: ''
+        resizeTimeout: 'PT15M'
+      }
+    }
+    taskSlotsPerNode: 1
+    vmSize: 'STANDARD_A1'
     certificates: null
     deploymentConfiguration: {
       virtualMachineConfiguration: {
@@ -35,17 +46,6 @@ resource pool 'Microsoft.Batch/batchAccounts/pools@2022-10-01' = {
       }
     }
     displayName: ''
-    interNodeCommunication: 'Enabled'
     metadata: []
-    scaleSettings: {
-      fixedScale: {
-        nodeDeallocationOption: ''
-        resizeTimeout: 'PT15M'
-        targetDedicatedNodes: 1
-        targetLowPriorityNodes: 0
-      }
-    }
-    taskSlotsPerNode: 1
-    vmSize: 'STANDARD_A1'
   }
 }

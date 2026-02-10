@@ -13,13 +13,13 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
+    supportsHttpsTrafficOnly: true
     allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -31,24 +31,24 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
     isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
   }
 }
 
 resource dataflow 'Microsoft.DataFactory/factories/dataflows@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     type: 'Flowlet'
@@ -67,13 +67,12 @@ source1 sink(
 '''
       sinks: [
         {
+          name: 'sink1'
           description: ''
           linkedService: {
             parameters: {}
-            referenceName: linkedservice.name
             type: 'LinkedServiceReference'
           }
-          name: 'sink1'
         }
       ]
       sources: [
@@ -81,7 +80,6 @@ source1 sink(
           description: ''
           linkedService: {
             parameters: {}
-            referenceName: linkedservice.name
             type: 'LinkedServiceReference'
           }
           name: 'source1'
@@ -92,8 +90,8 @@ source1 sink(
 }
 
 resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     type: 'AzureBlobStorage'

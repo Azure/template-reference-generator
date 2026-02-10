@@ -4,33 +4,6 @@ param location string = 'westus'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: '${resourceName}-nic'
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'ipconfig1'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
-resource networkWatcher 'Microsoft.Network/networkWatchers@2024-05-01' = {
-  name: '${resourceName}-nw'
-  location: location
-}
-
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: '${resourceName}-vm'
   location: location
@@ -49,9 +22,9 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: adminPassword
       adminUsername: 'testadmin'
-      computerName: 'acctest0001-vm'
+      computerName: '${resourceName}-vm'
       linuxConfiguration: {
         disablePasswordAuthentication: false
       }
@@ -64,13 +37,13 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         version: 'latest'
       }
       osDisk: {
-        caching: 'ReadWrite'
         createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
-        name: 'acctest0001-osdisk'
+        name: '${resourceName}-osdisk'
         writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
       }
     }
   }
@@ -93,24 +66,28 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource extension 'Microsoft.Compute/virtualMachines/extensions@2024-03-01' = {
-  parent: virtualMachine
   name: 'network-watcher'
   location: location
+  parent: virtualMachine
   properties: {
-    autoUpgradeMinorVersion: true
     enableAutomaticUpgrade: false
     publisher: 'Microsoft.Azure.NetworkWatcher'
     suppressFailures: false
     type: 'NetworkWatcherAgentLinux'
     typeHandlerVersion: '1.4'
+    autoUpgradeMinorVersion: true
   }
 }
 
+resource networkWatcher 'Microsoft.Network/networkWatchers@2024-05-01' = {
+  name: '${resourceName}-nw'
+  location: location
+}
+
 resource packetCapture 'Microsoft.Network/networkWatchers/packetCaptures@2024-05-01' = {
-  parent: networkWatcher
   name: '${resourceName}-pc'
+  parent: networkWatcher
   properties: {
-    bytesToCapturePerPacket: 0
     storageLocation: {
       filePath: '/var/captures/packet.cap'
     }
@@ -118,19 +95,40 @@ resource packetCapture 'Microsoft.Network/networkWatchers/packetCaptures@2024-05
     targetType: 'AzureVM'
     timeLimitInSeconds: 18000
     totalBytesPerSession: 1073741824
+    bytesToCapturePerPacket: 0
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
-    defaultOutboundAccess: true
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    defaultOutboundAccess: true
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: '${resourceName}-nic'
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'ipconfig1'
+        properties: {
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
+          primary: true
+        }
+      }
+    ]
   }
 }

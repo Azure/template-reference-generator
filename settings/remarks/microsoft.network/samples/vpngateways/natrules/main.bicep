@@ -10,9 +10,7 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {
-      id: virtualWan.id
-    }
+    virtualWan: {}
   }
 }
 
@@ -20,10 +18,10 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    allowBranchToBranchTraffic: true
-    disableVpnEncryption: false
     office365LocalBreakoutCategory: 'None'
     type: 'Standard'
+    allowBranchToBranchTraffic: true
+    disableVpnEncryption: false
   }
 }
 
@@ -41,8 +39,8 @@ resource vpnGateway 'Microsoft.Network/vpnGateways@2022-07-01' = {
 }
 
 resource natRule 'Microsoft.Network/vpnGateways/natRules@2022-07-01' = {
-  parent: vpnGateway
   name: resourceName
+  parent: vpnGateway
   properties: {
     externalMappings: [
       {

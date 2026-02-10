@@ -5,69 +5,57 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
   name: resourceName
   location: location
   properties: {
-    authenticationCertificates: []
-    backendAddressPools: [
-      {
-        name: '\'${virtualNetwork.name}-beap\''
-        properties: {
-          backendAddresses: []
-        }
-      }
-    ]
     backendHttpSettingsCollection: [
       {
-        name: '\'${virtualNetwork.name}-be-htst\''
+        name: '${virtualNetwork.name}-be-htst'
         properties: {
           authenticationCertificates: []
           cookieBasedAffinity: 'Disabled'
+          protocol: 'Http'
+          trustedRootCertificates: []
           path: ''
           pickHostNameFromBackendAddress: false
           port: 80
-          protocol: 'Http'
           requestTimeout: 1
-          trustedRootCertificates: []
         }
       }
     ]
-    customErrorConfigurations: []
-    enableHttp2: false
     frontendIPConfigurations: [
       {
-        name: '\'${virtualNetwork.name}-feip\''
+        name: '${virtualNetwork.name}-feip'
         properties: {
           privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {
-            id: publicIPAddress.id
-          }
+          publicIPAddress: {}
         }
       }
     ]
     frontendPorts: [
       {
-        name: '\'${virtualNetwork.name}-feport\''
+        name: '${virtualNetwork.name}-feport'
         properties: {
           port: 80
         }
       }
     ]
-    gatewayIPConfigurations: [
+    trustedClientCertificates: []
+    backendAddressPools: [
       {
-        name: 'my-gateway-ip-configuration'
+        name: '${virtualNetwork.name}-beap'
         properties: {
-          subnet: {
-            id: subnet.id
-          }
+          backendAddresses: []
         }
       }
     ]
+    customErrorConfigurations: []
     httpListeners: [
       {
-        name: '\'${virtualNetwork.name}-httplstn\''
+        name: '${virtualNetwork.name}-httplstn'
         properties: {
           customErrorConfigurations: []
           frontendIPConfiguration: {
             id: resourceId(
               'Microsoft.Network/applicationGateways/frontendIPConfigurations',
+              resourceGroup().name,
               resourceName,
               '${virtualNetwork.name}-feip'
             )
@@ -75,6 +63,7 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
           frontendPort: {
             id: resourceId(
               'Microsoft.Network/applicationGateways/frontendPorts',
+              resourceGroup().name,
               resourceName,
               '${virtualNetwork.name}-feport'
             )
@@ -87,13 +76,29 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
     privateLinkConfigurations: []
     probes: []
     redirectConfigurations: []
+    sku: {
+      capacity: 2
+      name: 'Standard_v2'
+      tier: 'Standard_v2'
+    }
+    sslPolicy: {}
+    authenticationCertificates: []
+    gatewayIPConfigurations: [
+      {
+        name: 'my-gateway-ip-configuration'
+        properties: {
+          subnet: {}
+        }
+      }
+    ]
     requestRoutingRules: [
       {
-        name: '${virtualNetwork.name}-rqrt'
+        name: '-rqrt'
         properties: {
           backendAddressPool: {
             id: resourceId(
               'Microsoft.Network/applicationGateways/backendAddressPools',
+              resourceGroup().name,
               resourceName,
               '${virtualNetwork.name}-beap'
             )
@@ -101,6 +106,7 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
           backendHttpSettings: {
             id: resourceId(
               'Microsoft.Network/applicationGateways/backendHttpSettingsCollection',
+              resourceGroup().name,
               resourceName,
               '${virtualNetwork.name}-be-htst'
             )
@@ -108,44 +114,39 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
           httpListener: {
             id: resourceId(
               'Microsoft.Network/applicationGateways/httpListeners',
+              resourceGroup().name,
               resourceName,
               '${virtualNetwork.name}-httplstn'
             )
           }
-          priority: 10
           ruleType: 'Basic'
+          priority: 10
         }
       }
     ]
     rewriteRuleSets: []
-    sku: {
-      capacity: 2
-      name: 'Standard_v2'
-      tier: 'Standard_v2'
-    }
     sslCertificates: []
-    sslPolicy: {}
-    sslProfiles: []
-    trustedClientCertificates: []
     trustedRootCertificates: []
     urlPathMaps: []
+    enableHttp2: false
+    sslProfiles: []
   }
 }
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
+    publicIPAllocationMethod: 'Static'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
@@ -166,14 +167,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'subnet-230630033653837171'
+  parent: virtualNetwork
   properties: {
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
     addressPrefix: '10.0.0.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Disabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

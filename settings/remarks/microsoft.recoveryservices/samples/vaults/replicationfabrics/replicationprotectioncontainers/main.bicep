@@ -4,27 +4,27 @@ param location string = 'westeurope'
 resource vault 'Microsoft.RecoveryServices/vaults@2022-10-01' = {
   name: resourceName
   location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-  }
   sku: {
     name: 'Standard'
+  }
+  properties: {
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource replicationFabric 'Microsoft.RecoveryServices/vaults/replicationFabrics@2022-10-01' = {
-  parent: vault
   name: resourceName
+  parent: vault
   properties: {
     customDetails: {
       instanceType: 'Azure'
-      location: 'westeurope'
+      location: '${location}'
     }
   }
 }
 
 resource replicationProtectionContainer 'Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers@2022-10-01' = {
-  parent: replicationFabric
   name: resourceName
+  parent: replicationFabric
   properties: {}
 }

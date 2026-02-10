@@ -4,31 +4,27 @@ param location string = 'westeurope'
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_F2'
+    tier: 'Standard'
+  }
   properties: {
     additionalCapabilities: {}
-    doNotRunExtensionsOnOverprovisionedVMs: false
-    orchestrationMode: 'Uniform'
-    overprovision: true
-    scaleInPolicy: {
-      forceDeletion: false
-      rules: [
-        'Default'
-      ]
-    }
     singlePlacementGroup: true
     upgradePolicy: {
       mode: 'Manual'
     }
+    doNotRunExtensionsOnOverprovisionedVMs: false
+    orchestrationMode: 'Uniform'
+    overprovision: true
+    scaleInPolicy: {
+      rules: [
+        'Default'
+      ]
+      forceDeletion: false
+    }
     virtualMachineProfile: {
-      diagnosticsProfile: {
-        bootDiagnostics: {
-          enabled: false
-          storageUri: ''
-        }
-      }
-      extensionProfile: {
-        extensionsTimeBudget: 'PT1H30M'
-      }
       networkProfile: {
         networkInterfaceConfigurations: [
           {
@@ -41,18 +37,16 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
               enableIPForwarding: false
               ipConfigurations: [
                 {
-                  name: 'internal'
                   properties: {
+                    primary: true
+                    privateIPAddressVersion: 'IPv4'
+                    subnet: {}
                     applicationGatewayBackendAddressPools: []
                     applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
-                    primary: true
-                    privateIPAddressVersion: 'IPv4'
-                    subnet: {
-                      id: subnet.id
-                    }
                   }
+                  name: 'internal'
                 }
               ]
               primary: true
@@ -62,7 +56,7 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
       osProfile: {
         adminUsername: 'adminuser'
-        computerNamePrefix: 'acctest0001'
+        computerNamePrefix: resourceName
         linuxConfiguration: {
           disablePasswordAuthentication: true
           provisionVMAgent: true
@@ -96,12 +90,16 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           writeAcceleratorEnabled: false
         }
       }
+      diagnosticsProfile: {
+        bootDiagnostics: {
+          enabled: false
+          storageUri: ''
+        }
+      }
+      extensionProfile: {
+        extensionsTimeBudget: 'PT1H30M'
+      }
     }
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard_F2'
-    tier: 'Standard'
   }
 }
 
@@ -122,14 +120,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

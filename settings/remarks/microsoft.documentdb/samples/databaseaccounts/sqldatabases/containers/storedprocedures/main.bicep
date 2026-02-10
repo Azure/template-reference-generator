@@ -6,22 +6,12 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
     ipRules: []
-    isVirtualNetworkFilterEnabled: false
+    networkAclBypass: 'None'
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+    capabilities: []
+    disableKeyBasedMetadataWriteAccess: false
     locations: [
       {
         failoverPriority: 0
@@ -29,44 +19,54 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    networkAclBypass: 'None'
     networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    disableLocalAuth: false
+    enableAutomaticFailover: false
+    defaultIdentity: 'FirstPartyIdentity'
+    enableAnalyticalStorage: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    isVirtualNetworkFilterEnabled: false
   }
 }
 
 resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }
 
 resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
-  parent: sqlDatabase
   name: resourceName
+  parent: sqlDatabase
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
       partitionKey: {
         kind: 'Hash'
         paths: [
           '/definition/id'
         ]
       }
+      id: '${resourceName}'
     }
   }
 }
 
 resource storedProcedure 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures@2021-10-15' = {
-  parent: container
   name: resourceName
+  parent: container
   properties: {
     options: {}
     resource: {
@@ -76,7 +76,7 @@ resource storedProcedure 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/con
 		response.setBody(''Hello, World'');
 	}
 '''
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }

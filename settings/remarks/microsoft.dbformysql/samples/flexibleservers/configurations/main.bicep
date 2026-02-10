@@ -7,13 +7,11 @@ param administratorLoginPassword string
 resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
   name: '${resourceName}-mysql'
   location: location
+  sku: {
+    name: 'Standard_B1ms'
+    tier: 'Burstable'
+  }
   properties: {
-    administratorLogin: 'tfadmin'
-    administratorLoginPassword: null
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
     dataEncryption: {
       type: 'SystemManaged'
     }
@@ -21,16 +19,18 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
       mode: 'Disabled'
     }
     version: '8.0.21'
-  }
-  sku: {
-    name: 'Standard_B1ms'
-    tier: 'Burstable'
+    administratorLogin: 'tfadmin'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
+    }
   }
 }
 
 resource configuration 'Microsoft.DBforMySQL/flexibleServers/configurations@2023-12-30' = {
-  parent: flexibleServer
   name: 'character_set_server'
+  parent: flexibleServer
   properties: {
     value: 'utf8mb4'
   }

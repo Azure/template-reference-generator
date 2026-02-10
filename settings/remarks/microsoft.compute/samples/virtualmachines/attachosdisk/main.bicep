@@ -1,3 +1,4 @@
+param attachedResourceName string = 'acctest0002'
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator username for the virtual machine')
@@ -5,7 +6,6 @@ param adminUsername string
 @secure()
 @description('The administrator password for the virtual machine')
 param adminPassword string
-param attachedResourceName string = 'acctest0002'
 
 var osDiskName = 'myosdisk1'
 var attachedOsDiskName = 'myosdisk2'
@@ -14,32 +14,96 @@ resource managedDisk 'Microsoft.Compute/disks@2023-10-02' existing = {
   name: osDiskName
 }
 
-resource attachedManagedDisk 'Microsoft.Compute/disks@2023-10-02' = {
-  name: attachedOsDiskName
+resource snapshot 'Microsoft.Compute/snapshots@2023-10-02' = {
+  name: resourceName
   location: location
+  sku: {
+    name: 'Standard_ZRS'
+  }
   properties: {
     creationData: {
       createOption: 'Copy'
-      sourceResourceId: snapshot.id
+      sourceResourceId: managedDisk.id
     }
     diskSizeGB: 30
+    networkAccessPolicy: 'AllowAll'
+    hyperVGeneration: 'V1'
+    incremental: true
     encryption: {
       type: 'EncryptionAtRestWithPlatformKey'
     }
-    hyperVGeneration: 'V1'
-    networkAccessPolicy: 'AllowAll'
     osType: 'Linux'
     publicNetworkAccess: 'Enabled'
     supportedCapabilities: {
       architecture: 'x64'
     }
   }
+}
+
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          properties: {
+            primary: false
+          }
+          id: networkInterface.id
+        }
+      ]
+    }
+    osProfile: {
+      adminPassword: adminPassword
+      adminUsername: adminUsername
+      computerName: 'hostname230630032848831819'
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+      }
+    }
+    storageProfile: {
+      imageReference: {
+        publisher: 'Canonical'
+        sku: '16.04-LTS'
+        version: 'latest'
+        offer: 'UbuntuServer'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        name: osDiskName
+        writeAcceleratorEnabled: false
+      }
+    }
+  }
+}
+
+resource attachedManagedDisk 'Microsoft.Compute/disks@2023-10-02' = {
+  name: attachedOsDiskName
+  location: location
   sku: {
     name: 'Standard_LRS'
   }
-  zones: [
-    '1'
-  ]
+  properties: {
+    networkAccessPolicy: 'AllowAll'
+    hyperVGeneration: 'V1'
+    publicNetworkAccess: 'Enabled'
+    supportedCapabilities: {
+      architecture: 'x64'
+    }
+    creationData: {
+      createOption: 'Copy'
+    }
+    osType: 'Linux'
+    diskSizeGB: 30
+    encryption: {
+      type: 'EncryptionAtRestWithPlatformKey'
+    }
+  }
 }
 
 resource attachedNetworkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
@@ -55,9 +119,7 @@ resource attachedNetworkInterface 'Microsoft.Network/networkInterfaces@2022-07-0
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
@@ -83,14 +145,14 @@ resource attachedVirtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' =
     }
     storageProfile: {
       osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'Attach'
         name: attachedOsDiskName
         osType: 'Linux'
         writeAcceleratorEnabled: false
         managedDisk: {
           id: attachedManagedDisk.id
         }
+        caching: 'ReadWrite'
+        createOption: 'Attach'
       }
     }
   }
@@ -100,8 +162,6 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
     ipConfigurations: [
       {
         name: 'testconfiguration1'
@@ -109,80 +169,12 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
-  }
-}
-
-resource snapshot 'Microsoft.Compute/snapshots@2023-10-02' = {
-  name: resourceName
-  location: location
-  properties: {
-    creationData: {
-      createOption: 'Copy'
-      sourceResourceId: managedDisk.id
-    }
-    diskSizeGB: 30
-    encryption: {
-      type: 'EncryptionAtRestWithPlatformKey'
-    }
-    hyperVGeneration: 'V1'
-    incremental: true
-    networkAccessPolicy: 'AllowAll'
-    osType: 'Linux'
-    publicNetworkAccess: 'Enabled'
-    supportedCapabilities: {
-      architecture: 'x64'
-    }
-  }
-  sku: {
-    name: 'Standard_ZRS'
-  }
-}
-
-resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: false
-          }
-        }
-      ]
-    }
-    osProfile: {
-      adminPassword: adminPassword
-      adminUsername: adminUsername
-      computerName: 'hostname230630032848831819'
-      linuxConfiguration: {
-        disablePasswordAuthentication: false
-      }
-    }
-    storageProfile: {
-      imageReference: {
-        offer: 'UbuntuServer'
-        publisher: 'Canonical'
-        sku: '16.04-LTS'
-        version: 'latest'
-      }
-      osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        name: osDiskName
-        writeAcceleratorEnabled: false
-      }
-    }
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
   }
 }
 
@@ -203,8 +195,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []

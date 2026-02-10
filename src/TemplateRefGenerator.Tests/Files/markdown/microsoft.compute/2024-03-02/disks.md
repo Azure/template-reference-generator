@@ -311,7 +311,12 @@ param location string = 'westeurope'
 resource disk 'Microsoft.Compute/disks@2022-03-02' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   properties: {
+    osType: ''
+    publicNetworkAccess: 'Enabled'
     creationData: {
       createOption: 'Empty'
     }
@@ -320,11 +325,6 @@ resource disk 'Microsoft.Compute/disks@2022-03-02' = {
       type: 'EncryptionAtRestWithPlatformKey'
     }
     networkAccessPolicy: 'AllowAll'
-    osType: ''
-    publicNetworkAccess: 'Enabled'
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 ```

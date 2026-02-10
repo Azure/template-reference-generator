@@ -1,3 +1,4 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource emailService 'Microsoft.Communication/emailServices@2023-04-01-preview' = {
@@ -9,11 +10,11 @@ resource emailService 'Microsoft.Communication/emailServices@2023-04-01-preview'
 }
 
 resource domain 'Microsoft.Communication/emailServices/domains@2023-04-01-preview' = {
-  parent: emailService
   name: 'example.com'
   location: 'global'
+  parent: emailService
   properties: {
-    domainManagement: 'CustomerManaged'
     userEngagementTracking: 'Disabled'
+    domainManagement: 'CustomerManaged'
   }
 }

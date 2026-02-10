@@ -8,7 +8,6 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: workspace.properties.customerId
         sharedKey: workspace.listKeys().primarySharedKey
       }
     }
@@ -21,8 +20,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   location: location
   properties: {
     features: {
-      disableLocalAuth: false
       enableLogAccessUsingOnlyResourcePermissions: true
+      disableLocalAuth: false
     }
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
@@ -37,8 +36,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource aspireDashboard 'Microsoft.App/managedEnvironments/dotNetComponents@2024-10-02-preview' = {
-  parent: managedEnvironment
   name: resourceName
+  parent: managedEnvironment
   properties: {
     componentType: 'AspireDashboard'
     configurations: []

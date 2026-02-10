@@ -8,7 +8,6 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
     publicNetworkAccess: 'Enabled'
     storageAccounts: [
       {
-        id: storageAccount.id
         type: 'Primary'
       }
     ]
@@ -18,18 +17,19 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
-  kind: 'StorageV2'
   sku: {
     name: 'Standard_GRS'
   }
+  kind: 'StorageV2'
 }
 
 resource liveEvent 'Microsoft.Media/mediaServices/liveEvents@2022-08-01' = {
-  parent: mediaService
   name: resourceName
   location: location
+  parent: mediaService
   properties: {
     input: {
+      streamingProtocol: 'RTMP'
       accessControl: {
         ip: {
           allow: [
@@ -42,7 +42,6 @@ resource liveEvent 'Microsoft.Media/mediaServices/liveEvents@2022-08-01' = {
         }
       }
       keyFrameIntervalDuration: 'PT6S'
-      streamingProtocol: 'RTMP'
     }
   }
 }

@@ -10,9 +10,10 @@ param credentialPassword string
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Basic'
+  }
   properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
     dataEndpointEnabled: false
     networkRuleBypassOptions: 'AzureServices'
     policies: {
@@ -27,9 +28,8 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
     }
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Basic'
+    adminUserEnabled: false
+    anonymousPullEnabled: false
   }
 }
 
@@ -37,9 +37,17 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: '${resourceName}vault'
   location: location
   properties: {
+    enableSoftDelete: true
+    enabledForDeployment: false
+    publicNetworkAccess: 'Enabled'
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    softDeleteRetentionInDays: 7
+    tenantId: tenant()
     accessPolicies: [
       {
-        objectId: deployer().objectId
         permissions: {
           certificates: []
           keys: []
@@ -51,34 +59,26 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant()
+        objectId: deployer().objectId
       }
     ]
     createMode: 'default'
-    enableRbacAuthorization: false
-    enableSoftDelete: true
-    enabledForDeployment: false
     enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
-    publicNetworkAccess: 'Enabled'
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
+    enableRbacAuthorization: false
   }
 }
 
 resource credentialSet 'Microsoft.ContainerRegistry/registries/credentialSets@2023-07-01' = {
-  parent: registry
   name: '${resourceName}-acr-credential-set'
+  parent: registry
   properties: {
     authCredentials: [
       {
+        passwordSecretIdentifier: 'https://${resourceName}vault.vault.azure.net/secrets/password'
+        usernameSecretIdentifier: 'https://${resourceName}vault.vault.azure.net/secrets/username'
         name: 'Credential1'
-        passwordSecretIdentifier: 'https://acctest0001vault.vault.azure.net/secrets/password'
-        usernameSecretIdentifier: 'https://acctest0001vault.vault.azure.net/secrets/username'
       }
     ]
     loginServer: 'docker.io'
@@ -86,17 +86,17 @@ resource credentialSet 'Microsoft.ContainerRegistry/registries/credentialSets@20
 }
 
 resource passwordSecret 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vault
   name: 'password'
+  parent: vault
   properties: {
-    value: null
+    value: '${credentialPassword}'
   }
 }
 
 resource usernameSecret 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vault
   name: 'username'
+  parent: vault
   properties: {
-    value: 'testuser'
+    value: '${credentialUsername}'
   }
 }

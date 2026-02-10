@@ -10,9 +10,9 @@ resource routeTable 'Microsoft.Network/routeTables@2022-09-01' = {
       {
         name: 'first'
         properties: {
-          addressPrefix: '10.100.0.0/14'
           nextHopIpAddress: '10.10.1.1'
           nextHopType: 'VirtualAppliance'
+          addressPrefix: '10.100.0.0/14'
         }
       }
     ]

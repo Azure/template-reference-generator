@@ -4,7 +4,14 @@ param location string = 'westus'
 resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
   name: '${resourceName}-service'
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
+    virtualNetworkType: 'None'
     certificates: []
     customProperties: {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
@@ -15,38 +22,31 @@ resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
-    virtualNetworkType: 'None'
-  }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
   }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
-  parent: service
   name: '${resourceName}-api;rev=1'
+  parent: service
   properties: {
-    apiRevisionDescription: ''
+    type: 'http'
     apiType: 'http'
     apiVersionDescription: ''
     authenticationSettings: {}
     displayName: 'api1'
     path: 'api1'
+    subscriptionRequired: true
+    apiRevisionDescription: ''
     protocols: [
       'https'
     ]
-    subscriptionRequired: true
-    type: 'http'
   }
 }
 
 resource tag 'Microsoft.ApiManagement/service/tags@2022-08-01' = {
-  parent: service
   name: '${resourceName}-tag'
+  parent: service
   properties: {
-    displayName: 'acctest0001-tag'
+    displayName: '${resourceName}-tag'
   }
 }

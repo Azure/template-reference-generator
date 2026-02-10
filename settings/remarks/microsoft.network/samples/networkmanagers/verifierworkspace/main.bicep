@@ -12,16 +12,16 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
     networkManagerScopes: {
       managementGroups: []
       subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
+        '/subscriptions/${subscription()}'
       ]
     }
   }
 }
 
 resource verifierWorkspace 'Microsoft.Network/networkManagers/verifierWorkspaces@2024-01-01-preview' = {
-  parent: networkManager
   name: resourceName
   location: location
+  parent: networkManager
   properties: {
     description: 'A sample workspace'
   }

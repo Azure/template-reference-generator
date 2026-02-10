@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
@@ -22,13 +22,13 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource dataSource 'Microsoft.OperationalInsights/workspaces/dataSources@2020-08-01' = {
-  parent: workspace
   name: resourceName
+  parent: workspace
   kind: 'WindowsPerformanceCounter'
   properties: {
+    objectName: 'CPU'
     counterName: 'CPU'
     instanceName: '*'
     intervalSeconds: 10
-    objectName: 'CPU'
   }
 }

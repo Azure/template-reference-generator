@@ -8,6 +8,6 @@ resource devCenter 'Microsoft.DevCenter/devCenters@2025-02-01' = {
 }
 
 resource environmentType 'Microsoft.DevCenter/devCenters/environmentTypes@2025-02-01' = {
-  parent: devCenter
   name: resourceName
+  parent: devCenter
 }

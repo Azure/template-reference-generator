@@ -4,7 +4,13 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
+    publisherName: 'pub1'
+    virtualNetworkType: 'None'
     certificates: []
     customProperties: {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
@@ -16,19 +22,13 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     disableGateway: false
     publicNetworkAccess: 'Enabled'
     publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
-    virtualNetworkType: 'None'
-  }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
   }
 }
 
 resource tag 'Microsoft.ApiManagement/service/tags@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
-    displayName: 'acctest0001'
+    displayName: '${resourceName}'
   }
 }

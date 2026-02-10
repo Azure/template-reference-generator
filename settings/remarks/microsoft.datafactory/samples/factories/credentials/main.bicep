@@ -10,21 +10,22 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   }
 }
 
-resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: resourceName
-}
-
 resource credential 'Microsoft.DataFactory/factories/credentials@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
+    type: 'ManagedIdentity'
     annotations: [
       'test'
     ]
     description: 'this is a test'
-    type: 'ManagedIdentity'
     typeProperties: {
       resourceId: userAssignedIdentity.id
     }
   }
+}
+
+resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
 }

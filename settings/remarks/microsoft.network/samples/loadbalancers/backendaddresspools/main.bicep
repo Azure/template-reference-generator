@@ -4,27 +4,29 @@ param location string = 'westeurope'
 resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
     frontendIPConfigurations: [
       {
         name: 'internal'
         properties: {
-          publicIPAddress: {
-            id: publicIPAddress.id
-          }
+          publicIPAddress: {}
         }
       }
     ]
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -33,14 +35,10 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
   }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
-  }
 }
 
 resource backendAddressPool 'Microsoft.Network/loadBalancers/backendAddressPools@2022-07-01' = {
-  parent: loadBalancer
   name: resourceName
+  parent: loadBalancer
   properties: {}
 }

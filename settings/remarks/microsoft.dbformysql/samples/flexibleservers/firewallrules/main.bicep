@@ -7,16 +7,20 @@ param mysqlAdministratorPassword string
 resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_B1s'
+    tier: 'Burstable'
+  }
   properties: {
-    administratorLogin: 'adminTerraform'
-    administratorLoginPassword: null
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
     createMode: ''
     dataEncryption: {
       type: 'SystemManaged'
+    }
+    administratorLogin: 'adminTerraform'
+    administratorLoginPassword: '${mysqlAdministratorPassword}'
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
     }
     highAvailability: {
       mode: 'Disabled'
@@ -24,15 +28,11 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
     network: {}
     version: '5.7'
   }
-  sku: {
-    name: 'Standard_B1s'
-    tier: 'Burstable'
-  }
 }
 
 resource firewallRule 'Microsoft.DBforMySQL/flexibleServers/firewallRules@2021-05-01' = {
-  parent: flexibleServer
   name: resourceName
+  parent: flexibleServer
   properties: {
     endIpAddress: '255.255.255.255'
     startIpAddress: '0.0.0.0'

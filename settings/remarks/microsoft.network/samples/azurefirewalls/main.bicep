@@ -8,15 +8,11 @@ resource azureFirewall 'Microsoft.Network/azureFirewalls@2022-07-01' = {
     additionalProperties: {}
     ipConfigurations: [
       {
-        name: 'configuration'
         properties: {
-          publicIPAddress: {
-            id: publicIPAddress.id
-          }
-          subnet: {
-            id: subnet.id
-          }
+          publicIPAddress: {}
+          subnet: {}
         }
+        name: 'configuration'
       }
     ]
     sku: {
@@ -30,17 +26,17 @@ resource azureFirewall 'Microsoft.Network/azureFirewalls@2022-07-01' = {
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
+    publicIPAllocationMethod: 'Static'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
@@ -61,8 +57,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'AzureFirewallSubnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.1.0/24'
     delegations: []

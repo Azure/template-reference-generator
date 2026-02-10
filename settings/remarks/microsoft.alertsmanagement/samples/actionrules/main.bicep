@@ -1,4 +1,5 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource actionRule 'Microsoft.AlertsManagement/actionRules@2021-08-08' = {
   name: resourceName
@@ -11,8 +12,6 @@ resource actionRule 'Microsoft.AlertsManagement/actionRules@2021-08-08' = {
     ]
     description: ''
     enabled: true
-    scopes: [
-      resourceGroup().id
-    ]
+    scopes: []
   }
 }

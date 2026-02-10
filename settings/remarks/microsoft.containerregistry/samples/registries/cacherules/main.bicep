@@ -4,12 +4,13 @@ param location string = 'westus'
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: '${resourceName}registry'
   location: location
+  sku: {
+    name: 'Basic'
+  }
   properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
-    dataEndpointEnabled: false
     networkRuleBypassOptions: 'AzureServices'
     policies: {
+      trustPolicy: {}
       exportPolicy: {
         status: 'enabled'
       }
@@ -17,19 +18,18 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
         status: 'disabled'
       }
       retentionPolicy: {}
-      trustPolicy: {}
     }
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Basic'
+    adminUserEnabled: false
+    anonymousPullEnabled: false
+    dataEndpointEnabled: false
   }
 }
 
 resource cacheRule 'Microsoft.ContainerRegistry/registries/cacheRules@2023-07-01' = {
-  parent: registry
   name: '${resourceName}-cache-rule'
+  parent: registry
   properties: {
     sourceRepository: 'mcr.microsoft.com/hello-world'
     targetRepository: 'target'

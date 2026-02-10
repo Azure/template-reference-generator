@@ -4,92 +4,33 @@ param location string = 'westeurope'
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    zoneRedundant: false
-  }
   sku: {
     name: 'S0'
   }
-}
-
-resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
-  name: resourceName
-  location: location
-  kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'BoundedStaleness'
-      maxIntervalInSeconds: 10
-      maxStalenessPrefix: 200
-    }
-    databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'West Europe'
-      }
-    ]
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
-  }
-}
-
-resource linker 'Microsoft.ServiceLinker/linkers@2022-05-01' = {
-  scope: deployment
-  name: resourceName
-  properties: {
-    authInfo: {
-      authType: 'systemAssignedIdentity'
-    }
-    clientType: 'none'
-    targetService: {
-      id: sqlDatabase.id
-      resourceProperties: null
-      type: 'AzureResource'
-    }
+    zoneRedundant: false
   }
 }
 
 resource app 'Microsoft.AppPlatform/Spring/apps@2023-05-01-preview' = {
-  parent: spring
   name: resourceName
   location: location
+  parent: spring
   properties: {
-    customPersistentDisks: []
     enableEndToEndTLS: false
     public: false
-  }
-}
-
-resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
-  parent: databaseAccount
-  name: resourceName
-  properties: {
-    options: {
-      throughput: 400
-    }
-    resource: {
-      id: 'acctest0001'
-    }
+    customPersistentDisks: []
   }
 }
 
 resource deployment 'Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-preview' = {
-  parent: app
   name: 'deploy-q4uff'
+  parent: app
+  sku: {
+    capacity: 1
+    name: 'S0'
+    tier: 'Standard'
+  }
   properties: {
     deploymentSettings: {
       environmentVariables: {}
@@ -105,9 +46,67 @@ resource deployment 'Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-pr
       type: 'Jar'
     }
   }
-  sku: {
-    capacity: 1
-    name: 'S0'
-    tier: 'Standard'
+}
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  name: resourceName
+  location: location
+  kind: 'GlobalDocumentDB'
+  properties: {
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    enableAnalyticalStorage: false
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    ipRules: []
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    capabilities: []
+    enableMultipleWriteLocations: false
+    databaseAccountOfferType: 'Standard'
+    disableLocalAuth: false
+    virtualNetworkRules: []
+  }
+}
+
+resource linker 'Microsoft.ServiceLinker/linkers@2022-05-01' = {
+  name: resourceName
+  scope: deployment
+  properties: {
+    authInfo: {
+      authType: 'systemAssignedIdentity'
+    }
+    clientType: 'none'
+    targetService: {
+      resourceProperties: null
+      type: 'AzureResource'
+    }
+  }
+}
+
+resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
+  name: resourceName
+  parent: databaseAccount
+  properties: {
+    options: {
+      throughput: 400
+    }
+    resource: {
+      id: '${resourceName}'
+    }
   }
 }

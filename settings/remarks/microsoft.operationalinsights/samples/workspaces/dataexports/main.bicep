@@ -4,11 +4,12 @@ param location string = 'westeurope'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
     allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
@@ -23,17 +24,16 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       }
     }
     isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
+    accessTier: 'Hot'
+    allowCrossTenantReplication: true
+    isNfsV3Enabled: false
+    isSftpEnabled: false
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
@@ -42,8 +42,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   location: location
   properties: {
     features: {
-      disableLocalAuth: false
       enableLogAccessUsingOnlyResourcePermissions: true
+      disableLocalAuth: false
     }
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
@@ -58,8 +58,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource dataExport 'Microsoft.OperationalInsights/workspaces/dataExports@2020-08-01' = {
-  parent: workspace
   name: resourceName
+  parent: workspace
   properties: {
     destination: {
       resourceId: storageAccount.id

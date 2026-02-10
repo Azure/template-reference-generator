@@ -9,7 +9,29 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   location: location
   kind: 'MongoDB'
   properties: {
-    backupPolicy: null
+    consistencyPolicy: {
+      maxStalenessPrefix: 100
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+    }
+    enablePartitionMerge: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    publicNetworkAccess: 'Enabled'
+    disableLocalAuth: false
+    enableAutomaticFailover: false
+    databaseAccountOfferType: 'Standard'
+    enableAnalyticalStorage: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: '${location}'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    virtualNetworkRules: []
     capabilities: [
       {
         name: 'EnableMongoRoleBasedAccessControl'
@@ -18,55 +40,33 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
         name: 'EnableMongo'
       }
     ]
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    databaseAccountOfferType: 'Standard'
     disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
     enableBurstCapacity: false
     enableFreeTier: false
     enableMultipleWriteLocations: false
-    enablePartitionMerge: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'westus'
-      }
-    ]
     minimalTlsVersion: 'Tls12'
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
+    backupPolicy: null
   }
 }
 
 resource mongodbDatabas 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: '${resourceName}-mongodb'
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001-mongodb'
+      id: '${resourceName}-mongodb'
     }
   }
 }
 
 resource mongodbUserDefinition 'Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions@2022-11-15' = {
-  parent: databaseAccount
   name: '${mongodbDatabas.name}.myUserName'
+  parent: databaseAccount
   properties: {
+    userName: 'myUserName'
     databaseName: mongodbDatabas.name
     mechanisms: 'SCRAM-SHA-256'
-    password: null
-    userName: 'myUserName'
+    password: mongodbUserPassword
   }
 }

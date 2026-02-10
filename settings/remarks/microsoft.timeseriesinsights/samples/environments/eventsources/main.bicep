@@ -1,9 +1,13 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
-resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'B1'
+  }
   properties: {
     cloudToDevice: {}
     enableFileUploadNotifications: false
@@ -20,10 +24,6 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
     }
     storageEndpoints: {}
   }
-  sku: {
-    capacity: 1
-    name: 'B1'
-  }
   tags: {
     purpose: 'testing'
   }
@@ -32,10 +32,13 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
 resource environment 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'L1'
+  }
   kind: 'Gen2'
   properties: {
     storageConfiguration: {
-      accountName: storageAccount.name
       managementKey: storageAccount.listKeys().keys[0].value
     }
     timeSeriesIdProperties: [
@@ -45,22 +48,19 @@ resource environment 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
       }
     ]
   }
-  sku: {
-    capacity: 1
-    name: 'L1'
-  }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
-    allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -73,31 +73,30 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       }
     }
     isHnsEnabled: false
-    isNfsV3Enabled: false
     isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    allowBlobPublicAccess: true
+    defaultToOAuthAuthentication: false
+    isNfsV3Enabled: false
     networkAcls: {
       defaultAction: 'Allow'
     }
-    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
 resource eventSource 'Microsoft.TimeSeriesInsights/environments/eventSources@2020-05-15' = {
-  parent: environment
   name: resourceName
   location: location
+  parent: environment
   kind: 'Microsoft.IoTHub'
   properties: {
-    consumerGroupName: 'test'
-    eventSourceResourceId: iothub.id
-    iotHubName: iothub.name
+    eventSourceResourceId: iotHub.id
+    iotHubName: iotHub.name
     keyName: 'iothubowner'
-    sharedAccessKey: iothub.listkeys().value[0].primaryKey
+    sharedAccessKey: iotHub.listKeys().value[0].primaryKey
     timestampPropertyName: ''
+    consumerGroupName: 'test'
   }
 }

@@ -4,33 +4,6 @@ param location string = 'westeurope'
 @description('The shared key for the ExpressRoute connection')
 param sharedKey string
 
-resource expressrouteport 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    bandwidthInGbps: 10
-    encapsulation: 'Dot1Q'
-    peeringLocation: 'CDC-Canberra'
-  }
-}
-
-resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    authorizationKey: ''
-    bandwidthInGbps: 5
-    expressRoutePort: {
-      id: expressrouteport.id
-    }
-  }
-  sku: {
-    family: 'MeteredData'
-    name: 'Premium_MeteredData'
-    tier: 'Premium'
-  }
-}
-
 resource expressRouteGateway 'Microsoft.Network/expressRouteGateways@2022-07-01' = {
   name: resourceName
   location: location
@@ -41,9 +14,62 @@ resource expressRouteGateway 'Microsoft.Network/expressRouteGateways@2022-07-01'
         min: 1
       }
     }
-    virtualHub: {
-      id: virtualHub.id
+    virtualHub: {}
+  }
+}
+
+resource expressRouteConnection 'Microsoft.Network/expressRouteGateways/expressRouteConnections@2022-07-01' = {
+  name: resourceName
+  parent: expressRouteGateway
+  properties: {
+    enableInternetSecurity: false
+    expressRouteCircuitPeering: {}
+    expressRouteGatewayBypass: false
+    routingConfiguration: {}
+    routingWeight: 0
+  }
+}
+
+resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    tier: 'Premium'
+    family: 'MeteredData'
+    name: 'Premium_MeteredData'
+  }
+  properties: {
+    authorizationKey: ''
+    bandwidthInGbps: 5
+    expressRoutePort: {
+      id: expressRoutePort.id
     }
+  }
+}
+
+resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = {
+  name: 'AzurePrivatePeering'
+  parent: expressRouteCircuit
+  properties: {
+    gatewayManagerEtag: ''
+    sharedKey: '${sharedKey}'
+    azureASN: 12076
+    peerASN: 100
+    peeringType: 'AzurePrivatePeering'
+    primaryPeerAddressPrefix: '192.168.1.0/30'
+    secondaryPeerAddressPrefix: '192.168.2.0/30'
+    state: 'Enabled'
+    vlanId: 100
+  }
+}
+
+resource expressRoutePort 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    bandwidthInGbps: 10
+    encapsulation: 'Dot1Q'
+    peeringLocation: 'CDC-Canberra'
   }
 }
 
@@ -56,9 +82,7 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {
-      id: virtualWan.id
-    }
+    virtualWan: {}
   }
 }
 
@@ -66,39 +90,9 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    allowBranchToBranchTraffic: true
-    disableVpnEncryption: false
     office365LocalBreakoutCategory: 'None'
     type: 'Standard'
-  }
-}
-
-resource expressRouteConnection 'Microsoft.Network/expressRouteGateways/expressRouteConnections@2022-07-01' = {
-  parent: expressRouteGateway
-  name: resourceName
-  properties: {
-    enableInternetSecurity: false
-    expressRouteCircuitPeering: {
-      id: peering.id
-    }
-    expressRouteGatewayBypass: false
-    routingConfiguration: {}
-    routingWeight: 0
-  }
-}
-
-resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = {
-  parent: expressRouteCircuit
-  name: 'AzurePrivatePeering'
-  properties: {
-    azureASN: 12076
-    gatewayManagerEtag: ''
-    peerASN: 100
-    peeringType: 'AzurePrivatePeering'
-    primaryPeerAddressPrefix: '192.168.1.0/30'
-    secondaryPeerAddressPrefix: '192.168.2.0/30'
-    sharedKey: null
-    state: 'Enabled'
-    vlanId: 100
+    allowBranchToBranchTraffic: true
+    disableVpnEncryption: false
   }
 }

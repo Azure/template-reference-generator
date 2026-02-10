@@ -10,9 +10,7 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {
-      id: virtualWan.id
-    }
+    virtualWan: {}
   }
 }
 
@@ -44,12 +42,12 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
 }
 
 resource hubVirtualNetworkConnection 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2022-07-01' = {
-  parent: virtualHub
   name: resourceName
+  parent: virtualHub
   properties: {
-    enableInternetSecurity: false
     remoteVirtualNetwork: {
       id: virtualNetwork.id
     }
+    enableInternetSecurity: false
   }
 }

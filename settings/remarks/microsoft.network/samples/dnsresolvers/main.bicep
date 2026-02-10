@@ -5,9 +5,7 @@ resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    virtualNetwork: {
-      id: virtualNetwork.id
-    }
+    virtualNetwork: {}
   }
 }
 

@@ -1,6 +1,7 @@
 targetScope = 'subscription'
 
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' = {
   name: '6faae21a-0cd6-4536-8c23-a278823d12ed'
@@ -11,15 +12,15 @@ resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-prev
     description: ''
     permissions: [
       {
-        actions: [
-          '*'
-        ]
         dataActions: []
         notActions: []
         notDataActions: []
+        actions: [
+          '*'
+        ]
       }
     ]
-    roleName: 'acctest0001'
+    roleName: resourceName
     type: 'CustomRole'
   }
 }

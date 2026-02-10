@@ -4,38 +4,6 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    dataFlows: [
-      {
-        destinations: [
-          'test-destination-metrics'
-        ]
-        streams: [
-          'Microsoft-InsightsMetrics'
-        ]
-      }
-    ]
-    description: ''
-    destinations: {
-      azureMonitorMetrics: {
-        name: 'test-destination-metrics'
-      }
-    }
-  }
-}
-
-resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
-  scope: virtualMachine
-  name: resourceName
-  properties: {
-    dataCollectionRuleId: dataCollectionRule.id
-    description: ''
-  }
-}
-
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: 'nic-230630033559397415'
   location: location
@@ -49,9 +17,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
@@ -62,20 +28,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: 'machine-230630033559397415'
   location: location
   properties: {
-    additionalCapabilities: {}
-    applicationProfile: {
-      galleryApplications: []
-    }
-    diagnosticsProfile: {
-      bootDiagnostics: {
-        enabled: false
-        storageUri: ''
-      }
-    }
     extensionsTimeBudget: 'PT1H30M'
-    hardwareProfile: {
-      vmSize: 'Standard_B1ls'
-    }
     networkProfile: {
       networkInterfaces: [
         {
@@ -86,13 +39,23 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         }
       ]
     }
+    priority: 'Regular'
+    additionalCapabilities: {}
+    applicationProfile: {
+      galleryApplications: []
+    }
+    diagnosticsProfile: {
+      bootDiagnostics: {
+        enabled: false
+        storageUri: ''
+      }
+    }
+    hardwareProfile: {
+      vmSize: 'Standard_B1ls'
+    }
     osProfile: {
-      adminPassword: null
-      adminUsername: 'adminuser'
-      allowExtensionOperations: true
       computerName: 'machine-230630033559397415'
       linuxConfiguration: {
-        disablePasswordAuthentication: false
         patchSettings: {
           assessmentMode: 'ImageDefault'
           patchMode: 'ImageDefault'
@@ -101,10 +64,13 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         ssh: {
           publicKeys: []
         }
+        disablePasswordAuthentication: false
       }
       secrets: []
+      adminPassword: adminPassword
+      adminUsername: 'adminuser'
+      allowExtensionOperations: true
     }
-    priority: 'Regular'
     storageProfile: {
       dataDisks: []
       imageReference: {
@@ -114,13 +80,13 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         version: 'latest'
       }
       osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
         osType: 'Linux'
         writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
       }
     }
   }
@@ -130,21 +96,21 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: 'network-230630033559397415'
   location: location
   properties: {
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
       ]
     }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'subnet-230630033559397415'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -152,5 +118,37 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    destinations: {
+      azureMonitorMetrics: {
+        name: 'test-destination-metrics'
+      }
+    }
+    dataFlows: [
+      {
+        destinations: [
+          'test-destination-metrics'
+        ]
+        streams: [
+          'Microsoft-InsightsMetrics'
+        ]
+      }
+    ]
+    description: ''
+  }
+}
+
+resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
+  name: resourceName
+  scope: virtualMachine
+  properties: {
+    dataCollectionRuleId: dataCollectionRule.id
+    description: ''
   }
 }

@@ -1,0 +1,40 @@
+targetScope = 'tenant'
+
+param location string = 'westus'
+param resourceName string = 'acctest0001'
+
+resource diagnosticSetting 'Microsoft.AADIAM/diagnosticSettings@2017-04-01' = {
+  name: '${resourceName}-DS-unique'
+  properties: {
+    logs: [
+      {
+        category: 'RiskyUsers'
+        enabled: true
+      }
+      {
+        category: 'ServicePrincipalSignInLogs'
+        enabled: true
+      }
+      {
+        category: 'SignInLogs'
+        enabled: true
+      }
+      {
+        category: 'B2CRequestLogs'
+        enabled: true
+      }
+      {
+        category: 'UserRiskEvents'
+        enabled: true
+      }
+      {
+        category: 'NonInteractiveUserSignInLogs'
+        enabled: true
+      }
+      {
+        category: 'AuditLogs'
+        enabled: true
+      }
+    ]
+  }
+}

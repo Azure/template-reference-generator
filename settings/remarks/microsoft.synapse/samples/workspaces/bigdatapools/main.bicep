@@ -7,18 +7,18 @@ param sqlAdministratorLogin string
 param sqlAdministratorLoginPassword string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
+  parent: storageAccount
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
-  kind: 'StorageV2'
-  properties: {}
   sku: {
     name: 'Standard_LRS'
   }
+  kind: 'StorageV2'
+  properties: {}
 }
 
 resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
@@ -27,9 +27,7 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   properties: {
     defaultDataLakeStorage: {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
-      filesystem: container.name
     }
-
     managedVirtualNetwork: ''
     publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
@@ -38,17 +36,10 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
 }
 
 resource bigDataPool 'Microsoft.Synapse/workspaces/bigDataPools@2021-06-01-preview' = {
-  parent: workspace
   name: resourceName
   location: location
+  parent: workspace
   properties: {
-    autoPause: {
-      enabled: false
-    }
-    autoScale: {
-      enabled: false
-    }
-    cacheSize: 0
     defaultSparkLogFolder: '/logs'
     dynamicExecutorAllocation: {
       enabled: false
@@ -57,17 +48,24 @@ resource bigDataPool 'Microsoft.Synapse/workspaces/bigDataPools@2021-06-01-previ
     }
     isComputeIsolationEnabled: false
     nodeCount: 3
-    nodeSize: 'Small'
     nodeSizeFamily: 'MemoryOptimized'
+    sparkVersion: '2.4'
+    autoPause: {
+      enabled: false
+    }
+    autoScale: {
+      enabled: false
+    }
+    nodeSize: 'Small'
     sessionLevelPackagesEnabled: false
     sparkEventsFolder: '/events'
-    sparkVersion: '2.4'
+    cacheSize: 0
   }
 }
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
   name: resourceName
+  parent: blobService
   properties: {
     metadata: {
       key: 'value'

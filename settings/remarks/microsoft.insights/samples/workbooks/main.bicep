@@ -1,3 +1,4 @@
+param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
 resource workbook 'Microsoft.Insights/workbooks@2022-04-01' = {
@@ -5,9 +6,9 @@ resource workbook 'Microsoft.Insights/workbooks@2022-04-01' = {
   location: location
   kind: 'shared'
   properties: {
+    serializedData: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
+    sourceId: 'azure monitor'
     category: 'workbook'
     displayName: 'acctest-amw-230630032616547405'
-    serializedData: '{"fallbackResourceIds":["Azure Monitor"],"isLocked":false,"items":[{"content":{"json":"Test2022"},"name":"text - 0","type":1}],"version":"Notebook/1.0"}'
-    sourceId: 'azure monitor'
   }
 }

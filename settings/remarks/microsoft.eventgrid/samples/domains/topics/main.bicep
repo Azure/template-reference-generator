@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource domain 'Microsoft.EventGrid/domains@2021-12-01' = {
   name: resourceName
@@ -15,6 +15,6 @@ resource domain 'Microsoft.EventGrid/domains@2021-12-01' = {
 }
 
 resource topic 'Microsoft.EventGrid/domains/topics@2021-12-01' = {
-  parent: domain
   name: resourceName
+  parent: domain
 }

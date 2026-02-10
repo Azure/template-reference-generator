@@ -4,30 +4,30 @@ param location string = 'westeurope'
 resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    disableLocalAuth: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
   sku: {
     capacity: 0
     name: 'Standard'
     tier: 'Standard'
   }
+  properties: {
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
+    disableLocalAuth: false
+  }
 }
 
 resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-06-01-preview' = {
-  parent: namespace
   name: resourceName
+  parent: namespace
   properties: {
-    deadLetteringOnMessageExpiration: false
     enableBatchedOperations: true
     enableExpress: false
+    status: 'Active'
     enablePartitioning: true
     maxDeliveryCount: 10
     maxSizeInMegabytes: 81920
     requiresDuplicateDetection: false
     requiresSession: false
-    status: 'Active'
+    deadLetteringOnMessageExpiration: false
   }
 }

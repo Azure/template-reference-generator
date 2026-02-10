@@ -8,10 +8,33 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
   name: resourceName
   location: location
   properties: {
+    title: 'Test Title'
+    virtualMachineProfile: {
+      usageQuota: 'PT0S'
+      useSharedPassword: 'Disabled'
+      additionalCapabilities: {
+        installGpuDrivers: 'Disabled'
+      }
+      adminUser: {
+        password: '${adminPassword}'
+        username: 'testadmin'
+      }
+      createOption: 'Image'
+      imageReference: {
+        publisher: 'canonical'
+        sku: '20_04-lts'
+        version: 'latest'
+        offer: '0001-com-ubuntu-server-focal'
+      }
+      sku: {
+        capacity: 1
+        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
+      }
+    }
     autoShutdownProfile: {
-      shutdownOnDisconnect: 'Disabled'
       shutdownOnIdle: 'None'
       shutdownWhenNotConnected: 'Disabled'
+      shutdownOnDisconnect: 'Disabled'
     }
     connectionProfile: {
       clientRdpAccess: 'None'
@@ -21,29 +44,6 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
     }
     securityProfile: {
       openAccess: 'Disabled'
-    }
-    title: 'Test Title'
-    virtualMachineProfile: {
-      additionalCapabilities: {
-        installGpuDrivers: 'Disabled'
-      }
-      adminUser: {
-        password: null
-        username: 'testadmin'
-      }
-      createOption: 'Image'
-      imageReference: {
-        offer: '0001-com-ubuntu-server-focal'
-        publisher: 'canonical'
-        sku: '20_04-lts'
-        version: 'latest'
-      }
-      sku: {
-        capacity: 1
-        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
-      }
-      usageQuota: 'PT0S'
-      useSharedPassword: 'Disabled'
     }
   }
 }

@@ -19,9 +19,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
@@ -32,22 +30,9 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: false
-          }
-        }
-      ]
-    }
     osProfile: {
-      adminPassword: null
-      adminUsername: null
+      adminPassword: adminPassword
+      adminUsername: adminUsername
       computerName: 'hostname230630032848831819'
       linuxConfiguration: {
         disablePasswordAuthentication: false
@@ -66,6 +51,19 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         name: 'myosdisk1'
         writeAcceleratorEnabled: false
       }
+    }
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+          properties: {
+            primary: false
+          }
+        }
+      ]
     }
   }
 }
@@ -87,8 +85,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []

@@ -1,14 +1,17 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
-resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
+resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
   name: resourceName
   location: 'global'
+  sku: {
+    name: 'Premium_AzureFrontDoor'
+  }
   properties: {
     customRules: {
       rules: [
         {
           action: 'Block'
-          enabledState: 'Enabled'
           matchConditions: [
             {
               matchValue: [
@@ -20,17 +23,21 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
               operator: 'IPMatch'
             }
           ]
-          name: 'Rule1'
           priority: 1
-          rateLimitDurationInMinutes: 1
           rateLimitThreshold: 10
           ruleType: 'MatchRule'
+          enabledState: 'Enabled'
+          name: 'Rule1'
+          rateLimitDurationInMinutes: 1
         }
       ]
     }
     managedRules: {
       managedRuleSets: [
         {
+          ruleSetAction: 'Block'
+          ruleSetType: 'DefaultRuleSet'
+          ruleSetVersion: 'preview-0.1'
           ruleGroupOverrides: [
             {
               ruleGroupName: 'PHP'
@@ -43,9 +50,6 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
               ]
             }
           ]
-          ruleSetAction: 'Block'
-          ruleSetType: 'DefaultRuleSet'
-          ruleSetVersion: 'preview-0.1'
         }
         {
           ruleSetAction: 'Block'
@@ -61,8 +65,5 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
       mode: 'Prevention'
       redirectUrl: 'https://www.fabrikam.com'
     }
-  }
-  sku: {
-    name: 'Premium_AzureFrontDoor'
   }
 }

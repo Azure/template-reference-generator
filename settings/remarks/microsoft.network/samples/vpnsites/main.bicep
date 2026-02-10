@@ -28,12 +28,12 @@ resource vpnSite 'Microsoft.Network/vpnSites@2022-07-01' = {
       {
         name: 'link1'
         properties: {
-          fqdn: ''
-          ipAddress: '10.0.1.1'
           linkProperties: {
             linkProviderName: ''
             linkSpeedInMbps: 0
           }
+          fqdn: ''
+          ipAddress: '10.0.1.1'
         }
       }
       {

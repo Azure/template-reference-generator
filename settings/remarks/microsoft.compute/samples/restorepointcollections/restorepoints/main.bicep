@@ -14,9 +14,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
           primary: false
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
@@ -27,9 +25,7 @@ resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-
   name: '${resourceName}-rpc'
   location: location
   properties: {
-    source: {
-      id: virtualMachine.id
-    }
+    source: {}
   }
 }
 
@@ -37,39 +33,25 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: '${resourceName}-vm'
   location: location
   properties: {
+    priority: 'Regular'
     additionalCapabilities: {}
-    applicationProfile: {
-      galleryApplications: []
-    }
     diagnosticsProfile: {
       bootDiagnostics: {
         enabled: false
         storageUri: ''
       }
     }
-    extensionsTimeBudget: 'PT1H30M'
     hardwareProfile: {
       vmSize: 'Standard_F2'
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: true
-          }
-        }
-      ]
     }
     osProfile: {
       adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001-vm'
+      computerName: '${resourceName}-vm'
       linuxConfiguration: {
-        disablePasswordAuthentication: true
         patchSettings: {
-          assessmentMode: 'ImageDefault'
           patchMode: 'ImageDefault'
+          assessmentMode: 'ImageDefault'
         }
         provisionVMAgent: true
         ssh: {
@@ -80,17 +62,17 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
             }
           ]
         }
+        disablePasswordAuthentication: true
       }
       secrets: []
     }
-    priority: 'Regular'
     storageProfile: {
       dataDisks: []
       imageReference: {
-        offer: '0001-com-ubuntu-server-jammy'
         publisher: 'Canonical'
         sku: '22_04-lts'
         version: 'latest'
+        offer: '0001-com-ubuntu-server-jammy'
       }
       osDisk: {
         caching: 'ReadWrite'
@@ -101,6 +83,20 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         osType: 'Linux'
         writeAcceleratorEnabled: false
       }
+    }
+    applicationProfile: {
+      galleryApplications: []
+    }
+    extensionsTimeBudget: 'PT1H30M'
+    networkProfile: {
+      networkInterfaces: [
+        {
+          properties: {
+            primary: true
+          }
+          id: networkInterface.id
+        }
+      ]
     }
   }
 }
@@ -123,21 +119,21 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource restorePoint 'Microsoft.Compute/restorePointCollections/restorePoints@2024-03-01' = {
-  parent: restorePointCollection
   name: '${resourceName}-rp'
+  parent: restorePointCollection
   properties: {}
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
+    serviceEndpoints: []
     addressPrefix: '10.0.0.0/24'
     defaultOutboundAccess: true
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

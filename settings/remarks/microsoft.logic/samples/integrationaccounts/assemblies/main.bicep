@@ -4,20 +4,36 @@ param location string = 'westus'
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: '${resourceName}-ia'
   location: location
-  properties: {}
   sku: {
     name: 'Standard'
   }
+  properties: {}
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: replace(substring(toLower('${resourceName}sa'), 0, 24), '-', '')
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
     allowBlobPublicAccess: true
+    isHnsEnabled: false
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+    isNfsV3Enabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+    }
     allowCrossTenantReplication: false
+    isLocalUserEnabled: true
+    accessTier: 'Hot'
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
@@ -32,36 +48,20 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
         }
       }
     }
-    isHnsEnabled: false
-    isLocalUserEnabled: true
-    isNfsV3Enabled: false
     isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: []
-      resourceAccessRules: []
-      virtualNetworkRules: []
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
 resource assembly 'Microsoft.Logic/integrationAccounts/assemblies@2019-05-01' = {
-  parent: integrationAccount
   name: '${resourceName}-assembly'
+  parent: integrationAccount
   properties: {
-    assemblyName: 'TestAssembly2'
-    assemblyVersion: '2.2.2.2'
     content: 'dGVzdA=='
     contentType: 'application/octet-stream'
     metadata: {
       foo: 'bar2'
     }
+    assemblyName: 'TestAssembly2'
+    assemblyVersion: '2.2.2.2'
   }
 }

@@ -1,34 +1,21 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @secure()
 @description('The administrator password for the lab virtual machine')
 param adminPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
   name: resourceName
   location: location
   properties: {
-    autoShutdownProfile: {
-      shutdownOnDisconnect: 'Disabled'
-      shutdownOnIdle: 'None'
-      shutdownWhenNotConnected: 'Disabled'
-    }
-    connectionProfile: {
-      clientRdpAccess: 'None'
-      clientSshAccess: 'None'
-      webRdpAccess: 'None'
-      webSshAccess: 'None'
-    }
-    securityProfile: {
-      openAccess: 'Disabled'
-    }
     title: 'Test Title'
     virtualMachineProfile: {
+      useSharedPassword: 'Disabled'
       additionalCapabilities: {
         installGpuDrivers: 'Disabled'
       }
       adminUser: {
-        password: null
+        password: '${adminPassword}'
         username: 'testadmin'
       }
       createOption: 'Image'
@@ -43,16 +30,29 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
         name: 'Classic_Fsv2_2_4GB_128_S_SSD'
       }
       usageQuota: 'PT0S'
-      useSharedPassword: 'Disabled'
+    }
+    autoShutdownProfile: {
+      shutdownOnDisconnect: 'Disabled'
+      shutdownOnIdle: 'None'
+      shutdownWhenNotConnected: 'Disabled'
+    }
+    connectionProfile: {
+      clientRdpAccess: 'None'
+      clientSshAccess: 'None'
+      webRdpAccess: 'None'
+      webSshAccess: 'None'
+    }
+    securityProfile: {
+      openAccess: 'Disabled'
     }
   }
 }
 
 resource schedule 'Microsoft.LabServices/labs/schedules@2022-08-01' = {
-  parent: lab
   name: resourceName
+  parent: lab
   properties: {
-    stopAt: '2023-06-30T04:33:55Z'
     timeZoneId: 'America/Los_Angeles'
+    stopAt: '2023-06-30T04:33:55Z'
   }
 }

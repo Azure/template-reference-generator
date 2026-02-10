@@ -9,17 +9,13 @@ param administratorLoginPassword string
 resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-preview' = {
   name: resourceName
   location: location
-  identity: {
-    type: 'None'
-    userAssignedIdentities: null
+  sku: {
+    name: 'Standard_D2s_v3'
+    tier: 'GeneralPurpose'
   }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    administratorLogin: '${administratorLogin}'
     availabilityZone: '2'
-    backup: {
-      geoRedundantBackup: 'Disabled'
-    }
     highAvailability: {
       mode: 'Disabled'
     }
@@ -28,9 +24,13 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-pr
       storageSizeGB: 32
     }
     version: '12'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    backup: {
+      geoRedundantBackup: 'Disabled'
+    }
   }
-  sku: {
-    name: 'Standard_D2s_v3'
-    tier: 'GeneralPurpose'
+  identity: {
+    type: 'None'
+    userAssignedIdentities: null
   }
 }

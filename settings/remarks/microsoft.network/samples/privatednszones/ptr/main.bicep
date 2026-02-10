@@ -1,3 +1,4 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
@@ -5,11 +6,10 @@ resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
   location: 'global'
 }
 
-resource ptr 'Microsoft.Network/privateDnsZones/PTR@2018-09-01' = {
-  parent: privateDnsZone
+resource pTR 'Microsoft.Network/privateDnsZones/PTR@2018-09-01' = {
   name: resourceName
+  parent: privateDnsZone
   properties: {
-    metadata: {}
     ptrRecords: [
       {
         ptrdname: 'test2.contoso.com'
@@ -19,5 +19,6 @@ resource ptr 'Microsoft.Network/privateDnsZones/PTR@2018-09-01' = {
       }
     ]
     ttl: 300
+    metadata: {}
   }
 }

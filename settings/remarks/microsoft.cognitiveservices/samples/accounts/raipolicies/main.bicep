@@ -4,6 +4,9 @@ param location string = 'eastus'
 resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'S0'
+  }
   kind: 'OpenAI'
   properties: {
     disableLocalAuth: false
@@ -11,14 +14,11 @@ resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
   }
-  sku: {
-    name: 'S0'
-  }
 }
 
 resource raiPolicy 'Microsoft.CognitiveServices/accounts/raiPolicies@2024-10-01' = {
-  parent: account
   name: 'NoModerationPolicy'
+  parent: account
   properties: {
     basePolicyName: 'Microsoft.Default'
     contentFilters: [

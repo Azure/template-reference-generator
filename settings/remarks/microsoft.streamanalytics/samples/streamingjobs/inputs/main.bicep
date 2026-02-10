@@ -1,11 +1,14 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'S1'
+    capacity: 1
+  }
   properties: {
-    cloudToDevice: {}
     enableFileUploadNotifications: false
     messagingEndpoints: {}
     routing: {
@@ -19,10 +22,7 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
       }
     }
     storageEndpoints: {}
-  }
-  sku: {
-    capacity: 1
-    name: 'S1'
+    cloudToDevice: {}
   }
 }
 
@@ -31,14 +31,14 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
   location: location
   properties: {
     cluster: {}
+    eventsOutOfOrderPolicy: 'Adjust'
+    outputErrorPolicy: 'Drop'
     compatibilityLevel: '1.0'
     contentStoragePolicy: 'SystemAccount'
     dataLocale: 'en-GB'
     eventsLateArrivalMaxDelayInSeconds: 60
     eventsOutOfOrderMaxDelayInSeconds: 50
-    eventsOutOfOrderPolicy: 'Adjust'
     jobType: 'Cloud'
-    outputErrorPolicy: 'Drop'
     sku: {
       name: 'Standard'
     }
@@ -56,15 +56,15 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
 }
 
 resource input 'Microsoft.StreamAnalytics/streamingJobs/inputs@2020-03-01' = {
-  parent: streamingJob
   name: resourceName
+  parent: streamingJob
   properties: {
     datasource: {
       properties: {
         consumerGroupName: '$Default'
         endpoint: 'messages/events'
-        iotHubNamespace: iothub.name
-        sharedAccessPolicyKey: iothub.listkeys().value[0].primaryKey
+        iotHubNamespace: iotHub.name
+        sharedAccessPolicyKey: iotHub.listKeys().value[0].primaryKey
         sharedAccessPolicyName: 'iothubowner'
       }
       type: 'Microsoft.Devices/IotHubs'

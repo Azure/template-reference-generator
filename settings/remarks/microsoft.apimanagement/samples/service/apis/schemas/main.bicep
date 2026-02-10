@@ -4,7 +4,14 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
+    virtualNetworkType: 'None'
     certificates: []
     customProperties: {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
@@ -15,40 +22,33 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
-    virtualNetworkType: 'None'
-  }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
   }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
-  parent: service
   name: '${resourceName};rev=1'
+  parent: service
   properties: {
-    apiRevisionDescription: ''
-    apiType: 'http'
-    apiVersion: ''
-    apiVersionDescription: ''
-    authenticationSettings: {}
-    description: ''
     displayName: 'api1'
-    path: 'api1'
     protocols: [
       'https'
     ]
     serviceUrl: ''
-    subscriptionRequired: true
     type: 'http'
+    apiRevisionDescription: ''
+    apiType: 'http'
+    apiVersionDescription: ''
+    description: ''
+    path: 'api1'
+    subscriptionRequired: true
+    apiVersion: ''
+    authenticationSettings: {}
   }
 }
 
 resource schema 'Microsoft.ApiManagement/service/apis/schemas@2021-08-01' = {
-  parent: api
   name: resourceName
+  parent: api
   properties: {
     contentType: 'application/vnd.ms-azure-apim.xsd+xml'
     document: {

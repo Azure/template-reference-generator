@@ -4,65 +4,23 @@ param location string = 'westeurope'
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_F2'
+    tier: 'Standard'
+  }
   properties: {
-    additionalCapabilities: {}
-    doNotRunExtensionsOnOverprovisionedVMs: false
     orchestrationMode: 'Uniform'
-    overprovision: true
     scaleInPolicy: {
       forceDeletion: false
       rules: [
         'Default'
       ]
     }
-    singlePlacementGroup: true
-    upgradePolicy: {
-      mode: 'Manual'
-    }
     virtualMachineProfile: {
-      diagnosticsProfile: {
-        bootDiagnostics: {
-          enabled: false
-          storageUri: ''
-        }
-      }
-      extensionProfile: {
-        extensionsTimeBudget: 'PT1H30M'
-      }
-      networkProfile: {
-        networkInterfaceConfigurations: [
-          {
-            name: 'example'
-            properties: {
-              dnsSettings: {
-                dnsServers: []
-              }
-              enableAcceleratedNetworking: false
-              enableIPForwarding: false
-              ipConfigurations: [
-                {
-                  name: 'internal'
-                  properties: {
-                    applicationGatewayBackendAddressPools: []
-                    applicationSecurityGroups: []
-                    loadBalancerBackendAddressPools: []
-                    loadBalancerInboundNatPools: []
-                    primary: true
-                    privateIPAddressVersion: 'IPv4'
-                    subnet: {
-                      id: subnet.id
-                    }
-                  }
-                }
-              ]
-              primary: true
-            }
-          }
-        ]
-      }
       osProfile: {
         adminUsername: 'adminuser'
-        computerNamePrefix: 'acctest0001'
+        computerNamePrefix: resourceName
         linuxConfiguration: {
           disablePasswordAuthentication: true
           provisionVMAgent: true
@@ -79,6 +37,15 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
       priority: 'Regular'
       storageProfile: {
+        osDisk: {
+          managedDisk: {
+            storageAccountType: 'Standard_LRS'
+          }
+          osType: 'Linux'
+          writeAcceleratorEnabled: false
+          caching: 'ReadWrite'
+          createOption: 'FromImage'
+        }
         dataDisks: []
         imageReference: {
           offer: 'UbuntuServer'
@@ -86,22 +53,53 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           sku: '16.04-LTS'
           version: 'latest'
         }
-        osDisk: {
-          caching: 'ReadWrite'
-          createOption: 'FromImage'
-          managedDisk: {
-            storageAccountType: 'Standard_LRS'
-          }
-          osType: 'Linux'
-          writeAcceleratorEnabled: false
+      }
+      diagnosticsProfile: {
+        bootDiagnostics: {
+          enabled: false
+          storageUri: ''
         }
       }
+      extensionProfile: {
+        extensionsTimeBudget: 'PT1H30M'
+      }
+      networkProfile: {
+        networkInterfaceConfigurations: [
+          {
+            name: 'example'
+            properties: {
+              enableAcceleratedNetworking: false
+              enableIPForwarding: false
+              ipConfigurations: [
+                {
+                  properties: {
+                    applicationSecurityGroups: []
+                    loadBalancerBackendAddressPools: []
+                    loadBalancerInboundNatPools: []
+                    primary: true
+                    privateIPAddressVersion: 'IPv4'
+                    subnet: {}
+                    applicationGatewayBackendAddressPools: []
+                  }
+                  name: 'internal'
+                }
+              ]
+              primary: true
+              dnsSettings: {
+                dnsServers: []
+              }
+            }
+          }
+        ]
+      }
     }
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard_F2'
-    tier: 'Standard'
+    additionalCapabilities: {}
+    doNotRunExtensionsOnOverprovisionedVMs: false
+    overprovision: true
+    singlePlacementGroup: true
+    upgradePolicy: {
+      mode: 'Manual'
+    }
   }
 }
 
@@ -122,13 +120,13 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource extension 'Microsoft.Compute/virtualMachineScaleSets/extensions@2023-03-01' = {
-  parent: virtualMachineScaleSet
   name: resourceName
+  parent: virtualMachineScaleSet
   properties: {
     autoUpgradeMinorVersion: true
     enableAutomaticUpgrade: false
-    provisionAfterExtensions: []
     publisher: 'Microsoft.Azure.Extensions'
+    provisionAfterExtensions: []
     settings: {
       commandToExecute: 'echo $HOSTNAME'
     }
@@ -139,14 +137,14 @@ resource extension 'Microsoft.Compute/virtualMachineScaleSets/extensions@2023-03
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

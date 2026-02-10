@@ -6,51 +6,9 @@ param adminUsername string
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
+var dataDiskName = 'mydatadisk1'
 var attachedDataDiskName = 'myattacheddatadisk1'
 var osDiskName = 'myosdisk1'
-var dataDiskName = 'mydatadisk1'
-
-resource attachedDisk 'Microsoft.Compute/disks@2022-03-02' = {
-  name: attachedDataDiskName
-  location: location
-  properties: {
-    creationData: {
-      createOption: 'Empty'
-    }
-    diskSizeGB: 1
-    encryption: {
-      type: 'EncryptionAtRestWithPlatformKey'
-    }
-    networkAccessPolicy: 'AllowAll'
-    osType: 'Linux'
-    publicNetworkAccess: 'Enabled'
-  }
-  sku: {
-    name: 'Standard_LRS'
-  }
-}
-
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
@@ -70,12 +28,12 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: adminPassword
-      adminUsername: adminUsername
-      computerName: 'hostname230630032848831819'
       linuxConfiguration: {
         disablePasswordAuthentication: false
       }
+      adminPassword: adminPassword
+      adminUsername: adminUsername
+      computerName: 'hostname230630032848831819'
     }
     storageProfile: {
       imageReference: {
@@ -92,14 +50,14 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       }
       dataDisks: [
         {
-          caching: 'ReadWrite'
-          createOption: 'Empty'
-          name: dataDiskName
-          diskSizeGB: 1
           lun: 1
           managedDisk: {
             storageAccountType: 'Standard_LRS'
           }
+          caching: 'ReadWrite'
+          createOption: 'Empty'
+          name: dataDiskName
+          diskSizeGB: 1
         }
         {
           caching: 'ReadWrite'
@@ -132,8 +90,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -141,5 +99,45 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource attachedDisk 'Microsoft.Compute/disks@2022-03-02' = {
+  name: attachedDataDiskName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {
+    osType: 'Linux'
+    publicNetworkAccess: 'Enabled'
+    creationData: {
+      createOption: 'Empty'
+    }
+    diskSizeGB: 1
+    encryption: {
+      type: 'EncryptionAtRestWithPlatformKey'
+    }
+    networkAccessPolicy: 'AllowAll'
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration1'
+        properties: {
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
+          primary: true
+        }
+      }
+    ]
   }
 }

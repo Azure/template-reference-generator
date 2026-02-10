@@ -1,6 +1,7 @@
 targetScope = 'subscription'
 
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: resourceName
@@ -19,14 +20,14 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       }
     }
     policyRule: {
+      then: {
+        effect: 'audit'
+      }
       if: {
         not: {
           field: 'location'
-          in: '[parameters(\'allowedLocations\')]'
+          in: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         }
-      }
-      then: {
-        effect: 'audit'
       }
     }
     policyType: 'Custom'
@@ -37,7 +38,7 @@ resource policySetDefinition 'Microsoft.Authorization/policySetDefinitions@2025-
   name: 'acctestpolset-${resourceName}'
   properties: {
     description: ''
-    displayName: 'acctestpolset-acctest0001'
+    displayName: 'acctestpolset-${resourceName}'
     parameters: {
       allowedLocations: {
         metadata: {
@@ -50,14 +51,14 @@ resource policySetDefinition 'Microsoft.Authorization/policySetDefinitions@2025-
     }
     policyDefinitions: [
       {
-        groupNames: []
         parameters: {
           listOfAllowedLocations: {
-            value: '[parameters(\'allowedLocations\')]'
+            value: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
           }
         }
         policyDefinitionId: policyDefinition.id
         policyDefinitionReferenceId: ''
+        groupNames: []
       }
     ]
     policyType: 'Custom'

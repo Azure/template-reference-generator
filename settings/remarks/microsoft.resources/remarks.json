@@ -15,6 +15,11 @@
       "ResourceType": "Microsoft.Resources/resourceGroups",
       "Path": "samples/resourceGroups/main.bicep",
       "Description": "A basic example of deploying Resource Group."
+    },
+    {
+      "ResourceType": "Microsoft.Resources/deployments",
+      "Path": "samples/deployments/main.bicep",
+      "Description": "A basic example of deploying Template Deployment."
     }
   ],
   "ResourceRemarks": [

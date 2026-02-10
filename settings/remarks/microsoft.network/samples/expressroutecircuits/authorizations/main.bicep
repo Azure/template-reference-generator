@@ -1,9 +1,14 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Standard'
+    family: 'MeteredData'
+    name: 'Standard_MeteredData'
+  }
   properties: {
     authorizationKey: ''
     serviceProviderProperties: {
@@ -12,11 +17,6 @@ resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01'
       serviceProviderName: 'Equinix'
     }
   }
-  sku: {
-    family: 'MeteredData'
-    name: 'Standard_MeteredData'
-    tier: 'Standard'
-  }
   tags: {
     Environment: 'production'
     Purpose: 'AcceptanceTests'
@@ -24,7 +24,7 @@ resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01'
 }
 
 resource authorization 'Microsoft.Network/expressRouteCircuits/authorizations@2022-07-01' = {
-  parent: expressRouteCircuit
   name: resourceName
+  parent: expressRouteCircuit
   properties: {}
 }

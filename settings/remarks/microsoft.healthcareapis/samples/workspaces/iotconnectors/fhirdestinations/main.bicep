@@ -4,16 +4,16 @@ param location string = 'westeurope'
 resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    disableLocalAuth: false
-    isAutoInflateEnabled: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
   sku: {
-    capacity: 1
     name: 'Standard'
     tier: 'Standard'
+    capacity: 1
+  }
+  properties: {
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
+    disableLocalAuth: false
+    isAutoInflateEnabled: false
   }
 }
 
@@ -23,8 +23,8 @@ resource workspace 'Microsoft.HealthcareApis/workspaces@2022-12-01' = {
 }
 
 resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: namespace
   name: resourceName
+  parent: namespace
   properties: {
     messageRetentionInDays: 1
     partitionCount: 2
@@ -33,16 +33,16 @@ resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
 }
 
 resource fhirService 'Microsoft.HealthcareApis/workspaces/fhirServices@2022-12-01' = {
-  parent: workspace
   name: resourceName
   location: location
+  parent: workspace
   kind: 'fhir-R4'
   properties: {
     acrConfiguration: {}
     authenticationConfiguration: {
-      audience: 'https://acctestfhir.fhir.azurehealthcareapis.com'
-      authority: 'https://login.microsoftonline.com/deployer().tenantId'
       smartProxyEnabled: false
+      audience: 'https://acctestfhir.fhir.azurehealthcareapis.com'
+      authority: 'https://login.microsoftonline.com/${tenant()}'
     }
     corsConfiguration: {
       allowCredentials: false
@@ -54,9 +54,9 @@ resource fhirService 'Microsoft.HealthcareApis/workspaces/fhirServices@2022-12-0
 }
 
 resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12-01' = {
-  parent: workspace
   name: resourceName
   location: location
+  parent: workspace
   properties: {
     deviceMapping: {
       content: {
@@ -65,7 +65,6 @@ resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12
       }
     }
     ingestionEndpointConfiguration: {
-      consumerGroup: consumerGroup.id
       eventHubName: eventhub.name
       fullyQualifiedEventHubNamespace: '${namespace.name}.servicebus.windows.net'
     }
@@ -73,17 +72,17 @@ resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12
 }
 
 resource consumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumerGroups@2021-11-01' = {
-  parent: eventhub
   name: resourceName
+  parent: eventhub
   properties: {
     userMetadata: ''
   }
 }
 
 resource fhirDestination 'Microsoft.HealthcareApis/workspaces/iotConnectors/fhirDestinations@2022-12-01' = {
-  parent: iotConnector
   name: resourceName
   location: location
+  parent: iotConnector
   properties: {
     fhirMapping: {
       content: {

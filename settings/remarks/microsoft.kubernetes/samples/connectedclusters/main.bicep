@@ -6,9 +6,9 @@ resource connectedCluster 'Microsoft.Kubernetes/connectedClusters@2024-01-01' = 
   location: location
   kind: 'ProvisionedCluster'
   properties: {
-    agentPublicKeyCertificate: ''
     arcAgentProfile: {
       agentAutoUpgrade: 'Enabled'
     }
+    agentPublicKeyCertificate: ''
   }
 }

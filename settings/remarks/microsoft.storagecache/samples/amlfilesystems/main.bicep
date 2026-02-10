@@ -4,20 +4,16 @@ param location string = 'westus'
 resource amlFilesystem 'Microsoft.StorageCache/amlFilesystems@2024-07-01' = {
   name: '${resourceName}-amlfs'
   location: location
-  properties: {
-    filesystemSubnet: subnet.id
-    maintenanceWindow: {
-      dayOfWeek: 'Friday'
-      timeOfDayUTC: '22:00'
-    }
-    storageCapacityTiB: 8
-  }
   sku: {
     name: 'AMLFS-Durable-Premium-250'
   }
-  zones: [
-    '1'
-  ]
+  properties: {
+    maintenanceWindow: {
+      timeOfDayUTC: '22:00'
+      dayOfWeek: 'Friday'
+    }
+    storageCapacityTiB: 8
+  }
 }
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
@@ -38,15 +34,15 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
-    defaultOutboundAccess: true
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    defaultOutboundAccess: true
   }
 }

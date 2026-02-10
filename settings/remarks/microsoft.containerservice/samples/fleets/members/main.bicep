@@ -10,31 +10,34 @@ resource fleet 'Microsoft.ContainerService/fleets@2024-04-01' = {
 resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Free'
+    name: 'Base'
+  }
   properties: {
-    addonProfiles: {}
     agentPoolProfiles: [
       {
+        kubeletDiskType: ''
+        osDiskType: 'Managed'
+        osType: 'Linux'
         count: 1
         enableAutoScaling: false
         enableEncryptionAtHost: false
-        enableFIPS: false
-        enableNodePublicIP: false
         enableUltraSSD: false
-        kubeletDiskType: ''
-        mode: 'System'
-        name: 'default'
-        nodeLabels: {}
-        osDiskType: 'Managed'
-        osType: 'Linux'
         scaleDownMode: 'Delete'
         tags: {}
-        type: 'VirtualMachineScaleSets'
         upgradeSettings: {
+          nodeSoakDurationInMinutes: 0
           drainTimeoutInMinutes: 0
           maxSurge: '10%'
-          nodeSoakDurationInMinutes: 0
         }
+        enableFIPS: false
+        nodeLabels: {}
+        type: 'VirtualMachineScaleSets'
         vmSize: 'Standard_B2s'
+        enableNodePublicIP: false
+        mode: 'System'
+        name: 'default'
       }
     ]
     apiServerAccessProfile: {
@@ -52,30 +55,27 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
       }
     }
     disableLocalAccounts: false
-    dnsPrefix: 'acctest0001'
     enableRBAC: true
-    kubernetesVersion: ''
     metricsProfile: {
       costAnalysis: {
         enabled: false
       }
     }
     nodeResourceGroup: ''
+    addonProfiles: {}
+    dnsPrefix: '${resourceName}'
+    kubernetesVersion: ''
     securityProfile: {}
     servicePrincipalProfile: {
       clientId: 'msi'
     }
     supportPlan: 'KubernetesOfficial'
   }
-  sku: {
-    name: 'Base'
-    tier: 'Free'
-  }
 }
 
 resource member 'Microsoft.ContainerService/fleets/members@2024-04-01' = {
-  parent: fleet
   name: resourceName
+  parent: fleet
   properties: {
     clusterResourceId: managedCluster.id
     group: 'default'

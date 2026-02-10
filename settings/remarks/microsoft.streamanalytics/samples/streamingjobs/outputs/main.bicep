@@ -4,13 +4,18 @@ param location string = 'westeurope'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -29,11 +34,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     networkAcls: {
       defaultAction: 'Allow'
     }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
@@ -42,14 +42,9 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
   location: location
   properties: {
     cluster: {}
-    compatibilityLevel: '1.0'
     contentStoragePolicy: 'SystemAccount'
-    dataLocale: 'en-GB'
-    eventsLateArrivalMaxDelayInSeconds: 60
     eventsOutOfOrderMaxDelayInSeconds: 50
-    eventsOutOfOrderPolicy: 'Adjust'
     jobType: 'Cloud'
-    outputErrorPolicy: 'Drop'
     sku: {
       name: 'Standard'
     }
@@ -63,12 +58,17 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
         streamingUnits: 3
       }
     }
+    compatibilityLevel: '1.0'
+    dataLocale: 'en-GB'
+    eventsLateArrivalMaxDelayInSeconds: 60
+    eventsOutOfOrderPolicy: 'Adjust'
+    outputErrorPolicy: 'Drop'
   }
 }
 
 resource output 'Microsoft.StreamAnalytics/streamingJobs/outputs@2021-10-01-preview' = {
-  parent: streamingJob
   name: resourceName
+  parent: streamingJob
   properties: {
     datasource: {
       properties: {

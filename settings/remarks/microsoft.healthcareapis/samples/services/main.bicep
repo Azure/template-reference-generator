@@ -6,16 +6,16 @@ resource service 'Microsoft.HealthcareApis/services@2022-12-01' = {
   location: location
   kind: 'fhir'
   properties: {
-    accessPolicies: [
-      {
-        objectId: deployer().objectId
-      }
-    ]
     authenticationConfiguration: {}
     corsConfiguration: {}
     cosmosDbConfiguration: {
       offerThroughput: 1000
     }
     publicNetworkAccess: 'Enabled'
+    accessPolicies: [
+      {
+        objectId: deployer().objectId
+      }
+    ]
   }
 }

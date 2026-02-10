@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: '${administratorLoginPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,20 +18,20 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
-  parent: server
   name: resourceName
   location: location
+  parent: server
   properties: {
+    readScale: 'Disabled'
+    zoneRedundant: false
     autoPauseDelay: 0
     createMode: 'Default'
-    elasticPoolId: ''
     highAvailabilityReplicaCount: 0
     isLedgerOn: false
+    requestedBackupStorageRedundancy: 'Geo'
+    elasticPoolId: ''
     licenseType: 'LicenseIncluded'
     maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
     minCapacity: 0
-    readScale: 'Disabled'
-    requestedBackupStorageRedundancy: 'Geo'
-    zoneRedundant: false
   }
 }

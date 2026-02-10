@@ -7,11 +7,11 @@ resource capacityReservationGroup 'Microsoft.Compute/capacityReservationGroups@2
 }
 
 resource capacityReservation 'Microsoft.Compute/capacityReservationGroups/capacityReservations@2022-03-01' = {
-  parent: capacityReservationGroup
   name: '${resourceName}-ccr'
   location: location
+  parent: capacityReservationGroup
   sku: {
-    capacity: 2
     name: 'Standard_F2'
+    capacity: 2
   }
 }

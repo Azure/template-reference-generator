@@ -4,10 +4,31 @@ param location string = 'westeurope'
 resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_S1'
+  }
   properties: {
+    resourceLogConfiguration: {
+      categories: [
+        {
+          enabled: 'false'
+          name: 'MessagingLogs'
+        }
+        {
+          name: 'ConnectivityLogs'
+          enabled: 'false'
+        }
+        {
+          name: 'HttpRequestLogs'
+          enabled: 'false'
+        }
+      ]
+    }
+    upstream: {
+      templates: []
+    }
     cors: {}
-    disableAadAuth: false
-    disableLocalAuth: false
     features: [
       {
         flag: 'ServiceMode'
@@ -27,34 +48,13 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
       }
     ]
     publicNetworkAccess: 'Enabled'
-    resourceLogConfiguration: {
-      categories: [
-        {
-          enabled: 'false'
-          name: 'MessagingLogs'
-        }
-        {
-          enabled: 'false'
-          name: 'ConnectivityLogs'
-        }
-        {
-          enabled: 'false'
-          name: 'HttpRequestLogs'
-        }
-      ]
-    }
     serverless: {
       connectionTimeoutInSeconds: 30
     }
     tls: {
       clientCertEnabled: false
     }
-    upstream: {
-      templates: []
-    }
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard_S1'
+    disableAadAuth: false
+    disableLocalAuth: false
   }
 }

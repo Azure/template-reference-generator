@@ -6,5 +6,12 @@
       "Path": "samples/billingaccounts/billingprofiles/main.tf",
       "Description": "A basic example of deploying Billing Accounts Billing Profiles."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Billing/billingAccounts/billingProfiles",
+      "Path": "samples/billingaccounts/billingprofiles/main.bicep",
+      "Description": "A basic example of deploying Billing Accounts Billing Profiles."
+    }
   ]
 }

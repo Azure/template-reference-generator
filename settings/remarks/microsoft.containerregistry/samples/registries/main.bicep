@@ -4,8 +4,11 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
   properties: {
-    adminUserEnabled: false
     anonymousPullEnabled: false
     dataEndpointEnabled: false
     encryption: {
@@ -26,11 +29,8 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
         status: 'disabled'
       }
     }
+    adminUserEnabled: false
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Standard'
   }
 }

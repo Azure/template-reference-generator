@@ -4,18 +4,18 @@ param location string = 'westeurope'
 resource namespace 'Microsoft.Relay/namespaces@2017-04-01' = {
   name: resourceName
   location: location
-  properties: {}
   sku: {
-    name: 'Standard'
     tier: 'Standard'
+    name: 'Standard'
   }
+  properties: {}
 }
 
 resource hybridConnection 'Microsoft.Relay/namespaces/hybridConnections@2017-04-01' = {
-  parent: namespace
   name: resourceName
+  parent: namespace
   properties: {
-    requiresClientAuthorization: true
     userMetadata: 'metadatatest'
+    requiresClientAuthorization: true
   }
 }

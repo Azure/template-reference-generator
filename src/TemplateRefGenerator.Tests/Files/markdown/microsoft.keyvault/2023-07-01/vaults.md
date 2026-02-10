@@ -214,22 +214,20 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
       {
         objectId: deployer().objectId
         permissions: {
+          secrets: [
+            'Set'
+          ]
+          storage: []
           certificates: [
             'ManageContacts'
           ]
           keys: [
             'Create'
           ]
-          secrets: [
-            'Set'
-          ]
-          storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant()
       }
     ]
-    createMode: 'default'
-    enableRbacAuthorization: false
     enableSoftDelete: true
     enabledForDeployment: false
     enabledForDiskEncryption: false
@@ -239,8 +237,10 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
       family: 'A'
       name: 'standard'
     }
+    tenantId: tenant()
+    createMode: 'default'
+    enableRbacAuthorization: false
     softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
   }
 }
 ```

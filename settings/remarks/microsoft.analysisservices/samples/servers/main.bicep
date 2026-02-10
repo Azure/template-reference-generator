@@ -4,6 +4,9 @@ param location string = 'westeurope'
 resource server 'Microsoft.AnalysisServices/servers@2017-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'B1'
+  }
   properties: {
     asAdministrators: {
       members: []
@@ -12,8 +15,5 @@ resource server 'Microsoft.AnalysisServices/servers@2017-08-01' = {
       enablePowerBIService: false
       firewallRules: []
     }
-  }
-  sku: {
-    name: 'B1'
   }
 }

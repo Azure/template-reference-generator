@@ -1,14 +1,67 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
-resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
+resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: resourceName
   location: 'global'
+  sku: {
+    name: 'Premium_AzureFrontDoor'
+  }
+  properties: {
+    originResponseTimeoutSeconds: 120
+  }
+}
+
+resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
+  name: resourceName
+  parent: profile
+  properties: {
+    azureDnsZone: {
+      id: dnsZone.id
+    }
+    hostName: 'fabrikam.${resourceName}.com'
+    tlsSettings: {
+      certificateType: 'ManagedCertificate'
+      minimumTlsVersion: 'TLS12'
+    }
+  }
+}
+
+resource securityPolicy 'Microsoft.Cdn/profiles/securityPolicies@2021-06-01' = {
+  name: resourceName
+  parent: profile
+  properties: {
+    parameters: {
+      type: 'WebApplicationFirewall'
+      wafPolicy: {
+        id: frontDoorWebApplicationFirewallPolicy.id
+      }
+      associations: [
+        {
+          patternsToMatch: [
+            '/*'
+          ]
+          domains: [
+            {
+              id: customDomain.id
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
+  name: resourceName
+  location: 'global'
+  sku: {
+    name: 'Premium_AzureFrontDoor'
+  }
   properties: {
     customRules: {
       rules: [
         {
-          action: 'Block'
-          enabledState: 'Enabled'
           matchConditions: [
             {
               matchValue: [
@@ -25,6 +78,8 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
           rateLimitDurationInMinutes: 1
           rateLimitThreshold: 10
           ruleType: 'MatchRule'
+          action: 'Block'
+          enabledState: 'Enabled'
         }
       ]
     }
@@ -48,9 +103,9 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
           ruleSetVersion: 'preview-0.1'
         }
         {
+          ruleSetVersion: 'preview-0.1'
           ruleSetAction: 'Block'
           ruleSetType: 'BotProtection'
-          ruleSetVersion: 'preview-0.1'
         }
       ]
     }
@@ -62,63 +117,9 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
       redirectUrl: 'https://www.fabrikam.com'
     }
   }
-  sku: {
-    name: 'Premium_AzureFrontDoor'
-  }
 }
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
   name: '${resourceName}.com'
   location: 'global'
-}
-
-resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
-  name: resourceName
-  location: 'global'
-  properties: {
-    originResponseTimeoutSeconds: 120
-  }
-  sku: {
-    name: 'Premium_AzureFrontDoor'
-  }
-}
-
-resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
-  parent: profile
-  name: resourceName
-  properties: {
-    azureDnsZone: {
-      id: dnsZone.id
-    }
-    hostName: 'fabrikam.acctest0001.com'
-    tlsSettings: {
-      certificateType: 'ManagedCertificate'
-      minimumTlsVersion: 'TLS12'
-    }
-  }
-}
-
-resource securityPolicy 'Microsoft.Cdn/profiles/securityPolicies@2021-06-01' = {
-  parent: profile
-  name: resourceName
-  properties: {
-    parameters: {
-      associations: [
-        {
-          domains: [
-            {
-              id: customDomain.id
-            }
-          ]
-          patternsToMatch: [
-            '/*'
-          ]
-        }
-      ]
-      type: 'WebApplicationFirewall'
-      wafPolicy: {
-        id: frontdoorwebapplicationfirewallpolicy.id
-      }
-    }
-  }
 }

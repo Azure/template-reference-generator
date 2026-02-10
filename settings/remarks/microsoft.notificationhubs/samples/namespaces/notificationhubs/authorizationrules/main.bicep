@@ -4,26 +4,26 @@ param location string = 'westeurope'
 resource namespace 'Microsoft.NotificationHubs/namespaces@2017-04-01' = {
   name: resourceName
   location: location
-  properties: {
-    enabled: true
-    namespaceType: 'NotificationHub'
-    region: 'westeurope'
-  }
   sku: {
     name: 'Free'
+  }
+  properties: {
+    region: 'westeurope'
+    enabled: true
+    namespaceType: 'NotificationHub'
   }
 }
 
 resource notificationHub 'Microsoft.NotificationHubs/namespaces/notificationHubs@2017-04-01' = {
-  parent: namespace
   name: resourceName
   location: location
+  parent: namespace
   properties: {}
 }
 
 resource authorizationRule 'Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules@2017-04-01' = {
-  parent: notificationHub
   name: resourceName
+  parent: notificationHub
   properties: {
     rights: [
       'Listen'

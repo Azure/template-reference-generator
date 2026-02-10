@@ -6,25 +6,27 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: [
-      {
-        name: 'EnableTable'
-      }
-    ]
+    publicNetworkAccess: 'Enabled'
     consistencyPolicy: {
       defaultConsistencyLevel: 'Strong'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    databaseAccountOfferType: 'Standard'
     defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
     enableAnalyticalStorage: false
     enableAutomaticFailover: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
+    databaseAccountOfferType: 'Standard'
     ipRules: []
+    networkAclBypass: 'None'
+    virtualNetworkRules: []
+    capabilities: [
+      {
+        name: 'EnableTable'
+      }
+    ]
+    disableKeyBasedMetadataWriteAccess: false
+    enableMultipleWriteLocations: false
     isVirtualNetworkFilterEnabled: false
     locations: [
       {
@@ -33,20 +35,18 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    networkAclBypass: 'None'
     networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
+    enableFreeTier: false
   }
 }
 
 resource table 'Microsoft.DocumentDB/databaseAccounts/tables@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }

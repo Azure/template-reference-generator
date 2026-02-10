@@ -8,11 +8,6 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
   name: resourceName
   location: location
   properties: {
-    autoShutdownProfile: {
-      shutdownOnDisconnect: 'Disabled'
-      shutdownOnIdle: 'None'
-      shutdownWhenNotConnected: 'Disabled'
-    }
     connectionProfile: {
       clientRdpAccess: 'None'
       clientSshAccess: 'None'
@@ -24,11 +19,17 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
     }
     title: 'Test Title'
     virtualMachineProfile: {
+      sku: {
+        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
+        capacity: 1
+      }
+      usageQuota: 'PT0S'
+      useSharedPassword: 'Disabled'
       additionalCapabilities: {
         installGpuDrivers: 'Disabled'
       }
       adminUser: {
-        password: null
+        password: '${adminPassword}'
         username: 'testadmin'
       }
       createOption: 'Image'
@@ -38,19 +39,18 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
         sku: '20_04-lts'
         version: 'latest'
       }
-      sku: {
-        capacity: 1
-        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
-      }
-      usageQuota: 'PT0S'
-      useSharedPassword: 'Disabled'
+    }
+    autoShutdownProfile: {
+      shutdownWhenNotConnected: 'Disabled'
+      shutdownOnDisconnect: 'Disabled'
+      shutdownOnIdle: 'None'
     }
   }
 }
 
 resource user 'Microsoft.LabServices/labs/users@2022-08-01' = {
-  parent: lab
   name: resourceName
+  parent: lab
   properties: {
     additionalUsageQuota: 'PT0S'
     email: 'terraform-acctest@hashicorp.com'

@@ -8,24 +8,20 @@ resource p2svpnGateway 'Microsoft.Network/p2svpnGateways@2022-07-01' = {
     isRoutingPreferenceInternet: false
     p2SConnectionConfigurations: [
       {
-        name: 'first'
         properties: {
-          enableInternetSecurity: false
           vpnClientAddressPool: {
             addressPrefixes: [
               '172.100.0.0/14'
             ]
           }
+          enableInternetSecurity: false
         }
+        name: 'first'
       }
     ]
-    virtualHub: {
-      id: virtualHub.id
-    }
+    virtualHub: {}
     vpnGatewayScaleUnit: 1
-    vpnServerConfiguration: {
-      id: vpnServerConfiguration.id
-    }
+    vpnServerConfiguration: {}
   }
 }
 
@@ -38,9 +34,7 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {
-      id: virtualWan.id
-    }
+    virtualWan: {}
   }
 }
 
@@ -48,10 +42,10 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    allowBranchToBranchTraffic: true
-    disableVpnEncryption: false
     office365LocalBreakoutCategory: 'None'
     type: 'Standard'
+    allowBranchToBranchTraffic: true
+    disableVpnEncryption: false
   }
 }
 
@@ -59,9 +53,6 @@ resource vpnServerConfiguration 'Microsoft.Network/vpnServerConfigurations@2022-
   name: resourceName
   location: location
   properties: {
-    vpnAuthenticationTypes: [
-      'Certificate'
-    ]
     vpnClientIpsecPolicies: []
     vpnClientRevokedCertificates: []
     vpnClientRootCertificates: [
@@ -93,6 +84,9 @@ M/s/1JRtO3bDSzD9TazRVzn2oBqzSa8VgIo5C1nOnoAKJTlsClJKvIhnRlaLQqk=
     vpnProtocols: [
       'OpenVPN'
       'IkeV2'
+    ]
+    vpnAuthenticationTypes: [
+      'Certificate'
     ]
   }
 }

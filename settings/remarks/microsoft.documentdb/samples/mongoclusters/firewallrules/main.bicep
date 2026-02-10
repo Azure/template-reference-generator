@@ -13,26 +13,26 @@ resource mongoCluster 'Microsoft.DocumentDB/mongoClusters@2025-09-01' = {
     compute: {
       tier: 'M40'
     }
-    highAvailability: {
-      targetMode: 'Disabled'
-    }
     previewFeatures: [
       'ShardRebalancer'
     ]
-    publicNetworkAccess: 'Enabled'
-    serverVersion: '5.0'
     sharding: {
       shardCount: 1
     }
     storage: {
       sizeGb: 32
     }
+    highAvailability: {
+      targetMode: 'Disabled'
+    }
+    publicNetworkAccess: 'Enabled'
+    serverVersion: '5.0'
   }
 }
 
 resource firewallRule 'Microsoft.DocumentDB/mongoClusters/firewallRules@2025-09-01' = {
-  parent: mongoCluster
   name: resourceName
+  parent: mongoCluster
   properties: {
     endIpAddress: '0.0.0.0'
     startIpAddress: '0.0.0.0'

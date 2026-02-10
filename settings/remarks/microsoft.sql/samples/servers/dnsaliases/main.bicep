@@ -10,8 +10,8 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    administratorLogin: '${administratorLogin}'
+    administratorLoginPassword: '${administratorLoginPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -20,6 +20,6 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource dnsAlias 'Microsoft.Sql/servers/dnsAliases@2020-11-01-preview' = {
-  parent: server
   name: resourceName
+  parent: server
 }

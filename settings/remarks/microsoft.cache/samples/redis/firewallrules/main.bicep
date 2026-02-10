@@ -17,16 +17,16 @@ resource redis 'Microsoft.Cache/redis@2024-11-01' = {
     }
     redisVersion: '6.0'
     sku: {
-      capacity: 1
       family: 'P'
       name: 'Premium'
+      capacity: 1
     }
   }
 }
 
 resource firewallRule 'Microsoft.Cache/redis/firewallRules@2024-11-01' = {
-  parent: redis
   name: '${resourceName}_fwrule'
+  parent: redis
   properties: {
     endIP: '2.3.4.5'
     startIP: '1.2.3.4'

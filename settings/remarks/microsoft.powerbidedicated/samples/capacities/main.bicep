@@ -4,6 +4,9 @@ param location string = 'westeurope'
 resource capacity 'Microsoft.PowerBIDedicated/capacities@2021-01-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'A1'
+  }
   properties: {
     administration: {
       members: [
@@ -11,8 +14,5 @@ resource capacity 'Microsoft.PowerBIDedicated/capacities@2021-01-01' = {
       ]
     }
     mode: 'Gen2'
-  }
-  sku: {
-    name: 'A1'
   }
 }

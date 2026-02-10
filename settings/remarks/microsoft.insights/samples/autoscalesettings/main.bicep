@@ -1,10 +1,39 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator username for the virtual machine scale set')
 param adminUsername string
 @secure()
 @description('The administrator password for the virtual machine scale set')
 param adminPassword string
+param resourceName string = 'acctest0001'
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'internal'
+  parent: virtualNetwork
+  properties: {
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+  }
+}
 
 resource autoScaleSetting 'Microsoft.Insights/autoScaleSettings@2022-10-01' = {
   name: resourceName
@@ -22,40 +51,42 @@ resource autoScaleSetting 'Microsoft.Insights/autoScaleSettings@2022-10-01' = {
         name: 'metricRules'
         rules: [
           {
-            metricTrigger: {
-              dimensions: []
-              dividePerInstance: true
-              metricName: 'Percentage CPU'
-              metricNamespace: ''
-              metricResourceUri: virtualMachineScaleSet.id
-              operator: 'GreaterThan'
-              statistic: 'Average'
-              threshold: 75
-              timeAggregation: 'Last'
-              timeGrain: 'PT1M'
-              timeWindow: 'PT5M'
-            }
             scaleAction: {
-              cooldown: 'PT1M'
               direction: 'Increase'
               type: 'ChangeCount'
               value: '1'
+              cooldown: 'PT1M'
+            }
+            metricTrigger: {
+              dimensions: []
+              statistic: 'Average'
+              timeAggregation: 'Last'
+              timeWindow: 'PT5M'
+              dividePerInstance: true
+              metricName: 'Percentage CPU'
+              metricNamespace: ''
+              operator: 'GreaterThan'
+              threshold: 75
+              timeGrain: 'PT1M'
             }
           }
         ]
       }
     ]
-    targetResourceUri: virtualMachineScaleSet.id
   }
 }
 
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 2
+    name: 'Standard_F2'
+    tier: 'Standard'
+  }
   properties: {
     additionalCapabilities: {}
     doNotRunExtensionsOnOverprovisionedVMs: false
-    orchestrationMode: 'Uniform'
     overprovision: true
     scaleInPolicy: {
       forceDeletion: false
@@ -67,6 +98,7 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
     upgradePolicy: {
       mode: 'Manual'
     }
+    orchestrationMode: 'Uniform'
     virtualMachineProfile: {
       diagnosticsProfile: {
         bootDiagnostics: {
@@ -82,35 +114,31 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           {
             name: 'TestNetworkProfile-230630033559396108'
             properties: {
-              dnsSettings: {
-                dnsServers: []
-              }
-              enableAcceleratedNetworking: false
               enableIPForwarding: false
               ipConfigurations: [
                 {
-                  name: 'TestIPConfiguration'
                   properties: {
+                    privateIPAddressVersion: 'IPv4'
+                    subnet: {}
                     applicationGatewayBackendAddressPools: []
                     applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
                     primary: true
-                    privateIPAddressVersion: 'IPv4'
-                    subnet: {
-                      id: subnet.id
-                    }
                   }
+                  name: 'TestIPConfiguration'
                 }
               ]
               primary: true
+              dnsSettings: {
+                dnsServers: []
+              }
+              enableAcceleratedNetworking: false
             }
           }
         ]
       }
       osProfile: {
-        adminPassword: null
-        adminUsername: null
         computerNamePrefix: 'testvm-230630033559396108'
         linuxConfiguration: {
           disablePasswordAuthentication: false
@@ -125,6 +153,8 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           }
         }
         secrets: []
+        adminPassword: adminPassword
+        adminUsername: adminUsername
       }
       priority: 'Regular'
       storageProfile: {
@@ -146,39 +176,5 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
         }
       }
     }
-  }
-  sku: {
-    capacity: 2
-    name: 'Standard_F2'
-    tier: 'Standard'
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
-  name: 'internal'
-  properties: {
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

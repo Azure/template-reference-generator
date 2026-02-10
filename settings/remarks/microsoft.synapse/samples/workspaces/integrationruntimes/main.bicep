@@ -7,18 +7,8 @@ param sqlAdministratorLogin string
 param sqlAdministratorLoginPassword string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
-}
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  kind: 'StorageV2'
-  properties: {}
-  sku: {
-    name: 'Standard_LRS'
-  }
+  parent: storageAccount
 }
 
 resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
@@ -27,9 +17,7 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   properties: {
     defaultDataLakeStorage: {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
-      filesystem: container.name
     }
-
     managedVirtualNetwork: 'default'
     publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
@@ -38,20 +26,30 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
 }
 
 resource integrationRuntime 'Microsoft.Synapse/workspaces/integrationRuntimes@2021-06-01-preview' = {
-  parent: workspace
   name: resourceName
+  parent: workspace
   properties: {
-    description: 'test'
     type: 'SelfHosted'
+    description: 'test'
   }
 }
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
   name: resourceName
+  parent: blobService
   properties: {
     metadata: {
       key: 'value'
     }
   }
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {}
 }

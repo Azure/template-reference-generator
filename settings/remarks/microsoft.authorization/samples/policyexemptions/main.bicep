@@ -1,13 +1,15 @@
 targetScope = 'subscription'
 
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
   name: resourceName
+  location: 'westeurope'
+  scope: subscription()
   properties: {
     displayName: ''
     enforcementMode: 'Default'
-    policyDefinitionId: policyDefinition.id
     scope: subscription().id
   }
 }
@@ -15,15 +17,13 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01'
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: resourceName
   properties: {
-    description: ''
-    displayName: 'my-policy-definition'
     mode: 'All'
     parameters: {
       allowedLocations: {
         metadata: {
+          strongType: 'location'
           description: 'The list of allowed locations for resources.'
           displayName: 'Allowed locations'
-          strongType: 'location'
         }
         type: 'Array'
       }
@@ -32,7 +32,7 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       if: {
         not: {
           field: 'location'
-          in: '[parameters(\'allowedLocations\')]'
+          in: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         }
       }
       then: {
@@ -40,11 +40,14 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       }
     }
     policyType: 'Custom'
+    description: ''
+    displayName: 'my-policy-definition'
   }
 }
 
 resource policyExemption 'Microsoft.Authorization/policyExemptions@2020-07-01-preview' = {
   name: resourceName
+  scope: subscription()
   properties: {
     exemptionCategory: 'Mitigated'
     policyAssignmentId: policyAssignment.id

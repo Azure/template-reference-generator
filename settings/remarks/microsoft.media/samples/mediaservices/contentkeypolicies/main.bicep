@@ -8,7 +8,6 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
     publicNetworkAccess: 'Enabled'
     storageAccounts: [
       {
-        id: storageAccount.id
         type: 'Primary'
       }
     ]
@@ -18,13 +17,19 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_GRS'
+  }
   kind: 'StorageV2'
   properties: {
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
     accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -36,24 +41,18 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    supportsHttpsTrafficOnly: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_GRS'
   }
 }
 
 resource contentKeyPolicy 'Microsoft.Media/mediaServices/contentKeyPolicies@2022-08-01' = {
-  parent: mediaService
   name: resourceName
+  parent: mediaService
   properties: {
     description: 'My Policy Description'
     options: [
@@ -63,6 +62,7 @@ resource contentKeyPolicy 'Microsoft.Media/mediaServices/contentKeyPolicies@2022
         }
         name: 'ClearKeyOption'
         restriction: {
+          restrictionTokenType: 'Swt'
           '@odata.type': '#Microsoft.Media.ContentKeyPolicyTokenRestriction'
           audience: 'urn:audience'
           issuer: 'urn:issuer'
@@ -71,7 +71,6 @@ resource contentKeyPolicy 'Microsoft.Media/mediaServices/contentKeyPolicies@2022
             keyValue: 'AAAAAAAAAAAAAAAAAAAAAA=='
           }
           requiredClaims: []
-          restrictionTokenType: 'Swt'
         }
       }
     ]

@@ -7,9 +7,9 @@ resource resourceProvider 'Microsoft.CustomProviders/resourceProviders@2018-09-0
   properties: {
     resourceTypes: [
       {
-        endpoint: 'https://example.com/'
         name: 'dEf1'
         routingType: 'Proxy'
+        endpoint: 'https://example.com/'
       }
     ]
   }

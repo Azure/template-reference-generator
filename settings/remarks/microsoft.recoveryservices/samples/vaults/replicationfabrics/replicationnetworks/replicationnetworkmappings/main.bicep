@@ -4,15 +4,15 @@ param location string = 'westus'
 resource vault 'Microsoft.RecoveryServices/vaults@2024-01-01' = {
   name: '${resourceName}-rsv'
   location: location
+  sku: {
+    name: 'Standard'
+  }
   properties: {
     publicNetworkAccess: 'Enabled'
     redundancySettings: {
       crossRegionRestore: 'Disabled'
       standardTierStorageRedundancy: 'GeoRedundant'
     }
-  }
-  sku: {
-    name: 'Standard'
   }
 }
 
@@ -35,6 +35,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 
 resource virtualnetwork1 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: '${resourceName}-vnet2'
+  location: 'centralus'
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -50,19 +51,19 @@ resource virtualnetwork1 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource replicationFabric 'Microsoft.RecoveryServices/vaults/replicationFabrics@2024-04-01' = {
-  parent: vault
   name: '${resourceName}-fabric1'
+  parent: vault
   properties: {
     customDetails: {
       instanceType: 'Azure'
-      location: 'westus'
+      location: '${location}'
     }
   }
 }
 
 resource replicationfabric1 'Microsoft.RecoveryServices/vaults/replicationFabrics@2024-04-01' = {
-  parent: vault
   name: '${resourceName}-fabric2'
+  parent: vault
   properties: {
     customDetails: {
       instanceType: 'Azure'
@@ -71,19 +72,12 @@ resource replicationfabric1 'Microsoft.RecoveryServices/vaults/replicationFabric
   }
 }
 
-// The replication network is an intermediate resource under the replication fabric
-resource replicationNetwork 'Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks@2024-04-01' existing = {
-  parent: replicationFabric
-  name: virtualNetwork.name
-}
-
 resource replicationNetworkMapping 'Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings@2024-04-01' = {
-  parent: replicationNetwork
   name: '${resourceName}-mapping'
   properties: {
     fabricSpecificDetails: {
-      instanceType: 'AzureToAzure'
       primaryNetworkId: virtualNetwork.id
+      instanceType: 'AzureToAzure'
     }
     recoveryFabricName: replicationfabric1.name
     recoveryNetworkId: virtualnetwork1.id

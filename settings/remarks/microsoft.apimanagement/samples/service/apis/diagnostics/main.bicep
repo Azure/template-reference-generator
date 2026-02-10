@@ -1,26 +1,15 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource component 'Microsoft.Insights/components@2020-02-02' = {
-  name: resourceName
-  location: location
-  kind: 'web'
-  properties: {
-    Application_Type: 'web'
-    DisableIpMasking: false
-    DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
-    SamplingPercentage: 100
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-  }
-}
-
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Consumption'
+    capacity: 0
+  }
   properties: {
+    virtualNetworkType: 'None'
     certificates: []
     customProperties: {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
@@ -33,45 +22,56 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publicNetworkAccess: 'Enabled'
     publisherEmail: 'pub1@email.com'
     publisherName: 'pub1'
-    virtualNetworkType: 'None'
-  }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
   }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
-  parent: service
   name: '${resourceName};rev=1'
+  parent: service
   properties: {
+    value: 'http://conferenceapi.azurewebsites.net/?format=json'
     apiType: 'http'
     apiVersion: ''
     format: 'swagger-link-json'
     path: 'test'
     type: 'http'
-    value: 'http://conferenceapi.azurewebsites.net/?format=json'
+  }
+}
+
+resource diagnostic 'Microsoft.ApiManagement/service/apis/diagnostics@2021-08-01' = {
+  name: 'applicationinsights'
+  parent: api
+  properties: {
+    loggerId: logger.id
+    operationNameFormat: 'Name'
+  }
+}
+
+resource component 'Microsoft.Insights/components@2020-02-02' = {
+  name: resourceName
+  location: location
+  kind: 'web'
+  properties: {
+    publicNetworkAccessForIngestion: 'Enabled'
+    Application_Type: 'web'
+    DisableLocalAuth: false
+    publicNetworkAccessForQuery: 'Enabled'
+    DisableIpMasking: false
+    ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
+    SamplingPercentage: 100
   }
 }
 
 resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
+    loggerType: 'applicationInsights'
     credentials: {
       instrumentationKey: component.properties.InstrumentationKey
     }
     description: ''
     isBuffered: true
-    loggerType: 'applicationInsights'
-  }
-}
-
-resource diagnostic 'Microsoft.ApiManagement/service/apis/diagnostics@2021-08-01' = {
-  parent: api
-  name: 'applicationinsights'
-  properties: {
-    loggerId: logger.id
-    operationNameFormat: 'Name'
   }
 }

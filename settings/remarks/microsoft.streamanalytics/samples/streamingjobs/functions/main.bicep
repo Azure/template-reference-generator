@@ -12,8 +12,8 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
     eventsLateArrivalMaxDelayInSeconds: 60
     eventsOutOfOrderMaxDelayInSeconds: 50
     eventsOutOfOrderPolicy: 'Adjust'
-    jobType: 'Cloud'
     outputErrorPolicy: 'Drop'
+    jobType: 'Cloud'
     sku: {
       name: 'Standard'
     }
@@ -31,8 +31,8 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
 }
 
 resource function 'Microsoft.StreamAnalytics/streamingJobs/functions@2020-03-01' = {
-  parent: streamingJob
   name: resourceName
+  parent: streamingJob
   properties: {
     properties: {
       binding: {

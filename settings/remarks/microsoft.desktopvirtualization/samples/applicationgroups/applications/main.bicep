@@ -6,7 +6,6 @@ resource applicationGroup 'Microsoft.DesktopVirtualization/applicationGroups@202
   location: location
   properties: {
     applicationGroupType: 'RemoteApp'
-    hostPoolArmPath: hostPool.id
   }
 }
 
@@ -25,9 +24,9 @@ resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2023-09-05' = {
 }
 
 resource application 'Microsoft.DesktopVirtualization/applicationGroups/applications@2023-09-05' = {
-  parent: applicationGroup
   name: resourceName
   location: location
+  parent: applicationGroup
   properties: {
     commandLineSetting: 'DoNotAllow'
     filePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'

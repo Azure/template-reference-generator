@@ -34,12 +34,23 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
+  }
+}
+
+resource hybridRunbookWorkerGroup 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups@2021-06-22' = {
+  name: resourceName
+  parent: automationAccount
+}
+
+resource hybridRunbookWorker 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers@2021-06-22' = {
+  name: 'c7714056-5ba8-4bbe-920e-2993171164eb'
+  parent: hybridRunbookWorkerGroup
+  properties: {
+    vmResourceId: virtualMachine.id
   }
 }
 
@@ -47,7 +58,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    additionalCapabilities: {}
     applicationProfile: {
       galleryApplications: []
     }
@@ -58,9 +68,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       }
     }
     extensionsTimeBudget: 'PT1H30M'
-    hardwareProfile: {
-      vmSize: 'Standard_D2s_v3'
-    }
     networkProfile: {
       networkInterfaces: [
         {
@@ -72,22 +79,22 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
-      adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001'
+      computerName: resourceName
       linuxConfiguration: {
+        provisionVMAgent: true
+        ssh: {
+          publicKeys: []
+        }
         disablePasswordAuthentication: false
         patchSettings: {
           assessmentMode: 'ImageDefault'
           patchMode: 'ImageDefault'
         }
-        provisionVMAgent: true
-        ssh: {
-          publicKeys: []
-        }
       }
       secrets: []
+      adminPassword: vmAdminPassword
+      adminUsername: 'adminuser'
     }
     priority: 'Regular'
     storageProfile: {
@@ -107,6 +114,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         osType: 'Linux'
         writeAcceleratorEnabled: false
       }
+    }
+    additionalCapabilities: {}
+    hardwareProfile: {
+      vmSize: 'Standard_D2s_v3'
     }
   }
 }
@@ -128,26 +139,18 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource credential 'Microsoft.Automation/automationAccounts/credentials@2020-01-13-preview' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     description: ''
-    password: null
+    password: '${automationWorkerPassword}'
     userName: 'test_user'
   }
 }
 
-resource hybridRunbookWorkerGroup 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups@2021-06-22' = {
-  parent: automationAccount
-  name: resourceName
-  credential: {
-    name: credential.name
-  }
-}
-
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -155,13 +158,5 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-  }
-}
-
-resource hybridRunbookWorker 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers@2021-06-22' = {
-  parent: hybridRunbookWorkerGroup
-  name: 'c7714056-5ba8-4bbe-920e-2993171164eb'
-  properties: {
-    vmResourceId: virtualMachine.id
   }
 }

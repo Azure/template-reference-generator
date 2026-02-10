@@ -8,12 +8,6 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
     cluster: {}
     compatibilityLevel: '1.0'
     contentStoragePolicy: 'SystemAccount'
-    dataLocale: 'en-GB'
-    eventsLateArrivalMaxDelayInSeconds: 60
-    eventsOutOfOrderMaxDelayInSeconds: 50
-    eventsOutOfOrderPolicy: 'Adjust'
-    jobType: 'Cloud'
-    outputErrorPolicy: 'Drop'
     sku: {
       name: 'Standard'
     }
@@ -27,5 +21,11 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
         streamingUnits: 3
       }
     }
+    dataLocale: 'en-GB'
+    eventsLateArrivalMaxDelayInSeconds: 60
+    eventsOutOfOrderMaxDelayInSeconds: 50
+    eventsOutOfOrderPolicy: 'Adjust'
+    jobType: 'Cloud'
+    outputErrorPolicy: 'Drop'
   }
 }

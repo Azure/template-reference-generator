@@ -6,26 +6,17 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: [
-      {
-        name: 'EnableGremlin'
-      }
-    ]
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
     databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
     disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
-    enableAnalyticalStorage: false
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    defaultIdentity: 'FirstPartyIdentity'
     enableAutomaticFailover: false
-    enableFreeTier: false
     enableMultipleWriteLocations: false
     ipRules: []
-    isVirtualNetworkFilterEnabled: false
+    virtualNetworkRules: []
     locations: [
       {
         failoverPriority: 0
@@ -33,20 +24,29 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
+    capabilities: [
+      {
+        name: 'EnableGremlin'
+      }
+    ]
+    enableAnalyticalStorage: false
+    enableFreeTier: false
     publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
+    consistencyPolicy: {
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+      defaultConsistencyLevel: 'Strong'
+    }
   }
 }
 
 resource gremlinDatabase 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2023-04-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }

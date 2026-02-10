@@ -4,10 +4,11 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Basic'
+  }
   properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
-    dataEndpointEnabled: false
     encryption: {
       status: 'disabled'
     }
@@ -28,17 +29,16 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
     }
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Basic'
-    tier: 'Basic'
+    adminUserEnabled: false
+    anonymousPullEnabled: false
+    dataEndpointEnabled: false
   }
 }
 
 resource task 'Microsoft.ContainerRegistry/registries/tasks@2019-06-01-preview' = {
-  parent: registry
   name: resourceName
   location: location
+  parent: registry
   properties: {
     isSystemTask: true
     status: 'Enabled'

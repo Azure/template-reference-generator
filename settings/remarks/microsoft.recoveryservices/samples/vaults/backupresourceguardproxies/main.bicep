@@ -12,19 +12,18 @@ resource resourceGuard 'Microsoft.DataProtection/resourceGuards@2022-04-01' = {
 resource vault 'Microsoft.RecoveryServices/vaults@2022-10-01' = {
   name: resourceName
   location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-  }
   sku: {
     name: 'Standard'
+  }
+  properties: {
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource backupResourceGuardProxy 'Microsoft.RecoveryServices/vaults/backupResourceGuardProxies@2023-02-01' = {
-  parent: vault
   name: resourceName
+  parent: vault
   properties: {
     resourceGuardResourceId: resourceGuard.id
   }
-  type: 'Microsoft.RecoveryServices/vaults/backupResourceGuardProxies'
 }

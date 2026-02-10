@@ -4,21 +4,19 @@ param location string = 'westeurope'
 resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
   name: resourceName
   location: location
-  properties: {
-    frontendIPConfigurations: [
-      {
-        name: 'acctest0001'
-        properties: {
-          publicIPAddress: {
-            id: publicIPAddress.id
-          }
-        }
-      }
-    ]
-  }
   sku: {
     name: 'Standard'
     tier: 'Regional'
+  }
+  properties: {
+    frontendIPConfigurations: [
+      {
+        name: resourceName
+        properties: {
+          publicIPAddress: {}
+        }
+      }
+    ]
   }
 }
 
@@ -26,6 +24,9 @@ resource privateLinkService 'Microsoft.Network/privateLinkServices@2022-07-01' =
   name: resourceName
   location: location
   properties: {
+    visibility: {
+      subscriptions: []
+    }
     autoApproval: {
       subscriptions: []
     }
@@ -39,9 +40,7 @@ resource privateLinkService 'Microsoft.Network/privateLinkServices@2022-07-01' =
           privateIPAddress: ''
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
@@ -50,26 +49,23 @@ resource privateLinkService 'Microsoft.Network/privateLinkServices@2022-07-01' =
         id: loadBalancer.properties.frontendIPConfigurations[0].id
       }
     ]
-    visibility: {
-      subscriptions: []
-    }
   }
 }
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Static'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
     idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
@@ -90,14 +86,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
+    serviceEndpoints: []
     addressPrefix: '10.5.4.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Disabled'
     serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

@@ -13,28 +13,28 @@ resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
 }
 
 resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
     pccRules: [
       {
-        ruleName: 'default-rule'
         rulePrecedence: 1
         serviceDataFlowTemplates: [
           {
+            remoteIpList: [
+              '10.3.4.0/24'
+            ]
+            templateName: 'IP-to-server'
             direction: 'Uplink'
             ports: []
             protocol: [
               'ip'
             ]
-            remoteIpList: [
-              '10.3.4.0/24'
-            ]
-            templateName: 'IP-to-server'
           }
         ]
         trafficControl: 'Enabled'
+        ruleName: 'default-rule'
       }
     ]
     servicePrecedence: 0

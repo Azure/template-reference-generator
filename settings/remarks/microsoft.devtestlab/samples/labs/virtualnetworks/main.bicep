@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
   name: resourceName
@@ -10,14 +10,19 @@ resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
 }
 
 resource virtualNetwork 'Microsoft.DevTestLab/labs/virtualNetworks@2018-09-15' = {
-  parent: lab
   name: resourceName
+  parent: lab
   properties: {
     description: ''
     subnetOverrides: [
       {
-        labSubnetName: '\'${resourceName}Subnet\''
-        resourceId: resourceId('Microsoft.Network/virtualNetworks/subnets', resourceName, '${resourceName}Subnet')
+        labSubnetName: '${resourceName}Subnet'
+        resourceId: resourceId(
+          'Microsoft.Network/virtualNetworks/subnets',
+          resourceGroup().name,
+          resourceName,
+          '${resourceName}Subnet'
+        )
         useInVmCreationPermission: 'Allow'
         usePublicIpAddressPermission: 'Allow'
       }

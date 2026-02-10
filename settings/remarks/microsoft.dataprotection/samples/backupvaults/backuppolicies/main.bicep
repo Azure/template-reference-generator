@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   name: resourceName
@@ -7,26 +7,22 @@ resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   properties: {
     storageSettings: [
       {
-        datastoreType: 'VaultStore'
         type: 'LocallyRedundant'
+        datastoreType: 'VaultStore'
       }
     ]
   }
 }
 
 resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022-04-01' = {
-  parent: backupVault
   name: resourceName
+  parent: backupVault
   properties: {
-    datasourceTypes: [
-      'Microsoft.DBforPostgreSQL/servers/databases'
-    ]
-    objectType: 'BackupPolicy'
     policyRules: [
       {
         backupParameters: {
-          backupType: 'Full'
           objectType: 'AzureBackupParams'
+          backupType: 'Full'
         }
         dataStore: {
           dataStoreType: 'VaultStore'
@@ -35,22 +31,22 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
         name: 'BackupIntervals'
         objectType: 'AzureBackupRule'
         trigger: {
+          taggingCriteria: [
+            {
+              tagInfo: {
+                id: 'Default_'
+                tagName: 'Default'
+              }
+              taggingPriority: 99
+              isDefault: true
+            }
+          ]
           objectType: 'ScheduleBasedTriggerContext'
           schedule: {
             repeatingTimeIntervals: [
               'R/2021-05-23T02:30:00+00:00/P1W'
             ]
           }
-          taggingCriteria: [
-            {
-              isDefault: true
-              tagInfo: {
-                id: 'Default_'
-                tagName: 'Default'
-              }
-              taggingPriority: 99
-            }
-          ]
         }
       }
       {
@@ -72,5 +68,9 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
         objectType: 'AzureRetentionRule'
       }
     ]
+    datasourceTypes: [
+      'Microsoft.DBforPostgreSQL/servers/databases'
+    ]
+    objectType: 'BackupPolicy'
   }
 }

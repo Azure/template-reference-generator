@@ -1,35 +1,11 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
 resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
   name: resourceName
   location: location
   properties: {
-    source: {
-      id: virtualMachine.id
-    }
+    source: {}
   }
 }
 
@@ -37,20 +13,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: resourceName
   location: location
   properties: {
-    additionalCapabilities: {}
-    applicationProfile: {
-      galleryApplications: []
-    }
-    diagnosticsProfile: {
-      bootDiagnostics: {
-        enabled: false
-        storageUri: ''
-      }
-    }
-    extensionsTimeBudget: 'PT1H30M'
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
     networkProfile: {
       networkInterfaces: [
         {
@@ -62,9 +24,8 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
       ]
     }
     osProfile: {
-      adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001'
+      computerName: resourceName
       linuxConfiguration: {
         disablePasswordAuthentication: true
         patchSettings: {
@@ -82,9 +43,19 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         }
       }
       secrets: []
+      adminUsername: 'adminuser'
     }
     priority: 'Regular'
     storageProfile: {
+      osDisk: {
+        osType: 'Linux'
+        writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+      }
       dataDisks: []
       imageReference: {
         offer: '0001-com-ubuntu-server-jammy'
@@ -92,15 +63,20 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         sku: '22_04-lts'
         version: 'latest'
       }
-      osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: 'Standard_LRS'
-        }
-        osType: 'Linux'
-        writeAcceleratorEnabled: false
+    }
+    applicationProfile: {
+      galleryApplications: []
+    }
+    diagnosticsProfile: {
+      bootDiagnostics: {
+        enabled: false
+        storageUri: ''
       }
+    }
+    extensionsTimeBudget: 'PT1H30M'
+    additionalCapabilities: {}
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
     }
   }
 }
@@ -123,15 +99,35 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.0.0/24'
-    defaultOutboundAccess: true
-    delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.0.0/24'
+    defaultOutboundAccess: true
+    delegations: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
+        }
+      }
+    ]
   }
 }

@@ -10,8 +10,8 @@ param vmPassword string
 param restCredentialPassword string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
+  parent: storageAccount
 }
 
 resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
@@ -19,25 +19,22 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
   location: location
   properties: {
     clusterDefinition: {
-      componentVersion: {
-        Spark: '2.4'
-      }
       configurations: {
         gateway: {
-          'restAuthCredential.isEnabled': true
           'restAuthCredential.password': restCredentialPassword
           'restAuthCredential.username': 'acctestusrgw'
+          'restAuthCredential.isEnabled': true
         }
       }
       kind: 'Spark'
+      componentVersion: {
+        Spark: '2.4'
+      }
     }
     clusterVersion: '4.0.3000.1'
     computeProfile: {
       roles: [
         {
-          hardwareProfile: {
-            vmSize: 'standard_a4_v2'
-          }
           name: 'headnode'
           osProfile: {
             linuxOperatingSystemProfile: {
@@ -46,6 +43,9 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
             }
           }
           targetInstanceCount: 2
+          hardwareProfile: {
+            vmSize: 'standard_a4_v2'
+          }
         }
         {
           hardwareProfile: {
@@ -83,11 +83,9 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
     storageProfile: {
       storageaccounts: [
         {
-          container: container.name
           isDefault: true
           key: storageAccount.listKeys().keys[0].value
-          name: '${storageAccount.name}.blob.core.windows.net'
-          resourceId: storageAccount.id
+          name: '.blob.core.windows.net'
         }
       ]
     }
@@ -98,8 +96,19 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
+    minimumTlsVersion: 'TLS1_2'
+    isHnsEnabled: false
+    isSftpEnabled: false
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
@@ -108,32 +117,21 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        queue: {
+        table: {
           keyType: 'Service'
         }
-        table: {
+        queue: {
           keyType: 'Service'
         }
       }
     }
-    isHnsEnabled: false
     isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
   name: resourceName
+  parent: blobService
   properties: {
     metadata: {
       key: 'value'

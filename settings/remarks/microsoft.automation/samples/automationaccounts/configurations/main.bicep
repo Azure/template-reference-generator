@@ -16,9 +16,9 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource configuration 'Microsoft.Automation/automationAccounts/configurations@2022-08-08' = {
-  parent: automationAccount
   name: resourceName
   location: location
+  parent: automationAccount
   properties: {
     description: 'test'
     logVerbose: false

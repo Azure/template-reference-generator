@@ -8,9 +8,9 @@ resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
 }
 
 resource backupPolicy 'Microsoft.NetApp/netAppAccounts/backupPolicies@2025-01-01' = {
-  parent: netAppAccount
   name: '${resourceName}-policy'
   location: location
+  parent: netAppAccount
   properties: {
     dailyBackupsToKeep: 2
     enabled: true

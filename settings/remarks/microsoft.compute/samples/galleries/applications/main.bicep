@@ -10,9 +10,9 @@ resource gallery 'Microsoft.Compute/galleries@2022-03-03' = {
 }
 
 resource application 'Microsoft.Compute/galleries/applications@2022-03-03' = {
-  parent: gallery
   name: resourceName
   location: location
+  parent: gallery
   properties: {
     supportedOSType: 'Linux'
   }

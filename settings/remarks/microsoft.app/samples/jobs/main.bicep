@@ -14,19 +14,18 @@ resource job 'Microsoft.App/jobs@2025-01-01' = {
       replicaTimeout: 10
       triggerType: 'Manual'
     }
-    environmentId: managedEnvironment.id
     template: {
       containers: [
         {
-          env: []
-          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
-          name: 'testcontainerappsjob0'
-          probes: []
           resources: {
             cpu: any('0.5')
             memory: '1Gi'
           }
           volumeMounts: []
+          env: []
+          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
+          name: 'testcontainerappsjob0'
+          probes: []
         }
       ]
       initContainers: []
@@ -42,7 +41,6 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2025-01-01' = {
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: workspace.properties.customerId
         sharedKey: workspace.listKeys().primarySharedKey
       }
     }

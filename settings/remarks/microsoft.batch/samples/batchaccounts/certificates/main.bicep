@@ -19,12 +19,12 @@ resource batchAccount 'Microsoft.Batch/batchAccounts@2022-10-01' = {
 }
 
 resource certificate 'Microsoft.Batch/batchAccounts/certificates@2022-10-01' = {
-  parent: batchAccount
   name: 'SHA1-${certificateThumbprint}'
+  parent: batchAccount
   properties: {
-    data: null
-    format: 'Cer'
-    thumbprint: null
+    thumbprint: '${certificateThumbprint}'
     thumbprintAlgorithm: 'sha1'
+    data: '${certificateData}'
+    format: 'Cer'
   }
 }

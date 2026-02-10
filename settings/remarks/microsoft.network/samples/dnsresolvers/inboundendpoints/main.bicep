@@ -5,9 +5,7 @@ resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    virtualNetwork: {
-      id: virtualNetwork.id
-    }
+    virtualNetwork: {}
   }
 }
 
@@ -28,26 +26,23 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource inboundEndpoint 'Microsoft.Network/dnsResolvers/inboundEndpoints@2022-07-01' = {
-  parent: dnsResolver
   name: resourceName
   location: location
+  parent: dnsResolver
   properties: {
     ipConfigurations: [
       {
         privateIpAllocationMethod: 'Dynamic'
-        subnet: {
-          id: subnet.id
-        }
+        subnet: {}
       }
     ]
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'inbounddns'
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.0.0/28'
     delegations: [
       {
         name: 'Microsoft.Network.dnsResolvers'
@@ -60,5 +55,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.0.0/28'
   }
 }

@@ -13,15 +13,17 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
+    isNfsV3Enabled: false
+    minimumTlsVersion: 'TLS1_2'
+    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
     encryption: {
-      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -30,25 +32,23 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
           keyType: 'Service'
         }
       }
+      keySource: 'Microsoft.Storage'
     }
     isHnsEnabled: false
-    isNfsV3Enabled: false
     isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
   }
 }
 
 resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     type: 'AzureBlobStorage'

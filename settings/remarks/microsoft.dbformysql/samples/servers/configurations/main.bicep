@@ -9,32 +9,32 @@ param administratorLoginPassword string
 resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
   name: resourceName
   location: location
+  sku: {
+    family: 'Gen5'
+    name: 'GP_Gen5_2'
+    tier: 'GeneralPurpose'
+    capacity: 2
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
-    createMode: 'Default'
-    infrastructureEncryption: 'Disabled'
-    minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
     sslEnforcement: 'Enabled'
+    version: '5.7'
+    createMode: 'Default'
+    minimalTlsVersion: 'TLS1_2'
     storageProfile: {
       backupRetentionDays: 7
       storageAutogrow: 'Enabled'
       storageMB: 51200
     }
-    version: '5.7'
-  }
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'GP_Gen5_2'
-    tier: 'GeneralPurpose'
+    administratorLogin: '${administratorLogin}'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    infrastructureEncryption: 'Disabled'
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource configuration 'Microsoft.DBforMySQL/servers/configurations@2017-12-01' = {
-  parent: server
   name: 'character_set_server'
+  parent: server
   properties: {
     value: 'latin1'
   }

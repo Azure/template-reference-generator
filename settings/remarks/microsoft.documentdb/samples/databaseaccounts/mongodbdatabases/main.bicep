@@ -6,26 +6,19 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'MongoDB'
   properties: {
+    enableAutomaticFailover: false
+    enableMultipleWriteLocations: false
+    networkAclBypass: 'None'
     capabilities: [
       {
         name: 'EnableMongo'
       }
     ]
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
     databaseAccountOfferType: 'Standard'
     defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
     enableAnalyticalStorage: false
-    enableAutomaticFailover: false
     enableFreeTier: false
-    enableMultipleWriteLocations: false
     ipRules: []
-    isVirtualNetworkFilterEnabled: false
     locations: [
       {
         failoverPriority: 0
@@ -33,20 +26,27 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
     publicNetworkAccess: 'Enabled'
+    isVirtualNetworkFilterEnabled: false
     virtualNetworkRules: []
+    disableLocalAuth: false
+    networkAclBypassResourceIds: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    disableKeyBasedMetadataWriteAccess: false
   }
 }
 
 resource mongodbDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }

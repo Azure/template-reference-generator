@@ -1,6 +1,26 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    workspaceCapping: {
+      dailyQuotaGb: -1
+    }
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    retentionInDays: 30
+    sku: {
+      name: 'PerGB2018'
+    }
+  }
+}
+
 resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
   name: resourceName
   location: location
@@ -8,12 +28,9 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
     configuration: {
       activeRevisionsMode: 'Single'
     }
-    managedEnvironmentId: managedEnvironment.id
     template: {
       containers: [
         {
-          env: []
-          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
           name: 'acctest-cont-230630032906865620'
           probes: []
           resources: {
@@ -22,6 +39,8 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
             memory: '0.5Gi'
           }
           volumeMounts: []
+          env: []
+          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
         }
       ]
       scale: {
@@ -39,30 +58,9 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
-        customerId: workspace.properties.customerId
         sharedKey: workspace.listKeys().primarySharedKey
       }
     }
     vnetConfiguration: {}
-  }
-}
-
-resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
-    }
-    workspaceCapping: {
-      dailyQuotaGb: -1
-    }
   }
 }

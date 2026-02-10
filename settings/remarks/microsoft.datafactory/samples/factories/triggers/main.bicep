@@ -5,30 +5,14 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: resourceName
   location: location
   properties: {
-    publicNetworkAccess: 'Enabled'
     repoConfiguration: null
-  }
-}
-
-resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
-  parent: factory
-  name: resourceName
-  properties: {
-    annotations: []
-    description: ''
-    parameters: {
-      test: {
-        defaultValue: 'testparameter'
-        type: 'String'
-      }
-    }
-    variables: {}
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     pipeline: {
@@ -45,5 +29,21 @@ resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
       maxConcurrency: 50
       startTime: '2022-09-21T00:00:00Z'
     }
+  }
+}
+
+resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
+  name: resourceName
+  parent: factory
+  properties: {
+    parameters: {
+      test: {
+        type: 'String'
+        defaultValue: 'testparameter'
+      }
+    }
+    variables: {}
+    annotations: []
+    description: ''
   }
 }

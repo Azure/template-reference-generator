@@ -9,13 +9,11 @@ param administratorLoginPassword string
 resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_B1s'
+    tier: 'Burstable'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
     createMode: ''
     dataEncryption: {
       type: 'SystemManaged'
@@ -24,9 +22,11 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
       mode: 'Disabled'
     }
     network: {}
-  }
-  sku: {
-    name: 'Standard_B1s'
-    tier: 'Burstable'
+    administratorLogin: '${administratorLogin}'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
+    }
   }
 }

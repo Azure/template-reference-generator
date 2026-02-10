@@ -4,9 +4,8 @@ param location string = 'eastus'
 resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
   name: resourceName
   location: location
-  identity: {
-    type: 'None'
-    userAssignedIdentities: null
+  sku: {
+    name: 'S0'
   }
   kind: 'OpenAI'
   properties: {
@@ -15,14 +14,15 @@ resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
   }
-  sku: {
-    name: 'S0'
+  identity: {
+    type: 'None'
+    userAssignedIdentities: null
   }
 }
 
 resource deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
-  parent: account
   name: 'testdep'
+  parent: account
   properties: {
     model: {
       format: 'OpenAI'

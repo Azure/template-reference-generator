@@ -1,21 +1,20 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
   properties: {
-    adminUserEnabled: false
     anonymousPullEnabled: false
     dataEndpointEnabled: false
     encryption: {
       status: 'disabled'
     }
-    networkRuleBypassOptions: 'AzureServices'
     policies: {
-      exportPolicy: {
-        status: 'enabled'
-      }
       quarantinePolicy: {
         status: 'disabled'
       }
@@ -25,20 +24,21 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
       trustPolicy: {
         status: 'disabled'
       }
+      exportPolicy: {
+        status: 'enabled'
+      }
     }
     publicNetworkAccess: 'Enabled'
+    adminUserEnabled: false
+    networkRuleBypassOptions: 'AzureServices'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Standard'
   }
 }
 
 resource taskRun 'Microsoft.ContainerRegistry/registries/taskRuns@2019-06-01-preview' = {
-  parent: registry
   name: resourceName
   location: location
+  parent: registry
   properties: {
     runRequest: {
       dockerFilePath: 'Dockerfile'

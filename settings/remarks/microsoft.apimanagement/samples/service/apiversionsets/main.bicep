@@ -4,7 +4,14 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
+    virtualNetworkType: 'None'
     certificates: []
     customProperties: {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
@@ -15,19 +22,12 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
-    virtualNetworkType: 'None'
-  }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
   }
 }
 
 resource apiVersionSet 'Microsoft.ApiManagement/service/apiVersionSets@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     description: 'TestDescription1'
     displayName: 'TestApiVersionSet1230630032559674766'

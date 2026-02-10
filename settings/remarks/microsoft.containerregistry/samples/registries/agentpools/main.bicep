@@ -1,18 +1,23 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Premium'
+    tier: 'Premium'
+  }
   properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
     dataEndpointEnabled: false
     encryption: {
       status: 'disabled'
     }
     networkRuleBypassOptions: 'AzureServices'
     policies: {
+      trustPolicy: {
+        status: 'disabled'
+      }
       exportPolicy: {
         status: 'enabled'
       }
@@ -22,23 +27,18 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
       retentionPolicy: {
         status: 'disabled'
       }
-      trustPolicy: {
-        status: 'disabled'
-      }
     }
     publicNetworkAccess: 'Enabled'
+    adminUserEnabled: false
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Premium'
-    tier: 'Premium'
+    anonymousPullEnabled: false
   }
 }
 
 resource agentPool 'Microsoft.ContainerRegistry/registries/agentPools@2019-06-01-preview' = {
-  parent: registry
   name: resourceName
   location: location
+  parent: registry
   properties: {
     count: 1
     os: 'Linux'

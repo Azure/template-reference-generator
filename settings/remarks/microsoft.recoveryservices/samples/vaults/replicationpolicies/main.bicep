@@ -4,17 +4,17 @@ param location string = 'westeurope'
 resource vault 'Microsoft.RecoveryServices/vaults@2022-10-01' = {
   name: resourceName
   location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-  }
   sku: {
     name: 'Standard'
+  }
+  properties: {
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource replicationPolicy 'Microsoft.RecoveryServices/vaults/replicationPolicies@2022-10-01' = {
-  parent: vault
   name: resourceName
+  parent: vault
   properties: {
     providerSpecificInput: {
       appConsistentFrequencyInMinutes: 240

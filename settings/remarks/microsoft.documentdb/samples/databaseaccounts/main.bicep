@@ -6,32 +6,32 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: []
     consistencyPolicy: {
       defaultConsistencyLevel: 'BoundedStaleness'
       maxIntervalInSeconds: 10
       maxStalenessPrefix: 200
     }
     databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
     enableAutomaticFailover: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
     ipRules: []
-    isVirtualNetworkFilterEnabled: false
     locations: [
       {
+        locationName: 'West Europe'
         failoverPriority: 0
         isZoneRedundant: false
-        locationName: 'West Europe'
       }
     ]
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
     virtualNetworkRules: []
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypass: 'None'
+    publicNetworkAccess: 'Enabled'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    networkAclBypassResourceIds: []
+    capabilities: []
   }
 }

@@ -4,14 +4,11 @@ param location string = 'westeurope'
 resource publicIPPrefix 'Microsoft.Network/publicIPPrefixes@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+  }
   properties: {
     prefixLength: 30
     publicIPAddressVersion: 'IPv4'
   }
-  sku: {
-    name: 'Standard'
-  }
-  zones: [
-    '1'
-  ]
 }

@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource devCenter 'Microsoft.DevCenter/devcenters@2023-04-01' = {
   name: resourceName
@@ -12,10 +12,8 @@ resource devCenter 'Microsoft.DevCenter/devcenters@2023-04-01' = {
 
 resource networkConnection 'Microsoft.DevCenter/networkConnections@2023-04-01' = {
   name: resourceName
-  location: 'westeurope'
   properties: {
     domainJoinType: 'AzureADJoin'
-    subnetId: subnet.id
   }
 }
 
@@ -32,16 +30,16 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource attachNetwork 'Microsoft.DevCenter/devcenters/attachednetworks@2023-04-01' = {
-  parent: devCenter
   name: resourceName
+  parent: devCenter
   properties: {
     networkConnectionId: networkConnection.id
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
   }
