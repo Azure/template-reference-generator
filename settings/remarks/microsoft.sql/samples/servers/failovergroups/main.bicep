@@ -1,20 +1,20 @@
-@secure()
-@description('The administrator login password for the SQL server')
-param administratorLoginPassword string
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 param secondaryLocation string = 'eastus'
+@secure()
+@description('The administrator login password for the SQL server')
+param administratorLoginPassword string
 
 resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: '${resourceName}-primary'
   location: location
   properties: {
-    minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
     administratorLogin: 'mradministrator'
     administratorLoginPassword: '${administratorLoginPassword}'
+    minimalTlsVersion: '1.2'
   }
 }
 
@@ -22,12 +22,12 @@ resource server1 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: '${resourceName}-secondary'
   location: secondaryLocation
   properties: {
-    minimalTlsVersion: '1.2'
-    publicNetworkAccess: 'Enabled'
-    restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
     administratorLogin: 'mradministrator'
     administratorLoginPassword: '${administratorLoginPassword}'
+    minimalTlsVersion: '1.2'
+    publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: 'Disabled'
   }
 }
 
@@ -39,21 +39,21 @@ resource database 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
     name: 'S1'
   }
   properties: {
-    createMode: 'Default'
-    minCapacity: 0
-    readScale: 'Disabled'
-    zoneRedundant: false
     autoPauseDelay: 0
     elasticPoolId: ''
+    licenseType: ''
+    readScale: 'Disabled'
+    requestedBackupStorageRedundancy: 'Geo'
+    collation: 'SQL_Latin1_General_CP1_CI_AS'
+    createMode: 'Default'
     encryptionProtectorAutoRotation: false
     isLedgerOn: false
-    secondaryType: ''
-    highAvailabilityReplicaCount: 0
-    requestedBackupStorageRedundancy: 'Geo'
-    sampleName: ''
-    collation: 'SQL_Latin1_General_CP1_CI_AS'
-    licenseType: ''
+    zoneRedundant: false
     maxSizeBytes: 214748364800
+    minCapacity: 0
+    highAvailabilityReplicaCount: 0
+    sampleName: ''
+    secondaryType: ''
   }
 }
 

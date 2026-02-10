@@ -1,5 +1,20 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
+
+resource batchAccount 'Microsoft.Batch/batchAccounts@2022-10-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    poolAllocationMode: 'BatchService'
+    publicNetworkAccess: 'Enabled'
+    autoStorage: {
+      authenticationMode: 'StorageKeys'
+    }
+    encryption: {
+      keySource: 'Microsoft.Batch'
+    }
+  }
+}
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
@@ -9,10 +24,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -24,31 +38,17 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isSftpEnabled: false
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     isHnsEnabled: false
     isNfsV3Enabled: false
+    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
-  }
-}
-
-resource batchAccount 'Microsoft.Batch/batchAccounts@2022-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    autoStorage: {
-      authenticationMode: 'StorageKeys'
+    accessTier: 'Hot'
+    defaultToOAuthAuthentication: false
+    networkAcls: {
+      defaultAction: 'Allow'
     }
-    encryption: {
-      keySource: 'Microsoft.Batch'
-    }
-    poolAllocationMode: 'BatchService'
     publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -56,8 +56,8 @@ resource application 'Microsoft.Batch/batchAccounts/applications@2022-10-01' = {
   name: resourceName
   parent: batchAccount
   properties: {
+    defaultVersion: ''
     displayName: ''
     allowUpdates: true
-    defaultVersion: ''
   }
 }

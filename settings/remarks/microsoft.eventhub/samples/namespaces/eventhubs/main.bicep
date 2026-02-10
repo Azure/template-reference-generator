@@ -5,9 +5,9 @@ resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
   sku: {
-    capacity: 1
     name: 'Standard'
     tier: 'Standard'
+    capacity: 1
   }
   properties: {
     disableLocalAuth: false
@@ -21,8 +21,8 @@ resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   name: resourceName
   parent: namespace
   properties: {
-    status: 'Active'
     messageRetentionInDays: 1
     partitionCount: 2
+    status: 'Active'
   }
 }

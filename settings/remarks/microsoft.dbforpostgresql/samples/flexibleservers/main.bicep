@@ -15,18 +15,18 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-pr
   }
   properties: {
     administratorLogin: '${administratorLogin}'
-    availabilityZone: '2'
+    administratorLoginPassword: '${administratorLoginPassword}'
     highAvailability: {
       mode: 'Disabled'
+    }
+    version: '12'
+    availabilityZone: '2'
+    backup: {
+      geoRedundantBackup: 'Disabled'
     }
     network: {}
     storage: {
       storageSizeGB: 32
-    }
-    version: '12'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    backup: {
-      geoRedundantBackup: 'Disabled'
     }
   }
   identity: {

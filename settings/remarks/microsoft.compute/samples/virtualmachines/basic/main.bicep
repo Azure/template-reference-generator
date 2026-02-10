@@ -1,10 +1,10 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @description('The administrator username for the virtual machine')
 param adminUsername string
 @secure()
 @description('The administrator password for the virtual machine')
 param adminPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: resourceName
@@ -16,10 +16,10 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
       {
         name: 'testconfiguration1'
         properties: {
+          subnet: {}
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
         }
       }
     ]
@@ -30,14 +30,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    osProfile: {
-      adminPassword: adminPassword
-      adminUsername: adminUsername
-      computerName: 'hostname230630032848831819'
-      linuxConfiguration: {
-        disablePasswordAuthentication: false
-      }
-    }
     storageProfile: {
       imageReference: {
         offer: 'UbuntuServer'
@@ -58,12 +50,20 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
     networkProfile: {
       networkInterfaces: [
         {
-          id: networkInterface.id
           properties: {
             primary: false
           }
+          id: networkInterface.id
         }
       ]
+    }
+    osProfile: {
+      adminPassword: adminPassword
+      adminUsername: adminUsername
+      computerName: 'hostname230630032848831819'
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+      }
     }
   }
 }
@@ -88,11 +88,11 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
   }
 }

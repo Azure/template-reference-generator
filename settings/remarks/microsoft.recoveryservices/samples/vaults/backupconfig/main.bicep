@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource vault 'Microsoft.RecoveryServices/vaults@2024-04-01' = {
   name: resourceName

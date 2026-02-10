@@ -4,19 +4,20 @@ param location string = 'westus'
 @description('The administrator login password for the MySQL flexible server')
 param administratorLoginPassword string
 
-resource userassignedidentity1 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: '${resourceName}-uai2'
-  location: location
-}
-
 resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
   name: '${resourceName}-mysql'
   location: location
   sku: {
-    tier: 'Burstable'
     name: 'Standard_B1ms'
+    tier: 'Burstable'
   }
   properties: {
+    administratorLogin: 'tfadmin'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
+    }
     dataEncryption: {
       type: 'SystemManaged'
     }
@@ -24,12 +25,6 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
       mode: 'Disabled'
     }
     version: '8.0.21'
-    administratorLogin: 'tfadmin'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
   }
 }
 
@@ -37,15 +32,20 @@ resource administrator 'Microsoft.DBforMySQL/flexibleServers/administrators@2023
   name: 'ActiveDirectory'
   parent: flexibleServer
   properties: {
+    sid: deployer().objectId
+    tenantId: tenant().tenantId
+    administratorType: 'ActiveDirectory'
     identityResourceId: userAssignedIdentity.id
     login: 'sqladmin'
-    sid: deployer().objectId
-    tenantId: tenant()
-    administratorType: 'ActiveDirectory'
   }
 }
 
 resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: '${resourceName}-uai1'
+  location: location
+}
+
+resource userassignedidentity1 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: '${resourceName}-uai2'
   location: location
 }

@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
   name: resourceName
@@ -11,10 +11,10 @@ resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
   properties: {
     frontendIPConfigurations: [
       {
+        name: resourceName
         properties: {
           publicIPAddress: {}
         }
-        name: resourceName
       }
     ]
   }
@@ -28,11 +28,11 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     tier: 'Regional'
   }
   properties: {
-    publicIPAllocationMethod: 'Static'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Static'
   }
 }

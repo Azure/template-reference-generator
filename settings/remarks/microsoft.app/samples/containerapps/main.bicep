@@ -1,25 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
-
-resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    workspaceCapping: {
-      dailyQuotaGb: -1
-    }
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
-    }
-  }
-}
+param resourceName string = 'acctest0001'
 
 resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
   name: resourceName
@@ -31,6 +11,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
     template: {
       containers: [
         {
+          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
           name: 'acctest-cont-230630032906865620'
           probes: []
           resources: {
@@ -40,7 +21,6 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
           }
           volumeMounts: []
           env: []
-          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
         }
       ]
       scale: {
@@ -62,5 +42,25 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
       }
     }
     vnetConfiguration: {}
+  }
+}
+
+resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    workspaceCapping: {
+      dailyQuotaGb: -1
+    }
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    retentionInDays: 30
+    sku: {
+      name: 'PerGB2018'
+    }
   }
 }

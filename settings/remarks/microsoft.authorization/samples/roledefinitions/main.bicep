@@ -12,12 +12,12 @@ resource roleDefinition 'Microsoft.Authorization/roleDefinitions@2018-01-01-prev
     description: ''
     permissions: [
       {
-        dataActions: []
-        notActions: []
         notDataActions: []
         actions: [
           '*'
         ]
+        dataActions: []
+        notActions: []
       }
     ]
     roleName: resourceName

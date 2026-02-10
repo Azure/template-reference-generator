@@ -8,9 +8,7 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
     name: 'Basic'
   }
   properties: {
-    networkRuleBypassOptions: 'AzureServices'
     policies: {
-      trustPolicy: {}
       exportPolicy: {
         status: 'enabled'
       }
@@ -18,12 +16,14 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
         status: 'disabled'
       }
       retentionPolicy: {}
+      trustPolicy: {}
     }
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
     adminUserEnabled: false
     anonymousPullEnabled: false
     dataEndpointEnabled: false
+    networkRuleBypassOptions: 'AzureServices'
   }
 }
 

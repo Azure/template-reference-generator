@@ -1,5 +1,5 @@
-param location string = 'eastus'
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource redisEnterprise 'Microsoft.Cache/redisEnterprise@2025-04-01' = {
   name: resourceName

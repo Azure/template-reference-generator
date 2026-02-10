@@ -11,6 +11,10 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 resource logProfile 'Microsoft.Insights/logProfiles@2016-03-01' = {
   name: resourceName
   properties: {
+    retentionPolicy: {
+      days: 7
+      enabled: true
+    }
     categories: [
       'Action'
     ]
@@ -18,10 +22,6 @@ resource logProfile 'Microsoft.Insights/logProfiles@2016-03-01' = {
       'westeurope'
       'westeurope'
     ]
-    retentionPolicy: {
-      days: 7
-      enabled: true
-    }
   }
 }
 

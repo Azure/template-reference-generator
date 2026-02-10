@@ -9,10 +9,10 @@ resource provisioningService 'Microsoft.Devices/provisioningServices@2022-02-05'
     name: 'S1'
   }
   properties: {
-    publicNetworkAccess: 'Enabled'
     allocationPolicy: 'Hashed'
     enableDataResidency: false
     iotHubs: []
+    publicNetworkAccess: 'Enabled'
   }
 }
 

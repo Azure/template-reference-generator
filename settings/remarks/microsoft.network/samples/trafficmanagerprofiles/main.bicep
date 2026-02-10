@@ -6,8 +6,8 @@ resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08
   location: 'global'
   properties: {
     dnsConfig: {
-      ttl: 30
       relativeName: 'acctest-tmp-230630034107605443'
+      ttl: 30
     }
     monitorConfig: {
       path: '/'

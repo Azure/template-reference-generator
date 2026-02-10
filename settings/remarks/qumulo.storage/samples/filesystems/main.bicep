@@ -1,8 +1,8 @@
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 @secure()
 @description('The administrative password for the Qumulo file system')
 param qumuloPassword string
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 
 resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: resourceName
@@ -23,21 +23,21 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   location: location
   parent: vnet
   properties: {
+    privateLinkServiceNetworkPolicies: 'Enabled'
     addressPrefix: '10.0.1.0/24'
     defaultOutboundAccess: true
     delegations: [
       {
         name: 'delegation'
         properties: {
-          serviceName: 'Qumulo.Storage/fileSystems'
           actions: [
             'Microsoft.Network/virtualNetworks/subnets/join/action'
           ]
+          serviceName: 'Qumulo.Storage/fileSystems'
         }
       }
     ]
     privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
   }
 }
 

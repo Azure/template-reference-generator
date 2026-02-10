@@ -6,33 +6,33 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
     enableAnalyticalStorage: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
-    ipRules: []
     locations: [
       {
-        locationName: 'West Europe'
         failoverPriority: 0
         isZoneRedundant: false
+        locationName: 'West Europe'
       }
     ]
-    virtualNetworkRules: []
-    capabilities: []
+    networkAclBypass: 'None'
+    publicNetworkAccess: 'Enabled'
+    isVirtualNetworkFilterEnabled: false
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    disableKeyBasedMetadataWriteAccess: false
-    networkAclBypassResourceIds: []
-    networkAclBypass: 'None'
     databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
     disableLocalAuth: false
+    enableFreeTier: false
+    ipRules: []
+    capabilities: []
     enableAutomaticFailover: false
-    isVirtualNetworkFilterEnabled: false
-    publicNetworkAccess: 'Enabled'
+    enableMultipleWriteLocations: false
+    networkAclBypassResourceIds: []
+    virtualNetworkRules: []
   }
 }
 
@@ -40,10 +40,10 @@ resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10
   name: resourceName
   parent: databaseAccount
   properties: {
+    options: {}
     resource: {
       id: '${resourceName}'
     }
-    options: {}
   }
 }
 
@@ -70,10 +70,10 @@ resource trigger 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/
   properties: {
     options: {}
     resource: {
-      body: 'function trigger(){}'
-      id: '${resourceName}'
       triggerOperation: 'All'
       triggerType: 'Pre'
+      body: 'function trigger(){}'
+      id: '${resourceName}'
     }
   }
 }

@@ -1,10 +1,11 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' = {
   name: resourceName
   location: location
   properties: {
+    description: ''
     destinations: {
       azureMonitorMetrics: {
         name: 'test-destination-metrics'
@@ -20,6 +21,5 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
         ]
       }
     ]
-    description: ''
   }
 }

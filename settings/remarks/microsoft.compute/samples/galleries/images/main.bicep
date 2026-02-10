@@ -14,25 +14,25 @@ resource image 'Microsoft.Compute/galleries/images@2022-03-03' = {
   location: location
   parent: gallery
   properties: {
+    recommended: {
+      memory: {}
+      vCPUs: {}
+    }
+    releaseNoteUri: ''
     architecture: 'x64'
     features: null
-    osState: 'Generalized'
-    osType: 'Linux'
+    identifier: {
+      offer: 'AccTesOffer230630032848825313'
+      publisher: 'AccTesPublisher230630032848825313'
+      sku: 'AccTesSku230630032848825313'
+    }
     privacyStatementUri: ''
     description: ''
     disallowed: {
       diskTypes: []
     }
     hyperVGeneration: 'V1'
-    identifier: {
-      offer: 'AccTesOffer230630032848825313'
-      publisher: 'AccTesPublisher230630032848825313'
-      sku: 'AccTesSku230630032848825313'
-    }
-    recommended: {
-      vCPUs: {}
-      memory: {}
-    }
-    releaseNoteUri: ''
+    osState: 'Generalized'
+    osType: 'Linux'
   }
 }

@@ -23,6 +23,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
@@ -31,7 +32,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     dhcpOptions: {
       dnsServers: []
     }
-    subnets: []
   }
 }
 
@@ -48,6 +48,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: 'outbounddns'
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.0.0.64/28'
     delegations: [
       {
         name: 'Microsoft.Network.dnsResolvers'
@@ -60,7 +61,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.0.0.64/28'
   }
 }
 

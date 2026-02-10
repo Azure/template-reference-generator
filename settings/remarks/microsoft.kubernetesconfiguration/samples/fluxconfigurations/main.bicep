@@ -21,8 +21,8 @@ resource extension 'Microsoft.KubernetesConfiguration/extensions@2022-11-01' = {
   name: resourceName
   scope: managedCluster
   properties: {
-    extensionType: 'microsoft.flux'
     autoUpgradeMinorVersion: true
+    extensionType: 'microsoft.flux'
   }
 }
 
@@ -45,6 +45,7 @@ resource fluxConfiguration 'Microsoft.KubernetesConfiguration/fluxConfigurations
     }
     kustomizations: {
       applications: {
+        timeoutInSeconds: 600
         dependsOn: [
           'shared'
         ]
@@ -53,15 +54,14 @@ resource fluxConfiguration 'Microsoft.KubernetesConfiguration/fluxConfigurations
         prune: false
         retryIntervalInSeconds: 60
         syncIntervalInSeconds: 60
-        timeoutInSeconds: 600
       }
       shared: {
-        force: false
         path: 'cluster-config/shared'
         prune: false
         retryIntervalInSeconds: 60
         syncIntervalInSeconds: 60
         timeoutInSeconds: 600
+        force: false
       }
     }
     namespace: 'flux-system'

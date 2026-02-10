@@ -6,6 +6,51 @@ resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinit
   parent: databaseAccount
 }
 
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  name: resourceName
+  location: location
+  kind: 'GlobalDocumentDB'
+  properties: {
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    enableAnalyticalStorage: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    networkAclBypassResourceIds: []
+    disableLocalAuth: false
+    virtualNetworkRules: []
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    enableAutomaticFailover: false
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    publicNetworkAccess: 'Enabled'
+  }
+}
+
+resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2021-10-15' = {
+  name: 'ff419bf7-f8ca-ef51-00d2-3576700c341b'
+  parent: databaseAccount
+  properties: {
+    roleDefinitionId: sqlRoleDefinition.id
+    scope: databaseAccount.id
+    principalId: cluster.identity.principalId
+  }
+}
+
 resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
   name: resourceName
   location: location
@@ -15,51 +60,16 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     tier: 'Basic'
   }
   properties: {
-    enableAutoStop: true
-    enablePurge: false
-    engineType: 'V2'
-    restrictOutboundNetworkAccess: 'Disabled'
     enableDiskEncryption: false
     enableDoubleEncryption: false
     enableStreamingIngest: false
+    engineType: 'V2'
+    trustedExternalTenants: []
+    enableAutoStop: true
+    enablePurge: false
     publicIPType: 'IPv4'
     publicNetworkAccess: 'Enabled'
-    trustedExternalTenants: []
-  }
-}
-
-resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
-  name: resourceName
-  location: location
-  kind: 'GlobalDocumentDB'
-  properties: {
-    databaseAccountOfferType: 'Standard'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    capabilities: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    enableAutomaticFailover: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'West Europe'
-      }
-    ]
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
-    virtualNetworkRules: []
-    defaultIdentity: 'FirstPartyIdentity'
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: 'Disabled'
   }
 }
 
@@ -69,14 +79,4 @@ resource database 'Microsoft.Kusto/clusters/databases@2023-05-02' = {
   parent: cluster
   kind: 'ReadWrite'
   properties: {}
-}
-
-resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2021-10-15' = {
-  name: 'ff419bf7-f8ca-ef51-00d2-3576700c341b'
-  parent: databaseAccount
-  properties: {
-    principalId: cluster.identity.principalId
-    roleDefinitionId: sqlRoleDefinition.id
-    scope: databaseAccount.id
-  }
 }

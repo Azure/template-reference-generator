@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: resourceName
@@ -11,7 +11,7 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
     }
     accessPolicies: []
     enableSoftDelete: true
-    tenantId: tenant()
+    tenantId: tenant().tenantId
   }
 }
 

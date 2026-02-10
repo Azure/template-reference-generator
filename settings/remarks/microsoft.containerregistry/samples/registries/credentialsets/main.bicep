@@ -1,11 +1,11 @@
-param resourceName string = 'acctest0001'
-param location string = 'eastus'
 @secure()
 @description('The username for the container registry credential')
 param credentialUsername string = 'testuser'
 @secure()
 @description('The password for the container registry credential')
 param credentialPassword string
+param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: resourceName
@@ -14,22 +14,22 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
     name: 'Basic'
   }
   properties: {
+    adminUserEnabled: false
+    anonymousPullEnabled: false
     dataEndpointEnabled: false
     networkRuleBypassOptions: 'AzureServices'
     policies: {
-      exportPolicy: {
-        status: 'enabled'
-      }
       quarantinePolicy: {
         status: 'disabled'
       }
       retentionPolicy: {}
       trustPolicy: {}
+      exportPolicy: {
+        status: 'enabled'
+      }
     }
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-    adminUserEnabled: false
-    anonymousPullEnabled: false
   }
 }
 
@@ -37,15 +37,6 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: '${resourceName}vault'
   location: location
   properties: {
-    enableSoftDelete: true
-    enabledForDeployment: false
-    publicNetworkAccess: 'Enabled'
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    softDeleteRetentionInDays: 7
-    tenantId: tenant()
     accessPolicies: [
       {
         permissions: {
@@ -59,14 +50,23 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
           ]
           storage: []
         }
-        tenantId: tenant()
+        tenantId: tenant().tenantId
         objectId: deployer().objectId
       }
     ]
-    createMode: 'default'
-    enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
     enableRbacAuthorization: false
+    enableSoftDelete: true
+    enabledForDeployment: false
+    enabledForDiskEncryption: false
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    tenantId: tenant().tenantId
+    createMode: 'default'
+    enabledForTemplateDeployment: false
+    publicNetworkAccess: 'Enabled'
+    softDeleteRetentionInDays: 7
   }
 }
 
@@ -76,9 +76,9 @@ resource credentialSet 'Microsoft.ContainerRegistry/registries/credentialSets@20
   properties: {
     authCredentials: [
       {
+        name: 'Credential1'
         passwordSecretIdentifier: 'https://${resourceName}vault.vault.azure.net/secrets/password'
         usernameSecretIdentifier: 'https://${resourceName}vault.vault.azure.net/secrets/username'
-        name: 'Credential1'
       }
     ]
     loginServer: 'docker.io'

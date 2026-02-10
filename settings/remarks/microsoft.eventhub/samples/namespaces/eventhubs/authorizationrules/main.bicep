@@ -21,9 +21,9 @@ resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   name: resourceName
   parent: namespace
   properties: {
+    messageRetentionInDays: 1
     partitionCount: 2
     status: 'Active'
-    messageRetentionInDays: 1
   }
 }
 

@@ -17,11 +17,11 @@ resource replicationPolicy 'Microsoft.RecoveryServices/vaults/replicationPolicie
   parent: vault
   properties: {
     providerSpecificInput: {
+      recoveryPointHistoryInMinutes: 1440
       appConsistentFrequencyInMinutes: 240
       crashConsistentFrequencyInMinutes: 10
       enableMultiVmSync: 'True'
       instanceType: 'InMageRcm'
-      recoveryPointHistoryInMinutes: 1440
     }
   }
 }

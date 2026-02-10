@@ -6,15 +6,6 @@ resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01'
   parent: storageAccount
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  properties: {}
-}
-
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
   name: resourceName
   parent: blobService
@@ -32,4 +23,13 @@ resource immutabilityPolicy 'Microsoft.Storage/storageAccounts/blobServices/cont
     allowProtectedAppendWrites: false
     immutabilityPeriodSinceCreationInDays: 4
   }
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {}
 }

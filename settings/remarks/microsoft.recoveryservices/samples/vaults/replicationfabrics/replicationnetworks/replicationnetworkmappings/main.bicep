@@ -20,6 +20,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: '${resourceName}-vnet1'
   location: location
   properties: {
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '192.168.1.0/24'
@@ -29,7 +30,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
       dnsServers: []
     }
     privateEndpointVNetPolicies: 'Disabled'
-    subnets: []
   }
 }
 
@@ -37,6 +37,7 @@ resource virtualnetwork1 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: '${resourceName}-vnet2'
   location: 'centralus'
   properties: {
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '192.168.2.0/24'
@@ -46,7 +47,6 @@ resource virtualnetwork1 'Microsoft.Network/virtualNetworks@2024-05-01' = {
       dnsServers: []
     }
     privateEndpointVNetPolicies: 'Disabled'
-    subnets: []
   }
 }
 
@@ -76,8 +76,8 @@ resource replicationNetworkMapping 'Microsoft.RecoveryServices/vaults/replicatio
   name: '${resourceName}-mapping'
   properties: {
     fabricSpecificDetails: {
-      primaryNetworkId: virtualNetwork.id
       instanceType: 'AzureToAzure'
+      primaryNetworkId: virtualNetwork.id
     }
     recoveryFabricName: replicationfabric1.name
     recoveryNetworkId: virtualnetwork1.id

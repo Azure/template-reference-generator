@@ -2,9 +2,9 @@
   "$schema": "../../schemas/remarks.schema.json",
   "BicepSamples": [
     {
-      "Description": "A basic example of deploying a resource group.",
+      "ResourceType": "microsoft.resources/resourceGroups",
       "Path": "samples/resourceGroups/basic.bicep",
-      "ResourceType": "microsoft.resources/resourceGroups"
+      "Description": "A basic example of deploying a resource group."
     },
     {
       "ResourceType": "Microsoft.Resources/deploymentScripts",

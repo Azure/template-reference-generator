@@ -1,8 +1,38 @@
+param location string = 'westeurope'
 @secure()
 @description('The administrator password for the virtual machine')
 param adminPassword string
 param resourceName string = 'acctest0001'
-param location string = 'westeurope'
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  properties: {
+    dnsSettings: {
+      dnsServers: []
+    }
+    enableAcceleratedNetworking: false
+    nicType: 'Standard'
+    auxiliarySku: 'None'
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
+        name: 'testconfiguration1'
+        properties: {
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          publicIPAddress: {}
+          subnet: {}
+          primary: true
+          privateIPAddress: '10.0.0.4'
+        }
+      }
+    ]
+    auxiliaryMode: 'None'
+    disableTcpStateTracking: false
+  }
+}
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
   name: resourceName
@@ -12,21 +42,39 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-0
       {
         name: 'MSSQLRule'
         properties: {
-          protocol: 'Tcp'
-          sourceAddressPrefix: '167.220.255.0/25'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '1433'
           sourcePortRange: '*'
           sourcePortRanges: []
           access: 'Allow'
           destinationAddressPrefixes: []
-          direction: 'Inbound'
-          sourceAddressPrefixes: []
-          destinationAddressPrefix: '*'
-          destinationPortRange: '1433'
           destinationPortRanges: []
+          direction: 'Inbound'
           priority: 1001
+          protocol: 'Tcp'
+          sourceAddressPrefix: '167.220.255.0/25'
+          sourceAddressPrefixes: []
         }
       }
     ]
+  }
+}
+
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  sku: {
+    name: 'Basic'
+    tier: 'Regional'
+  }
+  properties: {
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
+    idleTimeoutInMinutes: 4
+    ipTags: []
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Dynamic'
   }
 }
 
@@ -34,16 +82,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   name: resourceName
   location: 'azapi_resource.resourceGroup.location'
   properties: {
-    networkProfile: {
-      networkInterfaces: [
-        {
-          properties: {
-            primary: false
-          }
-          id: networkInterface.id
-        }
-      ]
-    }
     osProfile: {
       adminUsername: 'testadmin'
       adminPassword: adminPassword
@@ -63,20 +101,20 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
     storageProfile: {
       dataDisks: []
       imageReference: {
+        offer: 'SQL2017-WS2016'
         publisher: 'MicrosoftSQLServer'
         sku: 'SQLDEV'
         version: 'latest'
-        offer: 'SQL2017-WS2016'
       }
       osDisk: {
         diskSizeGB: 127
         managedDisk: {
           storageAccountType: 'Premium_LRS'
         }
-        name: 'acctvm-250116171212663925OSDisk'
         osType: 'Windows'
-        deleteOption: 'Detach'
         writeAcceleratorEnabled: false
+        deleteOption: 'Detach'
+        name: 'acctvm-250116171212663925OSDisk'
         caching: 'ReadOnly'
         createOption: 'FromImage'
       }
@@ -84,55 +122,16 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
     hardwareProfile: {
       vmSize: 'Standard_F2s'
     }
-  }
-}
-
-resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
-  name: 'azapi_resource.workspace.output.properties.customerId_azapi_resource.resourceGroup.location_DCRA_1'
-  scope: virtualMachine
-  properties: {
-    dataCollectionRuleId: dataCollectionRule.id
-  }
-}
-
-resource extension 'Microsoft.Compute/virtualMachines/extensions@2024-07-01' = {
-  name: 'AzureMonitorWindowsAgent'
-  location: 'westeurope'
-  parent: virtualMachine
-  properties: {
-    publisher: 'Microsoft.Azure.Monitor'
-    suppressFailures: false
-    type: 'AzureMonitorWindowsAgent'
-    typeHandlerVersion: '1.0'
-    autoUpgradeMinorVersion: true
-    enableAutomaticUpgrade: true
-  }
-}
-
-resource sqlvirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2023-10-01' = {
-  name: 'azapi_resource.virtualMachine.name'
-  location: 'azapi_resource.virtualMachine.location'
-  dependsOn: [
-    dataCollectionRuleAssociation
-    extension
-  ]
-  properties: {
-    sqlImageSku: 'Developer'
-    sqlManagement: 'Full'
-    assessmentSettings: {
-      runImmediately: false
-      schedule: {
-        dayOfWeek: 'Monday'
-        enable: true
-        startTime: '00:00'
-        weeklyInterval: 1
-      }
-      enable: true
+    networkProfile: {
+      networkInterfaces: [
+        {
+          properties: {
+            primary: false
+          }
+          id: networkInterface.id
+        }
+      ]
     }
-    sqlServerLicenseType: 'PAYG'
-    enableAutomaticUpgrade: true
-    leastPrivilegeMode: 'Enabled'
-    sqlImageOffer: 'SQL2017-WS2016'
   }
 }
 
@@ -178,16 +177,6 @@ resource table 'Microsoft.OperationalInsights/workspaces/tables@2023-09-01' = {
   }
 }
 
-resource dataCollectionEndpoint 'Microsoft.Insights/dataCollectionEndpoints@2022-06-01' = {
-  name: '${location}-DCE-1'
-  location: 'azapi_resource.resourceGroup.location'
-  properties: {
-    networkAcls: {
-      publicNetworkAccess: 'Enabled'
-    }
-  }
-}
-
 resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' = {
   name: 'azapi_resource.workspace.output.properties.customerId_azapi_resource.resourceGroup.location_DCR_1'
   location: 'azapi_resource.resourceGroup.location'
@@ -195,6 +184,26 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
     table
   ]
   properties: {
+    dataSources: {
+      logFiles: [
+        {
+          name: 'Custom-SqlAssessment_CL'
+          settings: {
+            text: {
+              recordStartTimestampFormat: 'ISO 8601'
+            }
+          }
+          streams: [
+            'Custom-SqlAssessment_CL'
+          ]
+          filePatterns: [
+            'C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Microsoft SQL Server IaaS Agent\\Assessment\\*.csv'
+          ]
+          format: 'text'
+        }
+      ]
+    }
+    description: ''
     destinations: {
       logAnalytics: [
         {}
@@ -225,74 +234,55 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
         destinations: []
       }
     ]
-    dataSources: {
-      logFiles: [
-        {
-          filePatterns: [
-            'C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Microsoft SQL Server IaaS Agent\\Assessment\\*.csv'
-          ]
-          format: 'text'
-          name: 'Custom-SqlAssessment_CL'
-          settings: {
-            text: {
-              recordStartTimestampFormat: 'ISO 8601'
-            }
-          }
-          streams: [
-            'Custom-SqlAssessment_CL'
-          ]
-        }
-      ]
-    }
-    description: ''
   }
 }
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
+resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
+  name: 'azapi_resource.workspace.output.properties.customerId_azapi_resource.resourceGroup.location_DCRA_1'
+  scope: virtualMachine
   properties: {
-    enableIPForwarding: false
-    nicType: 'Standard'
-    auxiliaryMode: 'None'
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          publicIPAddress: {}
-          subnet: {}
-          primary: true
-          privateIPAddress: '10.0.0.4'
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-        }
-        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
+    dataCollectionRuleId: dataCollectionRule.id
+  }
+}
+
+resource extension 'Microsoft.Compute/virtualMachines/extensions@2024-07-01' = {
+  name: 'AzureMonitorWindowsAgent'
+  location: 'westeurope'
+  parent: virtualMachine
+  properties: {
+    publisher: 'Microsoft.Azure.Monitor'
+    suppressFailures: false
+    type: 'AzureMonitorWindowsAgent'
+    typeHandlerVersion: '1.0'
+    autoUpgradeMinorVersion: true
+    enableAutomaticUpgrade: true
+  }
+}
+
+resource sqlvirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2023-10-01' = {
+  name: 'azapi_resource.virtualMachine.name'
+  location: 'azapi_resource.virtualMachine.location'
+  dependsOn: [
+    dataCollectionRuleAssociation
+    extension
+  ]
+  properties: {
+    leastPrivilegeMode: 'Enabled'
+    sqlImageOffer: 'SQL2017-WS2016'
+    sqlImageSku: 'Developer'
+    sqlManagement: 'Full'
+    assessmentSettings: {
+      schedule: {
+        enable: true
+        startTime: '00:00'
+        weeklyInterval: 1
+        dayOfWeek: 'Monday'
       }
-    ]
-    auxiliarySku: 'None'
-    disableTcpStateTracking: false
-    dnsSettings: {
-      dnsServers: []
+      enable: true
+      runImmediately: false
     }
-    enableAcceleratedNetworking: false
-  }
-}
-
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
-  }
-  properties: {
-    ipTags: []
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Dynamic'
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
-    }
-    idleTimeoutInMinutes: 4
+    sqlServerLicenseType: 'PAYG'
+    enableAutomaticUpgrade: true
   }
 }
 
@@ -315,6 +305,16 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     addressPrefix: '10.0.0.0/24'
     networkSecurityGroup: {
       id: networkSecurityGroup.id
+    }
+  }
+}
+
+resource dataCollectionEndpoint 'Microsoft.Insights/dataCollectionEndpoints@2022-06-01' = {
+  name: '${location}-DCE-1'
+  location: 'azapi_resource.resourceGroup.location'
+  properties: {
+    networkAcls: {
+      publicNetworkAccess: 'Enabled'
     }
   }
 }

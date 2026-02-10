@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
@@ -9,6 +9,20 @@ resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   }
   properties: {
     zoneRedundant: false
+  }
+}
+
+resource redis 'Microsoft.Cache/redis@2023-04-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableNonSslPort: true
+    minimumTlsVersion: '1.2'
+    sku: {
+      capacity: 2
+      family: 'C'
+      name: 'Standard'
+    }
   }
 }
 
@@ -32,19 +46,5 @@ resource binding 'Microsoft.AppPlatform/Spring/apps/bindings@2023-05-01-preview'
     }
     key: redis.listKeys().primaryKey
     resourceId: redis.id
-  }
-}
-
-resource redis 'Microsoft.Cache/redis@2023-04-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableNonSslPort: true
-    minimumTlsVersion: '1.2'
-    sku: {
-      capacity: 2
-      family: 'C'
-      name: 'Standard'
-    }
   }
 }

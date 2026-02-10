@@ -16,17 +16,17 @@ resource server 'Microsoft.DBforMariaDB/servers@2018-06-01' = {
     tier: 'GeneralPurpose'
   }
   properties: {
-    minimalTlsVersion: 'TLS1_2'
-    administratorLogin: '${administratorLogin}'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    publicNetworkAccess: 'Enabled'
     sslEnforcement: 'Enabled'
+    administratorLogin: '${administratorLogin}'
+    minimalTlsVersion: 'TLS1_2'
     storageProfile: {
+      storageMB: 51200
       backupRetentionDays: 7
       storageAutogrow: 'Enabled'
-      storageMB: 51200
     }
     version: '10.2'
+    administratorLoginPassword: '${administratorLoginPassword}'
     createMode: 'Default'
+    publicNetworkAccess: 'Enabled'
   }
 }

@@ -1,10 +1,10 @@
+@description('The SQL administrator login for the Synapse workspace')
+param sqlAdministratorLogin string
 @secure()
 @description('The SQL administrator login password for the Synapse workspace')
 param sqlAdministratorLoginPassword string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
-@description('The SQL administrator login for the Synapse workspace')
-param sqlAdministratorLogin string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
   name: 'default'
@@ -15,13 +15,13 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   name: resourceName
   location: location
   properties: {
+    publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
     sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
     defaultDataLakeStorage: {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
     }
     managedVirtualNetwork: ''
-    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -51,11 +51,11 @@ resource workloadGroup 'Microsoft.Synapse/workspaces/sqlPools/workloadGroups@202
   name: resourceName
   parent: sqlPool
   properties: {
-    importance: 'normal'
-    maxResourcePercent: 100
     maxResourcePercentPerRequest: 3
     minResourcePercent: 0
     minResourcePercentPerRequest: 3
+    importance: 'normal'
+    maxResourcePercent: 100
   }
 }
 

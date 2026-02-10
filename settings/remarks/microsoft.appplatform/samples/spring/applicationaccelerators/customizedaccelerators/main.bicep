@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
@@ -21,17 +21,17 @@ resource customizedAccelerator 'Microsoft.AppPlatform/Spring/applicationAccelera
   name: resourceName
   parent: applicationAccelerator
   properties: {
+    description: ''
     displayName: ''
     gitRepository: {
+      gitTag: ''
+      url: 'https://github.com/Azure-Samples/piggymetrics'
       authSetting: {
         authType: 'Public'
       }
       branch: 'master'
       commit: ''
-      gitTag: ''
-      url: 'https://github.com/Azure-Samples/piggymetrics'
     }
     iconUrl: ''
-    description: ''
   }
 }

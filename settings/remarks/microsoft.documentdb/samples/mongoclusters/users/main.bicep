@@ -28,11 +28,6 @@ resource mongoClusterSSDv2 'Microsoft.DocumentDB/mongoClusters@2025-09-01' = {
   }
 }
 
-resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: resourceName
-  location: location
-}
-
 resource mongouserEntraserviceprincipal 'Microsoft.DocumentDB/mongoClusters/users@2025-09-01' = {
   name: 'azapi_resource.userAssignedIdentity.output.properties.principalId'
   parent: mongoClusterSSDv2
@@ -50,4 +45,9 @@ resource mongouserEntraserviceprincipal 'Microsoft.DocumentDB/mongoClusters/user
       }
     ]
   }
+}
+
+resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: resourceName
+  location: location
 }

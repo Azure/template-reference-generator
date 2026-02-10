@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource project 'Microsoft.Migrate/migrateProjects@2020-05-01' = {
   name: resourceName
@@ -17,15 +17,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
+    isNfsV3Enabled: false
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -37,10 +34,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
   }
 }

@@ -1,16 +1,16 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
   name: resourceName
   location: location
   properties: {
+    publicNetworkAccess: 'Enabled'
     storageAccounts: [
       {
         type: 'Primary'
       }
     ]
-    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -22,10 +22,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    isHnsEnabled: false
     isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     allowBlobPublicAccess: true
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -38,15 +39,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
     isNfsV3Enabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
-    supportsHttpsTrafficOnly: true
+    publicNetworkAccess: 'Enabled'
     accessTier: 'Hot'
     allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
   }
 }
 

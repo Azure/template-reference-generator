@@ -12,10 +12,10 @@ resource catalog 'Microsoft.DevCenter/devCenters/catalogs@2025-02-01' = {
   parent: devCenter
   properties: {
     adoGit: {
-      branch: 'main'
       path: '/template'
       secretIdentifier: 'https://amlim-kv.vault.azure.net/secrets/ado/6279752c2bdd4a38a3e79d958cc36a75'
       uri: 'https://amlim@dev.azure.com/amlim/testCatalog/_git/testCatalog'
+      branch: 'main'
     }
   }
 }

@@ -25,13 +25,13 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   name: resourceName
   location: location
   properties: {
-    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
     defaultDataLakeStorage: {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
     }
     managedVirtualNetwork: ''
     publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
+    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
   }
 }
 

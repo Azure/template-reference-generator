@@ -9,13 +9,13 @@ resource account 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   }
   kind: 'OpenAI'
   properties: {
+    apiProperties: {}
+    customSubDomainName: ''
     disableLocalAuth: false
     dynamicThrottlingEnabled: false
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
     allowedFqdnList: []
-    apiProperties: {}
-    customSubDomainName: ''
   }
 }
 

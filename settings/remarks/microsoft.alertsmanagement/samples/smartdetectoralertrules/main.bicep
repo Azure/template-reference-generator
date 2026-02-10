@@ -5,19 +5,19 @@ resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
   name: resourceName
   location: 'global'
   properties: {
-    azureAppPushReceivers: []
-    azureFunctionReceivers: []
+    emailReceivers: []
+    enabled: true
+    groupShortName: 'acctestag'
+    itsmReceivers: []
     logicAppReceivers: []
-    smsReceivers: []
+    voiceReceivers: []
     webhookReceivers: []
     armRoleReceivers: []
     automationRunbookReceivers: []
-    emailReceivers: []
-    enabled: true
+    azureAppPushReceivers: []
+    azureFunctionReceivers: []
     eventHubReceivers: []
-    groupShortName: 'acctestag'
-    itsmReceivers: []
-    voiceReceivers: []
+    smsReceivers: []
   }
 }
 
@@ -26,14 +26,14 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
-    SamplingPercentage: 100
-    Application_Type: 'web'
     DisableIpMasking: false
     ForceCustomerStorageForProfiler: false
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    DisableLocalAuth: false
     RetentionInDays: 90
+    publicNetworkAccessForIngestion: 'Enabled'
+    Application_Type: 'web'
+    DisableLocalAuth: false
+    SamplingPercentage: 100
+    publicNetworkAccessForQuery: 'Enabled'
   }
 }
 
@@ -52,11 +52,11 @@ resource smartDetectorAlertRule 'microsoft.alertsManagement/smartDetectorAlertRu
     severity: 'Sev0'
     state: 'Enabled'
     actionGroups: {
-      customEmailSubject: ''
       customWebhookPayload: ''
       groupIds: [
         actionGroup.id
       ]
+      customEmailSubject: ''
     }
   }
 }

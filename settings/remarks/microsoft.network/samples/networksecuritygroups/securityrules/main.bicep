@@ -14,6 +14,7 @@ resource securityRule 'Microsoft.Network/networkSecurityGroups/securityRules@202
   parent: networkSecurityGroup
   properties: {
     destinationAddressPrefix: '*'
+    destinationPortRange: ''
     destinationPortRanges: [
       '9000'
       '1438'
@@ -21,12 +22,11 @@ resource securityRule 'Microsoft.Network/networkSecurityGroups/securityRules@202
       '9003'
       '1452'
     ]
-    priority: 106
+    protocol: 'Tcp'
     sourcePortRange: '*'
     access: 'Allow'
-    destinationPortRange: ''
     direction: 'Inbound'
-    protocol: 'Tcp'
+    priority: 106
     sourceAddressPrefix: '*'
   }
 }

@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
@@ -9,6 +9,10 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     name: 'Consumption'
   }
   properties: {
+    disableGateway: false
+    publicNetworkAccess: 'Enabled'
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
     virtualNetworkType: 'None'
     certificates: []
     customProperties: {
@@ -18,10 +22,6 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
     }
-    disableGateway: false
-    publicNetworkAccess: 'Enabled'
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
   }
 }
 

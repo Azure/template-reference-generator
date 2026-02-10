@@ -5,9 +5,9 @@ resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
   sku: {
+    name: 'Standard'
     tier: 'Standard'
     capacity: 1
-    name: 'Standard'
   }
   properties: {
     disableLocalAuth: false

@@ -8,7 +8,6 @@ resource disk 'Microsoft.Compute/disks@2022-03-02' = {
     name: 'Standard_LRS'
   }
   properties: {
-    osType: ''
     publicNetworkAccess: 'Enabled'
     creationData: {
       createOption: 'Empty'
@@ -18,5 +17,6 @@ resource disk 'Microsoft.Compute/disks@2022-03-02' = {
       type: 'EncryptionAtRestWithPlatformKey'
     }
     networkAccessPolicy: 'AllowAll'
+    osType: ''
   }
 }

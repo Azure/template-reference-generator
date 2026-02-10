@@ -13,45 +13,45 @@ resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
     name: 'Standard'
   }
   properties: {
-    clusterUpgradeCadence: 'Wave0'
-    dnsName: '${resourceName}'
+    adminUserName: '${adminUsername}'
     httpGatewayConnectionPort: 23456
+    loadBalancingRules: [
+      {
+        probeProtocol: 'http'
+        probeRequestPath: '/'
+        protocol: 'tcp'
+        backendPort: 8000
+        frontendPort: 443
+      }
+    ]
     networkSecurityRules: [
       {
         access: 'allow'
-        destinationAddressPrefixes: [
-          '0.0.0.0/0'
-        ]
-        name: 'rule443-allow-fe'
-        priority: 1000
         destinationPortRanges: [
           '443'
         ]
         direction: 'inbound'
+        name: 'rule443-allow-fe'
+        priority: 1000
         protocol: 'tcp'
-        sourceAddressPrefixes: [
-          '0.0.0.0/0'
-        ]
         sourcePortRanges: [
           '1-65535'
+        ]
+        destinationAddressPrefixes: [
+          '0.0.0.0/0'
+        ]
+        sourceAddressPrefixes: [
+          '0.0.0.0/0'
         ]
       }
     ]
     addonFeatures: [
       'DnsService'
     ]
-    adminUserName: '${adminUsername}'
-    loadBalancingRules: [
-      {
-        backendPort: 8000
-        frontendPort: 443
-        probeProtocol: 'http'
-        probeRequestPath: '/'
-        protocol: 'tcp'
-      }
-    ]
     adminPassword: '${adminPassword}'
     clientConnectionPort: 12345
+    clusterUpgradeCadence: 'Wave0'
+    dnsName: '${resourceName}'
   }
   tags: {
     Test: 'value'

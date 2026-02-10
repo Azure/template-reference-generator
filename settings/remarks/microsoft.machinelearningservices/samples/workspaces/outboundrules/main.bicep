@@ -1,14 +1,14 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-var workspaceName = 'resourceName-mlw'
+var keyVaultName = 'kvkvBase'
 var outboundName = 'resourceName-outbound'
 var baseName = 'resourcename'
+var aiName = 'resourceName-ai'
+var workspaceName = 'resourceName-mlw'
 var saBase = 'baseName'
 var kvBase = 'baseName'
 var storageName = 'sasaBase'
-var keyVaultName = 'kvkvBase'
-var aiName = 'resourceName-ai'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storageName
@@ -18,10 +18,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
-    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
+    isNfsV3Enabled: false
+    allowBlobPublicAccess: true
+    allowSharedKeyAccess: true
+    dnsEndpointType: 'Standard'
+    isHnsEnabled: false
+    isLocalUserEnabled: true
+    isSftpEnabled: false
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Allow'
@@ -30,6 +34,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       virtualNetworkRules: []
     }
     publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
     allowCrossTenantReplication: false
     encryption: {
@@ -43,12 +48,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
         }
       }
     }
-    isHnsEnabled: false
-    supportsHttpsTrafficOnly: true
-    allowBlobPublicAccess: true
-    dnsEndpointType: 'Standard'
-    isLocalUserEnabled: true
-    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
   }
 }
 
@@ -56,20 +56,20 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: keyVaultName
   location: location
   properties: {
+    enablePurgeProtection: true
+    enableRbacAuthorization: false
+    enableSoftDelete: true
     publicNetworkAccess: 'Enabled'
+    tenantId: tenant().tenantId
+    accessPolicies: []
+    createMode: 'default'
+    enabledForDeployment: false
+    enabledForDiskEncryption: false
+    enabledForTemplateDeployment: false
     sku: {
       family: 'A'
       name: 'standard'
     }
-    tenantId: tenant()
-    accessPolicies: []
-    enablePurgeProtection: true
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
-    createMode: 'default'
-    enableRbacAuthorization: false
-    enableSoftDelete: true
   }
 }
 
@@ -81,6 +81,7 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
   }
   kind: 'Default'
   properties: {
+    keyVault: vault.id
     managedNetwork: {
       isolationMode: 'AllowOnlyApprovedOutbound'
     }
@@ -88,7 +89,6 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
     storageAccount: storageAccount.id
     v1LegacyMode: false
     applicationInsights: component.id
-    keyVault: vault.id
   }
 }
 
@@ -107,13 +107,13 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
-    ForceCustomerStorageForProfiler: false
-    publicNetworkAccessForQuery: 'Enabled'
     Application_Type: 'web'
     DisableIpMasking: false
     DisableLocalAuth: false
     RetentionInDays: 90
     SamplingPercentage: 100
     publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    ForceCustomerStorageForProfiler: false
   }
 }

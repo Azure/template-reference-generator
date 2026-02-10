@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08-01' = {
   name: resourceName
@@ -26,11 +26,11 @@ resource azureEndpoint 'Microsoft.Network/trafficManagerProfiles/AzureEndpoints@
   name: resourceName
   parent: trafficManagerProfile
   properties: {
-    customHeaders: []
     endpointStatus: 'Enabled'
     subnets: []
     targetResourceId: publicIPAddress.id
     weight: 3
+    customHeaders: []
   }
 }
 
@@ -38,11 +38,10 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
   sku: {
-    name: 'Basic'
     tier: 'Regional'
+    name: 'Basic'
   }
   properties: {
-    publicIPAllocationMethod: 'Static'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
@@ -51,5 +50,6 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     }
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Static'
   }
 }

@@ -1,10 +1,10 @@
+@secure()
+@description('The administrator login password for the SQL server')
+param administratorLoginPassword string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator login name for the SQL server')
 param administratorLogin string
-@secure()
-@description('The administrator login password for the SQL server')
-param administratorLoginPassword string
 
 resource server 'Microsoft.Sql/servers@2015-05-01-preview' = {
   name: resourceName

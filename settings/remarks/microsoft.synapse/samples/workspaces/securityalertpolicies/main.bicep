@@ -25,13 +25,13 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   name: resourceName
   location: location
   properties: {
+    publicNetworkAccess: 'Enabled'
+    sqlAdministratorLogin: sqlAdministratorLogin
+    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
     defaultDataLakeStorage: {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
     }
     managedVirtualNetwork: ''
-    publicNetworkAccess: 'Enabled'
-    sqlAdministratorLogin: sqlAdministratorLogin
-    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
   }
 }
 
@@ -39,9 +39,9 @@ resource securityAlertPolicy 'Microsoft.Synapse/workspaces/securityAlertPolicies
   name: 'Default'
   parent: workspace
   properties: {
-    state: 'Enabled'
     storageAccountAccessKey: storageAccount.listKeys().keys[0].value
     storageEndpoint: storageAccount.properties.primaryEndpoints.blob
+    state: 'Enabled'
   }
 }
 

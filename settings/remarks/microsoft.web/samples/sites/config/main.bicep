@@ -19,33 +19,33 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
   name: resourceName
   location: location
   properties: {
+    serverFarmId: serverfarm.id
     vnetRouteAllEnabled: false
-    httpsOnly: false
+    clientAffinityEnabled: false
+    clientCertMode: 'Required'
+    publicNetworkAccess: 'Enabled'
     siteConfig: {
-      remoteDebuggingEnabled: false
-      use32BitWorkerProcess: true
-      windowsFxVersion: ''
-      loadBalancing: 'LeastRequests'
-      vnetRouteAllEnabled: false
-      webSocketsEnabled: false
-      localMySqlEnabled: false
-      ftpsState: 'Disabled'
-      managedPipelineMode: 'Integrated'
-      minTlsVersion: '1.2'
       scmIpSecurityRestrictionsUseMain: false
-      scmMinTlsVersion: '1.2'
-      acrUseManagedIdentityCreds: false
+      use32BitWorkerProcess: true
+      webSocketsEnabled: false
       alwaysOn: true
+      minTlsVersion: '1.2'
+      acrUseManagedIdentityCreds: false
+      localMySqlEnabled: false
+      remoteDebuggingEnabled: false
+      scmMinTlsVersion: '1.2'
+      vnetRouteAllEnabled: false
+      windowsFxVersion: ''
       autoHealEnabled: false
+      ftpsState: 'Disabled'
       http20Enabled: false
+      loadBalancing: 'LeastRequests'
+      managedPipelineMode: 'Integrated'
       publicNetworkAccess: 'Enabled'
     }
-    clientAffinityEnabled: false
     clientCertEnabled: false
-    clientCertMode: 'Required'
     enabled: true
-    publicNetworkAccess: 'Enabled'
-    serverFarmId: serverfarm.id
+    httpsOnly: false
   }
 }
 

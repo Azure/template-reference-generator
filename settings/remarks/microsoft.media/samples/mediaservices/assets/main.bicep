@@ -14,14 +14,6 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
   }
 }
 
-resource asset 'Microsoft.Media/mediaServices/assets@2022-08-01' = {
-  name: resourceName
-  parent: mediaService
-  properties: {
-    description: ''
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -30,7 +22,19 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
+      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -39,21 +43,17 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
           keyType: 'Service'
         }
       }
-      keySource: 'Microsoft.Storage'
     }
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    publicNetworkAccess: 'Enabled'
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    isHnsEnabled: false
     minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
+    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
+  }
+}
+
+resource asset 'Microsoft.Media/mediaServices/assets@2022-08-01' = {
+  name: resourceName
+  parent: mediaService
+  properties: {
+    description: ''
   }
 }

@@ -5,9 +5,9 @@ resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
   sku: {
-    name: 'Basic'
     tier: 'Basic'
     capacity: 1
+    name: 'Basic'
   }
   properties: {
     disableLocalAuth: false
@@ -21,19 +21,19 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: resourceName
   location: location
   properties: {
+    accessPolicies: []
+    createMode: 'default'
+    enableSoftDelete: true
     enabledForDeployment: false
     enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
     sku: {
       family: 'A'
       name: 'standard'
     }
-    tenantId: tenant()
-    accessPolicies: []
-    createMode: 'default'
     enableRbacAuthorization: false
-    enableSoftDelete: true
+    enabledForTemplateDeployment: false
+    tenantId: tenant().tenantId
   }
 }
 
@@ -53,23 +53,23 @@ resource diagnosticSetting 'Microsoft.Insights/diagnosticSettings@2021-05-01-pre
   name: resourceName
   scope: vault
   properties: {
-    metrics: [
-      {
-        retentionPolicy: {
-          days: 0
-          enabled: false
-        }
-        category: 'AllMetrics'
-        enabled: true
-      }
-    ]
     logs: [
       {
         categoryGroup: 'Audit'
         enabled: true
         retentionPolicy: {
-          enabled: false
           days: 0
+          enabled: false
+        }
+      }
+    ]
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+        retentionPolicy: {
+          days: 0
+          enabled: false
         }
       }
     ]

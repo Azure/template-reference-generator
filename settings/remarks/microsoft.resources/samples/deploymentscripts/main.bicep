@@ -1,11 +1,12 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: resourceName
   location: location
   kind: 'AzurePowerShell'
   properties: {
+    timeout: 'P1D'
     azPowerShellVersion: '8.3'
     cleanupPreference: 'Always'
     environmentVariables: null
@@ -16,6 +17,5 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
 		$DeploymentScriptOutputs[''text''] = $output
 '''
     supportingScriptUris: null
-    timeout: 'P1D'
   }
 }

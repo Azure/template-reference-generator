@@ -11,7 +11,7 @@ resource capacityReservation 'Microsoft.Compute/capacityReservationGroups/capaci
   location: location
   parent: capacityReservationGroup
   sku: {
-    name: 'Standard_F2'
     capacity: 2
+    name: 'Standard_F2'
   }
 }

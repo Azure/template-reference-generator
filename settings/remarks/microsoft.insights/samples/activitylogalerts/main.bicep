@@ -1,6 +1,46 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
+  name: resourceName
+  location: 'global'
+  properties: {
+    azureAppPushReceivers: []
+    azureFunctionReceivers: []
+    eventHubReceivers: []
+    groupShortName: 'acctestag1'
+    itsmReceivers: []
+    smsReceivers: []
+    voiceReceivers: []
+    webhookReceivers: []
+    armRoleReceivers: []
+    automationRunbookReceivers: []
+    emailReceivers: []
+    enabled: true
+    logicAppReceivers: []
+  }
+}
+
+resource actionGroup2 'Microsoft.Insights/actionGroups@2023-01-01' = {
+  name: resourceName
+  location: 'global'
+  properties: {
+    webhookReceivers: []
+    armRoleReceivers: []
+    automationRunbookReceivers: []
+    emailReceivers: []
+    eventHubReceivers: []
+    logicAppReceivers: []
+    azureAppPushReceivers: []
+    azureFunctionReceivers: []
+    enabled: true
+    groupShortName: 'acctestag2'
+    itsmReceivers: []
+    smsReceivers: []
+    voiceReceivers: []
+  }
+}
+
 resource activityLogAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
   name: resourceName
   location: 'global'
@@ -34,8 +74,8 @@ resource activityLogAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
               field: 'properties.currentHealthStatus'
             }
             {
-              field: 'properties.currentHealthStatus'
               equals: 'Degraded'
+              field: 'properties.currentHealthStatus'
             }
           ]
         }
@@ -46,8 +86,8 @@ resource activityLogAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
               field: 'properties.previousHealthStatus'
             }
             {
-              equals: 'Available'
               field: 'properties.previousHealthStatus'
+              equals: 'Available'
             }
           ]
         }
@@ -58,8 +98,8 @@ resource activityLogAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
               field: 'properties.cause'
             }
             {
-              field: 'properties.cause'
               equals: 'UserInitiated'
+              field: 'properties.cause'
             }
           ]
         }
@@ -78,13 +118,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    isNfsV3Enabled: false
     publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
+      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -93,55 +132,16 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
           keyType: 'Service'
         }
       }
-      keySource: 'Microsoft.Storage'
     }
-    isNfsV3Enabled: false
+    isHnsEnabled: false
     isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
-    defaultToOAuthAuthentication: false
-    isHnsEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-  }
-}
-
-resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
-  name: resourceName
-  location: 'global'
-  properties: {
-    azureAppPushReceivers: []
-    emailReceivers: []
-    eventHubReceivers: []
-    groupShortName: 'acctestag1'
-    itsmReceivers: []
-    logicAppReceivers: []
-    smsReceivers: []
-    voiceReceivers: []
-    armRoleReceivers: []
-    automationRunbookReceivers: []
-    azureFunctionReceivers: []
-    enabled: true
-    webhookReceivers: []
-  }
-}
-
-resource actionGroup2 'Microsoft.Insights/actionGroups@2023-01-01' = {
-  name: resourceName
-  location: 'global'
-  properties: {
-    armRoleReceivers: []
-    automationRunbookReceivers: []
-    azureAppPushReceivers: []
-    azureFunctionReceivers: []
-    emailReceivers: []
-    eventHubReceivers: []
-    smsReceivers: []
-    voiceReceivers: []
-    enabled: true
-    groupShortName: 'acctestag2'
-    itsmReceivers: []
-    logicAppReceivers: []
-    webhookReceivers: []
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
   }
 }

@@ -1,52 +1,14 @@
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 @secure()
 @description('The administrator password for the virtual machine')
 param adminPassword string
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
-
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          subnet: {}
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-        }
-      }
-    ]
-  }
-}
 
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    priority: 'Regular'
-    storageProfile: {
-      osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: 'Standard_LRS'
-        }
-        osType: 'Windows'
-        writeAcceleratorEnabled: false
-      }
-      dataDisks: []
-      imageReference: {
-        offer: 'WindowsServer'
-        publisher: 'MicrosoftWindowsServer'
-        sku: '2016-Datacenter'
-        version: 'latest'
-      }
-    }
+    additionalCapabilities: {}
     applicationProfile: {
       galleryApplications: []
     }
@@ -55,6 +17,11 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         enabled: false
         storageUri: ''
       }
+    }
+    extensionsTimeBudget: 'PT1H30M'
+    priority: 'Regular'
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
     }
     networkProfile: {
       networkInterfaces: [
@@ -85,40 +52,24 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       adminUsername: 'adminuser'
       allowExtensionOperations: true
     }
-    additionalCapabilities: {}
-    extensionsTimeBudget: 'PT1H30M'
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
+    storageProfile: {
+      dataDisks: []
+      imageReference: {
+        version: 'latest'
+        offer: 'WindowsServer'
+        publisher: 'MicrosoftWindowsServer'
+        sku: '2016-Datacenter'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+        osType: 'Windows'
+        writeAcceleratorEnabled: false
+      }
     }
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: 'internal'
-  parent: virtualNetwork
-  properties: {
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
   }
 }
 
@@ -128,17 +79,66 @@ resource guestConfigurationAssignment 'Microsoft.GuestConfiguration/guestConfigu
   scope: virtualMachine
   properties: {
     guestConfiguration: {
+      name: 'WhitelistedApplication'
+      version: '1.*'
       assignmentType: ''
       configurationParameter: [
         {
-          name: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
           value: 'NotePad,sql'
+          name: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         }
       ]
       contentHash: ''
       contentUri: ''
-      name: 'WhitelistedApplication'
-      version: '1.*'
     }
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          subnet: {}
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+        }
+      }
+    ]
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'internal'
+  parent: virtualNetwork
+  properties: {
+    serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
   }
 }

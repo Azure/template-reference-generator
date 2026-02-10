@@ -5,7 +5,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
     sku: {
       name: 'PerGB2018'
@@ -18,6 +17,7 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
       enableLogAccessUsingOnlyResourcePermissions: true
     }
     publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
   }
 }
 
@@ -37,18 +37,18 @@ resource alertRule 'Microsoft.SecurityInsights/alertRules@2022-10-01-preview' = 
   ]
   kind: 'NRT'
   properties: {
-    suppressionEnabled: false
+    severity: 'High'
+    suppressionDuration: 'PT5H'
     tactics: []
     techniques: []
-    displayName: 'Some Rule'
+    description: ''
     enabled: true
+    suppressionEnabled: false
+    displayName: 'Some Rule'
     query: '''AzureActivity |
   where OperationName == "Create or Update Virtual Machine" or OperationName =="Create Deployment" |
   where ActivityStatus == "Succeeded" |
   make-series dcount(ResourceId) default=0 on EventSubmissionTimestamp in range(ago(7d), now(), 1d) by Caller
 '''
-    severity: 'High'
-    description: ''
-    suppressionDuration: 'PT5H'
   }
 }

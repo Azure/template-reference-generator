@@ -10,25 +10,25 @@ resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
   name: resourceName
   location: location
   sku: {
-    capacity: 2
-    family: 'Gen5'
     name: 'GP_Gen5_2'
     tier: 'GeneralPurpose'
+    capacity: 2
+    family: 'Gen5'
   }
   properties: {
+    infrastructureEncryption: 'Disabled'
+    minimalTlsVersion: 'TLS1_2'
+    sslEnforcement: 'Enabled'
+    publicNetworkAccess: 'Enabled'
     storageProfile: {
-      backupRetentionDays: 7
       storageAutogrow: 'Enabled'
       storageMB: 51200
+      backupRetentionDays: 7
     }
-    administratorLoginPassword: '${administratorLoginPassword}'
-    createMode: 'Default'
-    infrastructureEncryption: 'Disabled'
-    sslEnforcement: 'Enabled'
     version: '9.5'
     administratorLogin: '${administratorLogin}'
-    minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    createMode: 'Default'
   }
 }
 
@@ -36,15 +36,15 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.7.29.0/29'
       ]
     }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
   }
 }
 
@@ -52,6 +52,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
+    serviceEndpointPolicies: []
     serviceEndpoints: [
       {
         service: 'Microsoft.Sql'
@@ -61,7 +62,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
   }
 }
 

@@ -5,6 +5,7 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
   location: location
   properties: {
+    description: ''
     networkManagerScopeAccesses: [
       'SecurityAdmin'
     ]
@@ -14,7 +15,6 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
         subscription().id
       ]
     }
-    description: ''
   }
 }
 

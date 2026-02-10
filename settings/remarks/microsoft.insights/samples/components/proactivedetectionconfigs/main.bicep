@@ -6,13 +6,13 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
     Application_Type: 'web'
+    RetentionInDays: 90
     DisableIpMasking: false
     DisableLocalAuth: false
     ForceCustomerStorageForProfiler: false
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    RetentionInDays: 90
     SamplingPercentage: 100
   }
 }

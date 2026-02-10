@@ -11,9 +11,9 @@ resource endpoint 'Microsoft.StorageMover/storageMovers/endpoints@2023-03-01' = 
   name: resourceName
   parent: storageMover
   properties: {
-    host: '192.168.0.1'
-    nfsVersion: 'NFSauto'
     endpointType: 'NfsMount'
     export: ''
+    host: '192.168.0.1'
+    nfsVersion: 'NFSauto'
   }
 }

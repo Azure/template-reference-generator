@@ -4,12 +4,12 @@ param location string = 'westeurope'
 var dataCollectionLogTableName = 'DataCollectionLog_CL'
 var dataCollectionLogColumns = [
   {
-    type: 'string'
     name: 'RawData'
+    type: 'string'
   }
   {
-    name: 'FilePath'
     type: 'string'
+    name: 'FilePath'
   }
   {
     name: 'TimeGenerated'
@@ -21,6 +21,12 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    sku: {
+      name: 'PerGB2018'
+    }
+    workspaceCapping: {
+      dailyQuotaGb: -1
+    }
     features: {
       disableLocalAuth: false
       enableLogAccessUsingOnlyResourcePermissions: true
@@ -28,12 +34,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
-    }
-    workspaceCapping: {
-      dailyQuotaGb: -1
-    }
   }
 }
 

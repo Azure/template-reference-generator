@@ -12,14 +12,49 @@ resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   }
 }
 
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  name: resourceName
+  location: location
+  kind: 'GlobalDocumentDB'
+  properties: {
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    networkAclBypassResourceIds: []
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    isVirtualNetworkFilterEnabled: false
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+    capabilities: []
+    networkAclBypass: 'None'
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    ipRules: []
+  }
+}
+
 resource app 'Microsoft.AppPlatform/Spring/apps@2023-05-01-preview' = {
   name: resourceName
   location: location
   parent: spring
   properties: {
+    customPersistentDisks: []
     enableEndToEndTLS: false
     public: false
-    customPersistentDisks: []
   }
 }
 
@@ -27,9 +62,9 @@ resource deployment 'Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-pr
   name: 'deploy-q4uff'
   parent: app
   sku: {
-    capacity: 1
     name: 'S0'
     tier: 'Standard'
+    capacity: 1
   }
   properties: {
     deploymentSettings: {
@@ -45,41 +80,6 @@ resource deployment 'Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-pr
       runtimeVersion: 'Java_8'
       type: 'Jar'
     }
-  }
-}
-
-resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
-  name: resourceName
-  location: location
-  kind: 'GlobalDocumentDB'
-  properties: {
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'BoundedStaleness'
-      maxIntervalInSeconds: 10
-      maxStalenessPrefix: 200
-    }
-    enableAnalyticalStorage: false
-    isVirtualNetworkFilterEnabled: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'West Europe'
-      }
-    ]
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
-    ipRules: []
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    capabilities: []
-    enableMultipleWriteLocations: false
-    databaseAccountOfferType: 'Standard'
-    disableLocalAuth: false
-    virtualNetworkRules: []
   }
 }
 

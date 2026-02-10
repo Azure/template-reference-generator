@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
   name: resourceName
@@ -14,9 +14,6 @@ resource schedule 'Microsoft.DevTestLab/labs/schedules@2018-09-15' = {
   location: location
   parent: lab
   properties: {
-    status: 'Disabled'
-    taskType: 'LabVmsShutdownTask'
-    timeZoneId: 'India Standard Time'
     dailyRecurrence: {
       time: '0100'
     }
@@ -25,6 +22,9 @@ resource schedule 'Microsoft.DevTestLab/labs/schedules@2018-09-15' = {
       timeInMinutes: 0
       webhookUrl: ''
     }
+    status: 'Disabled'
+    taskType: 'LabVmsShutdownTask'
+    timeZoneId: 'India Standard Time'
   }
   tags: {
     environment: 'Production'

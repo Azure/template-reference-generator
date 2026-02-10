@@ -1,10 +1,10 @@
+param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator username for the virtual machine scale set')
 param adminUsername string
 @secure()
 @description('The administrator password for the virtual machine scale set')
 param adminPassword string
-param resourceName string = 'acctest0001'
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
@@ -26,12 +26,12 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: 'internal'
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
   }
 }
 
@@ -51,23 +51,23 @@ resource autoScaleSetting 'Microsoft.Insights/autoScaleSettings@2022-10-01' = {
         name: 'metricRules'
         rules: [
           {
+            metricTrigger: {
+              timeGrain: 'PT1M'
+              timeWindow: 'PT5M'
+              dividePerInstance: true
+              timeAggregation: 'Last'
+              dimensions: []
+              metricName: 'Percentage CPU'
+              metricNamespace: ''
+              operator: 'GreaterThan'
+              statistic: 'Average'
+              threshold: 75
+            }
             scaleAction: {
               direction: 'Increase'
               type: 'ChangeCount'
               value: '1'
               cooldown: 'PT1M'
-            }
-            metricTrigger: {
-              dimensions: []
-              statistic: 'Average'
-              timeAggregation: 'Last'
-              timeWindow: 'PT5M'
-              dividePerInstance: true
-              metricName: 'Percentage CPU'
-              metricNamespace: ''
-              operator: 'GreaterThan'
-              threshold: 75
-              timeGrain: 'PT1M'
             }
           }
         ]
@@ -80,25 +80,11 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
   name: resourceName
   location: location
   sku: {
+    tier: 'Standard'
     capacity: 2
     name: 'Standard_F2'
-    tier: 'Standard'
   }
   properties: {
-    additionalCapabilities: {}
-    doNotRunExtensionsOnOverprovisionedVMs: false
-    overprovision: true
-    scaleInPolicy: {
-      forceDeletion: false
-      rules: [
-        'Default'
-      ]
-    }
-    singlePlacementGroup: true
-    upgradePolicy: {
-      mode: 'Manual'
-    }
-    orchestrationMode: 'Uniform'
     virtualMachineProfile: {
       diagnosticsProfile: {
         bootDiagnostics: {
@@ -114,32 +100,31 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           {
             name: 'TestNetworkProfile-230630033559396108'
             properties: {
+              dnsSettings: {
+                dnsServers: []
+              }
+              enableAcceleratedNetworking: false
               enableIPForwarding: false
               ipConfigurations: [
                 {
+                  name: 'TestIPConfiguration'
                   properties: {
-                    privateIPAddressVersion: 'IPv4'
-                    subnet: {}
                     applicationGatewayBackendAddressPools: []
                     applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
                     primary: true
+                    privateIPAddressVersion: 'IPv4'
+                    subnet: {}
                   }
-                  name: 'TestIPConfiguration'
                 }
               ]
               primary: true
-              dnsSettings: {
-                dnsServers: []
-              }
-              enableAcceleratedNetworking: false
             }
           }
         ]
       }
       osProfile: {
-        computerNamePrefix: 'testvm-230630033559396108'
         linuxConfiguration: {
           disablePasswordAuthentication: false
           provisionVMAgent: true
@@ -155,15 +140,16 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
         secrets: []
         adminPassword: adminPassword
         adminUsername: adminUsername
+        computerNamePrefix: 'testvm-230630033559396108'
       }
       priority: 'Regular'
       storageProfile: {
         dataDisks: []
         imageReference: {
-          offer: 'UbuntuServer'
           publisher: 'Canonical'
           sku: '16.04-LTS'
           version: 'latest'
+          offer: 'UbuntuServer'
         }
         osDisk: {
           caching: 'ReadWrite'
@@ -175,6 +161,20 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           writeAcceleratorEnabled: false
         }
       }
+    }
+    additionalCapabilities: {}
+    doNotRunExtensionsOnOverprovisionedVMs: false
+    orchestrationMode: 'Uniform'
+    singlePlacementGroup: true
+    overprovision: true
+    scaleInPolicy: {
+      forceDeletion: false
+      rules: [
+        'Default'
+      ]
+    }
+    upgradePolicy: {
+      mode: 'Manual'
     }
   }
 }

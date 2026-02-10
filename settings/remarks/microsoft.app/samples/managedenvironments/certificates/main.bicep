@@ -1,20 +1,20 @@
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 @secure()
 @description('The password for the certificate used in the managed environment')
 param certificatePassword string
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 
 resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: resourceName
   location: location
   properties: {
-    vnetConfiguration: {}
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
         sharedKey: workspace.listKeys().primarySharedKey
       }
     }
+    vnetConfiguration: {}
   }
 }
 
@@ -22,6 +22,10 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
@@ -30,10 +34,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     }
     workspaceCapping: {
       dailyQuotaGb: -1
-    }
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
     }
   }
 }

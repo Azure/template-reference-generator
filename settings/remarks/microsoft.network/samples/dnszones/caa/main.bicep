@@ -13,9 +13,9 @@ resource cAA 'Microsoft.Network/dnsZones/CAA@2018-05-01' = {
     TTL: 300
     caaRecords: [
       {
+        value: ';'
         flags: 1
         tag: 'issuewild'
-        value: ';'
       }
       {
         flags: 0
@@ -28,9 +28,9 @@ resource cAA 'Microsoft.Network/dnsZones/CAA@2018-05-01' = {
         value: 'example.com'
       }
       {
-        value: 'example.net'
         flags: 0
         tag: 'issue'
+        value: 'example.net'
       }
     ]
     metadata: {}

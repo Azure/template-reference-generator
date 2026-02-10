@@ -23,6 +23,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   kind: 'StorageV2'
   properties: {
     allowSharedKeyAccess: true
+    isHnsEnabled: false
+    isSftpEnabled: false
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    accessTier: 'Hot'
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -35,18 +41,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
-    isSftpEnabled: false
+    isNfsV3Enabled: false
     minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
     publicNetworkAccess: 'Enabled'
-    accessTier: 'Hot'
+    supportsHttpsTrafficOnly: true
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
-    isNfsV3Enabled: false
-    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -57,12 +57,12 @@ resource transform 'Microsoft.Media/mediaServices/transforms@2022-07-01' = {
     description: ''
     outputs: [
       {
-        onError: 'ContinueJob'
         preset: {
-          presetName: 'AACGoodQualityAudio'
           '@odata.type': '#Microsoft.Media.BuiltInStandardEncoderPreset'
+          presetName: 'AACGoodQualityAudio'
         }
         relativePriority: 'Normal'
+        onError: 'ContinueJob'
       }
     ]
   }

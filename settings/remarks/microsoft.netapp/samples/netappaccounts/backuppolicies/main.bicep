@@ -12,9 +12,9 @@ resource backupPolicy 'Microsoft.NetApp/netAppAccounts/backupPolicies@2025-01-01
   location: location
   parent: netAppAccount
   properties: {
-    dailyBackupsToKeep: 2
-    enabled: true
     monthlyBackupsToKeep: 1
     weeklyBackupsToKeep: 1
+    dailyBackupsToKeep: 2
+    enabled: true
   }
 }

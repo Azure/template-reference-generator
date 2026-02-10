@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: resourceName
@@ -19,10 +19,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
-    }
     workspaceCapping: {
       dailyQuotaGb: -1
     }
@@ -32,6 +28,10 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     }
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
+    retentionInDays: 30
+    sku: {
+      name: 'PerGB2018'
+    }
   }
 }
 
@@ -39,10 +39,10 @@ resource daprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03
   name: resourceName
   parent: managedEnvironment
   properties: {
+    version: 'v1'
     componentType: 'state.azure.blobstorage'
     ignoreErrors: false
     initTimeout: '5s'
     scopes: null
-    version: 'v1'
   }
 }

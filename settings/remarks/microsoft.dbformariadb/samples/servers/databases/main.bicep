@@ -19,15 +19,15 @@ resource server 'Microsoft.DBforMariaDB/servers@2018-06-01' = {
     administratorLogin: '${administratorLogin}'
     administratorLoginPassword: '${administratorLoginPassword}'
     minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    sslEnforcement: 'Enabled'
-    version: '10.2'
-    createMode: 'Default'
     storageProfile: {
       backupRetentionDays: 7
       storageAutogrow: 'Enabled'
       storageMB: 51200
     }
+    createMode: 'Default'
+    publicNetworkAccess: 'Enabled'
+    sslEnforcement: 'Enabled'
+    version: '10.2'
   }
 }
 

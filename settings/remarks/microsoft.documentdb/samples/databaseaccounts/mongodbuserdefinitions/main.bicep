@@ -9,29 +9,13 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   location: location
   kind: 'MongoDB'
   properties: {
-    consistencyPolicy: {
-      maxStalenessPrefix: 100
-      defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
-    }
-    enablePartitionMerge: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    publicNetworkAccess: 'Enabled'
-    disableLocalAuth: false
-    enableAutomaticFailover: false
-    databaseAccountOfferType: 'Standard'
-    enableAnalyticalStorage: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: '${location}'
-      }
-    ]
     networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    virtualNetworkRules: []
+    backupPolicy: null
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    isVirtualNetworkFilterEnabled: false
     capabilities: [
       {
         name: 'EnableMongoRoleBasedAccessControl'
@@ -40,12 +24,28 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
         name: 'EnableMongo'
       }
     ]
-    disableKeyBasedMetadataWriteAccess: false
     enableBurstCapacity: false
-    enableFreeTier: false
     enableMultipleWriteLocations: false
+    enablePartitionMerge: false
+    ipRules: []
+    virtualNetworkRules: []
+    databaseAccountOfferType: 'Standard'
+    disableKeyBasedMetadataWriteAccess: false
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    locations: [
+      {
+        locationName: '${location}'
+        failoverPriority: 0
+        isZoneRedundant: false
+      }
+    ]
     minimalTlsVersion: 'Tls12'
-    backupPolicy: null
   }
 }
 
@@ -64,9 +64,9 @@ resource mongodbUserDefinition 'Microsoft.DocumentDB/databaseAccounts/mongodbUse
   name: '${mongodbDatabas.name}.myUserName'
   parent: databaseAccount
   properties: {
+    password: mongodbUserPassword
     userName: 'myUserName'
     databaseName: mongodbDatabas.name
     mechanisms: 'SCRAM-SHA-256'
-    password: mongodbUserPassword
   }
 }

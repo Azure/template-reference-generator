@@ -1,10 +1,10 @@
-@secure()
-@description('The OAuth client secret for the authorization server')
-param oauthClientSecret string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The OAuth client ID for the authorization server')
 param oauthClientId string
+@secure()
+@description('The OAuth client secret for the authorization server')
+param oauthClientSecret string
 
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
@@ -34,12 +34,10 @@ resource authorizationServer 'Microsoft.ApiManagement/service/authorizationServe
   name: resourceName
   parent: service
   properties: {
-    tokenBodyParameters: []
-    authorizationEndpoint: 'https://azacceptance.hashicorptest.com/client/authorize'
     clientAuthenticationMethod: []
-    clientId: '${oauthClientId}'
     clientRegistrationEndpoint: 'https://azacceptance.hashicorptest.com/client/register'
-    description: ''
+    clientSecret: '${oauthClientSecret}'
+    defaultScope: ''
     grantTypes: [
       'implicit'
     ]
@@ -48,9 +46,11 @@ resource authorizationServer 'Microsoft.ApiManagement/service/authorizationServe
     authorizationMethods: [
       'GET'
     ]
-    clientSecret: '${oauthClientSecret}'
-    defaultScope: ''
+    clientId: '${oauthClientId}'
+    description: ''
     displayName: 'Test Group'
     resourceOwnerUsername: ''
+    tokenBodyParameters: []
+    authorizationEndpoint: 'https://azacceptance.hashicorptest.com/client/authorize'
   }
 }

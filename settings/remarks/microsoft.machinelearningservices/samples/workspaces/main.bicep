@@ -6,14 +6,14 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
+    ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
     SamplingPercentage: 100
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     Application_Type: 'web'
-    DisableLocalAuth: false
     DisableIpMasking: false
-    ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
+    DisableLocalAuth: false
   }
 }
 
@@ -25,13 +25,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -44,12 +37,19 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
     isNfsV3Enabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    accessTier: 'Hot'
+    allowSharedKeyAccess: true
+    isHnsEnabled: false
+    isSftpEnabled: false
+    supportsHttpsTrafficOnly: true
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
   }
 }
 
@@ -57,14 +57,13 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: resourceName
   location: location
   properties: {
+    createMode: 'default'
+    enablePurgeProtection: true
     enabledForDiskEncryption: false
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    tenantId: tenant()
+    enabledForTemplateDeployment: false
     accessPolicies: [
       {
+        objectId: '45a2d1ea-488a-44b0-bb2e-3cd8e485ebef'
         permissions: {
           certificates: [
             'all'
@@ -77,17 +76,18 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
           ]
           storage: []
         }
-        tenantId: tenant()
-        objectId: '45a2d1ea-488a-44b0-bb2e-3cd8e485ebef'
+        tenantId: tenant().tenantId
       }
     ]
-    createMode: 'default'
-    enabledForDeployment: false
-    enabledForTemplateDeployment: false
-    publicNetworkAccess: 'Enabled'
-    enablePurgeProtection: true
     enableRbacAuthorization: false
     enableSoftDelete: true
+    enabledForDeployment: false
+    publicNetworkAccess: 'Enabled'
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    tenantId: tenant().tenantId
   }
 }
 

@@ -1,3 +1,6 @@
+@secure()
+@description('The administrator login password for the SQL server')
+param administratorLoginPassword string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator username for the SQL server credential')
@@ -5,9 +8,6 @@ param sqlAdminUsername string
 @secure()
 @description('The administrator password for the SQL server credential')
 param sqlAdminPassword string
-@secure()
-@description('The administrator login password for the SQL server')
-param administratorLoginPassword string
 
 resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
@@ -19,24 +19,6 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
-  }
-}
-
-resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
-  name: resourceName
-  location: location
-  parent: server
-  properties: {
-    collation: 'SQL_Latin1_General_CP1_CI_AS'
-    createMode: 'Default'
-    elasticPoolId: ''
-    highAvailabilityReplicaCount: 0
-    isLedgerOn: false
-    requestedBackupStorageRedundancy: 'Geo'
-    zoneRedundant: false
-    autoPauseDelay: 0
-    minCapacity: 0
-    readScale: 'Disabled'
   }
 }
 
@@ -55,5 +37,23 @@ resource credential 'Microsoft.Sql/servers/jobAgents/credentials@2020-11-01-prev
   properties: {
     password: '${sqlAdminPassword}'
     username: '${sqlAdminUsername}'
+  }
+}
+
+resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
+  name: resourceName
+  location: location
+  parent: server
+  properties: {
+    zoneRedundant: false
+    collation: 'SQL_Latin1_General_CP1_CI_AS'
+    isLedgerOn: false
+    minCapacity: 0
+    autoPauseDelay: 0
+    createMode: 'Default'
+    elasticPoolId: ''
+    highAvailabilityReplicaCount: 0
+    readScale: 'Disabled'
+    requestedBackupStorageRedundancy: 'Geo'
   }
 }

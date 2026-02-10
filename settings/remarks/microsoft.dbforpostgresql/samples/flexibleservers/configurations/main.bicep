@@ -12,20 +12,20 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-pr
     tier: 'GeneralPurpose'
   }
   properties: {
-    highAvailability: {
-      mode: 'Disabled'
-    }
-    version: '12'
-    administratorLogin: 'adminTerraform'
-    administratorLoginPassword: '${postgresqlAdministratorPassword}'
-    availabilityZone: '2'
     backup: {
       geoRedundantBackup: 'Disabled'
     }
-    network: {}
     storage: {
       storageSizeGB: 32
     }
+    administratorLogin: 'adminTerraform'
+    administratorLoginPassword: '${postgresqlAdministratorPassword}'
+    availabilityZone: '2'
+    highAvailability: {
+      mode: 'Disabled'
+    }
+    network: {}
+    version: '12'
   }
   identity: {
     type: 'None'
@@ -37,8 +37,8 @@ resource pgbouncerEnabled 'Microsoft.DBforPostgreSQL/flexibleServers/configurati
   name: 'pgbouncer.enabled'
   parent: flexibleServer
   properties: {
-    source: 'user-override'
     value: 'true'
+    source: 'user-override'
   }
 }
 

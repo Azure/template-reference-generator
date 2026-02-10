@@ -18,6 +18,12 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   }
 }
 
+resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2022-09-01' = {
+  name: resourceName
+  parent: networkManager
+  properties: {}
+}
+
 resource securityAdminConfiguration 'Microsoft.Network/networkManagers/securityAdminConfigurations@2022-09-01' = {
   name: resourceName
   parent: networkManager
@@ -43,19 +49,13 @@ resource rule 'Microsoft.Network/networkManagers/securityAdminConfigurations/rul
   parent: ruleCollection
   kind: 'Custom'
   properties: {
+    sourcePortRanges: []
     sources: []
+    access: 'Deny'
     destinationPortRanges: []
     destinations: []
     direction: 'Outbound'
-    access: 'Deny'
     priority: 1
     protocol: 'Tcp'
-    sourcePortRanges: []
   }
-}
-
-resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2022-09-01' = {
-  name: resourceName
-  parent: networkManager
-  properties: {}
 }

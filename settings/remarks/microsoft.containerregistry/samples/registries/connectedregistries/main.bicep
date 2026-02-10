@@ -13,6 +13,7 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
     dataEndpointEnabled: true
     networkRuleBypassOptions: 'AzureServices'
     policies: {
+      trustPolicy: {}
       exportPolicy: {
         status: 'enabled'
       }
@@ -20,7 +21,6 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
         status: 'disabled'
       }
       retentionPolicy: {}
-      trustPolicy: {}
     }
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
@@ -39,9 +39,9 @@ resource connectedRegistry 'Microsoft.ContainerRegistry/registries/connectedRegi
     mode: 'ReadWrite'
     parent: {
       syncProperties: {
-        syncWindow: ''
         messageTtl: 'P1D'
         schedule: '* * * * *'
+        syncWindow: ''
       }
     }
   }

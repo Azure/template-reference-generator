@@ -15,11 +15,11 @@ resource budget 'Microsoft.Consumption/budgets@2019-10-01' = {
     category: 'Cost'
     filter: {
       tags: {
+        name: 'foo'
+        operator: 'In'
         values: [
           'bar'
         ]
-        name: 'foo'
-        operator: 'In'
       }
     }
     notifications: {

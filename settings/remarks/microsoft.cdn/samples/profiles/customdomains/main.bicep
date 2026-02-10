@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: resourceName
@@ -16,14 +16,14 @@ resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
   name: resourceName
   parent: profile
   properties: {
-    tlsSettings: {
-      certificateType: 'ManagedCertificate'
-      minimumTlsVersion: 'TLS12'
-    }
     azureDnsZone: {
       id: dnsZone.id
     }
     hostName: 'fabrikam.${resourceName}.com'
+    tlsSettings: {
+      minimumTlsVersion: 'TLS12'
+      certificateType: 'ManagedCertificate'
+    }
   }
 }
 

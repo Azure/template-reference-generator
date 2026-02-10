@@ -10,6 +10,7 @@ resource sRV 'Microsoft.Network/dnsZones/SRV@2018-05-01' = {
   name: resourceName
   parent: dnsZone
   properties: {
+    metadata: {}
     SRVRecords: [
       {
         port: 8080
@@ -25,6 +26,5 @@ resource sRV 'Microsoft.Network/dnsZones/SRV@2018-05-01' = {
       }
     ]
     TTL: 300
-    metadata: {}
   }
 }

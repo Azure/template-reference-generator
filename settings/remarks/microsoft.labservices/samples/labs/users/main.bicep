@@ -1,13 +1,18 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @secure()
 @description('The administrator password for the lab virtual machine')
 param adminPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
   name: resourceName
   location: location
   properties: {
+    autoShutdownProfile: {
+      shutdownOnDisconnect: 'Disabled'
+      shutdownOnIdle: 'None'
+      shutdownWhenNotConnected: 'Disabled'
+    }
     connectionProfile: {
       clientRdpAccess: 'None'
       clientSshAccess: 'None'
@@ -19,12 +24,6 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
     }
     title: 'Test Title'
     virtualMachineProfile: {
-      sku: {
-        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
-        capacity: 1
-      }
-      usageQuota: 'PT0S'
-      useSharedPassword: 'Disabled'
       additionalCapabilities: {
         installGpuDrivers: 'Disabled'
       }
@@ -39,11 +38,12 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
         sku: '20_04-lts'
         version: 'latest'
       }
-    }
-    autoShutdownProfile: {
-      shutdownWhenNotConnected: 'Disabled'
-      shutdownOnDisconnect: 'Disabled'
-      shutdownOnIdle: 'None'
+      sku: {
+        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
+        capacity: 1
+      }
+      usageQuota: 'PT0S'
+      useSharedPassword: 'Disabled'
     }
   }
 }

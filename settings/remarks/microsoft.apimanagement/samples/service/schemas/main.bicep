@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
@@ -9,19 +9,19 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     name: 'Consumption'
   }
   properties: {
-    certificates: []
     customProperties: {
-      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11': 'false'
-      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10': 'false'
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11': 'false'
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
     publisherEmail: 'pub1@email.com'
     publisherName: 'pub1'
     virtualNetworkType: 'None'
+    certificates: []
   }
 }
 
@@ -29,8 +29,6 @@ resource schema 'Microsoft.ApiManagement/service/schemas@2021-08-01' = {
   name: resourceName
   parent: service
   properties: {
-    description: ''
-    schemaType: 'xml'
     value: '''    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:tns="http://tempuri.org/PurchaseOrderSchema.xsd" targetNamespace="http://tempuri.org/PurchaseOrderSchema.xsd" elementFormDefault="qualified">
     <xsd:element name="PurchaseOrder" type="tns:PurchaseOrderType"/>
@@ -53,5 +51,7 @@ resource schema 'Microsoft.ApiManagement/service/schemas@2021-08-01' = {
     </xsd:complexType>
 </xsd:schema>
 '''
+    description: ''
+    schemaType: 'xml'
   }
 }

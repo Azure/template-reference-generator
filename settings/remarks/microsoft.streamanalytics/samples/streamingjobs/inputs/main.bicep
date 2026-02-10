@@ -5,10 +5,11 @@ resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
   name: resourceName
   location: location
   sku: {
-    name: 'S1'
     capacity: 1
+    name: 'S1'
   }
   properties: {
+    cloudToDevice: {}
     enableFileUploadNotifications: false
     messagingEndpoints: {}
     routing: {
@@ -22,7 +23,6 @@ resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
       }
     }
     storageEndpoints: {}
-    cloudToDevice: {}
   }
 }
 
@@ -30,18 +30,14 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
   name: resourceName
   location: location
   properties: {
-    cluster: {}
     eventsOutOfOrderPolicy: 'Adjust'
-    outputErrorPolicy: 'Drop'
-    compatibilityLevel: '1.0'
-    contentStoragePolicy: 'SystemAccount'
-    dataLocale: 'en-GB'
-    eventsLateArrivalMaxDelayInSeconds: 60
-    eventsOutOfOrderMaxDelayInSeconds: 50
     jobType: 'Cloud'
+    outputErrorPolicy: 'Drop'
     sku: {
       name: 'Standard'
     }
+    dataLocale: 'en-GB'
+    eventsLateArrivalMaxDelayInSeconds: 60
     transformation: {
       name: 'main'
       properties: {
@@ -52,6 +48,10 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
         streamingUnits: 3
       }
     }
+    cluster: {}
+    compatibilityLevel: '1.0'
+    contentStoragePolicy: 'SystemAccount'
+    eventsOutOfOrderMaxDelayInSeconds: 50
   }
 }
 
@@ -59,13 +59,14 @@ resource input 'Microsoft.StreamAnalytics/streamingJobs/inputs@2020-03-01' = {
   name: resourceName
   parent: streamingJob
   properties: {
+    type: 'Stream'
     datasource: {
       properties: {
-        consumerGroupName: '$Default'
-        endpoint: 'messages/events'
         iotHubNamespace: iotHub.name
         sharedAccessPolicyKey: iotHub.listKeys().value[0].primaryKey
         sharedAccessPolicyName: 'iothubowner'
+        consumerGroupName: '$Default'
+        endpoint: 'messages/events'
       }
       type: 'Microsoft.Devices/IotHubs'
     }
@@ -73,6 +74,5 @@ resource input 'Microsoft.StreamAnalytics/streamingJobs/inputs@2020-03-01' = {
       properties: {}
       type: 'Avro'
     }
-    type: 'Stream'
   }
 }

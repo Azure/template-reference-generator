@@ -20,15 +20,15 @@ resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-06-01-preview' = {
   name: resourceName
   parent: namespace
   properties: {
+    enablePartitioning: true
+    maxDeliveryCount: 10
+    requiresSession: false
+    enableExpress: false
+    maxSizeInMegabytes: 81920
+    requiresDuplicateDetection: false
+    status: 'Active'
     deadLetteringOnMessageExpiration: false
     enableBatchedOperations: true
-    enableExpress: false
-    maxDeliveryCount: 10
-    requiresDuplicateDetection: false
-    requiresSession: false
-    status: 'Active'
-    enablePartitioning: true
-    maxSizeInMegabytes: 81920
   }
 }
 

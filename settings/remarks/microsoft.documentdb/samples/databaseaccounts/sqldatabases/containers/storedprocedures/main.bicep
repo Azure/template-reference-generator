@@ -6,12 +6,26 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
+    networkAclBypassResourceIds: []
+    virtualNetworkRules: []
+    capabilities: []
+    defaultIdentity: 'FirstPartyIdentity'
+    enableAutomaticFailover: false
+    enableFreeTier: false
     ipRules: []
     networkAclBypass: 'None'
     publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
-    capabilities: []
+    enableAnalyticalStorage: false
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    disableLocalAuth: false
+    isVirtualNetworkFilterEnabled: false
+    databaseAccountOfferType: 'Standard'
     disableKeyBasedMetadataWriteAccess: false
+    enableMultipleWriteLocations: false
     locations: [
       {
         failoverPriority: 0
@@ -19,20 +33,6 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    networkAclBypassResourceIds: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    databaseAccountOfferType: 'Standard'
-    disableLocalAuth: false
-    enableAutomaticFailover: false
-    defaultIdentity: 'FirstPartyIdentity'
-    enableAnalyticalStorage: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
-    isVirtualNetworkFilterEnabled: false
   }
 }
 
@@ -53,13 +53,13 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
   properties: {
     options: {}
     resource: {
+      id: '${resourceName}'
       partitionKey: {
-        kind: 'Hash'
         paths: [
           '/definition/id'
         ]
+        kind: 'Hash'
       }
-      id: '${resourceName}'
     }
   }
 }

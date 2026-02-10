@@ -19,10 +19,10 @@ resource accessPolicy 'Microsoft.TimeSeriesInsights/environments/accessPolicies@
   name: resourceName
   parent: environment
   properties: {
-    description: ''
-    principalObjectId: 'aGUID'
     roles: [
       'Reader'
     ]
+    description: ''
+    principalObjectId: 'aGUID'
   }
 }

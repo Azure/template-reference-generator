@@ -19,6 +19,7 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
   properties: {
     pccRules: [
       {
+        ruleName: 'default-rule'
         rulePrecedence: 1
         serviceDataFlowTemplates: [
           {
@@ -34,7 +35,6 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
           }
         ]
         trafficControl: 'Enabled'
-        ruleName: 'default-rule'
       }
     ]
     servicePrecedence: 0

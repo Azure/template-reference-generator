@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource networkConnection 'Microsoft.DevCenter/networkConnections@2023-04-01' = {
   name: resourceName

@@ -6,6 +6,24 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
+    networkAclBypass: 'None'
+    defaultIdentity: 'FirstPartyIdentity'
+    enableFreeTier: false
+    ipRules: []
+    capabilities: []
+    databaseAccountOfferType: 'Standard'
+    disableLocalAuth: false
+    enableAutomaticFailover: false
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    enableAnalyticalStorage: false
     locations: [
       {
         failoverPriority: 0
@@ -13,26 +31,8 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    networkAclBypass: 'None'
     disableKeyBasedMetadataWriteAccess: false
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    networkAclBypassResourceIds: []
-    virtualNetworkRules: []
-    enableFreeTier: false
     enableMultipleWriteLocations: false
-    isVirtualNetworkFilterEnabled: false
-    publicNetworkAccess: 'Enabled'
-    capabilities: []
-    databaseAccountOfferType: 'Standard'
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    defaultIdentity: 'FirstPartyIdentity'
-    disableLocalAuth: false
-    ipRules: []
   }
 }
 

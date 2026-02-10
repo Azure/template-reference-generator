@@ -11,24 +11,15 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
   }
   properties: {
     enableDiskEncryption: false
+    enableDoubleEncryption: false
+    enableStreamingIngest: false
+    restrictOutboundNetworkAccess: 'Disabled'
+    trustedExternalTenants: []
     enablePurge: false
     engineType: 'V2'
     publicIPType: 'IPv4'
     publicNetworkAccess: 'Enabled'
-    trustedExternalTenants: []
-    enableDoubleEncryption: false
-    enableStreamingIngest: false
-    restrictOutboundNetworkAccess: 'Disabled'
     enableAutoStop: true
-  }
-}
-
-resource managedPrivateEndpoint 'Microsoft.Kusto/clusters/managedPrivateEndpoints@2023-05-02' = {
-  name: resourceName
-  parent: cluster
-  properties: {
-    groupId: 'blob'
-    privateLinkResourceId: storageAccount.id
   }
 }
 
@@ -40,12 +31,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    minimumTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
     allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    defaultToOAuthAuthentication: false
+    allowSharedKeyAccess: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -57,13 +45,25 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    isHnsEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+    allowCrossTenantReplication: true
+    defaultToOAuthAuthentication: false
+    isNfsV3Enabled: false
     isSftpEnabled: false
     networkAcls: {
       defaultAction: 'Allow'
     }
-    accessTier: 'Hot'
-    allowSharedKeyAccess: true
-    isHnsEnabled: false
-    isNfsV3Enabled: false
+  }
+}
+
+resource managedPrivateEndpoint 'Microsoft.Kusto/clusters/managedPrivateEndpoints@2023-05-02' = {
+  name: resourceName
+  parent: cluster
+  properties: {
+    privateLinkResourceId: storageAccount.id
+    groupId: 'blob'
   }
 }

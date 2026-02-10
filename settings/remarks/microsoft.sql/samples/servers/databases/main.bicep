@@ -22,16 +22,16 @@ resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
   location: location
   parent: server
   properties: {
+    isLedgerOn: false
+    licenseType: 'LicenseIncluded'
+    maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
+    minCapacity: 0
+    requestedBackupStorageRedundancy: 'Geo'
+    elasticPoolId: ''
     readScale: 'Disabled'
     zoneRedundant: false
     autoPauseDelay: 0
     createMode: 'Default'
     highAvailabilityReplicaCount: 0
-    isLedgerOn: false
-    requestedBackupStorageRedundancy: 'Geo'
-    elasticPoolId: ''
-    licenseType: 'LicenseIncluded'
-    maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
-    minCapacity: 0
   }
 }

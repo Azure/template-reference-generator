@@ -17,9 +17,17 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    publicNetworkAccess: 'Enabled'
-    defaultToOAuthAuthentication: false
     isLocalUserEnabled: true
+    minimumTlsVersion: 'TLS1_2'
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    publicNetworkAccess: 'Enabled'
+    accessTier: 'Hot'
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
+    supportsHttpsTrafficOnly: true
+    allowCrossTenantReplication: false
+    allowSharedKeyAccess: true
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Allow'
@@ -27,9 +35,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       resourceAccessRules: []
       virtualNetworkRules: []
     }
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    dnsEndpointType: 'Standard'
     encryption: {
+      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -38,16 +47,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
           keyType: 'Service'
         }
       }
-      keySource: 'Microsoft.Storage'
     }
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: false
-    dnsEndpointType: 'Standard'
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
-    allowSharedKeyAccess: true
-    isHnsEnabled: false
-    isSftpEnabled: false
   }
 }
 
@@ -82,6 +82,17 @@ resource version 'Microsoft.Compute/galleries/applications/versions@2022-03-03' 
   ]
   properties: {
     publishingProfile: {
+      source: {
+        defaultConfigurationLink: ''
+        mediaLink: 'https://${storageAccount.name}.blob.core.windows.net/mycontainer/myblob'
+      }
+      targetRegions: [
+        {
+          name: location
+          regionalReplicaCount: 1
+          storageAccountType: 'Standard_LRS'
+        }
+      ]
       enableHealthCheck: false
       excludeFromLatest: false
       manageActions: {
@@ -89,17 +100,6 @@ resource version 'Microsoft.Compute/galleries/applications/versions@2022-03-03' 
         remove: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         update: ''
       }
-      source: {
-        defaultConfigurationLink: ''
-        mediaLink: 'https://${storageAccount.name}.blob.core.windows.net/mycontainer/myblob'
-      }
-      targetRegions: [
-        {
-          regionalReplicaCount: 1
-          storageAccountType: 'Standard_LRS'
-          name: location
-        }
-      ]
     }
     safetyProfile: {
       allowDeletionOfReplicatedLocations: true

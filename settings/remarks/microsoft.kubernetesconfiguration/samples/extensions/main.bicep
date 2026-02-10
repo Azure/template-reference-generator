@@ -7,10 +7,10 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-p
   properties: {
     agentPoolProfiles: [
       {
-        name: 'default'
-        vmSize: 'Standard_DS2_v2'
         count: 1
         mode: 'System'
+        name: 'default'
+        vmSize: 'Standard_DS2_v2'
       }
     ]
     dnsPrefix: '${resourceName}'
@@ -21,7 +21,7 @@ resource extension 'Microsoft.KubernetesConfiguration/extensions@2022-11-01' = {
   name: resourceName
   scope: managedCluster
   properties: {
-    extensionType: 'microsoft.flux'
     autoUpgradeMinorVersion: true
+    extensionType: 'microsoft.flux'
   }
 }

@@ -17,33 +17,40 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
   properties: {
     agentPoolProfiles: [
       {
-        kubeletDiskType: ''
-        osDiskType: 'Managed'
-        osType: 'Linux'
-        count: 1
-        enableAutoScaling: false
         enableEncryptionAtHost: false
-        enableUltraSSD: false
-        scaleDownMode: 'Delete'
+        kubeletDiskType: ''
+        mode: 'System'
+        osDiskType: 'Managed'
         tags: {}
+        type: 'VirtualMachineScaleSets'
+        enableAutoScaling: false
+        enableFIPS: false
+        name: 'default'
+        enableNodePublicIP: false
+        nodeLabels: {}
+        osType: 'Linux'
+        scaleDownMode: 'Delete'
+        count: 1
+        enableUltraSSD: false
         upgradeSettings: {
+          maxSurge: '10%'
           nodeSoakDurationInMinutes: 0
           drainTimeoutInMinutes: 0
-          maxSurge: '10%'
         }
-        enableFIPS: false
-        nodeLabels: {}
-        type: 'VirtualMachineScaleSets'
         vmSize: 'Standard_B2s'
-        enableNodePublicIP: false
-        mode: 'System'
-        name: 'default'
       }
     ]
     apiServerAccessProfile: {
       disableRunCommand: false
       enablePrivateCluster: false
       enablePrivateClusterPublicFQDN: false
+    }
+    disableLocalAccounts: false
+    dnsPrefix: '${resourceName}'
+    enableRBAC: true
+    kubernetesVersion: ''
+    servicePrincipalProfile: {
+      clientId: 'msi'
     }
     autoUpgradeProfile: {
       nodeOSUpgradeChannel: 'NodeImage'
@@ -54,22 +61,15 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
         enabled: false
       }
     }
-    disableLocalAccounts: false
-    enableRBAC: true
     metricsProfile: {
       costAnalysis: {
         enabled: false
       }
     }
     nodeResourceGroup: ''
-    addonProfiles: {}
-    dnsPrefix: '${resourceName}'
-    kubernetesVersion: ''
     securityProfile: {}
-    servicePrincipalProfile: {
-      clientId: 'msi'
-    }
     supportPlan: 'KubernetesOfficial'
+    addonProfiles: {}
   }
 }
 

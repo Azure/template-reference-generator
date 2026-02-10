@@ -1,17 +1,17 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource environment 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
   name: resourceName
   location: location
   sku: {
-    capacity: 1
     name: 'S1'
+    capacity: 1
   }
   kind: 'Gen1'
   properties: {
-    storageLimitExceededBehavior: 'PurgeOldData'
     dataRetentionTime: 'P30D'
+    storageLimitExceededBehavior: 'PurgeOldData'
   }
 }
 
@@ -23,8 +23,8 @@ resource referenceDataSet 'Microsoft.TimeSeriesInsights/environments/referenceDa
     dataStringComparisonBehavior: 'Ordinal'
     keyProperties: [
       {
-        type: 'String'
         name: 'keyProperty1'
+        type: 'String'
       }
     ]
   }

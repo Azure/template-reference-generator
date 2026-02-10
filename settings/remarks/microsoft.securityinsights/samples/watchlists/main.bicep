@@ -6,8 +6,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   location: location
   properties: {
     features: {
-      enableLogAccessUsingOnlyResourcePermissions: true
       disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
     }
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'

@@ -41,10 +41,10 @@ resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2021-06-01' = {
   properties: {
     enforceCertificateNameCheck: false
     hostName: 'contoso.com'
-    httpPort: 80
     httpsPort: 443
-    originHostHeader: 'www.contoso.com'
     enabledState: 'Enabled'
+    httpPort: 80
+    originHostHeader: 'www.contoso.com'
     priority: 1
     weight: 1
   }
@@ -54,6 +54,10 @@ resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2021-06-01' = {
   name: resourceName
   parent: afdEndpoint
   properties: {
+    enabledState: 'Enabled'
+    forwardingProtocol: 'MatchRequest'
+    httpsRedirect: 'Enabled'
+    linkToDefaultDomain: 'Enabled'
     originGroup: {
       id: originGroup.id
     }
@@ -64,9 +68,5 @@ resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2021-06-01' = {
       'Https'
       'Http'
     ]
-    enabledState: 'Enabled'
-    forwardingProtocol: 'MatchRequest'
-    httpsRedirect: 'Enabled'
-    linkToDefaultDomain: 'Enabled'
   }
 }

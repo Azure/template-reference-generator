@@ -14,8 +14,6 @@ resource map 'Microsoft.Logic/integrationAccounts/maps@2019-05-01' = {
   name: resourceName
   parent: integrationAccount
   properties: {
-    contentType: 'application/xml'
-    mapType: 'Xslt'
     content: '''<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:msxsl="urn:schemas-microsoft-com:xslt"
                 xmlns:var="http://schemas.microsoft.com/BizTalk/2003/var"
@@ -87,5 +85,7 @@ resource map 'Microsoft.Logic/integrationAccounts/maps@2019-05-01' = {
 </xsl:template>
 </xsl:stylesheet>
 '''
+    contentType: 'application/xml'
+    mapType: 'Xslt'
   }
 }

@@ -9,16 +9,16 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
     tier: 'Standard'
   }
   properties: {
-    anonymousPullEnabled: false
+    publicNetworkAccess: 'Enabled'
+    adminUserEnabled: false
     dataEndpointEnabled: false
+    zoneRedundancy: 'Disabled'
+    anonymousPullEnabled: false
     encryption: {
       status: 'disabled'
     }
     networkRuleBypassOptions: 'AzureServices'
     policies: {
-      exportPolicy: {
-        status: 'enabled'
-      }
       quarantinePolicy: {
         status: 'disabled'
       }
@@ -28,9 +28,9 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
       trustPolicy: {
         status: 'disabled'
       }
+      exportPolicy: {
+        status: 'enabled'
+      }
     }
-    adminUserEnabled: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundancy: 'Disabled'
   }
 }

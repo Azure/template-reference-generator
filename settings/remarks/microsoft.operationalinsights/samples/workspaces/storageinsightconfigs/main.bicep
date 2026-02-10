@@ -9,30 +9,30 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
     allowCrossTenantReplication: true
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
     allowSharedKeyAccess: true
     encryption: {
-      keySource: 'Microsoft.Storage'
       services: {
-        queue: {
-          keyType: 'Service'
-        }
         table: {
           keyType: 'Service'
         }
+        queue: {
+          keyType: 'Service'
+        }
       }
+      keySource: 'Microsoft.Storage'
     }
-    isHnsEnabled: false
-    isSftpEnabled: false
+    isNfsV3Enabled: false
     networkAcls: {
       defaultAction: 'Allow'
     }
-    allowBlobPublicAccess: true
-    defaultToOAuthAuthentication: false
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
 }
@@ -41,19 +41,19 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    retentionInDays: 30
     sku: {
       name: 'PerGB2018'
     }
     workspaceCapping: {
       dailyQuotaGb: -1
     }
-    features: {
-      enableLogAccessUsingOnlyResourcePermissions: true
-      disableLocalAuth: false
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    retentionInDays: 30
   }
 }
 
@@ -62,8 +62,8 @@ resource storageInsightConfig 'Microsoft.OperationalInsights/workspaces/storageI
   parent: workspace
   properties: {
     storageAccount: {
-      key: storageAccount.listKeys().keys[0].value
       id: storageAccount.id
+      key: storageAccount.listKeys().keys[0].value
     }
   }
 }

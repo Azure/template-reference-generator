@@ -1,8 +1,8 @@
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 @secure()
 @description('The administrator login password for the SQL server')
 param administratorLoginPassword string
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 
 param clientId string
 
@@ -10,9 +10,9 @@ resource server 'Microsoft.Sql/servers@2015-05-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLogin: 'mradministrator'
     administratorLoginPassword: '${administratorLoginPassword}'
     version: '12.0'
+    administratorLogin: 'mradministrator'
   }
 }
 
@@ -23,6 +23,6 @@ resource administrator 'Microsoft.Sql/servers/administrators@2020-11-01-preview'
     administratorType: 'ActiveDirectory'
     login: 'sqladmin'
     sid: clientId
-    tenantId: tenant()
+    tenantId: tenant().tenantId
   }
 }

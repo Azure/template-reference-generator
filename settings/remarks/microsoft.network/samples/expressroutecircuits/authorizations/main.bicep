@@ -1,13 +1,13 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
   name: resourceName
   location: location
   sku: {
-    tier: 'Standard'
     family: 'MeteredData'
     name: 'Standard_MeteredData'
+    tier: 'Standard'
   }
   properties: {
     authorizationKey: ''

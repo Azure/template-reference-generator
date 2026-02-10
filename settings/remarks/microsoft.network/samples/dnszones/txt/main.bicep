@@ -10,8 +10,6 @@ resource tXT 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
   name: resourceName
   parent: dnsZone
   properties: {
-    metadata: {}
-    TTL: 300
     TXTRecords: [
       {
         value: [
@@ -26,5 +24,7 @@ resource tXT 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
         ]
       }
     ]
+    metadata: {}
+    TTL: 300
   }
 }

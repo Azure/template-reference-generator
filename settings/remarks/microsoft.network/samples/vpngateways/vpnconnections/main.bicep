@@ -1,16 +1,27 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
+
+resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    allowBranchToBranchTraffic: true
+    disableVpnEncryption: false
+    office365LocalBreakoutCategory: 'None'
+    type: 'Standard'
+  }
+}
 
 resource vpnGateway 'Microsoft.Network/vpnGateways@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    enableBgpRouteTranslationForNat: false
     isRoutingPreferenceInternet: false
     virtualHub: {
       id: virtualHub.id
     }
     vpnGatewayScaleUnit: 1
-    enableBgpRouteTranslationForNat: false
   }
 }
 
@@ -18,6 +29,11 @@ resource vpnSite 'Microsoft.Network/vpnSites@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.1.0/24'
+      ]
+    }
     virtualWan: {
       id: virtualWan.id
     }
@@ -45,11 +61,6 @@ resource vpnSite 'Microsoft.Network/vpnSites@2022-07-01' = {
         }
       }
     ]
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.1.0/24'
-      ]
-    }
   }
 }
 
@@ -65,33 +76,33 @@ resource vpnConnection 'Microsoft.Network/vpnGateways/vpnConnections@2022-07-01'
       {
         name: 'link1'
         properties: {
-          vpnGatewayCustomBgpAddresses: []
+          enableBgp: false
+          enableRateLimiting: false
+          useLocalAzureIpAddress: false
+          vpnConnectionProtocolType: 'IKEv2'
+          vpnLinkConnectionMode: 'Default'
           vpnSiteLink: {
             id: resourceId('Microsoft.Network/vpnSites/vpnSiteLinks', vpnSite.name, 'link1')
           }
-          connectionBandwidth: 10
-          enableRateLimiting: false
           routingWeight: 0
-          useLocalAzureIpAddress: false
           usePolicyBasedTrafficSelectors: false
-          vpnConnectionProtocolType: 'IKEv2'
-          vpnLinkConnectionMode: 'Default'
-          enableBgp: false
+          vpnGatewayCustomBgpAddresses: []
+          connectionBandwidth: 10
         }
       }
       {
         name: 'link2'
         properties: {
-          useLocalAzureIpAddress: false
           usePolicyBasedTrafficSelectors: false
+          vpnConnectionProtocolType: 'IKEv2'
+          connectionBandwidth: 10
+          enableBgp: false
+          useLocalAzureIpAddress: false
           vpnGatewayCustomBgpAddresses: []
           vpnLinkConnectionMode: 'Default'
-          vpnConnectionProtocolType: 'IKEv2'
           vpnSiteLink: {
             id: resourceId('Microsoft.Network/vpnSites/vpnSiteLinks', vpnSite.name, 'link2')
           }
-          connectionBandwidth: 10
-          enableBgp: false
           enableRateLimiting: false
           routingWeight: 0
         }
@@ -110,16 +121,5 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
       minCapacity: 2
     }
     virtualWan: {}
-  }
-}
-
-resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    allowBranchToBranchTraffic: true
-    disableVpnEncryption: false
-    office365LocalBreakoutCategory: 'None'
-    type: 'Standard'
   }
 }

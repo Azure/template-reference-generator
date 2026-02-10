@@ -5,14 +5,10 @@ resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
   name: '${resourceName}-service'
   location: location
   sku: {
-    capacity: 0
     name: 'Consumption'
+    capacity: 0
   }
   properties: {
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
-    virtualNetworkType: 'None'
-    certificates: []
     customProperties: {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10': 'false'
@@ -22,6 +18,10 @@ resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
+    virtualNetworkType: 'None'
+    certificates: []
   }
 }
 
@@ -29,17 +29,17 @@ resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
   name: '${resourceName}-api;rev=1'
   parent: service
   properties: {
-    type: 'http'
+    apiRevisionDescription: ''
     apiType: 'http'
     apiVersionDescription: ''
     authenticationSettings: {}
     displayName: 'api1'
-    path: 'api1'
-    subscriptionRequired: true
-    apiRevisionDescription: ''
     protocols: [
       'https'
     ]
+    path: 'api1'
+    subscriptionRequired: true
+    type: 'http'
   }
 }
 

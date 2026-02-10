@@ -1,42 +1,41 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
+var accountName = 'resourcename'
 var dbName = 'resourcenamedb'
 var roleName = 'resourcenamerole'
-var accountName = 'resourcename'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   name: accountName
   location: location
   kind: 'MongoDB'
   properties: {
-    minimalTlsVersion: 'Tls12'
-    virtualNetworkRules: []
-    backupPolicy: null
-    disableKeyBasedMetadataWriteAccess: false
-    enableAutomaticFailover: false
-    isVirtualNetworkFilterEnabled: false
-    networkAclBypassResourceIds: []
     consistencyPolicy: {
+      maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
       defaultConsistencyLevel: 'Strong'
-      maxIntervalInSeconds: 5
     }
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableFreeTier: false
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
     locations: [
       {
-        failoverPriority: 0
         isZoneRedundant: false
         locationName: '${location}'
+        failoverPriority: 0
       }
     ]
-    publicNetworkAccess: 'Enabled'
-    defaultIdentity: 'FirstPartyIdentity'
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
     enableBurstCapacity: false
     enablePartitionMerge: false
-    networkAclBypass: 'None'
+    ipRules: []
+    backupPolicy: null
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    isVirtualNetworkFilterEnabled: false
+    publicNetworkAccess: 'Enabled'
     capabilities: [
       {
         name: 'EnableMongoRoleBasedAccessControl'
@@ -45,9 +44,10 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
         name: 'EnableMongo'
       }
     ]
-    databaseAccountOfferType: 'Standard'
+    enableFreeTier: false
     enableMultipleWriteLocations: false
-    ipRules: []
+    minimalTlsVersion: 'Tls12'
+    virtualNetworkRules: []
   }
 }
 

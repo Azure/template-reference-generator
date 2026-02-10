@@ -9,13 +9,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    allowBlobPublicAccess: true
     allowCrossTenantReplication: true
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    allowBlobPublicAccess: true
+    allowSharedKeyAccess: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -27,13 +29,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
+    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
   }
 }
 
@@ -41,27 +41,27 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
   name: resourceName
   location: location
   properties: {
-    cluster: {}
-    contentStoragePolicy: 'SystemAccount'
-    eventsOutOfOrderMaxDelayInSeconds: 50
-    jobType: 'Cloud'
     sku: {
       name: 'Standard'
     }
     transformation: {
       name: 'main'
       properties: {
+        streamingUnits: 3
         query: '''    SELECT *
     INTO [YourOutputAlias]
     FROM [YourInputAlias]
 '''
-        streamingUnits: 3
       }
     }
-    compatibilityLevel: '1.0'
+    cluster: {}
+    contentStoragePolicy: 'SystemAccount'
     dataLocale: 'en-GB'
-    eventsLateArrivalMaxDelayInSeconds: 60
     eventsOutOfOrderPolicy: 'Adjust'
+    jobType: 'Cloud'
+    compatibilityLevel: '1.0'
+    eventsLateArrivalMaxDelayInSeconds: 60
+    eventsOutOfOrderMaxDelayInSeconds: 50
     outputErrorPolicy: 'Drop'
   }
 }

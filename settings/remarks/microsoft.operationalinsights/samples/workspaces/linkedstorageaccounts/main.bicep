@@ -1,10 +1,52 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_GRS'
+  }
+  kind: 'StorageV2'
+  properties: {
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    defaultToOAuthAuthentication: false
+    encryption: {
+      keySource: 'Microsoft.Storage'
+      services: {
+        queue: {
+          keyType: 'Service'
+        }
+        table: {
+          keyType: 'Service'
+        }
+      }
+    }
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+  }
+}
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    sku: {
+      name: 'PerGB2018'
+    }
+    workspaceCapping: {
+      dailyQuotaGb: -1
+    }
     features: {
       disableLocalAuth: false
       enableLogAccessUsingOnlyResourcePermissions: true
@@ -12,12 +54,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
-    }
-    workspaceCapping: {
-      dailyQuotaGb: -1
-    }
   }
 }
 
@@ -28,41 +64,5 @@ resource linkedStorageAccount 'Microsoft.OperationalInsights/workspaces/linkedSt
     storageAccountIds: [
       storageAccount.id
     ]
-  }
-}
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  sku: {
-    name: 'Standard_GRS'
-  }
-  kind: 'StorageV2'
-  properties: {
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    minimumTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
-    encryption: {
-      services: {
-        queue: {
-          keyType: 'Service'
-        }
-        table: {
-          keyType: 'Service'
-        }
-      }
-      keySource: 'Microsoft.Storage'
-    }
   }
 }

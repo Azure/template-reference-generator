@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName
@@ -34,13 +34,13 @@ resource subscription 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2021
   name: resourceName
   parent: topic
   properties: {
-    clientAffineProperties: {}
-    deadLetteringOnFilterEvaluationExceptions: true
-    maxDeliveryCount: 10
+    isClientAffine: false
     requiresSession: false
+    clientAffineProperties: {}
+    maxDeliveryCount: 10
     status: 'Active'
+    deadLetteringOnFilterEvaluationExceptions: true
     deadLetteringOnMessageExpiration: false
     enableBatchedOperations: false
-    isClientAffine: false
   }
 }

@@ -18,12 +18,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    allowBlobPublicAccess: true
-    isHnsEnabled: false
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
+    isSftpEnabled: false
     networkAcls: {
       ipRules: []
       resourceAccessRules: []
@@ -31,12 +26,17 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       bypass: 'AzureServices'
       defaultAction: 'Allow'
     }
-    allowCrossTenantReplication: false
     isLocalUserEnabled: true
-    accessTier: 'Hot'
-    allowSharedKeyAccess: true
+    isNfsV3Enabled: false
+    minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: false
+    allowSharedKeyAccess: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -48,7 +48,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
         }
       }
     }
-    isSftpEnabled: false
+    isHnsEnabled: false
   }
 }
 

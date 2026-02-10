@@ -12,16 +12,6 @@ resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   }
 }
 
-resource storage 'Microsoft.AppPlatform/Spring/storages@2023-05-01-preview' = {
-  name: resourceName
-  parent: spring
-  properties: {
-    accountKey: storageAccount.listKeys().keys[0].value
-    accountName: storageAccount.name
-    storageType: 'StorageAccount'
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -30,19 +20,22 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowSharedKeyAccess: true
     isNfsV3Enabled: false
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
     isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    defaultToOAuthAuthentication: false
+    accessTier: 'Hot'
     encryption: {
+      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -51,9 +44,16 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
           keyType: 'Service'
         }
       }
-      keySource: 'Microsoft.Storage'
     }
-    isHnsEnabled: false
-    publicNetworkAccess: 'Enabled'
+  }
+}
+
+resource storage 'Microsoft.AppPlatform/Spring/storages@2023-05-01-preview' = {
+  name: resourceName
+  parent: spring
+  properties: {
+    accountName: storageAccount.name
+    storageType: 'StorageAccount'
+    accountKey: storageAccount.listKeys().keys[0].value
   }
 }

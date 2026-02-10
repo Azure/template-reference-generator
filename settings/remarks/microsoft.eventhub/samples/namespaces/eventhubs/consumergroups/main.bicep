@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
@@ -10,10 +10,10 @@ resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
     tier: 'Standard'
   }
   properties: {
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
     disableLocalAuth: false
     isAutoInflateEnabled: false
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
   }
 }
 

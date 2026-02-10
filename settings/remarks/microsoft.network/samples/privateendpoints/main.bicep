@@ -1,34 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.5.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: resourceName
-  parent: virtualNetwork
-  properties: {
-    addressPrefix: '10.5.4.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Disabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-  }
-}
+param location string = 'westeurope'
 
 resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
   name: resourceName
@@ -66,9 +37,6 @@ resource privateLinkService 'Microsoft.Network/privateLinkServices@2022-07-01' =
   name: resourceName
   location: location
   properties: {
-    autoApproval: {
-      subscriptions: []
-    }
     enableProxyProtocol: false
     fqdns: []
     ipConfigurations: [
@@ -91,6 +59,9 @@ resource privateLinkService 'Microsoft.Network/privateLinkServices@2022-07-01' =
     visibility: {
       subscriptions: []
     }
+    autoApproval: {
+      subscriptions: []
+    }
   }
 }
 
@@ -108,5 +79,34 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.5.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: resourceName
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.5.4.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Disabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
   name: resourceName

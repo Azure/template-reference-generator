@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource cluster 'Microsoft.ServiceFabric/clusters@2021-06-01' = {
   name: resourceName
@@ -11,15 +11,15 @@ resource cluster 'Microsoft.ServiceFabric/clusters@2021-06-01' = {
     nodeTypes: [
       {
         isStateless: false
-        httpGatewayEndpointPort: 80
-        isPrimary: true
-        multipleAvailabilityZones: false
         name: 'first'
         placementProperties: {}
         vmInstanceCount: 3
-        capacities: {}
         clientConnectionEndpointPort: 2020
+        httpGatewayEndpointPort: 80
+        multipleAvailabilityZones: false
+        capacities: {}
         durabilityLevel: 'Bronze'
+        isPrimary: true
       }
     ]
     reliabilityLevel: 'Bronze'

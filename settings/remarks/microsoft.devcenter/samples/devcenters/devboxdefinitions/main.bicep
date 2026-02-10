@@ -1,12 +1,12 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource devCenter 'Microsoft.DevCenter/devcenters@2023-04-01' = {
   name: resourceName
   location: location
   identity: {
-    userAssignedIdentities: null
     type: 'SystemAssigned'
+    userAssignedIdentities: null
   }
 }
 

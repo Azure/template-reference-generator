@@ -18,23 +18,41 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    clusterDefinition: {
-      configurations: {
-        gateway: {
-          'restAuthCredential.password': restCredentialPassword
-          'restAuthCredential.username': 'acctestusrgw'
-          'restAuthCredential.isEnabled': true
+    storageProfile: {
+      storageaccounts: [
+        {
+          isDefault: true
+          key: storageAccount.listKeys().keys[0].value
+          name: '.blob.core.windows.net'
         }
-      }
-      kind: 'Spark'
+      ]
+    }
+    tier: 'standard'
+    clusterDefinition: {
       componentVersion: {
         Spark: '2.4'
       }
+      configurations: {
+        gateway: {
+          'restAuthCredential.isEnabled': true
+          'restAuthCredential.password': restCredentialPassword
+          'restAuthCredential.username': 'acctestusrgw'
+        }
+      }
+      kind: 'Spark'
     }
     clusterVersion: '4.0.3000.1'
+    encryptionInTransitProperties: {
+      isEncryptionInTransitEnabled: false
+    }
+    minSupportedTlsVersion: '1.2'
+    osType: 'Linux'
     computeProfile: {
       roles: [
         {
+          hardwareProfile: {
+            vmSize: 'standard_a4_v2'
+          }
           name: 'headnode'
           osProfile: {
             linuxOperatingSystemProfile: {
@@ -43,14 +61,8 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
             }
           }
           targetInstanceCount: 2
-          hardwareProfile: {
-            vmSize: 'standard_a4_v2'
-          }
         }
         {
-          hardwareProfile: {
-            vmSize: 'standard_a4_v2'
-          }
           name: 'workernode'
           osProfile: {
             linuxOperatingSystemProfile: {
@@ -59,6 +71,9 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
             }
           }
           targetInstanceCount: 3
+          hardwareProfile: {
+            vmSize: 'standard_a4_v2'
+          }
         }
         {
           hardwareProfile: {
@@ -75,21 +90,6 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
         }
       ]
     }
-    encryptionInTransitProperties: {
-      isEncryptionInTransitEnabled: false
-    }
-    minSupportedTlsVersion: '1.2'
-    osType: 'Linux'
-    storageProfile: {
-      storageaccounts: [
-        {
-          isDefault: true
-          key: storageAccount.listKeys().keys[0].value
-          name: '.blob.core.windows.net'
-        }
-      ]
-    }
-    tier: 'standard'
   }
 }
 
@@ -101,31 +101,31 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    minimumTlsVersion: 'TLS1_2'
+    encryption: {
+      keySource: 'Microsoft.Storage'
+      services: {
+        queue: {
+          keyType: 'Service'
+        }
+        table: {
+          keyType: 'Service'
+        }
+      }
+    }
     isHnsEnabled: false
+    isNfsV3Enabled: false
     isSftpEnabled: false
+    accessTier: 'Hot'
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
-    encryption: {
-      keySource: 'Microsoft.Storage'
-      services: {
-        table: {
-          keyType: 'Service'
-        }
-        queue: {
-          keyType: 'Service'
-        }
-      }
-    }
-    isNfsV3Enabled: false
   }
 }
 

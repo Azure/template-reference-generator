@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
@@ -9,10 +9,9 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
     tier: 'Premium'
   }
   properties: {
+    anonymousPullEnabled: false
+    networkRuleBypassOptions: 'AzureServices'
     policies: {
-      retentionPolicy: {
-        status: 'disabled'
-      }
       trustPolicy: {
         status: 'disabled'
       }
@@ -22,16 +21,17 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
       quarantinePolicy: {
         status: 'disabled'
       }
+      retentionPolicy: {
+        status: 'disabled'
+      }
     }
-    publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
     adminUserEnabled: true
+    dataEndpointEnabled: false
     encryption: {
       status: 'disabled'
     }
-    anonymousPullEnabled: false
-    dataEndpointEnabled: false
-    networkRuleBypassOptions: 'AzureServices'
+    publicNetworkAccess: 'Enabled'
   }
 }
 

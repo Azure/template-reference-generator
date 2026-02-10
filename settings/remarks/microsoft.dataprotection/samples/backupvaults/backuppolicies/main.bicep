@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   name: resourceName
@@ -7,8 +7,8 @@ resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   properties: {
     storageSettings: [
       {
-        type: 'LocallyRedundant'
         datastoreType: 'VaultStore'
+        type: 'LocallyRedundant'
       }
     ]
   }
@@ -18,59 +18,59 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
   name: resourceName
   parent: backupVault
   properties: {
+    datasourceTypes: [
+      'Microsoft.DBforPostgreSQL/servers/databases'
+    ]
+    objectType: 'BackupPolicy'
     policyRules: [
       {
-        backupParameters: {
-          objectType: 'AzureBackupParams'
-          backupType: 'Full'
-        }
-        dataStore: {
-          dataStoreType: 'VaultStore'
-          objectType: 'DataStoreInfoBase'
-        }
         name: 'BackupIntervals'
         objectType: 'AzureBackupRule'
         trigger: {
-          taggingCriteria: [
-            {
-              tagInfo: {
-                id: 'Default_'
-                tagName: 'Default'
-              }
-              taggingPriority: 99
-              isDefault: true
-            }
-          ]
           objectType: 'ScheduleBasedTriggerContext'
           schedule: {
             repeatingTimeIntervals: [
               'R/2021-05-23T02:30:00+00:00/P1W'
             ]
           }
+          taggingCriteria: [
+            {
+              isDefault: true
+              tagInfo: {
+                id: 'Default_'
+                tagName: 'Default'
+              }
+              taggingPriority: 99
+            }
+          ]
+        }
+        backupParameters: {
+          backupType: 'Full'
+          objectType: 'AzureBackupParams'
+        }
+        dataStore: {
+          dataStoreType: 'VaultStore'
+          objectType: 'DataStoreInfoBase'
         }
       }
       {
+        objectType: 'AzureRetentionRule'
         isDefault: true
         lifecycles: [
           {
+            targetDataStoreCopySettings: []
             deleteAfter: {
               duration: 'P4M'
               objectType: 'AbsoluteDeleteOption'
             }
             sourceDataStore: {
-              dataStoreType: 'VaultStore'
               objectType: 'DataStoreInfoBase'
+              dataStoreType: 'VaultStore'
             }
-            targetDataStoreCopySettings: []
           }
         ]
         name: 'Default'
-        objectType: 'AzureRetentionRule'
       }
     ]
-    datasourceTypes: [
-      'Microsoft.DBforPostgreSQL/servers/databases'
-    ]
-    objectType: 'BackupPolicy'
   }
 }

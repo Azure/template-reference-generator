@@ -5,9 +5,17 @@ resource workbookTemplate 'Microsoft.Insights/workbookTemplates@2020-11-20' = {
   name: resourceName
   location: location
   properties: {
+    galleries: [
+      {
+        order: 0
+        resourceType: 'Azure Monitor'
+        type: 'workbook'
+        category: 'workbook'
+        name: 'test'
+      }
+    ]
+    priority: 0
     templateData: {
-      styleSettings: {}
-      version: 'Notebook/1.0'
       '$schema': 'https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json'
       items: [
         {
@@ -21,16 +29,8 @@ Welcome to your new workbook.'''
           type: 1
         }
       ]
+      styleSettings: {}
+      version: 'Notebook/1.0'
     }
-    galleries: [
-      {
-        category: 'workbook'
-        name: 'test'
-        order: 0
-        resourceType: 'Azure Monitor'
-        type: 'workbook'
-      }
-    ]
-    priority: 0
   }
 }

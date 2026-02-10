@@ -5,20 +5,13 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
   name: resourceName
   location: location
   properties: {
-    cluster: {}
-    compatibilityLevel: '1.0'
     contentStoragePolicy: 'SystemAccount'
     dataLocale: 'en-GB'
     eventsLateArrivalMaxDelayInSeconds: 60
-    eventsOutOfOrderMaxDelayInSeconds: 50
-    eventsOutOfOrderPolicy: 'Adjust'
-    outputErrorPolicy: 'Drop'
-    jobType: 'Cloud'
     sku: {
       name: 'Standard'
     }
     transformation: {
-      name: 'main'
       properties: {
         query: '''    SELECT *
     INTO [YourOutputAlias]
@@ -26,7 +19,14 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
 '''
         streamingUnits: 3
       }
+      name: 'main'
     }
+    cluster: {}
+    compatibilityLevel: '1.0'
+    eventsOutOfOrderMaxDelayInSeconds: 50
+    eventsOutOfOrderPolicy: 'Adjust'
+    jobType: 'Cloud'
+    outputErrorPolicy: 'Drop'
   }
 }
 

@@ -10,6 +10,8 @@ resource tXT 'Microsoft.Network/privateDnsZones/TXT@2018-09-01' = {
   name: resourceName
   parent: privateDnsZone
   properties: {
+    metadata: {}
+    ttl: 300
     txtRecords: [
       {
         value: [
@@ -24,7 +26,5 @@ resource tXT 'Microsoft.Network/privateDnsZones/TXT@2018-09-01' = {
         ]
       }
     ]
-    metadata: {}
-    ttl: 300
   }
 }

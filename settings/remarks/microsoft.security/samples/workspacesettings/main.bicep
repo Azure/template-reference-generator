@@ -11,8 +11,8 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 resource workspaceSetting 'Microsoft.Security/workspaceSettings@2017-08-01-preview' = {
   name: 'default'
   properties: {
-    scope: '/subscriptions/${subscription()}'
     workspaceId: module1.outputs.workspaceId
+    scope: '/subscriptions/${subscription().subscriptionId}'
   }
 }
 

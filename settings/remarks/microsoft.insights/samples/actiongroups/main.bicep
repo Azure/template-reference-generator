@@ -5,18 +5,18 @@ resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
   name: resourceName
   location: 'global'
   properties: {
-    armRoleReceivers: []
-    automationRunbookReceivers: []
-    azureAppPushReceivers: []
-    eventHubReceivers: []
-    groupShortName: 'acctestag'
-    itsmReceivers: []
-    logicAppReceivers: []
-    webhookReceivers: []
-    azureFunctionReceivers: []
     emailReceivers: []
     enabled: true
-    smsReceivers: []
+    eventHubReceivers: []
+    logicAppReceivers: []
     voiceReceivers: []
+    webhookReceivers: []
+    automationRunbookReceivers: []
+    azureAppPushReceivers: []
+    azureFunctionReceivers: []
+    groupShortName: 'acctestag'
+    itsmReceivers: []
+    smsReceivers: []
+    armRoleReceivers: []
   }
 }

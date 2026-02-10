@@ -1,16 +1,16 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' = {
   name: resourceName
   location: location
   properties: {
-    encryption: {
-      keySource: 'Microsoft.Automation'
-    }
     publicNetworkAccess: true
     sku: {
       name: 'Basic'
+    }
+    encryption: {
+      keySource: 'Microsoft.Automation'
     }
   }
 }
@@ -20,22 +20,22 @@ resource softwareUpdateConfiguration 'Microsoft.Automation/automationAccounts/so
   parent: automationAccount
   properties: {
     scheduleInfo: {
-      nextRunOffsetMinutes: 0
-      timeZone: 'Etc/UTC'
-      expiryTimeOffsetMinutes: 0
-      isEnabled: true
-      startTimeOffsetMinutes: 0
       description: ''
+      expiryTimeOffsetMinutes: 0
       frequency: 'OneTime'
       interval: 0
+      isEnabled: true
+      nextRunOffsetMinutes: 0
+      startTimeOffsetMinutes: 0
+      timeZone: 'Etc/UTC'
     }
     updateConfiguration: {
       duration: 'PT2H'
       linux: {
+        excludedPackageNameMasks: []
         includedPackageClassifications: 'Security'
         includedPackageNameMasks: []
         rebootSetting: 'IfRequired'
-        excludedPackageNameMasks: []
       }
       operatingSystem: 'Linux'
       targets: {

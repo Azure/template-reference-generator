@@ -11,10 +11,10 @@ resource federatedIdentityCredential 'Microsoft.ManagedIdentity/userAssignedIden
   location: location
   parent: userAssignedIdentity
   properties: {
-    subject: 'foo'
     audiences: [
       'foo'
     ]
     issuer: 'https://foo'
+    subject: 'foo'
   }
 }

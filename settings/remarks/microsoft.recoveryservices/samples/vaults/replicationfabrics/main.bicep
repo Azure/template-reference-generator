@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus2'
+param resourceName string = 'acctest0001'
 
 resource vault 'Microsoft.RecoveryServices/vaults@2022-10-01' = {
   name: resourceName
@@ -17,8 +17,8 @@ resource replicationFabric2 'Microsoft.RecoveryServices/vaults/replicationFabric
   parent: vault
   properties: {
     customDetails: {
-      location: '${location}'
       instanceType: 'Azure'
+      location: '${location}'
     }
   }
 }

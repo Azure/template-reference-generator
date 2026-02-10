@@ -21,6 +21,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.1.0.0/24'
     delegations: [
       {
         name: 'acctestdelegation-230630033653886950'
@@ -33,7 +34,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.1.0.0/24'
   }
 }
 

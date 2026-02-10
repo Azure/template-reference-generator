@@ -20,12 +20,12 @@ resource runbook 'Microsoft.Automation/automationAccounts/runbooks@2019-06-01' =
   location: location
   parent: automationAccount
   properties: {
-    logVerbose: true
-    runbookType: 'PowerShell'
     description: 'This is a test runbook for terraform acceptance test'
     draft: {}
     logActivityTrace: 0
     logProgress: true
+    logVerbose: true
+    runbookType: 'PowerShell'
   }
 }
 

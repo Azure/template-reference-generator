@@ -11,12 +11,12 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
     mode: 'All'
     parameters: {
       allowedLocations: {
+        type: 'Array'
         metadata: {
           description: 'The list of allowed locations for resources.'
           displayName: 'Allowed locations'
           strongType: 'location'
         }
-        type: 'Array'
       }
     }
     policyRule: {

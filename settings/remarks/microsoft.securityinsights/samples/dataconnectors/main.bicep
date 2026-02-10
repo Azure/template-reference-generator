@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
@@ -39,14 +39,14 @@ resource dataConnector 'Microsoft.SecurityInsights/dataConnectors@2022-10-01-pre
   properties: {
     dataTypes: {
       bingSafetyPhishingURL: {
-        state: 'Disabled'
         lookbackPeriod: ''
+        state: 'Disabled'
       }
       microsoftEmergingThreatFeed: {
         lookbackPeriod: '1970-01-01T00:00:00Z'
         state: 'enabled'
       }
     }
-    tenantId: tenant()
+    tenantId: tenant().tenantId
   }
 }

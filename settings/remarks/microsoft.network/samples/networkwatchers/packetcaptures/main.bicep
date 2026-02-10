@@ -4,6 +4,22 @@ param location string = 'westus'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
+  name: '${resourceName}-vnet'
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    privateEndpointVNetPolicies: 'Disabled'
+  }
+}
+
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: '${resourceName}-vm'
   location: location
@@ -31,37 +47,21 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        offer: '0001-com-ubuntu-server-jammy'
         publisher: 'Canonical'
         sku: '22_04-lts'
         version: 'latest'
+        offer: '0001-com-ubuntu-server-jammy'
       }
       osDisk: {
+        caching: 'ReadWrite'
         createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
         name: '${resourceName}-osdisk'
         writeAcceleratorEnabled: false
-        caching: 'ReadWrite'
       }
     }
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
-  name: '${resourceName}-vnet'
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    privateEndpointVNetPolicies: 'Disabled'
   }
 }
 
@@ -70,12 +70,12 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2024-03-01' = {
   location: location
   parent: virtualMachine
   properties: {
+    autoUpgradeMinorVersion: true
     enableAutomaticUpgrade: false
     publisher: 'Microsoft.Azure.NetworkWatcher'
     suppressFailures: false
     type: 'NetworkWatcherAgentLinux'
     typeHandlerVersion: '1.4'
-    autoUpgradeMinorVersion: true
   }
 }
 
@@ -88,14 +88,14 @@ resource packetCapture 'Microsoft.Network/networkWatchers/packetCaptures@2024-05
   name: '${resourceName}-pc'
   parent: networkWatcher
   properties: {
-    storageLocation: {
-      filePath: '/var/captures/packet.cap'
-    }
     target: virtualMachine.id
     targetType: 'AzureVM'
     timeLimitInSeconds: 18000
     totalBytesPerSession: 1073741824
     bytesToCapturePerPacket: 0
+    storageLocation: {
+      filePath: '/var/captures/packet.cap'
+    }
   }
 }
 
@@ -103,13 +103,13 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   name: 'internal'
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.0.2.0/24'
+    defaultOutboundAccess: true
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.0.2.0/24'
-    defaultOutboundAccess: true
   }
 }
 
@@ -123,10 +123,10 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
       {
         name: 'ipconfig1'
         properties: {
+          primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
           subnet: {}
-          primary: true
         }
       }
     ]

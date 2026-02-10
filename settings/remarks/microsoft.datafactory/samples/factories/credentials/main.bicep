@@ -1,5 +1,10 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
+
+resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+}
 
 resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: resourceName
@@ -23,9 +28,4 @@ resource credential 'Microsoft.DataFactory/factories/credentials@2018-06-01' = {
       resourceId: userAssignedIdentity.id
     }
   }
-}
-
-resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
 }

@@ -5,11 +5,11 @@ resource diskEncryptionSet 'Microsoft.Compute/diskEncryptionSets@2022-03-02' = {
   name: resourceName
   location: location
   properties: {
-    encryptionType: 'EncryptionAtRestWithCustomerKey'
     rotationToLatestKeyVersionEnabled: false
     activeKey: {
       sourceVault: {}
     }
+    encryptionType: 'EncryptionAtRestWithCustomerKey'
   }
 }
 
@@ -17,13 +17,13 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: resourceName
   location: location
   properties: {
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
     accessPolicies: []
     enableSoftDelete: true
-    tenantId: tenant()
-    sku: {
-      name: 'standard'
-      family: 'A'
-    }
+    tenantId: tenant().tenantId
   }
 }
 
@@ -31,6 +31,7 @@ resource key 'Microsoft.KeyVault/vaults/keys@2023-02-01' = {
   name: resourceName
   parent: vault
   properties: {
+    kty: 'RSA'
     keyOps: [
       'encrypt'
       'decrypt'
@@ -40,6 +41,5 @@ resource key 'Microsoft.KeyVault/vaults/keys@2023-02-01' = {
       'unwrapKey'
     ]
     keySize: 2048
-    kty: 'RSA'
   }
 }

@@ -1,17 +1,17 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: resourceName
   location: location
   properties: {
+    enableSoftDelete: true
+    tenantId: tenant().tenantId
     sku: {
       family: 'A'
       name: 'standard'
     }
     accessPolicies: []
-    enableSoftDelete: true
-    tenantId: tenant()
   }
 }
 
@@ -23,18 +23,18 @@ resource putAccesspolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' =
       {
         objectId: deployer().objectId
         permissions: {
-          secrets: [
-            'Set'
-          ]
-          storage: []
           certificates: [
             'ManageContacts'
           ]
           keys: [
             'Create'
           ]
+          secrets: [
+            'Set'
+          ]
+          storage: []
         }
-        tenantId: tenant()
+        tenantId: tenant().tenantId
       }
     ]
   }

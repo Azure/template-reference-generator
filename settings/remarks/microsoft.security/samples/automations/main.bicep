@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
   name: 'ExportToWorkspace'
@@ -33,10 +33,10 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
           {
             rules: [
               {
-                propertyJPath: 'type'
-                propertyType: 'String'
                 expectedValue: 'Microsoft.Security/assessments'
                 operator: 'Contains'
+                propertyJPath: 'type'
+                propertyType: 'String'
               }
             ]
           }
@@ -54,40 +54,40 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
           {
             rules: [
               {
+                propertyJPath: 'Severity'
                 propertyType: 'String'
                 expectedValue: 'low'
                 operator: 'Equals'
-                propertyJPath: 'Severity'
               }
             ]
           }
           {
             rules: [
               {
+                propertyJPath: 'Severity'
                 propertyType: 'String'
                 expectedValue: 'medium'
                 operator: 'Equals'
-                propertyJPath: 'Severity'
               }
             ]
           }
           {
             rules: [
               {
-                operator: 'Equals'
                 propertyJPath: 'Severity'
                 propertyType: 'String'
                 expectedValue: 'high'
+                operator: 'Equals'
               }
             ]
           }
           {
             rules: [
               {
+                expectedValue: 'informational'
                 operator: 'Equals'
                 propertyJPath: 'Severity'
                 propertyType: 'String'
-                expectedValue: 'informational'
               }
             ]
           }
@@ -124,18 +124,18 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    retentionInDays: 30
     sku: {
       name: 'PerGB2018'
     }
     workspaceCapping: {
       dailyQuotaGb: -1
     }
+    features: {
+      enableLogAccessUsingOnlyResourcePermissions: true
+      disableLocalAuth: false
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    retentionInDays: 30
   }
 }

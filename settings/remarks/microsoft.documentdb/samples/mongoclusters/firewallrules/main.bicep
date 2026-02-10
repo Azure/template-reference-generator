@@ -5,28 +5,28 @@ resource mongoCluster 'Microsoft.DocumentDB/mongoClusters@2025-09-01' = {
   name: resourceName
   location: location
   properties: {
-    authConfig: {
-      allowedModes: [
-        'MicrosoftEntraID'
-      ]
-    }
     compute: {
       tier: 'M40'
     }
     previewFeatures: [
       'ShardRebalancer'
     ]
+    publicNetworkAccess: 'Enabled'
     sharding: {
       shardCount: 1
     }
-    storage: {
-      sizeGb: 32
+    authConfig: {
+      allowedModes: [
+        'MicrosoftEntraID'
+      ]
     }
     highAvailability: {
       targetMode: 'Disabled'
     }
-    publicNetworkAccess: 'Enabled'
     serverVersion: '5.0'
+    storage: {
+      sizeGb: 32
+    }
   }
 }
 

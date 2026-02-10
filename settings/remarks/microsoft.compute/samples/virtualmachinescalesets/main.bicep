@@ -1,6 +1,35 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'internal'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
@@ -10,26 +39,33 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
     tier: 'Standard'
   }
   properties: {
-    additionalCapabilities: {}
+    doNotRunExtensionsOnOverprovisionedVMs: false
+    scaleInPolicy: {
+      forceDeletion: false
+      rules: [
+        'Default'
+      ]
+    }
     singlePlacementGroup: true
     upgradePolicy: {
       mode: 'Manual'
     }
-    doNotRunExtensionsOnOverprovisionedVMs: false
-    orchestrationMode: 'Uniform'
-    overprovision: true
-    scaleInPolicy: {
-      rules: [
-        'Default'
-      ]
-      forceDeletion: false
-    }
     virtualMachineProfile: {
+      diagnosticsProfile: {
+        bootDiagnostics: {
+          enabled: false
+          storageUri: ''
+        }
+      }
+      extensionProfile: {
+        extensionsTimeBudget: 'PT1H30M'
+      }
       networkProfile: {
         networkInterfaceConfigurations: [
           {
             name: 'example'
             properties: {
+              primary: true
               dnsSettings: {
                 dnsServers: []
               }
@@ -37,19 +73,18 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
               enableIPForwarding: false
               ipConfigurations: [
                 {
+                  name: 'internal'
                   properties: {
-                    primary: true
-                    privateIPAddressVersion: 'IPv4'
                     subnet: {}
                     applicationGatewayBackendAddressPools: []
                     applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
+                    primary: true
+                    privateIPAddressVersion: 'IPv4'
                   }
-                  name: 'internal'
                 }
               ]
-              primary: true
             }
           }
         ]
@@ -75,10 +110,10 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       storageProfile: {
         dataDisks: []
         imageReference: {
-          offer: 'UbuntuServer'
           publisher: 'Canonical'
           sku: '16.04-LTS'
           version: 'latest'
+          offer: 'UbuntuServer'
         }
         osDisk: {
           caching: 'ReadWrite'
@@ -90,44 +125,9 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           writeAcceleratorEnabled: false
         }
       }
-      diagnosticsProfile: {
-        bootDiagnostics: {
-          enabled: false
-          storageUri: ''
-        }
-      }
-      extensionProfile: {
-        extensionsTimeBudget: 'PT1H30M'
-      }
     }
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: 'internal'
-  parent: virtualNetwork
-  properties: {
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
+    additionalCapabilities: {}
+    orchestrationMode: 'Uniform'
+    overprovision: true
   }
 }

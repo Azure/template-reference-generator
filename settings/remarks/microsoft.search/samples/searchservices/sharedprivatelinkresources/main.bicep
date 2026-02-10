@@ -8,20 +8,20 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
     name: 'standard'
   }
   properties: {
-    partitionCount: 1
-    authOptions: {
-      apiKeyOnly: {}
-    }
     disableLocalAuth: false
-    networkRuleSet: {
-      ipRules: []
-    }
-    publicNetworkAccess: 'Enabled'
-    replicaCount: 1
     encryptionWithCmk: {
       enforcement: 'Disabled'
     }
     hostingMode: 'default'
+    partitionCount: 1
+    replicaCount: 1
+    networkRuleSet: {
+      ipRules: []
+    }
+    publicNetworkAccess: 'Enabled'
+    authOptions: {
+      apiKeyOnly: {}
+    }
   }
   tags: {
     environment: 'staging'
@@ -36,6 +36,18 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    accessTier: 'Hot'
+    allowCrossTenantReplication: true
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -47,20 +59,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isNfsV3Enabled: false
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    allowSharedKeyAccess: true
     isHnsEnabled: false
-    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    defaultToOAuthAuthentication: false
   }
 }
 

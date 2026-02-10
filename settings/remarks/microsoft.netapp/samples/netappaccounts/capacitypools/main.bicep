@@ -17,8 +17,8 @@ resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01'
   location: location
   parent: netAppAccount
   properties: {
-    size: 4398046511104
     serviceLevel: 'Standard'
+    size: 4398046511104
   }
   tags: {
     SkipASMAzSecPack: 'true'

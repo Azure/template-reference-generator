@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName

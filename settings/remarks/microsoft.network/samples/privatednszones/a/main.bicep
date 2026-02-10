@@ -10,8 +10,6 @@ resource a 'Microsoft.Network/privateDnsZones/A@2018-09-01' = {
   name: resourceName
   parent: privateDnsZone
   properties: {
-    metadata: {}
-    ttl: 300
     aRecords: [
       {
         ipv4Address: '1.2.4.5'
@@ -20,5 +18,7 @@ resource a 'Microsoft.Network/privateDnsZones/A@2018-09-01' = {
         ipv4Address: '1.2.3.4'
       }
     ]
+    metadata: {}
+    ttl: 300
   }
 }

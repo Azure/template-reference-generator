@@ -7,29 +7,29 @@ resource job 'Microsoft.App/jobs@2025-01-01' = {
   properties: {
     configuration: {
       manualTriggerConfig: {
-        parallelism: 4
         replicaCompletionCount: 1
+        parallelism: 4
       }
       replicaRetryLimit: 10
       replicaTimeout: 10
       triggerType: 'Manual'
     }
     template: {
+      volumes: []
       containers: [
         {
+          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
+          name: 'testcontainerappsjob0'
+          probes: []
           resources: {
             cpu: any('0.5')
             memory: '1Gi'
           }
           volumeMounts: []
           env: []
-          image: 'jackofallops/azure-containerapps-python-acctest:v0.0.1'
-          name: 'testcontainerappsjob0'
-          probes: []
         }
       ]
       initContainers: []
-      volumes: []
     }
   }
 }

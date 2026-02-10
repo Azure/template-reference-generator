@@ -1,6 +1,22 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource component 'Microsoft.Insights/components@2020-02-02' = {
+  name: resourceName
+  location: location
+  kind: 'web'
+  properties: {
+    DisableIpMasking: false
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    Application_Type: 'web'
+    DisableLocalAuth: false
+    ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
+    SamplingPercentage: 100
+  }
+}
+
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
@@ -9,8 +25,6 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     name: 'Consumption'
   }
   properties: {
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
     virtualNetworkType: 'None'
     certificates: []
     customProperties: {
@@ -22,6 +36,8 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
   }
 }
 
@@ -43,21 +59,5 @@ resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
     description: ''
     isBuffered: true
     loggerType: 'applicationInsights'
-  }
-}
-
-resource component 'Microsoft.Insights/components@2020-02-02' = {
-  name: resourceName
-  location: location
-  kind: 'web'
-  properties: {
-    publicNetworkAccessForIngestion: 'Enabled'
-    Application_Type: 'web'
-    DisableIpMasking: false
-    DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
-    publicNetworkAccessForQuery: 'Enabled'
-    RetentionInDays: 90
-    SamplingPercentage: 100
   }
 }

@@ -1,26 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: '${resourceName}-nic'
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
-        }
-      }
-    ]
-  }
-}
-
 resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
   name: '${resourceName}-rpc'
   location: location
@@ -33,27 +13,11 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: '${resourceName}-vm'
   location: location
   properties: {
-    priority: 'Regular'
-    additionalCapabilities: {}
-    diagnosticsProfile: {
-      bootDiagnostics: {
-        enabled: false
-        storageUri: ''
-      }
-    }
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
     osProfile: {
       adminUsername: 'adminuser'
       allowExtensionOperations: true
       computerName: '${resourceName}-vm'
       linuxConfiguration: {
-        patchSettings: {
-          patchMode: 'ImageDefault'
-          assessmentMode: 'ImageDefault'
-        }
-        provisionVMAgent: true
         ssh: {
           publicKeys: [
             {
@@ -63,25 +27,31 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
           ]
         }
         disablePasswordAuthentication: true
+        patchSettings: {
+          assessmentMode: 'ImageDefault'
+          patchMode: 'ImageDefault'
+        }
+        provisionVMAgent: true
       }
       secrets: []
     }
+    priority: 'Regular'
     storageProfile: {
       dataDisks: []
       imageReference: {
-        publisher: 'Canonical'
-        sku: '22_04-lts'
         version: 'latest'
         offer: '0001-com-ubuntu-server-jammy'
+        publisher: 'Canonical'
+        sku: '22_04-lts'
       }
       osDisk: {
-        caching: 'ReadWrite'
         createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
         osType: 'Linux'
         writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
       }
     }
     applicationProfile: {
@@ -97,6 +67,16 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
           id: networkInterface.id
         }
       ]
+    }
+    additionalCapabilities: {}
+    diagnosticsProfile: {
+      bootDiagnostics: {
+        enabled: false
+        storageUri: ''
+      }
+    }
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
     }
   }
 }
@@ -128,12 +108,32 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   name: '${resourceName}-subnet'
   parent: virtualNetwork
   properties: {
-    serviceEndpoints: []
-    addressPrefix: '10.0.0.0/24'
     defaultOutboundAccess: true
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
+    serviceEndpoints: []
+    addressPrefix: '10.0.0.0/24'
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: '${resourceName}-nic'
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
+        }
+      }
+    ]
   }
 }

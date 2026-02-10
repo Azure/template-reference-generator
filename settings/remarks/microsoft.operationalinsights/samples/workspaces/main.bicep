@@ -5,11 +5,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    publicNetworkAccessForQuery: 'Enabled'
-    retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
-    }
     workspaceCapping: {
       dailyQuotaGb: -1
     }
@@ -18,5 +13,10 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
       enableLogAccessUsingOnlyResourcePermissions: true
     }
     publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    retentionInDays: 30
+    sku: {
+      name: 'PerGB2018'
+    }
   }
 }

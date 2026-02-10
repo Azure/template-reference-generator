@@ -5,15 +5,15 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-p
   name: resourceName
   location: location
   properties: {
-    dnsPrefix: '${resourceName}'
     agentPoolProfiles: [
       {
-        count: 1
         mode: 'System'
         name: 'default'
         vmSize: 'Standard_DS2_v2'
+        count: 1
       }
     ]
+    dnsPrefix: '${resourceName}'
   }
 }
 
@@ -21,8 +21,8 @@ resource agentPool 'Microsoft.ContainerService/managedClusters/agentPools@2023-0
   name: 'internal'
   parent: managedCluster
   properties: {
+    vmSize: 'Standard_DS2_v2'
     count: 1
     mode: 'User'
-    vmSize: 'Standard_DS2_v2'
   }
 }

@@ -16,9 +16,9 @@ resource apiPortal 'Microsoft.AppPlatform/Spring/apiPortals@2023-05-01-preview' 
   name: 'default'
   parent: spring
   sku: {
+    tier: 'Enterprise'
     capacity: 1
     name: 'E0'
-    tier: 'Enterprise'
   }
   properties: {
     httpsOnly: false

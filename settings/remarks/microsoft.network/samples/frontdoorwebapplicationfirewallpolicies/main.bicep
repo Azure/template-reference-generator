@@ -11,7 +11,7 @@ resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebAp
     customRules: {
       rules: [
         {
-          action: 'Block'
+          enabledState: 'Enabled'
           matchConditions: [
             {
               matchValue: [
@@ -23,20 +23,18 @@ resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebAp
               operator: 'IPMatch'
             }
           ]
-          priority: 1
-          rateLimitThreshold: 10
-          ruleType: 'MatchRule'
-          enabledState: 'Enabled'
           name: 'Rule1'
+          priority: 1
           rateLimitDurationInMinutes: 1
+          ruleType: 'MatchRule'
+          action: 'Block'
+          rateLimitThreshold: 10
         }
       ]
     }
     managedRules: {
       managedRuleSets: [
         {
-          ruleSetAction: 'Block'
-          ruleSetType: 'DefaultRuleSet'
           ruleSetVersion: 'preview-0.1'
           ruleGroupOverrides: [
             {
@@ -50,6 +48,8 @@ resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebAp
               ]
             }
           ]
+          ruleSetAction: 'Block'
+          ruleSetType: 'DefaultRuleSet'
         }
         {
           ruleSetAction: 'Block'

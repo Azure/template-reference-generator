@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource namespace 'Microsoft.NotificationHubs/namespaces@2017-04-01' = {
   name: resourceName
@@ -8,9 +8,9 @@ resource namespace 'Microsoft.NotificationHubs/namespaces@2017-04-01' = {
     name: 'Free'
   }
   properties: {
-    region: 'westeurope'
     enabled: true
     namespaceType: 'NotificationHub'
+    region: 'westeurope'
   }
 }
 

@@ -5,12 +5,10 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
   sku: {
-    capacity: 0
     name: 'Consumption'
+    capacity: 0
   }
   properties: {
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
     virtualNetworkType: 'None'
     certificates: []
     customProperties: {
@@ -22,6 +20,8 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
   }
 }
 

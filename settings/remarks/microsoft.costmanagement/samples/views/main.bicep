@@ -29,6 +29,18 @@ resource view 'Microsoft.CostManagement/views@2022-10-01' = {
     ]
     query: {
       dataSet: {
+        grouping: [
+          {
+            name: 'ResourceGroupName'
+            type: 'Dimension'
+          }
+        ]
+        sorting: [
+          {
+            direction: 'Ascending'
+            name: 'BillingMonth'
+          }
+        ]
         aggregation: {
           totalCost: {
             function: 'Sum'
@@ -40,18 +52,6 @@ resource view 'Microsoft.CostManagement/views@2022-10-01' = {
           }
         }
         granularity: 'Monthly'
-        grouping: [
-          {
-            name: 'ResourceGroupName'
-            type: 'Dimension'
-          }
-        ]
-        sorting: [
-          {
-            name: 'BillingMonth'
-            direction: 'Ascending'
-          }
-        ]
       }
       timeframe: 'MonthToDate'
       type: 'Usage'

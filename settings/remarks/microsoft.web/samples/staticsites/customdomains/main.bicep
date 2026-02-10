@@ -1,5 +1,5 @@
-param location string = 'westus'
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource staticSite 'Microsoft.Web/staticSites@2021-02-01' = {
   name: resourceName

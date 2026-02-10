@@ -9,19 +9,19 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
   }
   properties: {
     disableLocalAuth: false
-    encryptionWithCmk: {
-      enforcement: 'Disabled'
-    }
     hostingMode: 'default'
     networkRuleSet: {
       ipRules: []
     }
+    partitionCount: 1
     publicNetworkAccess: 'Enabled'
     replicaCount: 1
+    encryptionWithCmk: {
+      enforcement: 'Disabled'
+    }
     authOptions: {
       apiKeyOnly: {}
     }
-    partitionCount: 1
   }
   tags: {
     environment: 'staging'

@@ -4,53 +4,10 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param vmAdminPassword string
 
-resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    storageProfile: {
-      imageReference: {
-        offer: 'UbuntuServer'
-        publisher: 'Canonical'
-        sku: '16.04-LTS'
-        version: 'latest'
-      }
-      osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        name: 'myosdisk1'
-        writeAcceleratorEnabled: false
-      }
-    }
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: false
-          }
-        }
-      ]
-    }
-    osProfile: {
-      computerName: 'hostname230630032848831819'
-      linuxConfiguration: {
-        disablePasswordAuthentication: false
-      }
-      adminPassword: vmAdminPassword
-      adminUsername: 'testadmin'
-    }
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
@@ -59,6 +16,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     dhcpOptions: {
       dnsServers: []
     }
+    subnets: []
   }
 }
 
@@ -86,7 +44,7 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
     networkManagerScopes: {
       managementGroups: []
       subscriptions: [
-        '/subscriptions/${subscription()}'
+        '/subscriptions/${subscription().subscriptionId}'
       ]
     }
   }
@@ -145,5 +103,47 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
         }
       }
     ]
+  }
+}
+
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+          properties: {
+            primary: false
+          }
+        }
+      ]
+    }
+    osProfile: {
+      adminUsername: 'testadmin'
+      computerName: 'hostname230630032848831819'
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+      }
+      adminPassword: vmAdminPassword
+    }
+    storageProfile: {
+      imageReference: {
+        offer: 'UbuntuServer'
+        publisher: 'Canonical'
+        sku: '16.04-LTS'
+        version: 'latest'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        name: 'myosdisk1'
+        writeAcceleratorEnabled: false
+      }
+    }
   }
 }

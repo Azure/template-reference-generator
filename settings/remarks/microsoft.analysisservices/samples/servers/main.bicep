@@ -8,12 +8,12 @@ resource server 'Microsoft.AnalysisServices/servers@2017-08-01' = {
     name: 'B1'
   }
   properties: {
-    asAdministrators: {
-      members: []
-    }
     ipV4FirewallSettings: {
       enablePowerBIService: false
       firewallRules: []
+    }
+    asAdministrators: {
+      members: []
     }
   }
 }

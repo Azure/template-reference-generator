@@ -17,30 +17,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  name: '${resourceName}-subnet'
-  parent: virtualNetwork
-  properties: {
-    addressPrefix: '10.88.2.0/24'
-    defaultOutboundAccess: true
-    delegations: [
-      {
-        name: 'netapp-delegation'
-        properties: {
-          serviceName: 'Microsoft.NetApp/volumes'
-        }
-      }
-    ]
-    serviceEndpointPolicies: []
-    networkSecurityGroup: {
-      id: networkSecurityGroup.id
-    }
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpoints: []
-  }
-}
-
 resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
   name: '${resourceName}-acct'
   location: location
@@ -52,11 +28,35 @@ resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2025-01-01'
   location: location
   parent: netAppAccount
   properties: {
+    coolAccess: false
+    encryptionType: 'Single'
     qosType: 'Auto'
     serviceLevel: 'Standard'
     size: 4398046511104
-    coolAccess: false
-    encryptionType: 'Single'
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
+  name: '${resourceName}-subnet'
+  parent: virtualNetwork
+  properties: {
+    delegations: [
+      {
+        name: 'netapp-delegation'
+        properties: {
+          serviceName: 'Microsoft.NetApp/volumes'
+        }
+      }
+    ]
+    networkSecurityGroup: {
+      id: networkSecurityGroup.id
+    }
+    privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+    addressPrefix: '10.88.2.0/24'
+    defaultOutboundAccess: true
   }
 }
 
@@ -65,8 +65,6 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-0
   location: location
   parent: capacityPool
   properties: {
-    creationToken: '${resourceName}-path'
-    dataProtection: {}
     exportPolicy: {
       rules: []
     }
@@ -76,6 +74,8 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-0
     serviceLevel: 'Standard'
     subnetId: subnet.id
     usageThreshold: any('1.073741824e+11')
+    creationToken: '${resourceName}-path'
+    dataProtection: {}
   }
 }
 

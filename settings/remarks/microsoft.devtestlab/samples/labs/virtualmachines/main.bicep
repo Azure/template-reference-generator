@@ -1,8 +1,8 @@
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 @secure()
 @description('The password for the DevTest Lab virtual machine')
 param vmPassword string
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 
 resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
   name: resourceName
@@ -17,24 +17,24 @@ resource virtualMachine 'Microsoft.DevTestLab/labs/virtualMachines@2018-09-15' =
   location: location
   parent: lab
   properties: {
-    password: vmPassword
+    labSubnetName: '${resourceName}Subnet'
+    osType: 'Windows'
     size: 'Standard_F2'
-    allowClaim: true
+    userName: 'acct5stU5er'
     galleryImageReference: {
-      offer: 'WindowsServer'
       osType: 'Windows'
       publisher: 'MicrosoftWindowsServer'
       sku: '2012-Datacenter'
       version: 'latest'
+      offer: 'WindowsServer'
     }
-    labSubnetName: '${resourceName}Subnet'
-    storageType: 'Standard'
-    userName: 'acct5stU5er'
-    disallowPublicIpAddress: false
-    isAuthenticationWithSshKey: false
     networkInterface: {}
     notes: ''
-    osType: 'Windows'
+    password: vmPassword
+    storageType: 'Standard'
+    allowClaim: true
+    disallowPublicIpAddress: false
+    isAuthenticationWithSshKey: false
   }
 }
 

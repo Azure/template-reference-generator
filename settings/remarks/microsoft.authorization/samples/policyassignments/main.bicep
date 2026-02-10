@@ -25,6 +25,7 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01'
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: resourceName
   properties: {
+    policyType: 'Custom'
     description: ''
     displayName: 'my-policy-definition'
     mode: 'All'
@@ -49,6 +50,5 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
         effect: 'audit'
       }
     }
-    policyType: 'Custom'
   }
 }

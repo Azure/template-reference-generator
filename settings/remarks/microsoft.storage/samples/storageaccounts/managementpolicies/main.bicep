@@ -9,7 +9,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'BlobStorage'
   properties: {
-    accessTier: 'Hot'
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -23,17 +24,16 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       }
     }
     isHnsEnabled: false
-    minimumTlsVersion: 'TLS1_2'
+    isNfsV3Enabled: false
+    isSftpEnabled: false
     networkAcls: {
       defaultAction: 'Allow'
     }
-    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
     allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    isNfsV3Enabled: false
-    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -46,29 +46,29 @@ resource managementPolicy 'Microsoft.Storage/storageAccounts/managementPolicies@
         {
           definition: {
             actions: {
-              snapshot: {
-                delete: {
-                  daysAfterCreationGreaterThan: 30
-                }
-              }
               baseBlob: {
-                tierToCool: {
-                  daysAfterModificationGreaterThan: 10
-                }
                 delete: {
                   daysAfterModificationGreaterThan: 100
                 }
                 tierToArchive: {
                   daysAfterModificationGreaterThan: 50
                 }
+                tierToCool: {
+                  daysAfterModificationGreaterThan: 10
+                }
+              }
+              snapshot: {
+                delete: {
+                  daysAfterCreationGreaterThan: 30
+                }
               }
             }
             filters: {
-              prefixMatch: [
-                'container1/prefix1'
-              ]
               blobTypes: [
                 'blockBlob'
+              ]
+              prefixMatch: [
+                'container1/prefix1'
               ]
             }
           }

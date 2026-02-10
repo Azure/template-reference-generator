@@ -9,7 +9,6 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     name: 'Consumption'
   }
   properties: {
-    virtualNetworkType: 'None'
     certificates: []
     customProperties: {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
@@ -22,6 +21,7 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publicNetworkAccess: 'Enabled'
     publisherEmail: 'pub1@email.com'
     publisherName: 'pub1'
+    virtualNetworkType: 'None'
   }
 }
 

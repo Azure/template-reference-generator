@@ -8,9 +8,9 @@ resource namespace 'Microsoft.NotificationHubs/namespaces@2017-04-01' = {
     name: 'Free'
   }
   properties: {
+    region: 'westeurope'
     enabled: true
     namespaceType: 'NotificationHub'
-    region: 'westeurope'
   }
 }
 

@@ -16,6 +16,8 @@ resource backupPolicy 'Microsoft.RecoveryServices/vaults/backupPolicies@2023-02-
   name: resourceName
   parent: vault
   properties: {
+    timeZone: 'UTC'
+    workLoadType: 'AzureFileShare'
     backupManagementType: 'AzureStorage'
     retentionPolicy: {
       dailySchedule: {
@@ -36,7 +38,5 @@ resource backupPolicy 'Microsoft.RecoveryServices/vaults/backupPolicies@2023-02-
         '2018-07-30T23:00:00Z'
       ]
     }
-    timeZone: 'UTC'
-    workLoadType: 'AzureFileShare'
   }
 }

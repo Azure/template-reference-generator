@@ -14,11 +14,11 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     enableDiskEncryption: false
     enablePurge: false
     enableStreamingIngest: false
-    publicIPType: 'IPv4'
-    publicNetworkAccess: 'Enabled'
-    enableDoubleEncryption: false
     engineType: 'V2'
+    publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
+    enableDoubleEncryption: false
+    publicIPType: 'IPv4'
     trustedExternalTenants: []
   }
 }

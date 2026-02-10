@@ -10,8 +10,6 @@ resource aAAA 'Microsoft.Network/privateDnsZones/AAAA@2018-09-01' = {
   name: resourceName
   parent: privateDnsZone
   properties: {
-    metadata: {}
-    ttl: 300
     aaaaRecords: [
       {
         ipv6Address: 'fd5d:70bc:930e:d008:0000:0000:0000:7334'
@@ -20,5 +18,7 @@ resource aAAA 'Microsoft.Network/privateDnsZones/AAAA@2018-09-01' = {
         ipv6Address: 'fd5d:70bc:930e:d008::7335'
       }
     ]
+    metadata: {}
+    ttl: 300
   }
 }

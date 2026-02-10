@@ -1,6 +1,22 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource component 'Microsoft.Insights/components@2020-02-02' = {
+  name: resourceName
+  location: location
+  kind: 'web'
+  properties: {
+    RetentionInDays: 90
+    SamplingPercentage: 100
+    Application_Type: 'web'
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    DisableIpMasking: false
+    DisableLocalAuth: false
+    ForceCustomerStorageForProfiler: false
+  }
+}
+
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
@@ -11,11 +27,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   properties: {
     certificates: []
     customProperties: {
-      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10': 'false'
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11': 'false'
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
@@ -29,27 +45,11 @@ resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
   name: resourceName
   parent: service
   properties: {
-    description: ''
-    isBuffered: true
-    loggerType: 'applicationInsights'
     credentials: {
       instrumentationKey: component.properties.InstrumentationKey
     }
-  }
-}
-
-resource component 'Microsoft.Insights/components@2020-02-02' = {
-  name: resourceName
-  location: location
-  kind: 'web'
-  properties: {
-    RetentionInDays: 90
-    publicNetworkAccessForIngestion: 'Enabled'
-    Application_Type: 'web'
-    DisableIpMasking: false
-    DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
-    SamplingPercentage: 100
-    publicNetworkAccessForQuery: 'Enabled'
+    description: ''
+    isBuffered: true
+    loggerType: 'applicationInsights'
   }
 }

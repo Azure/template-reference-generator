@@ -1,5 +1,5 @@
-param location string = 'westus'
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: '${toLower(substring(resourceName, 0, 16))}acc'
@@ -9,75 +9,37 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    allowBlobPublicAccess: true
     allowCrossTenantReplication: false
+    defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
-    isHnsEnabled: false
-    isLocalUserEnabled: true
-    publicNetworkAccess: 'Enabled'
+    networkAcls: {
+      resourceAccessRules: []
+      virtualNetworkRules: []
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+      ipRules: []
+    }
     supportsHttpsTrafficOnly: true
-    allowSharedKeyAccess: true
+    allowBlobPublicAccess: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        table: {
+        queue: {
           keyType: 'Service'
         }
-        queue: {
+        table: {
           keyType: 'Service'
         }
       }
     }
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: []
-      resourceAccessRules: []
-      virtualNetworkRules: []
-    }
+    isLocalUserEnabled: true
     accessTier: 'Hot'
-    defaultToOAuthAuthentication: false
-    isSftpEnabled: false
+    isHnsEnabled: false
     isNfsV3Enabled: false
+    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
-  }
-}
-
-resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: '${resourceName}vault'
-  location: location
-  properties: {
-    accessPolicies: []
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
-    enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    tenantId: tenant()
-    createMode: 'default'
-    enablePurgeProtection: true
-    enableRbacAuthorization: false
-    enableSoftDelete: true
-  }
-}
-
-resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
-  name: '${resourceName}-mlw'
-  location: location
-  sku: {
-    name: 'Basic'
-    tier: 'Basic'
-  }
-  kind: 'Default'
-  properties: {
-    publicNetworkAccess: 'Enabled'
-    storageAccount: storageAccount.id
-    v1LegacyMode: false
-    applicationInsights: component.id
-    keyVault: vault.id
+    allowSharedKeyAccess: true
   }
 }
 
@@ -91,6 +53,60 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
   parent: storageaccountBlobservices
   properties: {
     publicAccess: 'None'
+  }
+}
+
+resource component 'Microsoft.Insights/components@2020-02-02' = {
+  name: '${resourceName}-ai'
+  location: location
+  kind: 'web'
+  properties: {
+    SamplingPercentage: 100
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    DisableLocalAuth: false
+    Application_Type: 'web'
+    DisableIpMasking: false
+    ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
+  }
+}
+
+resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
+  name: '${resourceName}vault'
+  location: location
+  properties: {
+    createMode: 'default'
+    enableRbacAuthorization: false
+    publicNetworkAccess: 'Enabled'
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    tenantId: tenant().tenantId
+    accessPolicies: []
+    enablePurgeProtection: true
+    enableSoftDelete: true
+    enabledForDeployment: false
+    enabledForDiskEncryption: false
+    enabledForTemplateDeployment: false
+  }
+}
+
+resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
+  name: '${resourceName}-mlw'
+  location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Basic'
+  }
+  kind: 'Default'
+  properties: {
+    storageAccount: storageAccount.id
+    v1LegacyMode: false
+    applicationInsights: component.id
+    keyVault: vault.id
+    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -114,21 +130,5 @@ resource dataStore 'Microsoft.MachineLearningServices/workspaces/dataStores@2024
     datastoreType: 'AzureBlob'
     description: ''
     endpoint: 'core.windows.net'
-  }
-}
-
-resource component 'Microsoft.Insights/components@2020-02-02' = {
-  name: '${resourceName}-ai'
-  location: location
-  kind: 'web'
-  properties: {
-    DisableIpMasking: false
-    ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
-    SamplingPercentage: 100
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    Application_Type: 'web'
-    DisableLocalAuth: false
   }
 }

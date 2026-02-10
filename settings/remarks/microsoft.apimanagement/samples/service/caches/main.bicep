@@ -9,7 +9,6 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     name: 'Consumption'
   }
   properties: {
-    publicNetworkAccess: 'Enabled'
     publisherEmail: 'pub1@email.com'
     publisherName: 'pub1'
     virtualNetworkType: 'None'
@@ -22,6 +21,7 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
     }
     disableGateway: false
+    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -29,8 +29,8 @@ resource cache 'Microsoft.ApiManagement/service/caches@2021-08-01' = {
   name: resourceName
   parent: service
   properties: {
-    useFromLocation: 'default'
     connectionString: '${redis.name}.redis.cache.windows.net:6380,password=${redis.listKeys().primaryKey},ssl=true,abortConnect=False'
+    useFromLocation: 'default'
   }
 }
 

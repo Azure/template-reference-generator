@@ -2,6 +2,46 @@ param resourceName string = 'acctest0001'
 param resourceSiteName string = 'acctestsite0001'
 param location string = 'westeurope'
 
+resource site 'Microsoft.Web/sites@2022-09-01' = {
+  name: resourceSiteName
+  location: location
+  properties: {
+    clientAffinityEnabled: false
+    enabled: true
+    publicNetworkAccess: 'Enabled'
+    serverFarmId: serverfarm.id
+    vnetRouteAllEnabled: false
+    clientCertEnabled: false
+    clientCertMode: 'Required'
+    httpsOnly: false
+    siteConfig: {
+      acrUseManagedIdentityCreds: false
+      ftpsState: 'Disabled'
+      http20Enabled: false
+      localMySqlEnabled: false
+      minTlsVersion: '1.2'
+      webSocketsEnabled: false
+      windowsFxVersion: ''
+      alwaysOn: true
+      remoteDebuggingEnabled: false
+      use32BitWorkerProcess: true
+      loadBalancing: 'LeastRequests'
+      scmIpSecurityRestrictionsUseMain: false
+      scmMinTlsVersion: '1.2'
+      vnetRouteAllEnabled: false
+      autoHealEnabled: false
+      managedPipelineMode: 'Integrated'
+      publicNetworkAccess: 'Enabled'
+    }
+  }
+}
+
+resource dynatraceSiteExtension 'Microsoft.Web/sites/siteextensions@2022-09-01' = {
+  name: 'Dynatrace'
+  location: location
+  parent: site
+}
+
 resource serverfarm 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: resourceName
   location: location
@@ -14,44 +54,4 @@ resource serverfarm 'Microsoft.Web/serverfarms@2022-09-01' = {
     reserved: false
     zoneRedundant: false
   }
-}
-
-resource site 'Microsoft.Web/sites@2022-09-01' = {
-  name: resourceSiteName
-  location: location
-  properties: {
-    clientCertMode: 'Required'
-    httpsOnly: false
-    publicNetworkAccess: 'Enabled'
-    siteConfig: {
-      managedPipelineMode: 'Integrated'
-      minTlsVersion: '1.2'
-      scmMinTlsVersion: '1.2'
-      acrUseManagedIdentityCreds: false
-      http20Enabled: false
-      localMySqlEnabled: false
-      remoteDebuggingEnabled: false
-      use32BitWorkerProcess: true
-      alwaysOn: true
-      ftpsState: 'Disabled'
-      scmIpSecurityRestrictionsUseMain: false
-      vnetRouteAllEnabled: false
-      windowsFxVersion: ''
-      autoHealEnabled: false
-      loadBalancing: 'LeastRequests'
-      publicNetworkAccess: 'Enabled'
-      webSocketsEnabled: false
-    }
-    vnetRouteAllEnabled: false
-    clientAffinityEnabled: false
-    clientCertEnabled: false
-    enabled: true
-    serverFarmId: serverfarm.id
-  }
-}
-
-resource dynatraceSiteExtension 'Microsoft.Web/sites/siteextensions@2022-09-01' = {
-  name: 'Dynatrace'
-  location: location
-  parent: site
 }

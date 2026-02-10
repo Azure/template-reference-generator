@@ -1,50 +1,50 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
+var accountName = 'resourcename'
 var keyspaceName = 'resourcenameks'
 var tableName = 'resourcenametbl'
-var accountName = 'resourcename'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   name: accountName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: [
-      {
-        name: 'EnableCassandra'
-      }
-    ]
-    enableBurstCapacity: false
-    enableFreeTier: false
-    enablePartitionMerge: false
-    minimalTlsVersion: 'Tls12'
-    networkAclBypassResourceIds: []
-    databaseAccountOfferType: 'Standard'
     disableLocalAuth: false
-    enableAnalyticalStorage: true
-    enableAutomaticFailover: false
-    backupPolicy: null
-    disableKeyBasedMetadataWriteAccess: false
-    enableMultipleWriteLocations: false
+    enableFreeTier: false
     ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: '${location}'
-      }
-    ]
-    networkAclBypass: 'None'
-    publicNetworkAccess: 'Enabled'
     consistencyPolicy: {
       maxStalenessPrefix: 100
       defaultConsistencyLevel: 'Strong'
       maxIntervalInSeconds: 5
     }
     defaultIdentity: 'FirstPartyIdentity'
+    enableBurstCapacity: false
+    enablePartitionMerge: false
+    locations: [
+      {
+        isZoneRedundant: false
+        locationName: '${location}'
+        failoverPriority: 0
+      }
+    ]
+    networkAclBypassResourceIds: []
+    capabilities: [
+      {
+        name: 'EnableCassandra'
+      }
+    ]
+    databaseAccountOfferType: 'Standard'
+    disableKeyBasedMetadataWriteAccess: false
     virtualNetworkRules: []
+    enableAnalyticalStorage: true
+    enableAutomaticFailover: false
+    enableMultipleWriteLocations: false
+    isVirtualNetworkFilterEnabled: false
+    minimalTlsVersion: 'Tls12'
+    networkAclBypass: 'None'
+    publicNetworkAccess: 'Enabled'
+    backupPolicy: null
   }
 }
 
@@ -65,9 +65,12 @@ resource table 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables@
   properties: {
     options: {}
     resource: {
-      analyticalStorageTtl: 1
-      id: '${tableName}'
       schema: {
+        partitionKeys: [
+          {
+            name: 'test1'
+          }
+        ]
         clusterKeys: []
         columns: [
           {
@@ -75,16 +78,13 @@ resource table 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables@
             type: 'ascii'
           }
           {
-            type: 'int'
             name: 'test2'
-          }
-        ]
-        partitionKeys: [
-          {
-            name: 'test1'
+            type: 'int'
           }
         ]
       }
+      analyticalStorageTtl: 1
+      id: '${tableName}'
     }
   }
 }

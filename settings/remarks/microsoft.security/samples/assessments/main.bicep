@@ -11,6 +11,15 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   location: location
 }
 
+resource pricing 'Microsoft.Security/pricings@2023-01-01' = {
+  name: 'VirtualMachines'
+  properties: {
+    extensions: []
+    pricingTier: 'Standard'
+    subPlan: 'P2'
+  }
+}
+
 resource assessmentMetadata 'Microsoft.Security/assessmentMetadata@2021-06-01' = {
   name: 'fdaaa62c-1d42-45ab-be2f-2af194dd1700'
   properties: {
@@ -21,21 +30,12 @@ resource assessmentMetadata 'Microsoft.Security/assessmentMetadata@2021-06-01' =
   }
 }
 
-resource pricing 'Microsoft.Security/pricings@2023-01-01' = {
-  name: 'VirtualMachines'
-  properties: {
-    extensions: []
-    pricingTier: 'Standard'
-    subPlan: 'P2'
-  }
-}
-
 module module1 'main-rg-module.bicep' = {
   name: 'deploy-rg-resources'
   scope: resourceGroup
   params: {
-    resourceName: resourceName
     adminPassword: adminPassword
+    resourceName: resourceName
     location: location
   }
 }

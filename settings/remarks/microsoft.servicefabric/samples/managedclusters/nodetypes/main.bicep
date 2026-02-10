@@ -1,10 +1,10 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @description('The administrator username for the Service Fabric managed cluster')
 param adminUsername string
 @secure()
 @description('The administrator password for the Service Fabric managed cluster')
 param adminPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
   name: resourceName
@@ -13,45 +13,45 @@ resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
     name: 'Standard'
   }
   properties: {
-    adminPassword: '${adminPassword}'
-    adminUserName: '${adminUsername}'
     clientConnectionPort: 12345
-    clusterUpgradeCadence: 'Wave0'
-    dnsName: '${resourceName}'
+    httpGatewayConnectionPort: 23456
     loadBalancingRules: [
       {
-        protocol: 'tcp'
         backendPort: 8000
         frontendPort: 443
         probeProtocol: 'http'
         probeRequestPath: '/'
+        protocol: 'tcp'
       }
     ]
     networkSecurityRules: [
       {
-        direction: 'inbound'
-        priority: 1000
-        protocol: 'tcp'
-        sourcePortRanges: [
-          '1-65535'
-        ]
-        access: 'allow'
-        name: 'rule443-allow-fe'
-        sourceAddressPrefixes: [
-          '0.0.0.0/0'
-        ]
         destinationAddressPrefixes: [
           '0.0.0.0/0'
         ]
         destinationPortRanges: [
           '443'
         ]
+        direction: 'inbound'
+        name: 'rule443-allow-fe'
+        priority: 1000
+        protocol: 'tcp'
+        sourcePortRanges: [
+          '1-65535'
+        ]
+        access: 'allow'
+        sourceAddressPrefixes: [
+          '0.0.0.0/0'
+        ]
       }
     ]
     addonFeatures: [
       'DnsService'
     ]
-    httpGatewayConnectionPort: 23456
+    adminPassword: '${adminPassword}'
+    adminUserName: '${adminUsername}'
+    clusterUpgradeCadence: 'Wave0'
+    dnsName: '${resourceName}'
   }
   tags: {
     Test: 'value'
@@ -62,27 +62,27 @@ resource nodeType 'Microsoft.ServiceFabric/managedClusters/nodeTypes@2021-05-01'
   name: resourceName
   parent: managedCluster
   properties: {
-    vmInstanceCount: 5
-    dataDiskSizeGB: 130
+    capacities: {}
+    dataDiskType: 'Standard_LRS'
     multiplePlacementGroups: false
     vmImageOffer: 'WindowsServer'
-    vmImageSku: '2016-Datacenter'
-    dataDiskType: 'Standard_LRS'
+    vmImagePublisher: 'MicrosoftWindowsServer'
     ephemeralPorts: {
       endPort: 20000
       startPort: 10000
     }
-    isStateless: false
-    vmImagePublisher: 'MicrosoftWindowsServer'
+    vmInstanceCount: 5
+    vmSecrets: []
     vmSize: 'Standard_DS2_v2'
-    vmImageVersion: 'latest'
+    vmImageSku: '2016-Datacenter'
+    dataDiskSizeGB: 130
+    isPrimary: true
+    isStateless: false
     applicationPorts: {
       endPort: 9000
       startPort: 7000
     }
-    capacities: {}
-    isPrimary: true
     placementProperties: {}
-    vmSecrets: []
+    vmImageVersion: 'latest'
   }
 }

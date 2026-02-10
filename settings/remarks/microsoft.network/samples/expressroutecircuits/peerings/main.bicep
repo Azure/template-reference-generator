@@ -18,9 +18,9 @@ resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01'
   name: resourceName
   location: location
   sku: {
+    family: 'MeteredData'
     name: 'Premium_MeteredData'
     tier: 'Premium'
-    family: 'MeteredData'
   }
   properties: {
     authorizationKey: ''
@@ -35,13 +35,13 @@ resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = 
   name: 'AzurePrivatePeering'
   parent: expressRouteCircuit
   properties: {
-    vlanId: 100
+    state: 'Enabled'
     azureASN: 12076
     gatewayManagerEtag: ''
-    peerASN: 100
-    state: 'Enabled'
-    peeringType: 'AzurePrivatePeering'
     primaryPeerAddressPrefix: '192.168.1.0/30'
+    vlanId: 100
+    peerASN: 100
+    peeringType: 'AzurePrivatePeering'
     secondaryPeerAddressPrefix: '192.168.2.0/30'
     sharedKey: '${expressRouteSharedKey}'
   }

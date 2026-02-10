@@ -24,6 +24,9 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: [
       {
@@ -31,9 +34,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
       }
     ]
     addressPrefix: '10.7.28.0/25'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
   }
 }
 
@@ -54,7 +54,7 @@ resource virtualNetworkRule 'Microsoft.Sql/servers/virtualNetworkRules@2020-11-0
   name: resourceName
   parent: server
   properties: {
-    virtualNetworkSubnetId: subnet.id
     ignoreMissingVnetServiceEndpoint: false
+    virtualNetworkSubnetId: subnet.id
   }
 }

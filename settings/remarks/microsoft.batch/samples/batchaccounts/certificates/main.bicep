@@ -22,9 +22,9 @@ resource certificate 'Microsoft.Batch/batchAccounts/certificates@2022-10-01' = {
   name: 'SHA1-${certificateThumbprint}'
   parent: batchAccount
   properties: {
-    thumbprint: '${certificateThumbprint}'
-    thumbprintAlgorithm: 'sha1'
     data: '${certificateData}'
     format: 'Cer'
+    thumbprint: '${certificateThumbprint}'
+    thumbprintAlgorithm: 'sha1'
   }
 }

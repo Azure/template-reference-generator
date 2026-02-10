@@ -1,30 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource p2svpnGateway 'Microsoft.Network/p2svpnGateways@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    isRoutingPreferenceInternet: false
-    p2SConnectionConfigurations: [
-      {
-        properties: {
-          vpnClientAddressPool: {
-            addressPrefixes: [
-              '172.100.0.0/14'
-            ]
-          }
-          enableInternetSecurity: false
-        }
-        name: 'first'
-      }
-    ]
-    virtualHub: {}
-    vpnGatewayScaleUnit: 1
-    vpnServerConfiguration: {}
-  }
-}
-
 resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
   name: resourceName
   location: location
@@ -42,10 +18,10 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    office365LocalBreakoutCategory: 'None'
     type: 'Standard'
     allowBranchToBranchTraffic: true
     disableVpnEncryption: false
+    office365LocalBreakoutCategory: 'None'
   }
 }
 
@@ -53,6 +29,9 @@ resource vpnServerConfiguration 'Microsoft.Network/vpnServerConfigurations@2022-
   name: resourceName
   location: location
   properties: {
+    vpnAuthenticationTypes: [
+      'Certificate'
+    ]
     vpnClientIpsecPolicies: []
     vpnClientRevokedCertificates: []
     vpnClientRootCertificates: [
@@ -85,8 +64,29 @@ M/s/1JRtO3bDSzD9TazRVzn2oBqzSa8VgIo5C1nOnoAKJTlsClJKvIhnRlaLQqk=
       'OpenVPN'
       'IkeV2'
     ]
-    vpnAuthenticationTypes: [
-      'Certificate'
+  }
+}
+
+resource p2svpnGateway 'Microsoft.Network/p2svpnGateways@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    vpnServerConfiguration: {}
+    isRoutingPreferenceInternet: false
+    p2SConnectionConfigurations: [
+      {
+        properties: {
+          enableInternetSecurity: false
+          vpnClientAddressPool: {
+            addressPrefixes: [
+              '172.100.0.0/14'
+            ]
+          }
+        }
+        name: 'first'
+      }
     ]
+    virtualHub: {}
+    vpnGatewayScaleUnit: 1
   }
 }

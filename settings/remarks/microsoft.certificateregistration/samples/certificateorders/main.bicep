@@ -5,10 +5,10 @@ resource certificateOrder 'Microsoft.CertificateRegistration/certificateOrders@2
   name: resourceName
   location: 'global'
   properties: {
+    distinguishedName: 'CN=example.com'
     keySize: 2048
     productType: 'StandardDomainValidatedSsl'
     validityInYears: 1
     autoRenew: true
-    distinguishedName: 'CN=example.com'
   }
 }

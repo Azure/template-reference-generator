@@ -8,8 +8,26 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
   name: resourceName
   location: location
   properties: {
+    autoShutdownProfile: {
+      shutdownOnDisconnect: 'Disabled'
+      shutdownOnIdle: 'None'
+      shutdownWhenNotConnected: 'Disabled'
+    }
+    connectionProfile: {
+      clientRdpAccess: 'None'
+      clientSshAccess: 'None'
+      webRdpAccess: 'None'
+      webSshAccess: 'None'
+    }
+    securityProfile: {
+      openAccess: 'Disabled'
+    }
     title: 'Test Title'
     virtualMachineProfile: {
+      sku: {
+        capacity: 1
+        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
+      }
       usageQuota: 'PT0S'
       useSharedPassword: 'Disabled'
       additionalCapabilities: {
@@ -21,29 +39,11 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
       }
       createOption: 'Image'
       imageReference: {
+        offer: '0001-com-ubuntu-server-focal'
         publisher: 'canonical'
         sku: '20_04-lts'
         version: 'latest'
-        offer: '0001-com-ubuntu-server-focal'
       }
-      sku: {
-        capacity: 1
-        name: 'Classic_Fsv2_2_4GB_128_S_SSD'
-      }
-    }
-    autoShutdownProfile: {
-      shutdownOnIdle: 'None'
-      shutdownWhenNotConnected: 'Disabled'
-      shutdownOnDisconnect: 'Disabled'
-    }
-    connectionProfile: {
-      clientRdpAccess: 'None'
-      clientSshAccess: 'None'
-      webRdpAccess: 'None'
-      webSshAccess: 'None'
-    }
-    securityProfile: {
-      openAccess: 'Disabled'
     }
   }
 }

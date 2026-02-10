@@ -8,9 +8,9 @@ resource redis 'Microsoft.Cache/redis@2023-04-01' = {
     enableNonSslPort: true
     minimumTlsVersion: '1.2'
     sku: {
+      name: 'Standard'
       capacity: 2
       family: 'C'
-      name: 'Standard'
     }
   }
 }

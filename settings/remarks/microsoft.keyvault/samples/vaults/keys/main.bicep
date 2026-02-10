@@ -5,14 +5,14 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: resourceName
   location: location
   properties: {
-    enableSoftDelete: true
-    enablePurgeProtection: true
-    tenantId: tenant()
     sku: {
       family: 'A'
       name: 'standard'
     }
     accessPolicies: []
+    enableSoftDelete: true
+    enablePurgeProtection: true
+    tenantId: tenant().tenantId
   }
 }
 
@@ -24,6 +24,13 @@ resource putAccesspolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' =
       {
         objectId: deployer().objectId
         permissions: {
+          secrets: [
+            'Get'
+          ]
+          storage: []
+          certificates: [
+            'ManageContacts'
+          ]
           keys: [
             'Get'
             'Create'
@@ -39,15 +46,8 @@ resource putAccesspolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' =
             'Sign'
             'Verify'
           ]
-          secrets: [
-            'Get'
-          ]
-          storage: []
-          certificates: [
-            'ManageContacts'
-          ]
         }
-        tenantId: tenant()
+        tenantId: tenant().tenantId
       }
     ]
   }

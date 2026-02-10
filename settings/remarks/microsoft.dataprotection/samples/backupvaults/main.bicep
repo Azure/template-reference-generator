@@ -7,8 +7,8 @@ resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   properties: {
     storageSettings: [
       {
-        datastoreType: 'VaultStore'
         type: 'LocallyRedundant'
+        datastoreType: 'VaultStore'
       }
     ]
   }

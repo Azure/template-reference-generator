@@ -19,33 +19,33 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
   name: resourceName
   location: location
   properties: {
-    clientCertMode: 'Required'
+    clientAffinityEnabled: false
+    clientCertEnabled: false
     enabled: true
     httpsOnly: false
     siteConfig: {
-      use32BitWorkerProcess: true
-      acrUseManagedIdentityCreds: false
-      http20Enabled: false
       localMySqlEnabled: false
-      scmMinTlsVersion: '1.2'
-      vnetRouteAllEnabled: false
-      ftpsState: 'Disabled'
-      publicNetworkAccess: 'Enabled'
+      managedPipelineMode: 'Integrated'
       remoteDebuggingEnabled: false
+      use32BitWorkerProcess: true
+      ftpsState: 'Disabled'
+      loadBalancing: 'LeastRequests'
+      publicNetworkAccess: 'Enabled'
       scmIpSecurityRestrictionsUseMain: false
+      windowsFxVersion: ''
+      http20Enabled: false
+      webSocketsEnabled: false
       alwaysOn: true
       autoHealEnabled: false
-      webSocketsEnabled: false
-      windowsFxVersion: ''
-      loadBalancing: 'LeastRequests'
-      managedPipelineMode: 'Integrated'
       minTlsVersion: '1.2'
+      scmMinTlsVersion: '1.2'
+      vnetRouteAllEnabled: false
+      acrUseManagedIdentityCreds: false
     }
-    clientCertEnabled: false
+    vnetRouteAllEnabled: false
+    clientCertMode: 'Required'
     publicNetworkAccess: 'Enabled'
     serverFarmId: serverfarm.id
-    vnetRouteAllEnabled: false
-    clientAffinityEnabled: false
   }
 }
 
@@ -56,31 +56,31 @@ resource slot 'Microsoft.Web/sites/slots@2022-09-01' = {
   properties: {
     clientAffinityEnabled: false
     clientCertExclusionPaths: ''
-    publicNetworkAccess: 'Enabled'
-    siteConfig: {
-      autoHealEnabled: false
-      ftpsState: 'Disabled'
-      managedPipelineMode: 'Integrated'
-      scmMinTlsVersion: '1.2'
-      use32BitWorkerProcess: false
-      alwaysOn: true
-      http20Enabled: false
-      loadBalancing: 'LeastRequests'
-      localMySqlEnabled: false
-      publicNetworkAccess: 'Enabled'
-      remoteDebuggingEnabled: false
-      scmIpSecurityRestrictionsUseMain: false
-      webSocketsEnabled: false
-      acrUseManagedIdentityCreds: false
-      minTlsVersion: '1.2'
-      vnetRouteAllEnabled: false
-      windowsFxVersion: ''
-    }
-    vnetRouteAllEnabled: false
-    clientCertEnabled: false
     clientCertMode: 'Required'
     enabled: true
     httpsOnly: false
+    publicNetworkAccess: 'Enabled'
+    vnetRouteAllEnabled: false
+    clientCertEnabled: false
     serverFarmId: serverfarm.id
+    siteConfig: {
+      http20Enabled: false
+      loadBalancing: 'LeastRequests'
+      localMySqlEnabled: false
+      use32BitWorkerProcess: false
+      acrUseManagedIdentityCreds: false
+      autoHealEnabled: false
+      ftpsState: 'Disabled'
+      publicNetworkAccess: 'Enabled'
+      managedPipelineMode: 'Integrated'
+      minTlsVersion: '1.2'
+      scmIpSecurityRestrictionsUseMain: false
+      vnetRouteAllEnabled: false
+      webSocketsEnabled: false
+      windowsFxVersion: ''
+      alwaysOn: true
+      remoteDebuggingEnabled: false
+      scmMinTlsVersion: '1.2'
+    }
   }
 }

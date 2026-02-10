@@ -5,9 +5,9 @@ resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
   sku: {
+    capacity: 0
     name: 'Standard'
     tier: 'Standard'
-    capacity: 0
   }
   properties: {
     disableLocalAuth: false
@@ -20,13 +20,13 @@ resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-06-01-preview' = {
   name: resourceName
   parent: namespace
   properties: {
+    enableExpress: false
     enablePartitioning: false
     maxSizeInMegabytes: 5120
     requiresDuplicateDetection: false
     status: 'Active'
     supportOrdering: false
     enableBatchedOperations: false
-    enableExpress: false
   }
 }
 

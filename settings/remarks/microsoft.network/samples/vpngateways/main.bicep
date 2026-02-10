@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
   name: resourceName
@@ -18,10 +18,10 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    allowBranchToBranchTraffic: true
     disableVpnEncryption: false
     office365LocalBreakoutCategory: 'None'
     type: 'Standard'
+    allowBranchToBranchTraffic: true
   }
 }
 
@@ -29,11 +29,11 @@ resource vpnGateway 'Microsoft.Network/vpnGateways@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    virtualHub: {
-      id: virtualHub.id
-    }
     vpnGatewayScaleUnit: 1
     enableBgpRouteTranslationForNat: false
     isRoutingPreferenceInternet: false
+    virtualHub: {
+      id: virtualHub.id
+    }
   }
 }

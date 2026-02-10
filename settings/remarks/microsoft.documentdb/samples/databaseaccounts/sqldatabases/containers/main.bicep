@@ -7,17 +7,24 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   kind: 'GlobalDocumentDB'
   properties: {
     disableKeyBasedMetadataWriteAccess: false
+    enableAnalyticalStorage: false
+    networkAclBypass: 'None'
     enableAutomaticFailover: false
-    enableFreeTier: false
     virtualNetworkRules: []
     consistencyPolicy: {
-      defaultConsistencyLevel: 'BoundedStaleness'
       maxIntervalInSeconds: 10
       maxStalenessPrefix: 200
+      defaultConsistencyLevel: 'BoundedStaleness'
     }
+    defaultIdentity: 'FirstPartyIdentity'
+    disableLocalAuth: false
     ipRules: []
-    networkAclBypass: 'None'
+    isVirtualNetworkFilterEnabled: false
     publicNetworkAccess: 'Enabled'
+    capabilities: []
+    databaseAccountOfferType: 'Standard'
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
     locations: [
       {
         failoverPriority: 0
@@ -25,14 +32,7 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    capabilities: []
-    defaultIdentity: 'FirstPartyIdentity'
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    isVirtualNetworkFilterEnabled: false
     networkAclBypassResourceIds: []
-    databaseAccountOfferType: 'Standard'
-    enableMultipleWriteLocations: false
   }
 }
 
@@ -40,11 +40,11 @@ resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10
   name: resourceName
   parent: databaseAccount
   properties: {
-    resource: {
-      id: '${resourceName}'
-    }
     options: {
       throughput: 400
+    }
+    resource: {
+      id: '${resourceName}'
     }
   }
 }
@@ -53,15 +53,15 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
   name: resourceName
   parent: sqlDatabase
   properties: {
+    options: {}
     resource: {
       id: 'test-containerWest Europe'
       partitionKey: {
-        kind: 'Hash'
         paths: [
           '/definition'
         ]
+        kind: 'Hash'
       }
     }
-    options: {}
   }
 }

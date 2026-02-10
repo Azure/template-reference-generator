@@ -5,21 +5,16 @@ resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
   sku: {
+    capacity: 1
     name: 'Standard'
     tier: 'Standard'
-    capacity: 1
   }
   properties: {
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
     disableLocalAuth: false
     isAutoInflateEnabled: false
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
   }
-}
-
-resource workspace 'Microsoft.HealthcareApis/workspaces@2022-12-01' = {
-  name: resourceName
-  location: location
 }
 
 resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
@@ -32,25 +27,17 @@ resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   }
 }
 
-resource fhirService 'Microsoft.HealthcareApis/workspaces/fhirServices@2022-12-01' = {
+resource consumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumerGroups@2021-11-01' = {
+  name: resourceName
+  parent: eventhub
+  properties: {
+    userMetadata: ''
+  }
+}
+
+resource workspace 'Microsoft.HealthcareApis/workspaces@2022-12-01' = {
   name: resourceName
   location: location
-  parent: workspace
-  kind: 'fhir-R4'
-  properties: {
-    acrConfiguration: {}
-    authenticationConfiguration: {
-      smartProxyEnabled: false
-      audience: 'https://acctestfhir.fhir.azurehealthcareapis.com'
-      authority: 'https://login.microsoftonline.com/${tenant()}'
-    }
-    corsConfiguration: {
-      allowCredentials: false
-      headers: []
-      methods: []
-      origins: []
-    }
-  }
 }
 
 resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12-01' = {
@@ -71,14 +58,6 @@ resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12
   }
 }
 
-resource consumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumerGroups@2021-11-01' = {
-  name: resourceName
-  parent: eventhub
-  properties: {
-    userMetadata: ''
-  }
-}
-
 resource fhirDestination 'Microsoft.HealthcareApis/workspaces/iotConnectors/fhirDestinations@2022-12-01' = {
   name: resourceName
   location: location
@@ -92,5 +71,26 @@ resource fhirDestination 'Microsoft.HealthcareApis/workspaces/iotConnectors/fhir
     }
     fhirServiceResourceId: fhirService.id
     resourceIdentityResolutionType: 'Create'
+  }
+}
+
+resource fhirService 'Microsoft.HealthcareApis/workspaces/fhirServices@2022-12-01' = {
+  name: resourceName
+  location: location
+  parent: workspace
+  kind: 'fhir-R4'
+  properties: {
+    acrConfiguration: {}
+    authenticationConfiguration: {
+      audience: 'https://acctestfhir.fhir.azurehealthcareapis.com'
+      authority: 'https://login.microsoftonline.com/${tenant().tenantId}'
+      smartProxyEnabled: false
+    }
+    corsConfiguration: {
+      allowCredentials: false
+      headers: []
+      methods: []
+      origins: []
+    }
   }
 }

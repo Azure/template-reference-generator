@@ -1,40 +1,12 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
-
-resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
-  name: resourceName
-  location: location
-  sku: {
-    capacity: 1
-    name: 'B1'
-  }
-  properties: {
-    cloudToDevice: {}
-    enableFileUploadNotifications: false
-    messagingEndpoints: {}
-    routing: {
-      fallbackRoute: {
-        condition: 'true'
-        endpointNames: [
-          'events'
-        ]
-        isEnabled: true
-        source: 'DeviceMessages'
-      }
-    }
-    storageEndpoints: {}
-  }
-  tags: {
-    purpose: 'testing'
-  }
-}
+param location string = 'westeurope'
 
 resource environment 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
   name: resourceName
   location: location
   sku: {
-    capacity: 1
     name: 'L1'
+    capacity: 1
   }
   kind: 'Gen2'
   properties: {
@@ -50,6 +22,49 @@ resource environment 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
   }
 }
 
+resource eventSource 'Microsoft.TimeSeriesInsights/environments/eventSources@2020-05-15' = {
+  name: resourceName
+  location: location
+  parent: environment
+  kind: 'Microsoft.IoTHub'
+  properties: {
+    timestampPropertyName: ''
+    consumerGroupName: 'test'
+    eventSourceResourceId: iotHub.id
+    iotHubName: iotHub.name
+    keyName: 'iothubowner'
+    sharedAccessKey: iotHub.listKeys().value[0].primaryKey
+  }
+}
+
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+  name: resourceName
+  location: location
+  sku: {
+    capacity: 1
+    name: 'B1'
+  }
+  properties: {
+    storageEndpoints: {}
+    cloudToDevice: {}
+    enableFileUploadNotifications: false
+    messagingEndpoints: {}
+    routing: {
+      fallbackRoute: {
+        condition: 'true'
+        endpointNames: [
+          'events'
+        ]
+        isEnabled: true
+        source: 'DeviceMessages'
+      }
+    }
+  }
+  tags: {
+    purpose: 'testing'
+  }
+}
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -58,9 +73,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    isNfsV3Enabled: false
+    minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
-    allowCrossTenantReplication: true
+    allowBlobPublicAccess: true
     allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -72,31 +92,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
     isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    allowBlobPublicAccess: true
-    defaultToOAuthAuthentication: false
-    isNfsV3Enabled: false
     networkAcls: {
       defaultAction: 'Allow'
     }
-    supportsHttpsTrafficOnly: true
-  }
-}
-
-resource eventSource 'Microsoft.TimeSeriesInsights/environments/eventSources@2020-05-15' = {
-  name: resourceName
-  location: location
-  parent: environment
-  kind: 'Microsoft.IoTHub'
-  properties: {
-    eventSourceResourceId: iotHub.id
-    iotHubName: iotHub.name
-    keyName: 'iothubowner'
-    sharedAccessKey: iotHub.listKeys().value[0].primaryKey
-    timestampPropertyName: ''
-    consumerGroupName: 'test'
+    allowCrossTenantReplication: true
+    isHnsEnabled: false
   }
 }

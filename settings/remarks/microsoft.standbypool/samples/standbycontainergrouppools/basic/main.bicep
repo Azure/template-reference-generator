@@ -5,6 +5,27 @@ resource containerGroupProfile 'Microsoft.ContainerInstance/containerGroupProfil
   name: '${resourceName}-contianerGroup'
   location: location
   properties: {
+    containers: [
+      {
+        name: 'mycontainergroupprofile'
+        properties: {
+          environmentVariables: []
+          image: 'mcr.microsoft.com/azuredocs/aci-helloworld:latest'
+          ports: [
+            {
+              port: 8000
+            }
+          ]
+          resources: {
+            requests: {
+              memoryInGB: any('1.5')
+              cpu: 1
+            }
+          }
+          command: []
+        }
+      }
+    ]
     imageRegistryCredentials: []
     ipAddress: {
       ports: [
@@ -17,42 +38,12 @@ resource containerGroupProfile 'Microsoft.ContainerInstance/containerGroupProfil
     }
     osType: 'Linux'
     sku: 'Standard'
-    containers: [
-      {
-        properties: {
-          command: []
-          environmentVariables: []
-          image: 'mcr.microsoft.com/azuredocs/aci-helloworld:latest'
-          ports: [
-            {
-              port: 8000
-            }
-          ]
-          resources: {
-            requests: {
-              cpu: 1
-              memoryInGB: any('1.5')
-            }
-          }
-        }
-        name: 'mycontainergroupprofile'
-      }
-    ]
   }
 }
 
 resource standbyContainerGroupPool 'Microsoft.StandbyPool/standbyContainerGroupPools@2025-03-01' = {
   name: '${resourceName}-CGPool'
   properties: {
-    containerGroupProperties: {
-      subnetIds: [
-        {}
-      ]
-      containerGroupProfile: {
-        id: containerGroupProfile.id
-        revision: 1
-      }
-    }
     elasticityProfile: {
       maxReadyCapacity: 5
       refillPolicy: 'always'
@@ -62,6 +53,15 @@ resource standbyContainerGroupPool 'Microsoft.StandbyPool/standbyContainerGroupP
       '2'
       '3'
     ]
+    containerGroupProperties: {
+      subnetIds: [
+        {}
+      ]
+      containerGroupProfile: {
+        id: containerGroupProfile.id
+        revision: 1
+      }
+    }
   }
 }
 

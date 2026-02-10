@@ -8,11 +8,11 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
     administratorLogin: 'mradministrator'
     administratorLoginPassword: '${sqlAdministratorPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: 'Disabled'
   }
 }

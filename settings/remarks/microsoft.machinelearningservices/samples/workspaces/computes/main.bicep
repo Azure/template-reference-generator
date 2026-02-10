@@ -14,20 +14,20 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: resourceName
   location: location
   properties: {
-    enableRbacAuthorization: false
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
-    publicNetworkAccess: 'Enabled'
     accessPolicies: []
     enablePurgeProtection: true
-    enableSoftDelete: true
-    enabledForTemplateDeployment: false
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
-    tenantId: tenant()
+    enabledForDeployment: false
     createMode: 'default'
+    enableRbacAuthorization: false
+    enableSoftDelete: true
+    enabledForDiskEncryption: false
+    enabledForTemplateDeployment: false
+    publicNetworkAccess: 'Enabled'
+    sku: {
+      name: 'standard'
+      family: 'A'
+    }
+    tenantId: tenant().tenantId
   }
 }
 
@@ -39,11 +39,11 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2022-05-01' = {
     tier: 'Basic'
   }
   properties: {
+    applicationInsights: component.id
+    keyVault: vault.id
     publicNetworkAccess: 'Enabled'
     storageAccount: storageAccount.id
     v1LegacyMode: false
-    applicationInsights: component.id
-    keyVault: vault.id
   }
 }
 
@@ -67,13 +67,13 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
-    ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
-    SamplingPercentage: 100
-    Application_Type: 'web'
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
     DisableIpMasking: false
     DisableLocalAuth: false
+    RetentionInDays: 90
+    publicNetworkAccessForQuery: 'Enabled'
+    Application_Type: 'web'
+    ForceCustomerStorageForProfiler: false
+    SamplingPercentage: 100
+    publicNetworkAccessForIngestion: 'Enabled'
   }
 }

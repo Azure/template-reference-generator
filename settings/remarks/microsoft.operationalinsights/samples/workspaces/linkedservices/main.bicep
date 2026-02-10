@@ -5,6 +5,11 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
     sku: {
@@ -13,11 +18,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     workspaceCapping: {
       dailyQuotaGb: -1
     }
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
   }
 }
 
@@ -33,12 +33,12 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
   name: resourceName
   location: location
   properties: {
+    sku: {
+      name: 'Basic'
+    }
     encryption: {
       keySource: 'Microsoft.Automation'
     }
     publicNetworkAccess: true
-    sku: {
-      name: 'Basic'
-    }
   }
 }

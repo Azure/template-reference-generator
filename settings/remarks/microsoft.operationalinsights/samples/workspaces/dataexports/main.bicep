@@ -9,9 +9,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    allowBlobPublicAccess: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
+    isHnsEnabled: false
+    isSftpEnabled: false
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -23,17 +27,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
+    isNfsV3Enabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
     accessTier: 'Hot'
-    allowCrossTenantReplication: true
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -42,8 +42,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   location: location
   properties: {
     features: {
-      enableLogAccessUsingOnlyResourcePermissions: true
       disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
     }
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'

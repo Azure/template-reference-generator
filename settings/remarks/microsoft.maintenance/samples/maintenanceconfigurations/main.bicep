@@ -5,9 +5,9 @@ resource maintenanceConfiguration 'Microsoft.Maintenance/maintenanceConfiguratio
   name: resourceName
   location: location
   properties: {
-    extensionProperties: {}
-    maintenanceScope: 'SQLDB'
     namespace: 'Microsoft.Maintenance'
     visibility: 'Custom'
+    extensionProperties: {}
+    maintenanceScope: 'SQLDB'
   }
 }

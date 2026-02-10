@@ -12,16 +12,16 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     tier: 'Basic'
   }
   properties: {
-    publicIPType: 'IPv4'
-    restrictOutboundNetworkAccess: 'Disabled'
+    enableAutoStop: true
     enableDoubleEncryption: false
     enableStreamingIngest: false
-    engineType: 'V2'
+    publicIPType: 'IPv4'
     publicNetworkAccess: 'Enabled'
-    trustedExternalTenants: []
-    enableAutoStop: true
+    restrictOutboundNetworkAccess: 'Disabled'
     enableDiskEncryption: false
     enablePurge: false
+    engineType: 'V2'
+    trustedExternalTenants: []
   }
 }
 
@@ -29,9 +29,9 @@ resource principalAssignment 'Microsoft.Kusto/clusters/principalAssignments@2023
   name: resourceName
   parent: cluster
   properties: {
-    tenantId: tenant()
     principalId: clientId
     principalType: 'App'
     role: 'AllDatabasesViewer'
+    tenantId: tenant().tenantId
   }
 }

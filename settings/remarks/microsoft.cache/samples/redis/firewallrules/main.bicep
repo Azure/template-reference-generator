@@ -1,12 +1,10 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource redis 'Microsoft.Cache/redis@2024-11-01' = {
   name: resourceName
   location: location
   properties: {
-    disableAccessKeyAuthentication: false
-    enableNonSslPort: false
     minimumTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     redisConfiguration: {
@@ -17,10 +15,12 @@ resource redis 'Microsoft.Cache/redis@2024-11-01' = {
     }
     redisVersion: '6.0'
     sku: {
-      family: 'P'
       name: 'Premium'
       capacity: 1
+      family: 'P'
     }
+    disableAccessKeyAuthentication: false
+    enableNonSslPort: false
   }
 }
 

@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource queueService 'Microsoft.Storage/storageAccounts/queueServices@2022-09-01' existing = {
   name: 'default'

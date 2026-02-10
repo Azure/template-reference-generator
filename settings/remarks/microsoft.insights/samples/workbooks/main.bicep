@@ -6,9 +6,9 @@ resource workbook 'Microsoft.Insights/workbooks@2022-04-01' = {
   location: location
   kind: 'shared'
   properties: {
-    serializedData: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
-    sourceId: 'azure monitor'
     category: 'workbook'
     displayName: 'acctest-amw-230630032616547405'
+    serializedData: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
+    sourceId: 'azure monitor'
   }
 }

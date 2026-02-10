@@ -5,9 +5,9 @@ resource applicationGroup 'Microsoft.DesktopVirtualization/applicationGroups@202
   name: '${resourceName}-ag'
   location: location
   properties: {
-    applicationGroupType: 'Desktop'
     description: ''
     friendlyName: ''
+    applicationGroupType: 'Desktop'
   }
 }
 
@@ -15,17 +15,17 @@ resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2024-04-03' = {
   name: '${resourceName}-hp'
   location: location
   properties: {
-    publicNetworkAccess: 'Enabled'
-    startVMOnConnect: false
-    loadBalancerType: 'BreadthFirst'
-    personalDesktopAssignmentType: ''
-    validationEnvironment: false
     vmTemplate: ''
     customRdpProperty: ''
-    description: ''
     friendlyName: ''
     hostPoolType: 'Pooled'
     maxSessionLimit: 999999
+    personalDesktopAssignmentType: ''
     preferredAppGroupType: 'Desktop'
+    validationEnvironment: false
+    description: ''
+    loadBalancerType: 'BreadthFirst'
+    publicNetworkAccess: 'Enabled'
+    startVMOnConnect: false
   }
 }

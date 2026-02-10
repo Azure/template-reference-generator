@@ -5,14 +5,14 @@ resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
   sku: {
-    capacity: 0
     name: 'Standard'
     tier: 'Standard'
+    capacity: 0
   }
   properties: {
+    disableLocalAuth: false
     publicNetworkAccess: 'Enabled'
     zoneRedundant: false
-    disableLocalAuth: false
   }
 }
 
@@ -20,14 +20,14 @@ resource queue 'Microsoft.ServiceBus/namespaces/queues@2021-06-01-preview' = {
   name: resourceName
   parent: namespace
   properties: {
-    enableBatchedOperations: true
+    deadLetteringOnMessageExpiration: false
     enableExpress: false
-    status: 'Active'
-    enablePartitioning: true
     maxDeliveryCount: 10
     maxSizeInMegabytes: 81920
-    requiresDuplicateDetection: false
     requiresSession: false
-    deadLetteringOnMessageExpiration: false
+    status: 'Active'
+    enableBatchedOperations: true
+    enablePartitioning: true
+    requiresDuplicateDetection: false
   }
 }

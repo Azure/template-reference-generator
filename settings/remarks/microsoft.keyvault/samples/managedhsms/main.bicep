@@ -17,6 +17,6 @@ resource managedHSM 'Microsoft.KeyVault/managedHSMs@2021-10-01' = {
     ]
     publicNetworkAccess: 'Enabled'
     softDeleteRetentionInDays: 90
-    tenantId: tenant()
+    tenantId: tenant().tenantId
   }
 }

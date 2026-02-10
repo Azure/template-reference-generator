@@ -9,8 +9,8 @@ resource amlFilesystem 'Microsoft.StorageCache/amlFilesystems@2024-07-01' = {
   }
   properties: {
     maintenanceWindow: {
-      timeOfDayUTC: '22:00'
       dayOfWeek: 'Friday'
+      timeOfDayUTC: '22:00'
     }
     storageCapacityTiB: 8
   }
@@ -37,12 +37,12 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   name: '${resourceName}-subnet'
   parent: virtualNetwork
   properties: {
-    delegations: []
-    privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     defaultOutboundAccess: true
+    delegations: []
+    privateEndpointNetworkPolicies: 'Disabled'
   }
 }

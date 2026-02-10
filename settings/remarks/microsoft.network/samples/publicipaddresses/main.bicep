@@ -9,11 +9,11 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     tier: 'Regional'
   }
   properties: {
-    idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
+    idleTimeoutInMinutes: 4
+    publicIPAddressVersion: 'IPv4'
   }
 }

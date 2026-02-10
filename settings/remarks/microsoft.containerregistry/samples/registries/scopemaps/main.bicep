@@ -9,14 +9,15 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
     tier: 'Premium'
   }
   properties: {
-    zoneRedundancy: 'Disabled'
     adminUserEnabled: false
+    encryption: {
+      status: 'disabled'
+    }
+    publicNetworkAccess: 'Enabled'
     anonymousPullEnabled: false
+    dataEndpointEnabled: false
     networkRuleBypassOptions: 'AzureServices'
     policies: {
-      retentionPolicy: {
-        status: 'disabled'
-      }
       trustPolicy: {
         status: 'disabled'
       }
@@ -26,12 +27,11 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
       quarantinePolicy: {
         status: 'disabled'
       }
+      retentionPolicy: {
+        status: 'disabled'
+      }
     }
-    publicNetworkAccess: 'Enabled'
-    dataEndpointEnabled: false
-    encryption: {
-      status: 'disabled'
-    }
+    zoneRedundancy: 'Disabled'
   }
 }
 

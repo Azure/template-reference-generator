@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource availabilitySet 'Microsoft.Compute/availabilitySets@2021-11-01' = {
   name: resourceName

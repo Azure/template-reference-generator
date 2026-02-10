@@ -28,7 +28,43 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: 'machine-230630033559397415'
   location: location
   properties: {
-    extensionsTimeBudget: 'PT1H30M'
+    osProfile: {
+      adminPassword: adminPassword
+      adminUsername: 'adminuser'
+      allowExtensionOperations: true
+      computerName: 'machine-230630033559397415'
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+        patchSettings: {
+          patchMode: 'ImageDefault'
+          assessmentMode: 'ImageDefault'
+        }
+        provisionVMAgent: true
+        ssh: {
+          publicKeys: []
+        }
+      }
+      secrets: []
+    }
+    storageProfile: {
+      dataDisks: []
+      imageReference: {
+        publisher: 'Canonical'
+        sku: '16.04-LTS'
+        version: 'latest'
+        offer: 'UbuntuServer'
+      }
+      osDisk: {
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+        osType: 'Linux'
+        writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+      }
+    }
+    additionalCapabilities: {}
     networkProfile: {
       networkInterfaces: [
         {
@@ -40,7 +76,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     priority: 'Regular'
-    additionalCapabilities: {}
     applicationProfile: {
       galleryApplications: []
     }
@@ -50,44 +85,9 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         storageUri: ''
       }
     }
+    extensionsTimeBudget: 'PT1H30M'
     hardwareProfile: {
       vmSize: 'Standard_B1ls'
-    }
-    osProfile: {
-      computerName: 'machine-230630033559397415'
-      linuxConfiguration: {
-        patchSettings: {
-          assessmentMode: 'ImageDefault'
-          patchMode: 'ImageDefault'
-        }
-        provisionVMAgent: true
-        ssh: {
-          publicKeys: []
-        }
-        disablePasswordAuthentication: false
-      }
-      secrets: []
-      adminPassword: adminPassword
-      adminUsername: 'adminuser'
-      allowExtensionOperations: true
-    }
-    storageProfile: {
-      dataDisks: []
-      imageReference: {
-        offer: 'UbuntuServer'
-        publisher: 'Canonical'
-        sku: '16.04-LTS'
-        version: 'latest'
-      }
-      osDisk: {
-        managedDisk: {
-          storageAccountType: 'Standard_LRS'
-        }
-        osType: 'Linux'
-        writeAcceleratorEnabled: false
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-      }
     }
   }
 }
@@ -125,6 +125,7 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
   name: resourceName
   location: location
   properties: {
+    description: ''
     destinations: {
       azureMonitorMetrics: {
         name: 'test-destination-metrics'
@@ -140,7 +141,6 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
         ]
       }
     ]
-    description: ''
   }
 }
 

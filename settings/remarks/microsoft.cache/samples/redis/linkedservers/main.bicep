@@ -17,7 +17,7 @@ module module1 'main-rg-module.bicep' = {
   name: 'deploy-rg-resources'
   scope: resourceGroup
   params: {
-    resourceName: resourceName
     location: location
+    resourceName: resourceName
   }
 }

@@ -1,4 +1,3 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
 @secure()
 @description('The administrator login password for the SQL server')
@@ -6,6 +5,7 @@ param administratorLoginPassword string
 @secure()
 @description('The password for the SQL job credential')
 param jobCredentialPassword string
+param resourceName string = 'acctest0001'
 
 var maintenanceConfigId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default'
 
@@ -13,12 +13,12 @@ resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: '${resourceName}-server'
   location: location
   properties: {
-    version: '12.0'
     administratorLogin: '4dm1n157r470r'
     administratorLoginPassword: '${administratorLoginPassword}'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
+    version: '12.0'
   }
 }
 
@@ -34,11 +34,12 @@ resource jobAgent 'Microsoft.Sql/servers/jobAgents@2023-08-01-preview' = {
   }
 }
 
-resource targetGroup 'Microsoft.Sql/servers/jobAgents/targetGroups@2023-08-01-preview' = {
-  name: '${resourceName}-target-group'
+resource credential 'Microsoft.Sql/servers/jobAgents/credentials@2023-08-01-preview' = {
+  name: '${resourceName}-job-credential'
   parent: jobAgent
   properties: {
-    members: []
+    password: '${jobCredentialPassword}'
+    username: 'testusername'
   }
 }
 
@@ -50,18 +51,18 @@ resource job 'Microsoft.Sql/servers/jobAgents/jobs@2023-08-01-preview' = {
   }
 }
 
+resource targetGroup 'Microsoft.Sql/servers/jobAgents/targetGroups@2023-08-01-preview' = {
+  name: '${resourceName}-target-group'
+  parent: jobAgent
+  properties: {
+    members: []
+  }
+}
+
 resource step 'Microsoft.Sql/servers/jobAgents/jobs/steps@2023-08-01-preview' = {
   name: '${resourceName}-job-step'
   parent: job
   properties: {
-    credential: credential.id
-    executionOptions: {
-      retryAttempts: 10
-      retryIntervalBackoffMultiplier: 2
-      timeoutSeconds: 43200
-      initialRetryIntervalSeconds: 1
-      maximumRetryIntervalSeconds: 120
-    }
     stepId: 1
     targetGroup: targetGroup.id
     action: {
@@ -71,6 +72,14 @@ resource step 'Microsoft.Sql/servers/jobAgents/jobs/steps@2023-08-01-preview' = 
     LastName NVARCHAR(50),
   );
 '''
+    }
+    credential: credential.id
+    executionOptions: {
+      initialRetryIntervalSeconds: 1
+      maximumRetryIntervalSeconds: 120
+      retryAttempts: 10
+      retryIntervalBackoffMultiplier: 2
+      timeoutSeconds: 43200
     }
   }
 }
@@ -83,17 +92,8 @@ resource database 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
     name: 'S1'
   }
   properties: {
-    maintenanceConfigurationId: '${maintenanceConfigId}'
     collation: 'SQL_Latin1_General_CP1_CI_AS'
     createMode: 'Default'
-  }
-}
-
-resource credential 'Microsoft.Sql/servers/jobAgents/credentials@2023-08-01-preview' = {
-  name: '${resourceName}-job-credential'
-  parent: jobAgent
-  properties: {
-    password: '${jobCredentialPassword}'
-    username: 'testusername'
+    maintenanceConfigurationId: '${maintenanceConfigId}'
   }
 }

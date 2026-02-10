@@ -5,9 +5,9 @@ resource dataCollectionEndpoint 'Microsoft.Insights/dataCollectionEndpoints@2022
   name: resourceName
   location: location
   properties: {
+    description: ''
     networkAcls: {
       publicNetworkAccess: 'Enabled'
     }
-    description: ''
   }
 }

@@ -12,6 +12,7 @@ resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
     name: 'B1'
   }
   properties: {
+    storageEndpoints: {}
     cloudToDevice: {}
     enableFileUploadNotifications: false
     messagingEndpoints: {}
@@ -25,7 +26,6 @@ resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
         condition: 'true'
       }
     }
-    storageEndpoints: {}
   }
 }
 

@@ -1,11 +1,11 @@
-param resourceName string = 'acctest0001'
-param location string = 'centralus'
 @secure()
 @description('The administrator login password for the SQL server')
 param administratorLoginPassword string
 @secure()
 @description('The password for the SQL job credential')
 param jobCredentialPassword string
+param resourceName string = 'acctest0001'
+param location string = 'centralus'
 
 resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: '${resourceName}-server'
@@ -17,6 +17,32 @@ resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
+  }
+}
+
+resource database 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
+  name: '${resourceName}-db'
+  location: location
+  parent: server
+  sku: {
+    name: 'S1'
+  }
+  properties: {
+    createMode: 'Default'
+    highAvailabilityReplicaCount: 0
+    encryptionProtectorAutoRotation: false
+    zoneRedundant: false
+    autoPauseDelay: 0
+    elasticPoolId: ''
+    licenseType: ''
+    readScale: 'Disabled'
+    requestedBackupStorageRedundancy: 'Geo'
+    secondaryType: ''
+    collation: 'SQL_Latin1_General_CP1_CI_AS'
+    isLedgerOn: false
+    maintenanceConfigurationId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default'
+    minCapacity: 0
+    sampleName: ''
   }
 }
 
@@ -46,31 +72,5 @@ resource targetGroup 'Microsoft.Sql/servers/jobAgents/targetGroups@2023-08-01-pr
   parent: jobAgent
   properties: {
     members: []
-  }
-}
-
-resource database 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
-  name: '${resourceName}-db'
-  location: location
-  parent: server
-  sku: {
-    name: 'S1'
-  }
-  properties: {
-    licenseType: ''
-    requestedBackupStorageRedundancy: 'Geo'
-    highAvailabilityReplicaCount: 0
-    readScale: 'Disabled'
-    sampleName: ''
-    zoneRedundant: false
-    createMode: 'Default'
-    minCapacity: 0
-    secondaryType: ''
-    collation: 'SQL_Latin1_General_CP1_CI_AS'
-    elasticPoolId: ''
-    encryptionProtectorAutoRotation: false
-    maintenanceConfigurationId: '/subscriptions/${subscription()}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default'
-    autoPauseDelay: 0
-    isLedgerOn: false
   }
 }

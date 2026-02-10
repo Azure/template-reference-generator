@@ -10,25 +10,25 @@ resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
   name: resourceName
   location: location
   sku: {
+    capacity: 2
     family: 'Gen5'
     name: 'GP_Gen5_2'
     tier: 'GeneralPurpose'
-    capacity: 2
   }
   properties: {
-    sslEnforcement: 'Enabled'
-    version: '5.7'
     createMode: 'Default'
     minimalTlsVersion: 'TLS1_2'
+    version: '5.7'
+    infrastructureEncryption: 'Disabled'
+    publicNetworkAccess: 'Enabled'
+    sslEnforcement: 'Enabled'
     storageProfile: {
+      storageMB: 51200
       backupRetentionDays: 7
       storageAutogrow: 'Enabled'
-      storageMB: 51200
     }
     administratorLogin: '${administratorLogin}'
     administratorLoginPassword: '${administratorLoginPassword}'
-    infrastructureEncryption: 'Disabled'
-    publicNetworkAccess: 'Enabled'
   }
 }
 

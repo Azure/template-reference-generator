@@ -36,10 +36,10 @@ resource watchlist 'Microsoft.SecurityInsights/watchlists@2022-11-01' = {
     onboardingState
   ]
   properties: {
+    displayName: 'test'
     itemsSearchKey: 'k1'
     provider: 'Microsoft'
     source: ''
-    displayName: 'test'
   }
 }
 

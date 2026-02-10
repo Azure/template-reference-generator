@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource capacity 'Microsoft.PowerBIDedicated/capacities@2021-01-01' = {
   name: resourceName

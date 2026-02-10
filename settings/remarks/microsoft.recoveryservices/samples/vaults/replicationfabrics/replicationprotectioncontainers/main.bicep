@@ -17,8 +17,8 @@ resource replicationFabric 'Microsoft.RecoveryServices/vaults/replicationFabrics
   parent: vault
   properties: {
     customDetails: {
-      instanceType: 'Azure'
       location: '${location}'
+      instanceType: 'Azure'
     }
   }
 }

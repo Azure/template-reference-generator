@@ -1,15 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -19,11 +10,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   kind: 'StorageV2'
   properties: {
     defaultToOAuthAuthentication: false
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
     encryption: {
+      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -32,10 +20,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
           keyType: 'Service'
         }
       }
-      keySource: 'Microsoft.Storage'
     }
     isHnsEnabled: false
     isSftpEnabled: false
+    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
+    isNfsV3Enabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
@@ -43,6 +34,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
+  }
+}
+
+resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    publicNetworkAccess: 'Enabled'
+    repoConfiguration: null
   }
 }
 

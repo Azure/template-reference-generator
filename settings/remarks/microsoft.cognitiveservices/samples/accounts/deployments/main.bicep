@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0003'
 param location string = 'eastus'
+param resourceName string = 'acctest0003'
 
 resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
   name: resourceName
@@ -9,10 +9,10 @@ resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
   }
   kind: 'OpenAI'
   properties: {
-    disableLocalAuth: false
-    dynamicThrottlingEnabled: false
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
+    disableLocalAuth: false
+    dynamicThrottlingEnabled: false
   }
   identity: {
     type: 'None'

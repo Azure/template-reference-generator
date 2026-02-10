@@ -29,19 +29,19 @@ resource liveEvent 'Microsoft.Media/mediaServices/liveEvents@2022-08-01' = {
   parent: mediaService
   properties: {
     input: {
-      streamingProtocol: 'RTMP'
       accessControl: {
         ip: {
           allow: [
             {
+              subnetPrefixLength: 0
               address: '0.0.0.0'
               name: 'AllowAll'
-              subnetPrefixLength: 0
             }
           ]
         }
       }
       keyFrameIntervalDuration: 'PT6S'
+      streamingProtocol: 'RTMP'
     }
   }
 }

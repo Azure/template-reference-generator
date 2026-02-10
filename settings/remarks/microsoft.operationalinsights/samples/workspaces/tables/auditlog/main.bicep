@@ -1,27 +1,26 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-var auditLogTableName = 'AuditLog_CL'
 var auditLogColumns = [
   {
     name: 'appId'
     type: 'string'
   }
   {
-    type: 'string'
     name: 'correlationId'
+    type: 'string'
   }
   {
-    type: 'datetime'
     name: 'TimeGenerated'
+    type: 'datetime'
   }
 ]
+var auditLogTableName = 'AuditLog_CL'
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
     sku: {
@@ -31,9 +30,10 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
       dailyQuotaGb: -1
     }
     features: {
-      enableLogAccessUsingOnlyResourcePermissions: true
       disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
     }
+    publicNetworkAccessForIngestion: 'Enabled'
   }
 }
 

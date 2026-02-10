@@ -10,6 +10,7 @@ resource sRV 'Microsoft.Network/privateDnsZones/SRV@2018-09-01' = {
   name: resourceName
   parent: privateDnsZone
   properties: {
+    metadata: {}
     srvRecords: [
       {
         port: 8080
@@ -18,13 +19,12 @@ resource sRV 'Microsoft.Network/privateDnsZones/SRV@2018-09-01' = {
         weight: 10
       }
       {
-        target: 'target1.contoso.com'
-        weight: 5
         port: 8080
         priority: 1
+        target: 'target1.contoso.com'
+        weight: 5
       }
     ]
     ttl: 300
-    metadata: {}
   }
 }

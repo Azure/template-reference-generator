@@ -1,23 +1,21 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
   location: location
   kind: 'MongoDB'
   properties: {
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
     enableAutomaticFailover: false
-    enableMultipleWriteLocations: false
-    networkAclBypass: 'None'
-    capabilities: [
-      {
-        name: 'EnableMongo'
-      }
-    ]
     databaseAccountOfferType: 'Standard'
     defaultIdentity: 'FirstPartyIdentity'
     enableAnalyticalStorage: false
     enableFreeTier: false
+    enableMultipleWriteLocations: false
     ipRules: []
     locations: [
       {
@@ -26,17 +24,19 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    publicNetworkAccess: 'Enabled'
-    isVirtualNetworkFilterEnabled: false
-    virtualNetworkRules: []
-    disableLocalAuth: false
     networkAclBypassResourceIds: []
+    capabilities: [
+      {
+        name: 'EnableMongo'
+      }
+    ]
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypass: 'None'
     consistencyPolicy: {
       defaultConsistencyLevel: 'Strong'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    disableKeyBasedMetadataWriteAccess: false
   }
 }
 

@@ -12,20 +12,20 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
     tier: 'GeneralPurpose'
   }
   properties: {
+    version: '12'
     administratorLogin: 'adminTerraform'
     administratorLoginPassword: '${postgresqlAdministratorPassword}'
     availabilityZone: '2'
-    network: {}
-    storage: {
-      storageSizeGB: 32
-    }
     backup: {
       geoRedundantBackup: 'Disabled'
     }
     highAvailability: {
       mode: 'Disabled'
     }
-    version: '12'
+    network: {}
+    storage: {
+      storageSizeGB: 32
+    }
   }
 }
 

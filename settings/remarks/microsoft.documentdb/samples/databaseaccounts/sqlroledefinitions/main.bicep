@@ -1,27 +1,25 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
-    enableAutomaticFailover: false
-    isVirtualNetworkFilterEnabled: false
+    enableMultipleWriteLocations: false
     networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
     publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
+    disableKeyBasedMetadataWriteAccess: false
+    enableAutomaticFailover: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
     consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
-      defaultConsistencyLevel: 'Strong'
     }
-    enableAnalyticalStorage: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
     locations: [
       {
         failoverPriority: 0
@@ -31,8 +29,10 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
     ]
     capabilities: []
     databaseAccountOfferType: 'Standard'
-    ipRules: []
-    networkAclBypassResourceIds: []
+    defaultIdentity: 'FirstPartyIdentity'
+    enableAnalyticalStorage: false
+    enableFreeTier: false
+    virtualNetworkRules: []
   }
 }
 
@@ -40,6 +40,10 @@ resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinit
   name: 'c3ce1661-d0b9-3476-0a7c-2654ce2f3055'
   parent: databaseAccount
   properties: {
+    type: 'CustomRole'
+    assignableScopes: [
+      databaseAccount.id
+    ]
     permissions: [
       {
         dataActions: [
@@ -48,9 +52,5 @@ resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinit
       }
     ]
     roleName: resourceName
-    type: 'CustomRole'
-    assignableScopes: [
-      databaseAccount.id
-    ]
   }
 }

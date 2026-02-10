@@ -3,20 +3,32 @@ targetScope = 'subscription'
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
+resource policyExemption 'Microsoft.Authorization/policyExemptions@2020-07-01-preview' = {
+  name: resourceName
+  scope: subscription()
+  properties: {
+    exemptionCategory: 'Mitigated'
+    policyAssignmentId: policyAssignment.id
+    policyDefinitionReferenceIds: []
+  }
+}
+
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
   name: resourceName
   location: 'westeurope'
   scope: subscription()
   properties: {
+    scope: subscription().id
     displayName: ''
     enforcementMode: 'Default'
-    scope: subscription().id
   }
 }
 
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: resourceName
   properties: {
+    description: ''
+    displayName: 'my-policy-definition'
     mode: 'All'
     parameters: {
       allowedLocations: {
@@ -40,17 +52,5 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       }
     }
     policyType: 'Custom'
-    description: ''
-    displayName: 'my-policy-definition'
-  }
-}
-
-resource policyExemption 'Microsoft.Authorization/policyExemptions@2020-07-01-preview' = {
-  name: resourceName
-  scope: subscription()
-  properties: {
-    exemptionCategory: 'Mitigated'
-    policyAssignmentId: policyAssignment.id
-    policyDefinitionReferenceIds: []
   }
 }

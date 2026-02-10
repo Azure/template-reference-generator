@@ -4,19 +4,19 @@ param resourceName string = 'acctest0001'
 param location string = 'westus'
 param secondaryLocation string = 'centralus'
 
-resource resourcegroup1 'Microsoft.Resources/resourceGroups@2020-06-01' = {
-  name: '${resourceName}rg2'
-  location: secondaryLocation
-}
-
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
   name: resourceName
   location: location
 }
 
+resource resourcegroup1 'Microsoft.Resources/resourceGroups@2020-06-01' = {
+  name: '${resourceName}rg2'
+  location: secondaryLocation
+}
+
 module module1 'main-rg-module.bicep' = {
   name: 'deploy-rg-resources'
-  scope: resourcegroup1
+  scope: resourceGroup
   params: {
     resourceName: resourceName
     location: location

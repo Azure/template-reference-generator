@@ -10,25 +10,25 @@ resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
   name: resourceName
   location: location
   sku: {
+    capacity: 2
     family: 'Gen5'
     name: 'GP_Gen5_2'
     tier: 'GeneralPurpose'
-    capacity: 2
   }
   properties: {
     administratorLogin: '${administratorLogin}'
-    administratorLoginPassword: '${administratorLoginPassword}'
+    minimalTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
+    sslEnforcement: 'Enabled'
+    version: '9.6'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    createMode: 'Default'
+    infrastructureEncryption: 'Disabled'
     storageProfile: {
       backupRetentionDays: 7
       storageAutogrow: 'Enabled'
       storageMB: 51200
     }
-    version: '9.6'
-    createMode: 'Default'
-    infrastructureEncryption: 'Disabled'
-    minimalTlsVersion: 'TLS1_2'
-    sslEnforcement: 'Enabled'
   }
 }
 

@@ -14,21 +14,21 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
     tier: 'Burstable'
   }
   properties: {
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
+    }
     createMode: ''
     highAvailability: {
       mode: 'Disabled'
     }
     network: {}
     version: ''
-    administratorLogin: '${administratorLogin}'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
     dataEncryption: {
       type: 'SystemManaged'
     }
+    administratorLogin: '${administratorLogin}'
+    administratorLoginPassword: '${administratorLoginPassword}'
   }
 }
 

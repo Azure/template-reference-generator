@@ -1,8 +1,8 @@
+param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @secure()
 @description('The password for the automation account credential')
 param credentialPassword string
-param resourceName string = 'acctest0001'
 
 resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' = {
   name: resourceName
@@ -22,9 +22,9 @@ resource credential 'Microsoft.Automation/automationAccounts/credentials@2020-01
   name: resourceName
   parent: automationAccount
   properties: {
+    userName: 'test_user'
     description: ''
     password: '${credentialPassword}'
-    userName: 'test_user'
   }
 }
 

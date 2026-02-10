@@ -1,10 +1,12 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
     ipConfigurations: [
       {
         name: 'testconfiguration1'
@@ -16,8 +18,6 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
         }
       }
     ]
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
   }
 }
 
@@ -41,11 +41,11 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

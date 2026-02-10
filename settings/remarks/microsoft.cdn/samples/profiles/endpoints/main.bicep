@@ -14,18 +14,18 @@ resource endpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
   location: location
   parent: profile
   properties: {
-    queryStringCachingBehavior: 'IgnoreQueryString'
-    isHttpAllowed: true
-    isHttpsAllowed: true
     origins: [
       {
         name: 'acceptanceTestCdnOrigin1'
         properties: {
-          httpsPort: 443
           hostName: 'www.contoso.com'
           httpPort: 80
+          httpsPort: 443
         }
       }
     ]
+    queryStringCachingBehavior: 'IgnoreQueryString'
+    isHttpAllowed: true
+    isHttpsAllowed: true
   }
 }

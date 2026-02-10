@@ -6,8 +6,8 @@ resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
   location: location
   properties: {
     publicLandMobileNetworkIdentifier: {
-      mcc: '001'
       mnc: '01'
+      mcc: '001'
     }
   }
 }
@@ -30,15 +30,15 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
         rulePrecedence: 1
         serviceDataFlowTemplates: [
           {
+            templateName: 'IP-to-server'
+            direction: 'Uplink'
+            ports: []
             protocol: [
               'ip'
             ]
             remoteIpList: [
               '10.3.4.0/24'
             ]
-            templateName: 'IP-to-server'
-            direction: 'Uplink'
-            ports: []
           }
         ]
         trafficControl: 'Enabled'
@@ -53,28 +53,29 @@ resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-0
   location: location
   parent: mobileNetwork
   properties: {
+    defaultSlice: {}
     registrationTimer: 3240
     sliceConfigurations: [
       {
         dataNetworkConfigurations: [
           {
+            '5qi': 9
+            additionalAllowedSessionTypes: null
+            allocationAndRetentionPriorityLevel: 9
             allowedServices: [
               {
                 id: service.id
               }
             ]
-            defaultSessionType: 'IPv4'
+            dataNetwork: {
+              id: dataNetwork.id
+            }
             preemptionCapability: 'NotPreempt'
             sessionAmbr: {
               downlink: '1 Gbps'
               uplink: '500 Mbps'
             }
-            '5qi': 9
-            additionalAllowedSessionTypes: null
-            allocationAndRetentionPriorityLevel: 9
-            dataNetwork: {
-              id: dataNetwork.id
-            }
+            defaultSessionType: 'IPv4'
             maximumNumberOfBufferedPackets: 10
             preemptionVulnerability: 'Preemptable'
           }
@@ -86,10 +87,9 @@ resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-0
       }
     ]
     ueAmbr: {
-      uplink: '500 Mbps'
       downlink: '1 Gbps'
+      uplink: '500 Mbps'
     }
-    defaultSlice: {}
   }
   tags: {
     key: 'value'

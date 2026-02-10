@@ -1,5 +1,5 @@
-param location string = 'westus'
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource spacecraft 'Microsoft.Orbital/spacecrafts@2022-11-01' = {
   name: resourceName

@@ -28,8 +28,8 @@ resource networkGroupForSubnet 'Microsoft.Network/networkManagers/networkGroups@
   name: '${resourceName}-subnet'
   parent: networkManager
   properties: {
-    memberType: 'Subnet'
     description: 'example network group'
+    memberType: 'Subnet'
   }
 }
 
@@ -37,14 +37,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-10-01' = {
   name: resourceName
   location: location
   properties: {
-    dhcpOptions: {
-      dnsServers: []
-    }
     subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/22'
       ]
+    }
+    dhcpOptions: {
+      dnsServers: []
     }
   }
 }

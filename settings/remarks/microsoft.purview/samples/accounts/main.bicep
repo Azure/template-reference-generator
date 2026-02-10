@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource account 'Microsoft.Purview/accounts@2021-07-01' = {
   name: resourceName

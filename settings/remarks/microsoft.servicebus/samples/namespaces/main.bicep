@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName

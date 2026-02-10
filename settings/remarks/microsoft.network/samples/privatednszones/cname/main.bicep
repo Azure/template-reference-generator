@@ -10,10 +10,10 @@ resource cNAME 'Microsoft.Network/privateDnsZones/CNAME@2018-09-01' = {
   name: resourceName
   parent: privateDnsZone
   properties: {
-    metadata: {}
-    ttl: 300
     cnameRecord: {
       cname: 'contoso.com'
     }
+    metadata: {}
+    ttl: 300
   }
 }

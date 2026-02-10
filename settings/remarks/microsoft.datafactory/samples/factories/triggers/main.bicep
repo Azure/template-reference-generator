@@ -5,30 +5,8 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: resourceName
   location: location
   properties: {
-    repoConfiguration: null
     publicNetworkAccess: 'Enabled'
-  }
-}
-
-resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
-  name: resourceName
-  parent: factory
-  properties: {
-    description: ''
-    pipeline: {
-      parameters: {}
-      pipelineReference: {
-        referenceName: pipeline.name
-        type: 'PipelineReference'
-      }
-    }
-    type: 'TumblingWindowTrigger'
-    typeProperties: {
-      frequency: 'Minute'
-      interval: 15
-      maxConcurrency: 50
-      startTime: '2022-09-21T00:00:00Z'
-    }
+    repoConfiguration: null
   }
 }
 
@@ -38,12 +16,34 @@ resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
   properties: {
     parameters: {
       test: {
-        type: 'String'
         defaultValue: 'testparameter'
+        type: 'String'
       }
     }
     variables: {}
     annotations: []
     description: ''
+  }
+}
+
+resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
+  name: resourceName
+  parent: factory
+  properties: {
+    typeProperties: {
+      frequency: 'Minute'
+      interval: 15
+      maxConcurrency: 50
+      startTime: '2022-09-21T00:00:00Z'
+    }
+    description: ''
+    pipeline: {
+      parameters: {}
+      pipelineReference: {
+        referenceName: pipeline.name
+        type: 'PipelineReference'
+      }
+    }
+    type: 'TumblingWindowTrigger'
   }
 }

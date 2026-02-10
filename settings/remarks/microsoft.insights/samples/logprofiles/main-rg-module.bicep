@@ -9,19 +9,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    minimumTlsVersion: 'TLS1_2'
-    accessTier: 'Hot'
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
     publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
     allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -33,6 +22,17 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    isHnsEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    defaultToOAuthAuthentication: false
+    isNfsV3Enabled: false
     isSftpEnabled: false
   }
 }

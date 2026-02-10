@@ -5,12 +5,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
     sku: {
       name: 'PerGB2018'
@@ -18,6 +12,12 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     workspaceCapping: {
       dailyQuotaGb: -1
     }
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
   }
 }
 
@@ -36,7 +36,6 @@ resource automationRule 'Microsoft.SecurityInsights/automationRules@2022-10-01-p
     onboardingState
   ]
   properties: {
-    displayName: 'acctest-SentinelAutoRule-230630033910945846'
     order: 1
     triggeringLogic: {
       isEnabled: true
@@ -56,5 +55,6 @@ resource automationRule 'Microsoft.SecurityInsights/automationRules@2022-10-01-p
         order: 1
       }
     ]
+    displayName: 'acctest-SentinelAutoRule-230630033910945846'
   }
 }

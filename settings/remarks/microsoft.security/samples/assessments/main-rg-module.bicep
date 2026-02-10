@@ -33,34 +33,31 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2024-
           {
             name: 'example'
             properties: {
+              primary: true
+              dnsSettings: {
+                dnsServers: []
+              }
               enableAcceleratedNetworking: false
               enableIPForwarding: false
               ipConfigurations: [
                 {
                   name: 'internal'
                   properties: {
+                    privateIPAddressVersion: 'IPv4'
+                    subnet: {}
+                    applicationGatewayBackendAddressPools: []
                     applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
                     primary: true
-                    privateIPAddressVersion: 'IPv4'
-                    subnet: {}
-                    applicationGatewayBackendAddressPools: []
                   }
                 }
               ]
-              primary: true
-              dnsSettings: {
-                dnsServers: []
-              }
             }
           }
         ]
       }
       osProfile: {
-        adminPassword: adminPassword
-        adminUsername: 'adminuser'
-        allowExtensionOperations: true
         computerNamePrefix: '${resourceName}-vmss'
         linuxConfiguration: {
           disablePasswordAuthentication: false
@@ -70,6 +67,9 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2024-
           }
         }
         secrets: []
+        adminPassword: adminPassword
+        adminUsername: 'adminuser'
+        allowExtensionOperations: true
       }
       priority: 'Regular'
       storageProfile: {
@@ -96,22 +96,6 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2024-
   }
 }
 
-resource assessment 'Microsoft.Security/assessments@2020-01-01' = {
-  name: 'fdaaa62c-1d42-45ab-be2f-2af194dd1700'
-  scope: virtualMachineScaleSet
-  properties: {
-    additionalData: {}
-    resourceDetails: {
-      source: 'Azure'
-    }
-    status: {
-      cause: ''
-      code: 'Healthy'
-      description: ''
-    }
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: '${resourceName}-vnet'
   location: location
@@ -132,12 +116,28 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   name: 'internal'
   parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
-    defaultOutboundAccess: true
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    defaultOutboundAccess: true
+  }
+}
+
+resource assessment 'Microsoft.Security/assessments@2020-01-01' = {
+  name: 'fdaaa62c-1d42-45ab-be2f-2af194dd1700'
+  scope: virtualMachineScaleSet
+  properties: {
+    additionalData: {}
+    resourceDetails: {
+      source: 'Azure'
+    }
+    status: {
+      cause: ''
+      code: 'Healthy'
+      description: ''
+    }
   }
 }

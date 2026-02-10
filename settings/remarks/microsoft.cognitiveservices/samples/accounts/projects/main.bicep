@@ -9,12 +9,12 @@ resource account 'Microsoft.CognitiveServices/accounts@2025-06-01' = {
   }
   kind: 'AIServices'
   properties: {
+    publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: false
     allowProjectManagement: true
     customSubDomainName: 'cog-${resourceName}'
     disableLocalAuth: false
     dynamicThrottlingEnabled: false
-    publicNetworkAccess: 'Enabled'
-    restrictOutboundNetworkAccess: false
   }
 }
 

@@ -1,7 +1,7 @@
 targetScope = 'tenant'
 
-param location string = 'westus'
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource diagnosticSetting 'Microsoft.AADIAM/diagnosticSettings@2017-04-01' = {
   name: '${resourceName}-DS-unique'

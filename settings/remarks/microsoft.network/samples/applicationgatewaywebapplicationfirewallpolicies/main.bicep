@@ -5,23 +5,23 @@ resource applicationGatewayWebApplicationFirewallPolicy 'Microsoft.Network/Appli
   name: resourceName
   location: location
   properties: {
+    customRules: []
     managedRules: {
       exclusions: []
       managedRuleSets: [
         {
-          ruleSetVersion: '3.1'
           ruleGroupOverrides: []
           ruleSetType: 'OWASP'
+          ruleSetVersion: '3.1'
         }
       ]
     }
     policySettings: {
+      fileUploadLimitInMb: 100
       maxRequestBodySizeInKb: 128
       mode: 'Detection'
       requestBodyCheck: true
       state: 'Enabled'
-      fileUploadLimitInMb: 100
     }
-    customRules: []
   }
 }

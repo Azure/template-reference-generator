@@ -13,8 +13,8 @@ resource mX 'Microsoft.Network/privateDnsZones/MX@2018-09-01' = {
     metadata: {}
     mxRecords: [
       {
-        preference: 10
         exchange: 'mx1.contoso.com'
+        preference: 10
       }
       {
         exchange: 'mx2.contoso.com'

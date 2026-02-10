@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: resourceName
@@ -14,68 +14,72 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
   name: resourceName
   parent: integrationAccount
   properties: {
+    hostIdentity: {
+      qualifier: 'AS2Identity'
+      value: 'FabrikamNY'
+    }
     agreementType: 'AS2'
     content: {
       aS2: {
         receiveAgreement: {
           protocolSettings: {
+            envelopeSettings: {
+              transmitFileNameInMimeHeader: false
+              autogenerateFileName: false
+              fileNameTemplate: '%FILE().ReceivedFileName%'
+              messageContentType: 'text/plain'
+              suspendMessageOnFileNameGenerationError: true
+            }
+            errorSettings: {
+              resendIfMDNNotReceived: false
+              suspendDuplicateMessage: false
+            }
             mdnSettings: {
+              needMDN: false
               sendInboundMDNToMessageBox: true
               sendMDNAsynchronously: false
               signMDN: false
               signOutboundMDNIfOptional: false
               dispositionNotificationTo: 'http://localhost'
               micHashingAlgorithm: 'SHA1'
-              needMDN: false
             }
             messageConnectionSettings: {
-              ignoreCertificateNameMismatch: false
-              keepHttpConnectionAlive: true
               supportHttpStatusCodeContinue: true
               unfoldHttpHeaders: true
+              ignoreCertificateNameMismatch: false
+              keepHttpConnectionAlive: true
             }
             securitySettings: {
-              enableNRRForInboundEncodedMessages: false
-              enableNRRForInboundMDN: false
               enableNRRForOutboundDecodedMessages: false
               enableNRRForOutboundEncodedMessages: false
               enableNRRForOutboundMDN: false
               overrideGroupSigningCertificate: false
               enableNRRForInboundDecodedMessages: false
+              enableNRRForInboundEncodedMessages: false
+              enableNRRForInboundMDN: false
             }
             validationSettings: {
-              interchangeDuplicatesValidityDays: 5
+              compressMessage: false
+              encryptionAlgorithm: 'DES3'
               overrideMessageProperties: false
-              signingAlgorithm: 'Default'
+              signMessage: false
               checkCertificateRevocationListOnReceive: false
               checkCertificateRevocationListOnSend: false
               checkDuplicateMessage: false
-              compressMessage: false
-              encryptionAlgorithm: 'DES3'
-              signMessage: false
               encryptMessage: false
+              interchangeDuplicatesValidityDays: 5
+              signingAlgorithm: 'Default'
             }
             acknowledgementConnectionSettings: {
-              unfoldHttpHeaders: false
-              ignoreCertificateNameMismatch: false
               keepHttpConnectionAlive: false
               supportHttpStatusCodeContinue: false
-            }
-            envelopeSettings: {
-              autogenerateFileName: false
-              fileNameTemplate: '%FILE().ReceivedFileName%'
-              messageContentType: 'text/plain'
-              suspendMessageOnFileNameGenerationError: true
-              transmitFileNameInMimeHeader: false
-            }
-            errorSettings: {
-              resendIfMDNNotReceived: false
-              suspendDuplicateMessage: false
+              unfoldHttpHeaders: false
+              ignoreCertificateNameMismatch: false
             }
           }
           receiverBusinessIdentity: {
-            qualifier: 'AS2Identity'
             value: 'FabrikamNY'
+            qualifier: 'AS2Identity'
           }
           senderBusinessIdentity: {
             qualifier: 'AS2Identity'
@@ -92,9 +96,22 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
             value: 'FabrikamNY'
           }
           protocolSettings: {
+            acknowledgementConnectionSettings: {
+              supportHttpStatusCodeContinue: false
+              unfoldHttpHeaders: false
+              ignoreCertificateNameMismatch: false
+              keepHttpConnectionAlive: false
+            }
+            envelopeSettings: {
+              transmitFileNameInMimeHeader: false
+              autogenerateFileName: false
+              fileNameTemplate: '%FILE().ReceivedFileName%'
+              messageContentType: 'text/plain'
+              suspendMessageOnFileNameGenerationError: true
+            }
             errorSettings: {
-              suspendDuplicateMessage: false
               resendIfMDNNotReceived: false
+              suspendDuplicateMessage: false
             }
             mdnSettings: {
               micHashingAlgorithm: 'SHA1'
@@ -106,56 +123,39 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
               dispositionNotificationTo: 'http://localhost'
             }
             messageConnectionSettings: {
-              ignoreCertificateNameMismatch: false
               keepHttpConnectionAlive: true
               supportHttpStatusCodeContinue: true
               unfoldHttpHeaders: true
+              ignoreCertificateNameMismatch: false
             }
             securitySettings: {
+              enableNRRForOutboundMDN: false
+              overrideGroupSigningCertificate: false
               enableNRRForInboundDecodedMessages: false
               enableNRRForInboundEncodedMessages: false
               enableNRRForInboundMDN: false
               enableNRRForOutboundDecodedMessages: false
               enableNRRForOutboundEncodedMessages: false
-              enableNRRForOutboundMDN: false
-              overrideGroupSigningCertificate: false
             }
             validationSettings: {
-              checkDuplicateMessage: false
+              checkCertificateRevocationListOnSend: false
               compressMessage: false
+              encryptMessage: false
+              interchangeDuplicatesValidityDays: 5
               overrideMessageProperties: false
               signMessage: false
-              signingAlgorithm: 'Default'
               checkCertificateRevocationListOnReceive: false
-              checkCertificateRevocationListOnSend: false
-              encryptMessage: false
+              checkDuplicateMessage: false
               encryptionAlgorithm: 'DES3'
-              interchangeDuplicatesValidityDays: 5
-            }
-            acknowledgementConnectionSettings: {
-              ignoreCertificateNameMismatch: false
-              keepHttpConnectionAlive: false
-              supportHttpStatusCodeContinue: false
-              unfoldHttpHeaders: false
-            }
-            envelopeSettings: {
-              autogenerateFileName: false
-              fileNameTemplate: '%FILE().ReceivedFileName%'
-              messageContentType: 'text/plain'
-              suspendMessageOnFileNameGenerationError: true
-              transmitFileNameInMimeHeader: false
+              signingAlgorithm: 'Default'
             }
           }
         }
       }
     }
     guestIdentity: {
+      qualifier: 'AS2Identity'
       value: 'FabrikamDC'
-      qualifier: 'AS2Identity'
-    }
-    hostIdentity: {
-      qualifier: 'AS2Identity'
-      value: 'FabrikamNY'
     }
   }
 }
@@ -164,17 +164,17 @@ resource partner 'Microsoft.Logic/integrationAccounts/partners@2019-05-01' = {
   name: resourceName
   parent: integrationAccount
   properties: {
-    partnerType: 'B2B'
     content: {
       b2b: {
         businessIdentities: [
           {
-            value: 'FabrikamNY'
             qualifier: 'AS2Identity'
+            value: 'FabrikamNY'
           }
         ]
       }
     }
+    partnerType: 'B2B'
   }
 }
 

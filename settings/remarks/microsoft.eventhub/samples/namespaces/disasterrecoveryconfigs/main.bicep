@@ -1,22 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource namespace2 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
-  name: resourceName
-  location: 'westus2'
-  sku: {
-    capacity: 1
-    name: 'Standard'
-    tier: 'Standard'
-  }
-  properties: {
-    disableLocalAuth: false
-    isAutoInflateEnabled: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
-}
-
 resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
@@ -38,5 +22,21 @@ resource disasterRecoveryConfig 'Microsoft.EventHub/namespaces/disasterRecoveryC
   parent: namespace
   properties: {
     partnerNamespace: namespace2.id
+  }
+}
+
+resource namespace2 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
+  name: resourceName
+  location: 'westus2'
+  sku: {
+    capacity: 1
+    name: 'Standard'
+    tier: 'Standard'
+  }
+  properties: {
+    disableLocalAuth: false
+    isAutoInflateEnabled: false
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
   }
 }

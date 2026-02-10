@@ -6,8 +6,8 @@ resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
   location: location
   properties: {
     publicLandMobileNetworkIdentifier: {
-      mcc: '001'
       mnc: '01'
+      mcc: '001'
     }
   }
 }

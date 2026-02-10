@@ -8,31 +8,31 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   properties: {
     enableFreeTier: false
     enableMultipleWriteLocations: false
-    isVirtualNetworkFilterEnabled: false
-    capabilities: []
+    publicNetworkAccess: 'Enabled'
     defaultIdentity: 'FirstPartyIdentity'
-    enableAnalyticalStorage: false
-    networkAclBypass: 'None'
-    virtualNetworkRules: []
-    databaseAccountOfferType: 'Standard'
     enableAutomaticFailover: false
+    networkAclBypassResourceIds: []
+    ipRules: []
+    locations: [
+      {
+        isZoneRedundant: false
+        locationName: 'West Europe'
+        failoverPriority: 0
+      }
+    ]
+    networkAclBypass: 'None'
+    capabilities: []
     consistencyPolicy: {
       defaultConsistencyLevel: 'BoundedStaleness'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    disableLocalAuth: false
-    ipRules: []
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'West Europe'
-      }
-    ]
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
+    databaseAccountOfferType: 'Standard'
+    enableAnalyticalStorage: false
+    isVirtualNetworkFilterEnabled: false
+    virtualNetworkRules: []
     disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
   }
 }
 

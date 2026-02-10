@@ -9,7 +9,25 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
     name: 'Standard_S1'
   }
   properties: {
-    cors: {}
+    resourceLogConfiguration: {
+      categories: [
+        {
+          name: 'MessagingLogs'
+          enabled: 'false'
+        }
+        {
+          enabled: 'false'
+          name: 'ConnectivityLogs'
+        }
+        {
+          enabled: 'false'
+          name: 'HttpRequestLogs'
+        }
+      ]
+    }
+    tls: {
+      clientCertEnabled: false
+    }
     disableLocalAuth: false
     features: [
       {
@@ -29,33 +47,15 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
         value: 'False'
       }
     ]
-    publicNetworkAccess: 'Enabled'
     serverless: {
       connectionTimeoutInSeconds: 30
     }
     upstream: {
       templates: []
     }
+    cors: {}
     disableAadAuth: false
-    resourceLogConfiguration: {
-      categories: [
-        {
-          name: 'MessagingLogs'
-          enabled: 'false'
-        }
-        {
-          enabled: 'false'
-          name: 'ConnectivityLogs'
-        }
-        {
-          name: 'HttpRequestLogs'
-          enabled: 'false'
-        }
-      ]
-    }
-    tls: {
-      clientCertEnabled: false
-    }
+    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -63,11 +63,11 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   name: resourceName
   location: location
   properties: {
-    tenantId: tenant()
-    createMode: 'default'
-    enabledForDeployment: false
-    enabledForDiskEncryption: false
-    softDeleteRetentionInDays: 7
+    publicNetworkAccess: 'Enabled'
+    sku: {
+      name: 'standard'
+      family: 'A'
+    }
     accessPolicies: [
       {
         objectId: deployer().objectId
@@ -83,17 +83,17 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
           ]
           storage: []
         }
-        tenantId: tenant()
+        tenantId: tenant().tenantId
       }
     ]
     enableRbacAuthorization: false
     enableSoftDelete: true
+    enabledForDiskEncryption: false
+    softDeleteRetentionInDays: 7
+    tenantId: tenant().tenantId
+    createMode: 'default'
+    enabledForDeployment: false
     enabledForTemplateDeployment: false
-    publicNetworkAccess: 'Enabled'
-    sku: {
-      family: 'A'
-      name: 'standard'
-    }
   }
 }
 
@@ -101,8 +101,8 @@ resource sharedPrivateLinkResource 'Microsoft.SignalRService/signalR/sharedPriva
   name: resourceName
   parent: signalR
   properties: {
+    privateLinkResourceId: vault.id
     requestMessage: 'please approve'
     groupId: 'vault'
-    privateLinkResourceId: vault.id
   }
 }

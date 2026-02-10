@@ -10,42 +10,6 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   }
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind: 'StorageV2'
-  properties: {
-    supportsHttpsTrafficOnly: true
-    allowSharedKeyAccess: true
-    encryption: {
-      keySource: 'Microsoft.Storage'
-      services: {
-        queue: {
-          keyType: 'Service'
-        }
-        table: {
-          keyType: 'Service'
-        }
-      }
-    }
-    isNfsV3Enabled: false
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    defaultToOAuthAuthentication: false
-    isHnsEnabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-  }
-}
-
 resource dataflow 'Microsoft.DataFactory/factories/dataflows@2018-06-01' = {
   name: resourceName
   parent: factory
@@ -67,12 +31,12 @@ source1 sink(
 '''
       sinks: [
         {
-          name: 'sink1'
           description: ''
           linkedService: {
             parameters: {}
             type: 'LinkedServiceReference'
           }
+          name: 'sink1'
         }
       ]
       sources: [
@@ -98,5 +62,41 @@ resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
     typeProperties: {
       serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
     }
+  }
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    encryption: {
+      keySource: 'Microsoft.Storage'
+      services: {
+        queue: {
+          keyType: 'Service'
+        }
+        table: {
+          keyType: 'Service'
+        }
+      }
+    }
+    isHnsEnabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    accessTier: 'Hot'
+    defaultToOAuthAuthentication: false
+    isNfsV3Enabled: false
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }

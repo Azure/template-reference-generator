@@ -9,8 +9,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    defaultToOAuthAuthentication: false
-    dnsEndpointType: 'Standard'
+    accessTier: 'Hot'
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    supportsHttpsTrafficOnly: true
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -22,24 +24,22 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
         }
       }
     }
-    allowSharedKeyAccess: true
+    isLocalUserEnabled: true
     networkAcls: {
-      resourceAccessRules: []
-      virtualNetworkRules: []
       bypass: 'AzureServices'
       defaultAction: 'Allow'
       ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
     }
-    minimumTlsVersion: 'TLS1_2'
+    isSftpEnabled: false
     publicNetworkAccess: 'Enabled'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: false
-    isHnsEnabled: false
-    isLocalUserEnabled: true
-    isNfsV3Enabled: false
-    accessTier: 'Hot'
-    isSftpEnabled: false
-    supportsHttpsTrafficOnly: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
+    dnsEndpointType: 'Standard'
+    minimumTlsVersion: 'TLS1_2'
   }
 }
 
@@ -50,24 +50,19 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
     storageAccount
   ]
   properties: {
-    enablePurgeProtection: true
     enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
     sku: {
       family: 'A'
       name: 'standard'
     }
-    tenantId: tenant()
-    createMode: 'default'
-    enableRbacAuthorization: false
-    enableSoftDelete: true
-    enabledForDeployment: false
-    publicNetworkAccess: 'Enabled'
+    tenantId: tenant().tenantId
     accessPolicies: [
       {
-        tenantId: tenant()
         objectId: deployer().objectId
         permissions: {
+          secrets: []
+          storage: []
           certificates: []
           keys: [
             'Get'
@@ -85,9 +80,8 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
             'Verify'
             'GetRotationPolicy'
           ]
-          secrets: []
-          storage: []
         }
+        tenantId: tenant().tenantId
       }
       {
         objectId: storageAccount.identity.principalId
@@ -101,9 +95,15 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
           secrets: []
           storage: []
         }
-        tenantId: tenant()
+        tenantId: tenant().tenantId
       }
     ]
+    createMode: 'default'
+    publicNetworkAccess: 'Enabled'
+    enablePurgeProtection: true
+    enableRbacAuthorization: false
+    enableSoftDelete: true
+    enabledForDeployment: false
   }
 }
 
@@ -114,9 +114,9 @@ resource encryptionScope 'Microsoft.Storage/storageAccounts/encryptionScopes@202
     vault
   ]
   properties: {
-    keyVaultProperties: {}
     source: 'Microsoft.KeyVault'
     state: 'Enabled'
+    keyVaultProperties: {}
   }
 }
 
@@ -124,8 +124,6 @@ resource key 'Microsoft.KeyVault/vaults/keys@2023-02-01' = {
   name: '${resourceName}-key'
   parent: vault
   properties: {
-    keySize: 2048
-    kty: 'RSA'
     keyOps: [
       'encrypt'
       'decrypt'
@@ -134,5 +132,7 @@ resource key 'Microsoft.KeyVault/vaults/keys@2023-02-01' = {
       'wrapKey'
       'unwrapKey'
     ]
+    keySize: 2048
+    kty: 'RSA'
   }
 }

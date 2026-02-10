@@ -20,12 +20,12 @@ resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-06-01-preview' = {
   name: resourceName
   parent: namespace
   properties: {
+    enablePartitioning: true
     maxSizeInMegabytes: 81920
     requiresDuplicateDetection: false
     status: 'Active'
     supportOrdering: false
     enableBatchedOperations: false
     enableExpress: false
-    enablePartitioning: true
   }
 }
