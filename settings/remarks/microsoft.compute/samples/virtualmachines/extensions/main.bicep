@@ -17,9 +17,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
@@ -44,7 +42,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: vmAdminPassword
       adminUsername: 'testadmin'
       computerName: 'hostname230630032848831819'
       linuxConfiguration: {
@@ -53,10 +51,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        offer: 'UbuntuServer'
-        publisher: 'Canonical'
         sku: '16.04-LTS'
         version: 'latest'
+        offer: 'UbuntuServer'
+        publisher: 'Canonical'
       }
       osDisk: {
         caching: 'ReadWrite'
@@ -85,11 +83,10 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource extension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
-  parent: virtualMachine
   name: resourceName
   location: location
+  parent: virtualMachine
   properties: {
-    autoUpgradeMinorVersion: false
     enableAutomaticUpgrade: false
     publisher: 'Microsoft.Azure.Extensions'
     settings: {
@@ -98,6 +95,7 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
     suppressFailures: false
     type: 'CustomScript'
     typeHandlerVersion: '2.0'
+    autoUpgradeMinorVersion: false
   }
   tags: {
     environment: 'Production'
@@ -105,14 +103,14 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
+    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

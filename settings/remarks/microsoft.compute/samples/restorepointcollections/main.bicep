@@ -1,110 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
-resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    source: {
-      id: virtualMachine.id
-    }
-  }
-}
-
-resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    additionalCapabilities: {}
-    applicationProfile: {
-      galleryApplications: []
-    }
-    diagnosticsProfile: {
-      bootDiagnostics: {
-        enabled: false
-        storageUri: ''
-      }
-    }
-    extensionsTimeBudget: 'PT1H30M'
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: true
-          }
-        }
-      ]
-    }
-    osProfile: {
-      adminUsername: 'adminuser'
-      allowExtensionOperations: true
-      computerName: 'acctest0001'
-      linuxConfiguration: {
-        disablePasswordAuthentication: true
-        patchSettings: {
-          assessmentMode: 'ImageDefault'
-          patchMode: 'ImageDefault'
-        }
-        provisionVMAgent: true
-        ssh: {
-          publicKeys: [
-            {
-              keyData: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com'
-              path: '/home/adminuser/.ssh/authorized_keys'
-            }
-          ]
-        }
-      }
-      secrets: []
-    }
-    priority: 'Regular'
-    storageProfile: {
-      dataDisks: []
-      imageReference: {
-        offer: '0001-com-ubuntu-server-jammy'
-        publisher: 'Canonical'
-        sku: '22_04-lts'
-        version: 'latest'
-      }
-      osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: 'Standard_LRS'
-        }
-        osType: 'Linux'
-        writeAcceleratorEnabled: false
-      }
-    }
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: resourceName
   location: location
@@ -123,15 +19,115 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.0.0/24'
-    defaultOutboundAccess: true
-    delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.0.0/24'
+    defaultOutboundAccess: true
+    delegations: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {}
+        }
+      }
+    ]
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+  }
+}
+
+resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    source: {}
+  }
+}
+
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+          properties: {
+            primary: true
+          }
+        }
+      ]
+    }
+    priority: 'Regular'
+    storageProfile: {
+      osDisk: {
+        writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+        osType: 'Linux'
+      }
+      dataDisks: []
+      imageReference: {
+        version: 'latest'
+        offer: '0001-com-ubuntu-server-jammy'
+        publisher: 'Canonical'
+        sku: '22_04-lts'
+      }
+    }
+    applicationProfile: {
+      galleryApplications: []
+    }
+    osProfile: {
+      adminUsername: 'adminuser'
+      allowExtensionOperations: true
+      computerName: resourceName
+      linuxConfiguration: {
+        disablePasswordAuthentication: true
+        patchSettings: {
+          assessmentMode: 'ImageDefault'
+          patchMode: 'ImageDefault'
+        }
+        provisionVMAgent: true
+        ssh: {
+          publicKeys: [
+            {
+              keyData: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+wWK73dCr+jgQOAxNsHAnNNNMEMWOHYEccp6wJm2gotpr9katuF/ZAdou5AaW1C61slRkHRkpRRX9FA9CYBiitZgvCCz+3nWNN7l/Up54Zps/pHWGZLHNJZRYyAB6j5yVLMVHIHriY49d/GZTZVNB8GoJv9Gakwc/fuEZYYl4YDFiGMBP///TzlI4jhiJzjKnEvqPFki5p2ZRJqcbCiF4pJrxUQR/RXqVFQdbRLZgYfJ8xGB878RENq3yQ39d8dVOkq4edbkzwcUmwwwkYVPIoDGsYLaRHnG+To7FvMeyO7xDVQkMKzopTQV8AuKpyvpqu0a9pWOMaiCyDytO7GGN you@me.com'
+              path: '/home/adminuser/.ssh/authorized_keys'
+            }
+          ]
+        }
+      }
+      secrets: []
+    }
+    additionalCapabilities: {}
+    diagnosticsProfile: {
+      bootDiagnostics: {
+        enabled: false
+        storageUri: ''
+      }
+    }
+    extensionsTimeBudget: 'PT1H30M'
   }
 }

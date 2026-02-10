@@ -121,6 +121,11 @@
       "ResourceType": "Microsoft.Web/staticSites/customDomains",
       "Path": "samples/staticsites/customdomains/main.bicep",
       "Description": "A basic example of deploying Static Web App Custom Domain."
+    },
+    {
+      "ResourceType": "Microsoft.Web/sourcecontrols",
+      "Path": "samples/sourcecontrols/main.bicep",
+      "Description": "A basic example of deploying App Service GitHub Token."
     }
   ]
 }

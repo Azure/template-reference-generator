@@ -6,20 +6,17 @@ resource project 'Microsoft.Migrate/migrateProjects@2020-05-01' = {
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    utilityStorageAccountId: storageAccount.id
   }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -31,6 +28,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    publicNetworkAccess: 'Enabled'
+    allowBlobPublicAccess: true
+    defaultToOAuthAuthentication: false
     isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
@@ -38,10 +38,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     networkAcls: {
       defaultAction: 'Allow'
     }
-    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    accessTier: 'Hot'
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
   }
 }

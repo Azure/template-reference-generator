@@ -36,8 +36,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource linkedService 'Microsoft.OperationalInsights/workspaces/linkedServices@2020-08-01' = {
-  parent: workspace
   name: 'Automation'
+  parent: workspace
   properties: {
     resourceId: automationAccount.id
   }

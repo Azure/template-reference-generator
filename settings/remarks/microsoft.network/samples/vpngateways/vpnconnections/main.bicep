@@ -1,45 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressPrefix: '10.0.0.0/24'
-    hubRoutingPreference: 'ExpressRoute'
-    virtualRouterAutoScaleConfiguration: {
-      minCapacity: 2
-    }
-    virtualWan: {
-      id: virtualWan.id
-    }
-  }
-}
-
-resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    allowBranchToBranchTraffic: true
-    disableVpnEncryption: false
-    office365LocalBreakoutCategory: 'None'
-    type: 'Standard'
-  }
-}
-
-resource vpnGateway 'Microsoft.Network/vpnGateways@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableBgpRouteTranslationForNat: false
-    isRoutingPreferenceInternet: false
-    virtualHub: {
-      id: virtualHub.id
-    }
-    vpnGatewayScaleUnit: 1
-  }
-}
-
 resource vpnSite 'Microsoft.Network/vpnSites@2022-07-01' = {
   name: resourceName
   location: location
@@ -56,12 +17,12 @@ resource vpnSite 'Microsoft.Network/vpnSites@2022-07-01' = {
       {
         name: 'link1'
         properties: {
-          fqdn: ''
           ipAddress: '10.0.1.1'
           linkProperties: {
-            linkProviderName: ''
             linkSpeedInMbps: 0
+            linkProviderName: ''
           }
+          fqdn: ''
         }
       }
       {
@@ -79,9 +40,22 @@ resource vpnSite 'Microsoft.Network/vpnSites@2022-07-01' = {
   }
 }
 
-resource vpnConnection 'Microsoft.Network/vpnGateways/vpnConnections@2022-07-01' = {
-  parent: vpnGateway
+resource vpnGateway 'Microsoft.Network/vpnGateways@2022-07-01' = {
   name: resourceName
+  location: location
+  properties: {
+    enableBgpRouteTranslationForNat: false
+    isRoutingPreferenceInternet: false
+    virtualHub: {
+      id: virtualHub.id
+    }
+    vpnGatewayScaleUnit: 1
+  }
+}
+
+resource vpnConnection 'Microsoft.Network/vpnGateways/vpnConnections@2022-07-01' = {
+  name: resourceName
+  parent: vpnGateway
   properties: {
     enableInternetSecurity: false
     remoteVpnSite: {
@@ -91,37 +65,61 @@ resource vpnConnection 'Microsoft.Network/vpnGateways/vpnConnections@2022-07-01'
       {
         name: 'link1'
         properties: {
-          connectionBandwidth: 10
-          enableBgp: false
-          enableRateLimiting: false
-          routingWeight: 0
-          useLocalAzureIpAddress: false
-          usePolicyBasedTrafficSelectors: false
           vpnConnectionProtocolType: 'IKEv2'
           vpnGatewayCustomBgpAddresses: []
           vpnLinkConnectionMode: 'Default'
+          enableRateLimiting: false
+          useLocalAzureIpAddress: false
+          usePolicyBasedTrafficSelectors: false
           vpnSiteLink: {
             id: resourceId('Microsoft.Network/vpnSites/vpnSiteLinks', vpnSite.name, 'link1')
           }
+          connectionBandwidth: 10
+          enableBgp: false
+          routingWeight: 0
         }
       }
       {
         name: 'link2'
         properties: {
-          connectionBandwidth: 10
-          enableBgp: false
-          enableRateLimiting: false
           routingWeight: 0
-          useLocalAzureIpAddress: false
-          usePolicyBasedTrafficSelectors: false
-          vpnConnectionProtocolType: 'IKEv2'
-          vpnGatewayCustomBgpAddresses: []
           vpnLinkConnectionMode: 'Default'
           vpnSiteLink: {
             id: resourceId('Microsoft.Network/vpnSites/vpnSiteLinks', vpnSite.name, 'link2')
           }
+          connectionBandwidth: 10
+          enableBgp: false
+          enableRateLimiting: false
+          useLocalAzureIpAddress: false
+          usePolicyBasedTrafficSelectors: false
+          vpnConnectionProtocolType: 'IKEv2'
+          vpnGatewayCustomBgpAddresses: []
         }
       }
     ]
+  }
+}
+
+resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressPrefix: '10.0.0.0/24'
+    hubRoutingPreference: 'ExpressRoute'
+    virtualRouterAutoScaleConfiguration: {
+      minCapacity: 2
+    }
+    virtualWan: {}
+  }
+}
+
+resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    allowBranchToBranchTraffic: true
+    disableVpnEncryption: false
+    office365LocalBreakoutCategory: 'None'
+    type: 'Standard'
   }
 }

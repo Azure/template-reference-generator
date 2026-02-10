@@ -13,9 +13,9 @@ resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2022-05-01' = {
 }
 
 resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01' = {
-  parent: netAppAccount
   name: resourceName
   location: location
+  parent: netAppAccount
   properties: {
     serviceLevel: 'Standard'
     size: 4398046511104

@@ -6,6 +6,8 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   location: location
   kind: 'AzurePowerShell'
   properties: {
+    supportingScriptUris: null
+    timeout: 'P1D'
     azPowerShellVersion: '8.3'
     cleanupPreference: 'Always'
     environmentVariables: null
@@ -15,7 +17,5 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
 		$DeploymentScriptOutputs = @{}
 		$DeploymentScriptOutputs[''text''] = $output
 '''
-    supportingScriptUris: null
-    timeout: 'P1D'
   }
 }

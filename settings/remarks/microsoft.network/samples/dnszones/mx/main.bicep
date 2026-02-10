@@ -1,13 +1,14 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
   name: '${resourceName}.com'
   location: 'global'
 }
 
-resource mx 'Microsoft.Network/dnsZones/MX@2018-05-01' = {
-  parent: dnsZone
+resource mX 'Microsoft.Network/dnsZones/MX@2018-05-01' = {
   name: resourceName
+  parent: dnsZone
   properties: {
     MXRecords: [
       {

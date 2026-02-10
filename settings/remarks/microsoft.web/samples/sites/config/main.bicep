@@ -1,17 +1,17 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource serverfarm 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'S1'
+  }
   properties: {
+    zoneRedundant: false
     hyperV: false
     perSiteScaling: false
     reserved: false
-    zoneRedundant: false
-  }
-  sku: {
-    name: 'S1'
   }
 }
 
@@ -20,37 +20,37 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
   location: location
   properties: {
     clientAffinityEnabled: false
-    clientCertEnabled: false
     clientCertMode: 'Required'
-    enabled: true
     httpsOnly: false
     publicNetworkAccess: 'Enabled'
-    serverFarmId: serverfarm.id
     siteConfig: {
-      acrUseManagedIdentityCreds: false
       alwaysOn: true
       autoHealEnabled: false
-      ftpsState: 'Disabled'
       http20Enabled: false
-      loadBalancing: 'LeastRequests'
+      remoteDebuggingEnabled: false
       localMySqlEnabled: false
       managedPipelineMode: 'Integrated'
       minTlsVersion: '1.2'
-      publicNetworkAccess: 'Enabled'
-      remoteDebuggingEnabled: false
       scmIpSecurityRestrictionsUseMain: false
-      scmMinTlsVersion: '1.2'
-      use32BitWorkerProcess: true
       vnetRouteAllEnabled: false
       webSocketsEnabled: false
+      publicNetworkAccess: 'Enabled'
+      acrUseManagedIdentityCreds: false
+      ftpsState: 'Disabled'
+      loadBalancing: 'LeastRequests'
+      scmMinTlsVersion: '1.2'
+      use32BitWorkerProcess: true
       windowsFxVersion: ''
     }
+    clientCertEnabled: false
+    enabled: true
+    serverFarmId: serverfarm.id
     vnetRouteAllEnabled: false
   }
 }
 
 resource config 'Microsoft.Web/sites/config@2022-09-01' = {
-  parent: site
   name: 'azurestorageaccounts'
+  parent: site
   properties: {}
 }

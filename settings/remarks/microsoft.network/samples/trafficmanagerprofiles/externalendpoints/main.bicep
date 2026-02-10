@@ -1,4 +1,5 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08-01' = {
   name: resourceName
@@ -9,21 +10,21 @@ resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08
       ttl: 30
     }
     monitorConfig: {
+      toleratedNumberOfFailures: 3
       expectedStatusCodeRanges: []
       intervalInSeconds: 30
       path: '/'
       port: 443
       protocol: 'HTTPS'
       timeoutInSeconds: 10
-      toleratedNumberOfFailures: 3
     }
     trafficRoutingMethod: 'Weighted'
   }
 }
 
-resource externalendpoint 'Microsoft.Network/trafficManagerProfiles/ExternalEndpoints@2018-08-01' = {
-  parent: trafficManagerProfile
+resource externalEndpoint 'Microsoft.Network/trafficManagerProfiles/ExternalEndpoints@2018-08-01' = {
   name: resourceName
+  parent: trafficManagerProfile
   properties: {
     customHeaders: []
     endpointStatus: 'Enabled'

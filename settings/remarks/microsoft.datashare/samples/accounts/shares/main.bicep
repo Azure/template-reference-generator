@@ -10,8 +10,8 @@ resource account 'Microsoft.DataShare/accounts@2019-11-01' = {
 }
 
 resource share 'Microsoft.DataShare/accounts/shares@2019-11-01' = {
-  parent: account
   name: resourceName
+  parent: account
   properties: {
     description: ''
     shareKind: 'CopyBased'

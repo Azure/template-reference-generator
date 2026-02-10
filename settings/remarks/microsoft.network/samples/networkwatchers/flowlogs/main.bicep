@@ -10,36 +10,36 @@ resource networkWatchers 'Microsoft.Network/networkWatchers@2023-11-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
     allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
     allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        queue: {
+        table: {
           keyType: 'Service'
         }
-        table: {
+        queue: {
           keyType: 'Service'
         }
       }
     }
-    isHnsEnabled: false
-    isNfsV3Enabled: false
     isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
+    allowCrossTenantReplication: true
+    defaultToOAuthAuthentication: false
+    isHnsEnabled: false
+    isNfsV3Enabled: false
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
@@ -60,16 +60,10 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource flowLog 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
-  parent: networkWatchers
   name: resourceName
   location: location
+  parent: networkWatchers
   properties: {
-    enabled: true
-    flowAnalyticsConfiguration: {
-      networkWatcherFlowAnalyticsConfiguration: {
-        enabled: false
-      }
-    }
     format: {
       type: 'JSON'
       version: 2
@@ -80,5 +74,11 @@ resource flowLog 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
     }
     storageId: storageAccount.id
     targetResourceId: virtualNetwork.id
+    enabled: true
+    flowAnalyticsConfiguration: {
+      networkWatcherFlowAnalyticsConfiguration: {
+        enabled: false
+      }
+    }
   }
 }

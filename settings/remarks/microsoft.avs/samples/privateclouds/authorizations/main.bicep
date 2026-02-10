@@ -4,6 +4,9 @@ param location string = 'centralus'
 resource privateCloud 'Microsoft.AVS/privateClouds@2022-05-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'av36'
+  }
   properties: {
     internet: 'Disabled'
     managementCluster: {
@@ -11,12 +14,9 @@ resource privateCloud 'Microsoft.AVS/privateClouds@2022-05-01' = {
     }
     networkBlock: '192.168.48.0/22'
   }
-  sku: {
-    name: 'av36'
-  }
 }
 
 resource authorization 'Microsoft.AVS/privateClouds/authorizations@2022-05-01' = {
-  parent: privateCloud
   name: resourceName
+  parent: privateCloud
 }

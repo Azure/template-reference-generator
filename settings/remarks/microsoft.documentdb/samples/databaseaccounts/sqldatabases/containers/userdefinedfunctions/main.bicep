@@ -6,22 +6,10 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    capabilities: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
     databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
-    ipRules: []
     isVirtualNetworkFilterEnabled: false
+    defaultIdentity: 'FirstPartyIdentity'
     locations: [
       {
         failoverPriority: 0
@@ -30,30 +18,42 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
       }
     ]
     networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
+    capabilities: []
+    disableKeyBasedMetadataWriteAccess: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
     publicNetworkAccess: 'Enabled'
     virtualNetworkRules: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    enableAnalyticalStorage: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    networkAclBypassResourceIds: []
   }
 }
 
 resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
-    options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
+    options: {}
   }
 }
 
 resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
-  parent: sqlDatabase
   name: resourceName
+  parent: sqlDatabase
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: '${resourceName}'
       partitionKey: {
         kind: 'Hash'
         paths: [
@@ -65,8 +65,8 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
 }
 
 resource userDefinedFunction 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/userDefinedFunctions@2021-10-15' = {
-  parent: container
   name: resourceName
+  parent: container
   properties: {
     options: {}
     resource: {
@@ -76,7 +76,7 @@ resource userDefinedFunction 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases
 		response.setBody(''Hello, World'');
 	}
 '''
-      id: 'acctest0001'
+      id: '${resourceName}'
     }
   }
 }

@@ -1,4 +1,5 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08-01' = {
   name: resourceName
@@ -9,13 +10,13 @@ resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08
       ttl: 30
     }
     monitorConfig: {
+      protocol: 'HTTPS'
+      timeoutInSeconds: 10
+      toleratedNumberOfFailures: 3
       expectedStatusCodeRanges: []
       intervalInSeconds: 30
       path: '/'
       port: 443
-      protocol: 'HTTPS'
-      timeoutInSeconds: 10
-      toleratedNumberOfFailures: 3
     }
     trafficRoutingMethod: 'Weighted'
   }

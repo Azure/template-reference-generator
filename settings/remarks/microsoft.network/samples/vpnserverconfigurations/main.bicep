@@ -8,26 +8,26 @@ resource vpnServerConfiguration 'Microsoft.Network/vpnServerConfigurations@2022-
   name: resourceName
   location: location
   properties: {
-    radiusClientRootCertificates: []
-    radiusServerAddress: ''
-    radiusServerRootCertificates: []
-    radiusServerSecret: null
-    radiusServers: [
-      {
-        radiusServerAddress: '10.105.1.1'
-        radiusServerScore: 15
-        radiusServerSecret: null
-      }
-    ]
     vpnAuthenticationTypes: [
       'Radius'
     ]
     vpnClientIpsecPolicies: []
     vpnClientRevokedCertificates: []
+    radiusClientRootCertificates: []
+    radiusServerRootCertificates: []
+    radiusServerSecret: '${radiusServerSecret}'
     vpnClientRootCertificates: []
     vpnProtocols: [
       'OpenVPN'
       'IkeV2'
+    ]
+    radiusServerAddress: ''
+    radiusServers: [
+      {
+        radiusServerAddress: '10.105.1.1'
+        radiusServerScore: 15
+        radiusServerSecret: '${radiusServerSecret}'
+      }
     ]
   }
 }

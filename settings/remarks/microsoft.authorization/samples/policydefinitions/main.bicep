@@ -1,5 +1,6 @@
 targetScope = 'subscription'
 
+param location string = 'eastus'
 param resourceName string = 'acctest0001'
 
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
@@ -10,19 +11,19 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
     mode: 'All'
     parameters: {
       allowedLocations: {
+        type: 'Array'
         metadata: {
           description: 'The list of allowed locations for resources.'
           displayName: 'Allowed locations'
           strongType: 'location'
         }
-        type: 'Array'
       }
     }
     policyRule: {
       if: {
         not: {
           field: 'location'
-          in: '[parameters(\'allowedLocations\')]'
+          in: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         }
       }
       then: {

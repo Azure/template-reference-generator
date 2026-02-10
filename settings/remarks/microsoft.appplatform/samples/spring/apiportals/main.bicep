@@ -4,25 +4,25 @@ param location string = 'westeurope'
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    zoneRedundant: false
-  }
   sku: {
     name: 'E0'
+  }
+  properties: {
+    zoneRedundant: false
   }
 }
 
 resource apiPortal 'Microsoft.AppPlatform/Spring/apiPortals@2023-05-01-preview' = {
-  parent: spring
   name: 'default'
-  properties: {
-    gatewayIds: []
-    httpsOnly: false
-    public: false
-  }
+  parent: spring
   sku: {
     capacity: 1
     name: 'E0'
     tier: 'Enterprise'
+  }
+  properties: {
+    gatewayIds: []
+    httpsOnly: false
+    public: false
   }
 }

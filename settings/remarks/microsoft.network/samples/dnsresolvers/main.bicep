@@ -1,16 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    virtualNetwork: {
-      id: virtualNetwork.id
-    }
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
@@ -24,5 +14,13 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
       dnsServers: []
     }
     subnets: []
+  }
+}
+
+resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    virtualNetwork: {}
   }
 }

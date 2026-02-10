@@ -1,42 +1,52 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
-
-resource fleet 'Microsoft.ContainerService/fleets@2024-04-01' = {
-  name: resourceName
-  location: location
-  properties: {}
-}
+param resourceName string = 'acctest0001'
 
 resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Base'
+    tier: 'Free'
+  }
   properties: {
+    metricsProfile: {
+      costAnalysis: {
+        enabled: false
+      }
+    }
+    nodeResourceGroup: ''
     addonProfiles: {}
     agentPoolProfiles: [
       {
+        mode: 'System'
+        osDiskType: 'Managed'
+        tags: {}
         count: 1
         enableAutoScaling: false
-        enableEncryptionAtHost: false
-        enableFIPS: false
-        enableNodePublicIP: false
         enableUltraSSD: false
-        kubeletDiskType: ''
-        mode: 'System'
-        name: 'default'
-        nodeLabels: {}
-        osDiskType: 'Managed'
-        osType: 'Linux'
         scaleDownMode: 'Delete'
-        tags: {}
+        vmSize: 'Standard_B2s'
+        enableNodePublicIP: false
         type: 'VirtualMachineScaleSets'
         upgradeSettings: {
           drainTimeoutInMinutes: 0
           maxSurge: '10%'
           nodeSoakDurationInMinutes: 0
         }
-        vmSize: 'Standard_B2s'
+        enableEncryptionAtHost: false
+        name: 'default'
+        nodeLabels: {}
+        osType: 'Linux'
+        enableFIPS: false
+        kubeletDiskType: ''
       }
     ]
+    enableRBAC: true
+    securityProfile: {}
+    servicePrincipalProfile: {
+      clientId: 'msi'
+    }
+    supportPlan: 'KubernetesOfficial'
     apiServerAccessProfile: {
       disableRunCommand: false
       enablePrivateCluster: false
@@ -52,32 +62,22 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
       }
     }
     disableLocalAccounts: false
-    dnsPrefix: 'acctest0001'
-    enableRBAC: true
+    dnsPrefix: '${resourceName}'
     kubernetesVersion: ''
-    metricsProfile: {
-      costAnalysis: {
-        enabled: false
-      }
-    }
-    nodeResourceGroup: ''
-    securityProfile: {}
-    servicePrincipalProfile: {
-      clientId: 'msi'
-    }
-    supportPlan: 'KubernetesOfficial'
-  }
-  sku: {
-    name: 'Base'
-    tier: 'Free'
   }
 }
 
-resource member 'Microsoft.ContainerService/fleets/members@2024-04-01' = {
-  parent: fleet
+resource fleet 'Microsoft.ContainerService/fleets@2024-04-01' = {
   name: resourceName
+  location: location
+  properties: {}
+}
+
+resource member 'Microsoft.ContainerService/fleets/members@2024-04-01' = {
+  name: resourceName
+  parent: fleet
   properties: {
-    clusterResourceId: managedCluster.id
     group: 'default'
+    clusterResourceId: managedCluster.id
   }
 }

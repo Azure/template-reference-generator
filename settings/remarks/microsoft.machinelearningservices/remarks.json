@@ -42,6 +42,11 @@
       "ResourceType": "Microsoft.MachineLearningServices/workspaces/dataStores",
       "Path": "samples/workspaces/datastores/main.bicep",
       "Description": "A basic example of deploying Machine Learning DataStore."
+    },
+    {
+      "ResourceType": "Microsoft.MachineLearningServices/workspaces/outboundRules",
+      "Path": "samples/workspaces/outboundrules/main.bicep",
+      "Description": "A basic example of deploying Azure Machine Learning Workspace FQDN Network Outbound Rule."
     }
   ]
 }

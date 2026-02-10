@@ -4,27 +4,6 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource guestConfigurationAssignment 'Microsoft.GuestConfiguration/guestConfigurationAssignments@2020-06-25' = {
-  scope: virtualMachine
-  name: 'WhitelistedApplication'
-  location: location
-  properties: {
-    guestConfiguration: {
-      assignmentType: ''
-      configurationParameter: [
-        {
-          name: '[InstalledApplication]bwhitelistedapp;Name'
-          value: 'NotePad,sql'
-        }
-      ]
-      contentHash: ''
-      contentUri: ''
-      name: 'WhitelistedApplication'
-      version: '1.*'
-    }
-  }
-}
-
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: resourceName
   location: location
@@ -38,9 +17,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
         }
       }
     ]
@@ -51,17 +28,12 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    additionalCapabilities: {}
-    applicationProfile: {
-      galleryApplications: []
-    }
     diagnosticsProfile: {
       bootDiagnostics: {
-        enabled: false
         storageUri: ''
+        enabled: false
       }
     }
-    extensionsTimeBudget: 'PT1H30M'
     hardwareProfile: {
       vmSize: 'Standard_F2'
     }
@@ -76,23 +48,23 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
-      adminUsername: 'adminuser'
-      allowExtensionOperations: true
       computerName: 'acctestvmdro23'
       secrets: []
       windowsConfiguration: {
         enableAutomaticUpdates: true
         patchSettings: {
-          assessmentMode: 'ImageDefault'
           enableHotpatching: false
           patchMode: 'AutomaticByOS'
+          assessmentMode: 'ImageDefault'
         }
         provisionVMAgent: true
         winRM: {
           listeners: []
         }
       }
+      adminPassword: adminPassword
+      adminUsername: 'adminuser'
+      allowExtensionOperations: true
     }
     priority: 'Regular'
     storageProfile: {
@@ -104,15 +76,20 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         version: 'latest'
       }
       osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
         managedDisk: {
           storageAccountType: 'Standard_LRS'
         }
         osType: 'Windows'
         writeAcceleratorEnabled: false
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
       }
     }
+    additionalCapabilities: {}
+    applicationProfile: {
+      galleryApplications: []
+    }
+    extensionsTimeBudget: 'PT1H30M'
   }
 }
 
@@ -133,14 +110,35 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
+    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
-    serviceEndpoints: []
+  }
+}
+
+resource guestConfigurationAssignment 'Microsoft.GuestConfiguration/guestConfigurationAssignments@2020-06-25' = {
+  name: 'WhitelistedApplication'
+  location: location
+  scope: virtualMachine
+  properties: {
+    guestConfiguration: {
+      contentHash: ''
+      contentUri: ''
+      name: 'WhitelistedApplication'
+      version: '1.*'
+      assignmentType: ''
+      configurationParameter: [
+        {
+          name: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
+          value: 'NotePad,sql'
+        }
+      ]
+    }
   }
 }

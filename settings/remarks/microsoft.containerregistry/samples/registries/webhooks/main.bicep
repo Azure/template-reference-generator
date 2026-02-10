@@ -4,18 +4,13 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
   properties: {
-    adminUserEnabled: false
-    anonymousPullEnabled: false
-    dataEndpointEnabled: false
-    encryption: {
-      status: 'disabled'
-    }
     networkRuleBypassOptions: 'AzureServices'
     policies: {
-      exportPolicy: {
-        status: 'enabled'
-      }
       quarantinePolicy: {
         status: 'disabled'
       }
@@ -25,27 +20,32 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
       trustPolicy: {
         status: 'disabled'
       }
+      exportPolicy: {
+        status: 'enabled'
+      }
     }
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Standard'
+    anonymousPullEnabled: false
+    adminUserEnabled: false
+    dataEndpointEnabled: false
+    encryption: {
+      status: 'disabled'
+    }
   }
 }
 
 resource webHook 'Microsoft.ContainerRegistry/registries/webHooks@2021-08-01-preview' = {
-  parent: registry
   name: resourceName
   location: location
+  parent: registry
   properties: {
+    scope: ''
+    serviceUri: 'https://mywebhookreceiver.example/mytag'
+    status: 'enabled'
     actions: [
       'push'
     ]
     customHeaders: {}
-    scope: ''
-    serviceUri: 'https://mywebhookreceiver.example/mytag'
-    status: 'enabled'
   }
 }

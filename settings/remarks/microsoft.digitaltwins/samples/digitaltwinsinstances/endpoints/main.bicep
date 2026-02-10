@@ -6,36 +6,36 @@ resource digitalTwinsInstance 'Microsoft.DigitalTwins/digitalTwinsInstances@2020
   location: location
 }
 
+resource endpoint 'Microsoft.DigitalTwins/digitalTwinsInstances/endpoints@2020-12-01' = {
+  name: resourceName
+  parent: digitalTwinsInstance
+  properties: {
+    authenticationType: 'KeyBased'
+    deadLetterSecret: ''
+    endpointType: 'ServiceBus'
+    primaryConnectionString: authorizationRule.listKeys().primaryConnectionString
+    secondaryConnectionString: authorizationRule.listKeys().secondaryConnectionString
+  }
+}
+
 resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    disableLocalAuth: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
   sku: {
     capacity: 0
     name: 'Standard'
     tier: 'Standard'
   }
-}
-
-resource endpoint 'Microsoft.DigitalTwins/digitalTwinsInstances/endpoints@2020-12-01' = {
-  parent: digitalTwinsInstance
-  name: resourceName
   properties: {
-    authenticationType: 'KeyBased'
-    deadLetterSecret: ''
-    endpointType: 'ServiceBus'
-    primaryConnectionString: 'authorizationRule.listKeys().primaryConnectionString'
-    secondaryConnectionString: 'authorizationRule.listKeys().secondaryConnectionString'
+    disableLocalAuth: false
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
   }
 }
 
 resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-06-01-preview' = {
-  parent: namespace
   name: resourceName
+  parent: namespace
   properties: {
     enableBatchedOperations: false
     enableExpress: false
@@ -48,8 +48,8 @@ resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-06-01-preview' = {
 }
 
 resource authorizationRule 'Microsoft.ServiceBus/namespaces/topics/authorizationRules@2021-06-01-preview' = {
-  parent: topic
   name: resourceName
+  parent: topic
   properties: {
     rights: [
       'Send'

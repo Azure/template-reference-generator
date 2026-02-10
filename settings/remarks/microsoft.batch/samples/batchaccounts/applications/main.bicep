@@ -5,27 +5,37 @@ resource batchAccount 'Microsoft.Batch/batchAccounts@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    publicNetworkAccess: 'Enabled'
     autoStorage: {
       authenticationMode: 'StorageKeys'
-      storageAccountId: storageAccount.id
     }
     encryption: {
       keySource: 'Microsoft.Batch'
     }
     poolAllocationMode: 'BatchService'
-    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
     accessTier: 'Hot'
+    allowSharedKeyAccess: true
+    minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -39,26 +49,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       }
     }
     isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
 resource application 'Microsoft.Batch/batchAccounts/applications@2022-10-01' = {
-  parent: batchAccount
   name: resourceName
+  parent: batchAccount
   properties: {
-    allowUpdates: true
     defaultVersion: ''
     displayName: ''
+    allowUpdates: true
   }
 }
