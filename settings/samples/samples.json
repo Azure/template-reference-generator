@@ -16843,6 +16843,13 @@
     },
     {
       "Type": "Terraform",
+      "Title": "Traffic Manager Profile",
+      "Description": "AVM Resource Module for Traffic Manager Profile",
+      "ResourceType": "Microsoft.Network/trafficmanagerprofiles",
+      "RepoUrl": "https://github.com/Azure/terraform-azurerm-avm-res-network-trafficmanagerprofile"
+    },
+    {
+      "Type": "Terraform",
       "Title": "Virtual Network",
       "Description": "AVM Resource Module for Virtual Network",
       "ResourceType": "Microsoft.Network/virtualNetworks",
