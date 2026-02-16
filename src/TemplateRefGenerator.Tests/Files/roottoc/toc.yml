@@ -28,7 +28,7 @@
     href: ./microsoft.appcomplianceautomation/change-log/toc.yml
   - name: App Configuration
     href: ./microsoft.appconfiguration/change-log/toc.yml
-  - name: ArizeAi.ObservabilityEval
+  - name: ArizeAI ObservabilityEval
     href: ./arizeai.observabilityeval/change-log/toc.yml
   - name: Astronomer Astro
     href: ./astronomer.astro/change-log/toc.yml
@@ -90,8 +90,6 @@
     href: ./microsoft.azurestack/change-log/toc.yml
   - name: Azure Stack HCI
     href: ./microsoft.azurestackhci/change-log/toc.yml
-  - name: Azure Storage Actions
-    href: ./microsoft.storageactions/change-log/toc.yml
   - name: Azure VMware Solution
     href: ./microsoft.avs/change-log/toc.yml
   - name: Baremetal Infrastructure
@@ -116,8 +114,8 @@
     href: ./microsoft.chaos/change-log/toc.yml
   - name: Cloud for Manufacturing
     href: ./microsoft.manufacturingplatform/change-log/toc.yml
-  - name: Cloud for Sovereignty
-    href: ./microsoft.sovereign/change-log/toc.yml
+  - name: CloudHealth
+    href: ./microsoft.cloudhealth/change-log/toc.yml
   - name: Codesigning
     href: ./microsoft.codesigning/change-log/toc.yml
   - name: Cognitive Services
@@ -184,7 +182,7 @@
     href: ./microsoft.datadog/change-log/toc.yml
   - name: Delegated Network
     href: ./microsoft.delegatednetwork/change-log/toc.yml
-  - name: Dell.Storage
+  - name: Dell Storage
     href: ./dell.storage/change-log/toc.yml
   - name: Desktop Virtualization
     href: ./microsoft.desktopvirtualization/change-log/toc.yml
@@ -292,8 +290,6 @@
     href: ./microsoft.iotcentral/change-log/toc.yml
   - name: IoT Firmware Defense
     href: ./microsoft.iotfirmwaredefense/change-log/toc.yml
-  - name: IoT Hub
-    href: ./microsoft.devices/change-log/toc.yml
   - name: IoT Operations
     href: ./microsoft.iotoperations/change-log/toc.yml
   - name: IoT Operations Data Processor
@@ -310,7 +306,7 @@
     href: ./microsoft.kubernetesruntime/change-log/toc.yml
   - name: Kusto
     href: ./microsoft.kusto/change-log/toc.yml
-  - name: LambdaTest.HyperExecute
+  - name: LambdaTest HyperExecute
     href: ./lambdatest.hyperexecute/change-log/toc.yml
   - name: Logic
     href: ./microsoft.logic/change-log/toc.yml
@@ -346,8 +342,6 @@
     href: ./microsoft.azurebridge.admin/change-log/toc.yml
   - name: Microsoft.Backup.Admin
     href: ./microsoft.backup.admin/change-log/toc.yml
-  - name: Microsoft.CloudHealth
-    href: ./microsoft.cloudhealth/change-log/toc.yml
   - name: Microsoft.Compute.Admin
     href: ./microsoft.compute.admin/change-log/toc.yml
   - name: Microsoft.ComputeSchedule
@@ -356,6 +350,8 @@
     href: ./microsoft.containerregistry.admin/change-log/toc.yml
   - name: Microsoft.Deployment.Admin
     href: ./microsoft.deployment.admin/change-log/toc.yml
+  - name: Microsoft.Devices
+    href: ./microsoft.devices/change-log/toc.yml
   - name: Microsoft.Fabric.Admin
     href: ./microsoft.fabric.admin/change-log/toc.yml
   - name: Microsoft.FileShares
@@ -370,8 +366,12 @@
     href: ./microsoft.network.admin/change-log/toc.yml
   - name: Microsoft.Relationships
     href: ./microsoft.relationships/change-log/toc.yml
+  - name: Microsoft.Sovereign
+    href: ./microsoft.sovereign/change-log/toc.yml
   - name: Microsoft.Storage.Admin
     href: ./microsoft.storage.admin/change-log/toc.yml
+  - name: Microsoft.StorageActions
+    href: ./microsoft.storageactions/change-log/toc.yml
   - name: Microsoft.StorageDiscovery
     href: ./microsoft.storagediscovery/change-log/toc.yml
   - name: Microsoft.Subscriptions.Admin
@@ -382,7 +382,7 @@
     href: ./microsoft.widget/change-log/toc.yml
   - name: Migrate
     href: ./microsoft.migrate/change-log/toc.yml
-  - name: MongoDB.Atlas
+  - name: MongoDB Atlas
     href: ./mongodb.atlas/change-log/toc.yml
   - name: Monitor
     href: ./microsoft.monitor/change-log/toc.yml
@@ -424,7 +424,7 @@
     href: ./paloaltonetworks.cloudngfw/change-log/toc.yml
   - name: Peering
     href: ./microsoft.peering/change-log/toc.yml
-  - name: Pinecone.VectorDb
+  - name: Pinecone Vector Database
     href: ./pinecone.vectordb/change-log/toc.yml
   - name: Policy Insights
     href: ./microsoft.policyinsights/change-log/toc.yml
@@ -446,7 +446,7 @@
     href: ./microsoft.programmableconnectivity/change-log/toc.yml
   - name: Provider Hub
     href: ./microsoft.providerhub/change-log/toc.yml
-  - name: PureStorage.Block
+  - name: Pure Storage Block Storage
     href: ./purestorage.block/change-log/toc.yml
   - name: Purview
     href: ./microsoft.purview/change-log/toc.yml
@@ -583,7 +583,7 @@
     href: ./microsoft.appcomplianceautomation/toc.yml
   - name: App Configuration
     href: ./microsoft.appconfiguration/toc.yml
-  - name: ArizeAi.ObservabilityEval
+  - name: ArizeAI ObservabilityEval
     href: ./arizeai.observabilityeval/toc.yml
   - name: Astronomer Astro
     href: ./astronomer.astro/toc.yml
@@ -645,8 +645,6 @@
     href: ./microsoft.azurestack/toc.yml
   - name: Azure Stack HCI
     href: ./microsoft.azurestackhci/toc.yml
-  - name: Azure Storage Actions
-    href: ./microsoft.storageactions/toc.yml
   - name: Azure VMware Solution
     href: ./microsoft.avs/toc.yml
   - name: Baremetal Infrastructure
@@ -671,8 +669,8 @@
     href: ./microsoft.chaos/toc.yml
   - name: Cloud for Manufacturing
     href: ./microsoft.manufacturingplatform/toc.yml
-  - name: Cloud for Sovereignty
-    href: ./microsoft.sovereign/toc.yml
+  - name: CloudHealth
+    href: ./microsoft.cloudhealth/toc.yml
   - name: Codesigning
     href: ./microsoft.codesigning/toc.yml
   - name: Cognitive Services
@@ -739,7 +737,7 @@
     href: ./microsoft.datadog/toc.yml
   - name: Delegated Network
     href: ./microsoft.delegatednetwork/toc.yml
-  - name: Dell.Storage
+  - name: Dell Storage
     href: ./dell.storage/toc.yml
   - name: Desktop Virtualization
     href: ./microsoft.desktopvirtualization/toc.yml
@@ -847,8 +845,6 @@
     href: ./microsoft.iotcentral/toc.yml
   - name: IoT Firmware Defense
     href: ./microsoft.iotfirmwaredefense/toc.yml
-  - name: IoT Hub
-    href: ./microsoft.devices/toc.yml
   - name: IoT Operations
     href: ./microsoft.iotoperations/toc.yml
   - name: IoT Operations Data Processor
@@ -865,7 +861,7 @@
     href: ./microsoft.kubernetesruntime/toc.yml
   - name: Kusto
     href: ./microsoft.kusto/toc.yml
-  - name: LambdaTest.HyperExecute
+  - name: LambdaTest HyperExecute
     href: ./lambdatest.hyperexecute/toc.yml
   - name: Logic
     href: ./microsoft.logic/toc.yml
@@ -901,8 +897,6 @@
     href: ./microsoft.azurebridge.admin/toc.yml
   - name: Microsoft.Backup.Admin
     href: ./microsoft.backup.admin/toc.yml
-  - name: Microsoft.CloudHealth
-    href: ./microsoft.cloudhealth/toc.yml
   - name: Microsoft.Compute.Admin
     href: ./microsoft.compute.admin/toc.yml
   - name: Microsoft.ComputeSchedule
@@ -911,6 +905,8 @@
     href: ./microsoft.containerregistry.admin/toc.yml
   - name: Microsoft.Deployment.Admin
     href: ./microsoft.deployment.admin/toc.yml
+  - name: Microsoft.Devices
+    href: ./microsoft.devices/toc.yml
   - name: Microsoft.Fabric.Admin
     href: ./microsoft.fabric.admin/toc.yml
   - name: Microsoft.FileShares
@@ -925,8 +921,12 @@
     href: ./microsoft.network.admin/toc.yml
   - name: Microsoft.Relationships
     href: ./microsoft.relationships/toc.yml
+  - name: Microsoft.Sovereign
+    href: ./microsoft.sovereign/toc.yml
   - name: Microsoft.Storage.Admin
     href: ./microsoft.storage.admin/toc.yml
+  - name: Microsoft.StorageActions
+    href: ./microsoft.storageactions/toc.yml
   - name: Microsoft.StorageDiscovery
     href: ./microsoft.storagediscovery/toc.yml
   - name: Microsoft.Subscriptions.Admin
@@ -937,7 +937,7 @@
     href: ./microsoft.widget/toc.yml
   - name: Migrate
     href: ./microsoft.migrate/toc.yml
-  - name: MongoDB.Atlas
+  - name: MongoDB Atlas
     href: ./mongodb.atlas/toc.yml
   - name: Monitor
     href: ./microsoft.monitor/toc.yml
@@ -979,7 +979,7 @@
     href: ./paloaltonetworks.cloudngfw/toc.yml
   - name: Peering
     href: ./microsoft.peering/toc.yml
-  - name: Pinecone.VectorDb
+  - name: Pinecone Vector Database
     href: ./pinecone.vectordb/toc.yml
   - name: Policy Insights
     href: ./microsoft.policyinsights/toc.yml
@@ -1001,7 +1001,7 @@
     href: ./microsoft.programmableconnectivity/toc.yml
   - name: Provider Hub
     href: ./microsoft.providerhub/toc.yml
-  - name: PureStorage.Block
+  - name: Pure Storage Block Storage
     href: ./purestorage.block/toc.yml
   - name: Purview
     href: ./microsoft.purview/toc.yml
