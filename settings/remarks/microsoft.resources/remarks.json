@@ -2,9 +2,9 @@
   "$schema": "../../schemas/remarks.schema.json",
   "BicepSamples": [
     {
-      "Description": "A basic example of deploying a resource group.",
+      "ResourceType": "microsoft.resources/resourceGroups",
       "Path": "samples/resourceGroups/basic.bicep",
-      "ResourceType": "microsoft.resources/resourceGroups"
+      "Description": "A basic example of deploying a resource group."
     },
     {
       "ResourceType": "Microsoft.Resources/deploymentScripts",
@@ -15,6 +15,11 @@
       "ResourceType": "Microsoft.Resources/resourceGroups",
       "Path": "samples/resourceGroups/main.bicep",
       "Description": "A basic example of deploying Resource Group."
+    },
+    {
+      "ResourceType": "Microsoft.Resources/deployments",
+      "Path": "samples/deployments/main.bicep",
+      "Description": "A basic example of deploying Template Deployment."
     }
   ],
   "ResourceRemarks": [

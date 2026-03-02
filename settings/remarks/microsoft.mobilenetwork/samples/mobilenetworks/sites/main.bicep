@@ -13,8 +13,8 @@ resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
 }
 
 resource site 'Microsoft.MobileNetwork/mobileNetworks/sites@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {}
 }

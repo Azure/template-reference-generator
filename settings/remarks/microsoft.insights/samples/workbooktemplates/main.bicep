@@ -7,11 +7,11 @@ resource workbookTemplate 'Microsoft.Insights/workbookTemplates@2020-11-20' = {
   properties: {
     galleries: [
       {
+        type: 'workbook'
         category: 'workbook'
         name: 'test'
         order: 0
         resourceType: 'Azure Monitor'
-        type: 'workbook'
       }
     ]
     priority: 0

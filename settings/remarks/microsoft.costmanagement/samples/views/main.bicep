@@ -1,6 +1,5 @@
-targetScope = 'subscription'
-
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource view 'Microsoft.CostManagement/views@2022-10-01' = {
   name: resourceName
@@ -30,17 +29,6 @@ resource view 'Microsoft.CostManagement/views@2022-10-01' = {
     ]
     query: {
       dataSet: {
-        aggregation: {
-          totalCost: {
-            function: 'Sum'
-            name: 'Cost'
-          }
-          totalCostUSD: {
-            function: 'Sum'
-            name: 'CostUSD'
-          }
-        }
-        granularity: 'Monthly'
         grouping: [
           {
             name: 'ResourceGroupName'
@@ -53,6 +41,17 @@ resource view 'Microsoft.CostManagement/views@2022-10-01' = {
             name: 'BillingMonth'
           }
         ]
+        aggregation: {
+          totalCost: {
+            function: 'Sum'
+            name: 'Cost'
+          }
+          totalCostUSD: {
+            function: 'Sum'
+            name: 'CostUSD'
+          }
+        }
+        granularity: 'Monthly'
       }
       timeframe: 'MonthToDate'
       type: 'Usage'

@@ -8,8 +8,8 @@ resource queryPack 'Microsoft.OperationalInsights/queryPacks@2019-09-01' = {
 }
 
 resource query 'Microsoft.OperationalInsights/queryPacks/queries@2019-09-01' = {
-  parent: queryPack
   name: 'aca50e92-d3e6-8f7d-1f70-2ec7adc1a926'
+  parent: queryPack
   properties: {
     body: '''    let newExceptionsTimeRange = 1d;
     let timeRangeToCheckBefore = 7d;

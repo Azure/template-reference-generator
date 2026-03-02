@@ -72,6 +72,26 @@
       "ResourceType": "Microsoft.Security/securityContacts",
       "Path": "samples/securitycontacts/main.bicep",
       "Description": "A basic example of deploying subscription's Security Center Contact."
+    },
+    {
+      "ResourceType": "Microsoft.Security/assessments",
+      "Path": "samples/assessments/main.bicep",
+      "Description": "A basic example of deploying Security Center Assessment for Azure Security Center."
+    },
+    {
+      "ResourceType": "Microsoft.Security/assessments",
+      "Path": "samples/assessments/main-rg-module.bicep",
+      "Description": "A basic example of deploying Security Center Assessment for Azure Security Center."
+    },
+    {
+      "ResourceType": "Microsoft.Security/workspaceSettings",
+      "Path": "samples/workspacesettings/main.bicep",
+      "Description": "A basic example of deploying subscription's Security Center Workspace."
+    },
+    {
+      "ResourceType": "Microsoft.Security/workspaceSettings",
+      "Path": "samples/workspacesettings/main-rg-module.bicep",
+      "Description": "A basic example of deploying subscription's Security Center Workspace."
     }
   ]
 }

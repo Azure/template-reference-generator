@@ -19,11 +19,11 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource credential 'Microsoft.Automation/automationAccounts/credentials@2020-01-13-preview' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     description: ''
-    password: null
+    password: '${automationCredentialPassword}'
     userName: 'test_user'
   }
 }

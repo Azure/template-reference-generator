@@ -5,23 +5,23 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
   location: location
   properties: {
+    networkManagerScopes: {
+      managementGroups: []
+      subscriptions: [
+        '/subscriptions/${subscription().subscriptionId}'
+      ]
+    }
     description: ''
     networkManagerScopeAccesses: [
       'SecurityAdmin'
     ]
-    networkManagerScopes: {
-      managementGroups: []
-      subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
-      ]
-    }
   }
 }
 
 resource verifierWorkspace 'Microsoft.Network/networkManagers/verifierWorkspaces@2024-01-01-preview' = {
-  parent: networkManager
   name: resourceName
   location: location
+  parent: networkManager
   properties: {
     description: 'A sample workspace'
   }

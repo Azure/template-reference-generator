@@ -15,8 +15,8 @@ resource elasticSan 'Microsoft.ElasticSan/elasticSans@2023-01-01' = {
 }
 
 resource volumeGroup 'Microsoft.ElasticSan/elasticSans/volumeGroups@2023-01-01' = {
-  parent: elasticSan
   name: '${resourceName}-vg'
+  parent: elasticSan
   properties: {
     encryption: 'EncryptionAtRestWithPlatformKey'
     networkAcls: {

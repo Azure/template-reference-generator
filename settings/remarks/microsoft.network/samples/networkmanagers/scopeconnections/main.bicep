@@ -19,10 +19,10 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
 }
 
 resource scopeConnection 'Microsoft.Network/networkManagers/scopeConnections@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {
     resourceId: subscription().id
-    tenantId: tenant().tenantId
+    tenantId: subscription().tenantId
   }
 }

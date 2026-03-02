@@ -4,17 +4,17 @@ param location string = 'westeurope'
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
-  properties: {
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
-    }
-    idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Dynamic'
-  }
   sku: {
     name: 'Basic'
     tier: 'Regional'
+  }
+  properties: {
+    idleTimeoutInMinutes: 4
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Dynamic'
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
   }
 }
 
@@ -38,36 +38,35 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07
   name: resourceName
   location: location
   properties: {
+    sku: {
+      name: 'Basic'
+      tier: 'Basic'
+    }
+    vpnType: 'RouteBased'
     activeActive: false
     enableBgp: false
     enablePrivateIpAddress: false
     gatewayType: 'Vpn'
     ipConfigurations: [
       {
-        name: 'vnetGatewayConfig'
         properties: {
-          privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
             id: publicIPAddress.id
           }
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
+          privateIPAllocationMethod: 'Dynamic'
         }
+        name: 'vnetGatewayConfig'
       }
     ]
-    sku: {
-      name: 'Basic'
-      tier: 'Basic'
-    }
-    vpnType: 'RouteBased'
   }
 }
 
 resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' = {
-  parent: virtualNetworkGateway
   name: resourceName
+  parent: virtualNetworkGateway
   properties: {
+    type: 'Static'
     externalMappings: [
       {
         addressSpace: '10.1.0.0/26'
@@ -79,13 +78,12 @@ resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' 
       }
     ]
     mode: 'EgressSnat'
-    type: 'Static'
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'GatewaySubnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.1.0/24'
     delegations: []

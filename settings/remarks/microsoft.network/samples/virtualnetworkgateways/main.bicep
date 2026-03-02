@@ -4,6 +4,10 @@ param location string = 'centralus'
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -11,10 +15,6 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
@@ -49,13 +49,11 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07
       {
         name: 'vnetGatewayConfig'
         properties: {
-          privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
             id: publicIPAddress.id
           }
-          subnet: {
-            id: subnet.id
-          }
+          subnet: {}
+          privateIPAllocationMethod: 'Dynamic'
         }
       }
     ]
@@ -68,8 +66,8 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'GatewaySubnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.6.1.0/24'
     delegations: []

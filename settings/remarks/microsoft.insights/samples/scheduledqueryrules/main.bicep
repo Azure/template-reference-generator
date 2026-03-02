@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource component 'Microsoft.Insights/components@2020-02-02' = {
   name: resourceName
@@ -8,11 +8,11 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   properties: {
     Application_Type: 'web'
     DisableIpMasking: false
-    DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
     RetentionInDays: 90
     SamplingPercentage: 100
     publicNetworkAccessForIngestion: 'Enabled'
+    DisableLocalAuth: false
+    ForceCustomerStorageForProfiler: false
     publicNetworkAccessForQuery: 'Enabled'
   }
 }
@@ -22,7 +22,6 @@ resource scheduledQueryRule 'Microsoft.Insights/scheduledQueryRules@2021-08-01' 
   location: location
   kind: 'LogAlert'
   properties: {
-    autoMitigate: false
     checkWorkspaceAlertsStorageConfigured: false
     criteria: {
       allOf: [
@@ -37,14 +36,15 @@ resource scheduledQueryRule 'Microsoft.Insights/scheduledQueryRules@2021-08-01' 
         }
       ]
     }
-    enabled: true
     evaluationFrequency: 'PT5M'
     scopes: [
       component.id
     ]
     severity: 3
-    skipQueryValidation: false
     targetResourceTypes: null
     windowSize: 'PT5M'
+    autoMitigate: false
+    enabled: true
+    skipQueryValidation: false
   }
 }

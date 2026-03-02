@@ -27,6 +27,11 @@
       "ResourceType": "Microsoft.SqlVirtualMachine/sqlVirtualMachines",
       "Path": "samples/sqlvirtualmachines/basic/main.bicep",
       "Description": "A basic example of deploying Microsoft SQL Virtual Machine."
+    },
+    {
+      "ResourceType": "Microsoft.SqlVirtualMachine/sqlVirtualMachines",
+      "Path": "samples/sqlvirtualmachines/sqlbestpracticesassessment/main.bicep",
+      "Description": "A sqlbestpracticesassessment example of deploying Microsoft SQL Virtual Machine."
     }
   ]
 }

@@ -4,12 +4,12 @@ param location string = 'westeurope'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
     allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -22,18 +22,18 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    accessTier: 'Hot'
   }
 }
 
@@ -41,11 +41,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
     sku: {
@@ -54,12 +49,17 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     workspaceCapping: {
       dailyQuotaGb: -1
     }
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
   }
 }
 
 resource storageInsightConfig 'Microsoft.OperationalInsights/workspaces/storageInsightConfigs@2020-08-01' = {
-  parent: workspace
   name: resourceName
+  parent: workspace
   properties: {
     storageAccount: {
       id: storageAccount.id

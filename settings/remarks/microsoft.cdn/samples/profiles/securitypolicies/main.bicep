@@ -1,8 +1,12 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
-resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
+resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
   name: resourceName
   location: 'global'
+  sku: {
+    name: 'Premium_AzureFrontDoor'
+  }
   properties: {
     customRules: {
       rules: [
@@ -20,10 +24,10 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
               operator: 'IPMatch'
             }
           ]
-          name: 'Rule1'
           priority: 1
-          rateLimitDurationInMinutes: 1
           rateLimitThreshold: 10
+          name: 'Rule1'
+          rateLimitDurationInMinutes: 1
           ruleType: 'MatchRule'
         }
       ]
@@ -62,9 +66,6 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
       redirectUrl: 'https://www.fabrikam.com'
     }
   }
-  sku: {
-    name: 'Premium_AzureFrontDoor'
-  }
 }
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
@@ -75,22 +76,22 @@ resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
 resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: resourceName
   location: 'global'
-  properties: {
-    originResponseTimeoutSeconds: 120
-  }
   sku: {
     name: 'Premium_AzureFrontDoor'
+  }
+  properties: {
+    originResponseTimeoutSeconds: 120
   }
 }
 
 resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
-  parent: profile
   name: resourceName
+  parent: profile
   properties: {
     azureDnsZone: {
       id: dnsZone.id
     }
-    hostName: 'fabrikam.acctest0001.com'
+    hostName: 'fabrikam.${resourceName}.com'
     tlsSettings: {
       certificateType: 'ManagedCertificate'
       minimumTlsVersion: 'TLS12'
@@ -99,8 +100,8 @@ resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
 }
 
 resource securityPolicy 'Microsoft.Cdn/profiles/securityPolicies@2021-06-01' = {
-  parent: profile
   name: resourceName
+  parent: profile
   properties: {
     parameters: {
       associations: [
@@ -117,7 +118,7 @@ resource securityPolicy 'Microsoft.Cdn/profiles/securityPolicies@2021-06-01' = {
       ]
       type: 'WebApplicationFirewall'
       wafPolicy: {
-        id: frontdoorwebapplicationfirewallpolicy.id
+        id: frontDoorWebApplicationFirewallPolicy.id
       }
     }
   }

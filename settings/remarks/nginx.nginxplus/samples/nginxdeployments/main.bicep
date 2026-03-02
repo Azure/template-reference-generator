@@ -1,81 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
-
-resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' = {
-  name: '${resourceName}-nginx'
-  location: location
-  properties: {
-    autoUpgradeProfile: {
-      upgradeChannel: 'stable'
-    }
-    enableDiagnosticsSupport: false
-    networkProfile: {
-      frontEndIPConfiguration: {
-        publicIPAddresses: [
-          {
-            id: publicIPAddress.id
-          }
-        ]
-      }
-      networkInterfaceConfiguration: {
-        subnetId: subnet.id
-      }
-    }
-    scalingProperties: {
-      autoScaleSettings: {
-        profiles: [
-          {
-            capacity: {
-              max: 30
-              min: 10
-            }
-            name: 'test'
-          }
-        ]
-      }
-    }
-    userProfile: {
-      preferredEmail: 'test@test.com'
-    }
-  }
-  sku: {
-    name: 'standardv2_Monthly'
-  }
-}
-
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
-  name: '${resourceName}-pip'
-  location: location
-  properties: {
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
-    }
-    idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
-  }
-}
-
-resource publicipaddress1 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
-  name: '${resourceName}-pip2'
-  location: location
-  properties: {
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
-    }
-    idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
-  }
-}
+param resourceName string = 'acctest0001'
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: '${resourceName}-vnet'
@@ -95,10 +19,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
     defaultOutboundAccess: true
     delegations: [
       {
@@ -112,13 +35,15 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
   }
 }
 
 resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet2'
+  parent: virtualNetwork
   properties: {
+    serviceEndpoints: []
     addressPrefix: '10.0.3.0/24'
     defaultOutboundAccess: true
     delegations: [
@@ -132,6 +57,77 @@ resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
-    serviceEndpoints: []
+  }
+}
+
+resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' = {
+  name: '${resourceName}-nginx'
+  location: location
+  sku: {
+    name: 'standardv2_Monthly'
+  }
+  properties: {
+    autoUpgradeProfile: {
+      upgradeChannel: 'stable'
+    }
+    enableDiagnosticsSupport: false
+    networkProfile: {
+      networkInterfaceConfiguration: {}
+      frontEndIPConfiguration: {
+        publicIPAddresses: [
+          {}
+        ]
+      }
+    }
+    scalingProperties: {
+      autoScaleSettings: {
+        profiles: [
+          {
+            capacity: {
+              max: 30
+              min: 10
+            }
+            name: 'test'
+          }
+        ]
+      }
+    }
+    userProfile: {
+      preferredEmail: 'test@test.com'
+    }
+  }
+}
+
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
+  name: '${resourceName}-pip'
+  location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
+  properties: {
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
+    idleTimeoutInMinutes: 4
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Static'
+  }
+}
+
+resource publicipaddress1 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
+  name: '${resourceName}-pip2'
+  location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
+  properties: {
+    idleTimeoutInMinutes: 4
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Static'
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
   }
 }
