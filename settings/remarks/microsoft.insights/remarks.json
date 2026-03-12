@@ -191,6 +191,21 @@
       "ResourceType": "Microsoft.Insights/workbooks",
       "Path": "samples/workbooks/main.bicep",
       "Description": "A basic example of deploying Azure Workbook."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/components/ProactiveDetectionConfigs",
+      "Path": "samples/components/proactivedetectionconfigs/main.bicep",
+      "Description": "A basic example of deploying Application Insights Smart Detection Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/logProfiles",
+      "Path": "samples/logprofiles/main.bicep",
+      "Description": "A basic example of deploying Insights Log Profiles."
+    },
+    {
+      "ResourceType": "Microsoft.Insights/logProfiles",
+      "Path": "samples/logprofiles/main-rg-module.bicep",
+      "Description": "A basic example of deploying Insights Log Profiles."
     }
   ]
 }

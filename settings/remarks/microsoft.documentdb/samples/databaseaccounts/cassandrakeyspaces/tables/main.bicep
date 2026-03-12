@@ -1,9 +1,9 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
-var keyspaceName = '${toLower(resourceName)}ks'
-var tableName = '${toLower(resourceName)}tbl'
-var accountName = toLower(replace(resourceName, '-', ''))
+var keyspaceName = 'resourcenameks'
+var tableName = 'resourcenametbl'
+var accountName = 'resourcename'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   name: accountName
@@ -11,6 +11,17 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   kind: 'GlobalDocumentDB'
   properties: {
     backupPolicy: null
+    enableAutomaticFailover: false
+    enableBurstCapacity: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: '${location}'
+      }
+    ]
+    minimalTlsVersion: 'Tls12'
+    virtualNetworkRules: []
     capabilities: [
       {
         name: 'EnableCassandra'
@@ -22,51 +33,40 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
       maxStalenessPrefix: 100
     }
     databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
     disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
-    enableAnalyticalStorage: true
-    enableAutomaticFailover: false
-    enableBurstCapacity: false
     enableFreeTier: false
-    enableMultipleWriteLocations: false
     enablePartitionMerge: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'eastus'
-      }
-    ]
-    minimalTlsVersion: 'Tls12'
-    networkAclBypass: 'None'
     networkAclBypassResourceIds: []
+    enableAnalyticalStorage: true
+    isVirtualNetworkFilterEnabled: false
+    networkAclBypass: 'None'
     publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
+    defaultIdentity: 'FirstPartyIdentity'
+    enableMultipleWriteLocations: false
+    ipRules: []
   }
 }
 
 resource cassandraKeyspace 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces@2021-10-15' = {
-  parent: databaseAccount
   name: keyspaceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: keyspaceName
+      id: '${keyspaceName}'
     }
   }
 }
 
 resource table 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables@2021-10-15' = {
-  parent: cassandraKeyspace
   name: tableName
+  parent: cassandraKeyspace
   properties: {
     options: {}
     resource: {
       analyticalStorageTtl: 1
-      id: tableName
+      id: '${tableName}'
       schema: {
         clusterKeys: []
         columns: [

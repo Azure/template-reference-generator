@@ -1,33 +1,26 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource component 'Microsoft.Insights/components@2020-02-02' = {
-  name: '${resourceName}-ai'
-  location: location
-  kind: 'web'
-  properties: {
-    Application_Type: 'web'
-    DisableIpMasking: false
-    DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
-    SamplingPercentage: 100
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: '${toLower(substring(resourceName, 0, 16))}acc'
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
     allowCrossTenantReplication: false
-    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
+    isNfsV3Enabled: false
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+      ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
+    }
+    publicNetworkAccess: 'Enabled'
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -40,22 +33,42 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       }
     }
     isHnsEnabled: false
-    isLocalUserEnabled: true
-    isNfsV3Enabled: false
-    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: []
-      resourceAccessRules: []
-      virtualNetworkRules: []
-    }
-    publicNetworkAccess: 'Enabled'
+    allowBlobPublicAccess: true
+    allowSharedKeyAccess: true
+    isLocalUserEnabled: true
     supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
+    isSftpEnabled: false
   }
-  sku: {
-    name: 'Standard_LRS'
+}
+
+resource storageaccountBlobservices 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
+  name: 'datacontainer'
+  parent: storageaccountBlobservices
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+resource component 'Microsoft.Insights/components@2020-02-02' = {
+  name: '${resourceName}-ai'
+  location: location
+  kind: 'web'
+  properties: {
+    DisableIpMasking: false
+    DisableLocalAuth: false
+    ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
+    SamplingPercentage: 100
+    publicNetworkAccessForIngestion: 'Enabled'
+    Application_Type: 'web'
+    publicNetworkAccessForQuery: 'Enabled'
   }
 }
 
@@ -63,26 +76,30 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: '${resourceName}vault'
   location: location
   properties: {
-    accessPolicies: []
     createMode: 'default'
-    enablePurgeProtection: true
-    enableRbacAuthorization: false
     enableSoftDelete: true
-    enabledForDeployment: false
     enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
-    publicNetworkAccess: 'Enabled'
     sku: {
       family: 'A'
       name: 'standard'
     }
-    tenantId: deployer().tenantId
+    tenantId: tenant().tenantId
+    accessPolicies: []
+    enablePurgeProtection: true
+    enableRbacAuthorization: false
+    enabledForDeployment: false
+    publicNetworkAccess: 'Enabled'
   }
 }
 
 resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
   name: '${resourceName}-mlw'
   location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Basic'
+  }
   kind: 'Default'
   properties: {
     applicationInsights: component.id
@@ -91,23 +108,21 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
     storageAccount: storageAccount.id
     v1LegacyMode: false
   }
-  sku: {
-    name: 'Basic'
-    tier: 'Basic'
-  }
 }
 
 resource dataStore 'Microsoft.MachineLearningServices/workspaces/dataStores@2024-04-01' = {
-  parent: workspace
   name: replace('${resourceName}_ds', '-', '_')
+  parent: workspace
+  dependsOn: [
+    container
+  ]
   properties: {
     accountName: storageAccount.name
-    containerName: container.name
     credentials: {
       credentialsType: 'AccountKey'
       secrets: {
-        key: base64(storageAccount.listKeys().keys[0].value)
         secretsType: 'AccountKey'
+        key: base64(storageAccount.listKeys().keys[0].value)
       }
     }
     datastoreType: 'AzureBlob'
@@ -115,22 +130,5 @@ resource dataStore 'Microsoft.MachineLearningServices/workspaces/dataStores@2024
     endpoint: 'core.windows.net'
     serviceDataAccessAuthIdentity: 'None'
     tags: null
-  }
-  dependsOn: [
-    container
-  ]
-}
-
-// The blob service is a singleton named 'default' under the storage account
-resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' existing = {
-  parent: storageAccount
-  name: 'default'
-}
-
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
-  parent: blobService
-  name: 'datacontainer'
-  properties: {
-    publicAccess: 'None'
   }
 }

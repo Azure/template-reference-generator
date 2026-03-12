@@ -1,14 +1,28 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource disk 'Microsoft.Compute/disks@2023-04-02' = {
-  name: '${resourceName}disk'
+resource snapshot 'Microsoft.Compute/snapshots@2022-03-02' = {
+  name: '${resourceName}snapshot'
   location: location
   properties: {
     creationData: {
-      createOption: 'Empty'
-      performancePlus: false
+      sourceUri: disk.id
+      createOption: 'Copy'
     }
+    diskSizeGB: 20
+    incremental: false
+    networkAccessPolicy: 'AllowAll'
+    publicNetworkAccess: 'Enabled'
+  }
+}
+
+resource disk 'Microsoft.Compute/disks@2023-04-02' = {
+  name: '${resourceName}disk'
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {
     diskSizeGB: 10
     encryption: {
       type: 'EncryptionAtRestWithPlatformKey'
@@ -16,23 +30,9 @@ resource disk 'Microsoft.Compute/disks@2023-04-02' = {
     networkAccessPolicy: 'AllowAll'
     optimizedForFrequentAttach: false
     publicNetworkAccess: 'Enabled'
-  }
-  sku: {
-    name: 'Standard_LRS'
-  }
-}
-
-resource snapshot 'Microsoft.Compute/snapshots@2022-03-02' = {
-  name: '${resourceName}snapshot'
-  location: location
-  properties: {
     creationData: {
-      createOption: 'Copy'
-      sourceUri: disk.id
+      performancePlus: false
+      createOption: 'Empty'
     }
-    diskSizeGB: 20
-    incremental: false
-    networkAccessPolicy: 'AllowAll'
-    publicNetworkAccess: 'Enabled'
   }
 }

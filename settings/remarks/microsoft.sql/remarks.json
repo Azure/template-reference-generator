@@ -257,6 +257,11 @@
       "ResourceType": "Microsoft.Sql/servers/virtualNetworkRules",
       "Path": "samples/servers/virtualnetworkrules/main.bicep",
       "Description": "A basic example of deploying Azure SQL Virtual Network Rule."
+    },
+    {
+      "ResourceType": "Microsoft.Sql/servers/jobAgents/jobs/steps",
+      "Path": "samples/servers/jobagents/jobs/steps/main.bicep",
+      "Description": "A basic example of deploying Elastic Job Step."
     }
   ]
 }

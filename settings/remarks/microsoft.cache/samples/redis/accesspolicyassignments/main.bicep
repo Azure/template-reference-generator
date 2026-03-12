@@ -16,11 +16,11 @@ resource redis 'Microsoft.Cache/redis@2023-04-01' = {
 }
 
 resource accessPolicyAssignment 'Microsoft.Cache/redis/accessPolicyAssignments@2024-03-01' = {
-  parent: redis
   name: resourceName
+  parent: redis
   properties: {
+    objectIdAlias: 'ServicePrincipal'
     accessPolicyName: 'Data Contributor'
     objectId: deployer().objectId
-    objectIdAlias: 'ServicePrincipal'
   }
 }

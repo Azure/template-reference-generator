@@ -7,12 +7,12 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   kind: 'web'
   properties: {
     Application_Type: 'web'
-    DisableIpMasking: false
-    DisableLocalAuth: false
     ForceCustomerStorageForProfiler: false
     RetentionInDays: 90
     SamplingPercentage: 100
-    publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
+    DisableIpMasking: false
+    DisableLocalAuth: false
+    publicNetworkAccessForIngestion: 'Enabled'
   }
 }

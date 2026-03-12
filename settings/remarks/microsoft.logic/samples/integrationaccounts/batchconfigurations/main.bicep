@@ -4,15 +4,15 @@ param location string = 'westeurope'
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: resourceName
   location: location
-  properties: {}
   sku: {
     name: 'Standard'
   }
+  properties: {}
 }
 
 resource batchConfiguration 'Microsoft.Logic/integrationAccounts/batchConfigurations@2019-05-01' = {
-  parent: integrationAccount
   name: resourceName
+  parent: integrationAccount
   properties: {
     batchGroupName: 'TestBatchGroup'
     releaseCriteria: {

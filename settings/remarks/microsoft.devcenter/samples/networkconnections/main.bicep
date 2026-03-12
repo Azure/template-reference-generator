@@ -6,7 +6,6 @@ resource networkConnection 'Microsoft.DevCenter/networkConnections@2023-04-01' =
   location: location
   properties: {
     domainJoinType: 'AzureADJoin'
-    subnetId: subnet.id
   }
 }
 
@@ -23,8 +22,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
   }

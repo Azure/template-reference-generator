@@ -6,7 +6,6 @@ resource account 'Microsoft.VideoIndexer/accounts@2025-04-01' = {
   location: location
   properties: {
     storageServices: {
-      resourceId: storageAccount.id
       userAssignedIdentity: ''
     }
   }
@@ -15,14 +14,26 @@ resource account 'Microsoft.VideoIndexer/accounts@2025-04-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: '${replace(resourceName, '-', '')}sa'
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+      ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
+    }
     accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: false
     allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
+    isLocalUserEnabled: true
+    allowCrossTenantReplication: false
+    isNfsV3Enabled: false
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -35,22 +46,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       }
     }
     isHnsEnabled: false
-    isLocalUserEnabled: true
-    isNfsV3Enabled: false
     isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: []
-      resourceAccessRules: []
-      virtualNetworkRules: []
-    }
-    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
+    allowBlobPublicAccess: true
+    publicNetworkAccess: 'Enabled'
   }
 }
 

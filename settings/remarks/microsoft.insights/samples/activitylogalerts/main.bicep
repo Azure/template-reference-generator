@@ -5,19 +5,19 @@ resource actionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
   name: resourceName
   location: 'global'
   properties: {
+    itsmReceivers: []
+    smsReceivers: []
+    webhookReceivers: []
     armRoleReceivers: []
-    automationRunbookReceivers: []
     azureAppPushReceivers: []
     azureFunctionReceivers: []
     emailReceivers: []
     enabled: true
-    eventHubReceivers: []
     groupShortName: 'acctestag1'
-    itsmReceivers: []
     logicAppReceivers: []
-    smsReceivers: []
     voiceReceivers: []
-    webhookReceivers: []
+    automationRunbookReceivers: []
+    eventHubReceivers: []
   }
 }
 
@@ -26,17 +26,17 @@ resource actionGroup2 'Microsoft.Insights/actionGroups@2023-01-01' = {
   location: 'global'
   properties: {
     armRoleReceivers: []
-    automationRunbookReceivers: []
     azureAppPushReceivers: []
     azureFunctionReceivers: []
     emailReceivers: []
     enabled: true
     eventHubReceivers: []
+    smsReceivers: []
+    voiceReceivers: []
+    automationRunbookReceivers: []
     groupShortName: 'acctestag2'
     itsmReceivers: []
     logicAppReceivers: []
-    smsReceivers: []
-    voiceReceivers: []
     webhookReceivers: []
   }
 }
@@ -45,6 +45,8 @@ resource activityLogAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
   name: resourceName
   location: 'global'
   properties: {
+    enabled: true
+    scopes: []
     actions: {
       actionGroups: [
         {
@@ -93,8 +95,8 @@ resource activityLogAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
         {
           anyOf: [
             {
-              equals: 'PlatformInitiated'
               field: 'properties.cause'
+              equals: 'PlatformInitiated'
             }
             {
               equals: 'UserInitiated'
@@ -105,24 +107,19 @@ resource activityLogAlert 'Microsoft.Insights/activityLogAlerts@2020-10-01' = {
       ]
     }
     description: 'This is just a test acceptance.'
-    enabled: true
-    scopes: [
-      resourceGroup().id
-      storageAccount.id
-    ]
   }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
-    allowBlobPublicAccess: true
     allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -141,10 +138,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     networkAcls: {
       defaultAction: 'Allow'
     }
+    allowBlobPublicAccess: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }

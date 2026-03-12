@@ -9,32 +9,32 @@ param administratorLoginPassword string
 resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Burstable'
+    name: 'Standard_B1s'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    network: {}
+    version: ''
+    administratorLogin: '${administratorLogin}'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    dataEncryption: {
+      type: 'SystemManaged'
+    }
     backup: {
       backupRetentionDays: 7
       geoRedundantBackup: 'Disabled'
     }
     createMode: ''
-    dataEncryption: {
-      type: 'SystemManaged'
-    }
     highAvailability: {
       mode: 'Disabled'
     }
-    network: {}
-    version: ''
-  }
-  sku: {
-    name: 'Standard_B1s'
-    tier: 'Burstable'
   }
 }
 
 resource database 'Microsoft.DBforMySQL/flexibleServers/databases@2021-05-01' = {
-  parent: flexibleServer
   name: resourceName
+  parent: flexibleServer
   properties: {
     charset: 'utf8'
     collation: 'utf8_unicode_ci'

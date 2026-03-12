@@ -4,19 +4,19 @@ param location string = 'westus2'
 resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Standard'
+    name: 'S0'
+  }
   kind: 'SpeechServices'
   properties: {
+    dynamicThrottlingEnabled: false
+    publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: false
     allowedFqdnList: []
     apiProperties: {}
     customSubDomainName: 'acctest-cogacc-230630032807723157'
     disableLocalAuth: false
-    dynamicThrottlingEnabled: false
-    publicNetworkAccess: 'Enabled'
-    restrictOutboundNetworkAccess: false
-  }
-  sku: {
-    name: 'S0'
-    tier: 'Standard'
   }
 }
 

@@ -87,6 +87,16 @@
       "ResourceType": "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules",
       "Path": "samples/namespaces/topics/subscriptions/rules/main.bicep",
       "Description": "A basic example of deploying ServiceBus Subscription Rule."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs",
+      "Path": "samples/namespaces/disasterrecoveryconfigs/main.bicep",
+      "Description": "A basic example of deploying Disaster Recovery Config for a Service Bus Namespace."
+    },
+    {
+      "ResourceType": "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs",
+      "Path": "samples/namespaces/disasterrecoveryconfigs/main-rg-module.bicep",
+      "Description": "A basic example of deploying Disaster Recovery Config for a Service Bus Namespace."
     }
   ]
 }

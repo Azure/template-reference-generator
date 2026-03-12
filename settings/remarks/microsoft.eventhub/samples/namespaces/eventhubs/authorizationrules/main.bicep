@@ -1,25 +1,25 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    disableLocalAuth: false
-    isAutoInflateEnabled: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
   sku: {
     capacity: 1
     name: 'Basic'
     tier: 'Basic'
   }
+  properties: {
+    zoneRedundant: false
+    disableLocalAuth: false
+    isAutoInflateEnabled: false
+    publicNetworkAccess: 'Enabled'
+  }
 }
 
 resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: namespace
   name: resourceName
+  parent: namespace
   properties: {
     messageRetentionInDays: 1
     partitionCount: 2
@@ -28,8 +28,8 @@ resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
 }
 
 resource authorizationRule 'Microsoft.EventHub/namespaces/eventhubs/authorizationRules@2021-11-01' = {
-  parent: eventhub
   name: resourceName
+  parent: eventhub
   properties: {
     rights: [
       'Send'

@@ -8,8 +8,8 @@ resource storageMover 'Microsoft.StorageMover/storageMovers@2023-03-01' = {
 }
 
 resource endpoint 'Microsoft.StorageMover/storageMovers/endpoints@2023-03-01' = {
-  parent: storageMover
   name: resourceName
+  parent: storageMover
   properties: {
     endpointType: 'NfsMount'
     export: ''

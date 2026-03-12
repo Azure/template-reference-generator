@@ -1,10 +1,15 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: '${resourceName}registry'
   location: location
+  sku: {
+    name: 'Premium'
+  }
   properties: {
+    publicNetworkAccess: 'Enabled'
+    zoneRedundancy: 'Disabled'
     adminUserEnabled: false
     anonymousPullEnabled: false
     dataEndpointEnabled: true
@@ -19,17 +24,12 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
       retentionPolicy: {}
       trustPolicy: {}
     }
-    publicNetworkAccess: 'Enabled'
-    zoneRedundancy: 'Disabled'
-  }
-  sku: {
-    name: 'Premium'
   }
 }
 
 resource connectedRegistry 'Microsoft.ContainerRegistry/registries/connectedRegistries@2023-11-01-preview' = {
-  parent: registry
   name: '${resourceName}connectedregistry'
+  parent: registry
   properties: {
     clientTokenIds: null
     logging: {
@@ -39,18 +39,17 @@ resource connectedRegistry 'Microsoft.ContainerRegistry/registries/connectedRegi
     mode: 'ReadWrite'
     parent: {
       syncProperties: {
+        syncWindow: ''
         messageTtl: 'P1D'
         schedule: '* * * * *'
-        syncWindow: ''
-        tokenId: token.id
       }
     }
   }
 }
 
 resource scopeMap 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-11-01-preview' = {
-  parent: registry
   name: '${resourceName}scopemap'
+  parent: registry
   properties: {
     actions: [
       'repositories/hello-world/content/delete'
@@ -58,18 +57,18 @@ resource scopeMap 'Microsoft.ContainerRegistry/registries/scopeMaps@2023-11-01-p
       'repositories/hello-world/content/write'
       'repositories/hello-world/metadata/read'
       'repositories/hello-world/metadata/write'
-      'gateway/acctest0001connectedregistry/config/read'
-      'gateway/acctest0001connectedregistry/config/write'
-      'gateway/acctest0001connectedregistry/message/read'
-      'gateway/acctest0001connectedregistry/message/write'
+      'gateway/${resourceName}connectedregistry/config/read'
+      'gateway/${resourceName}connectedregistry/config/write'
+      'gateway/${resourceName}connectedregistry/message/read'
+      'gateway/${resourceName}connectedregistry/message/write'
     ]
     description: ''
   }
 }
 
 resource token 'Microsoft.ContainerRegistry/registries/tokens@2023-11-01-preview' = {
-  parent: registry
   name: '${resourceName}token'
+  parent: registry
   properties: {
     scopeMapId: scopeMap.id
     status: 'enabled'

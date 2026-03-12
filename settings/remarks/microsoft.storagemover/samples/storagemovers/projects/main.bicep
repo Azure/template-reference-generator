@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'eastus'
+param resourceName string = 'acctest0001'
 
 resource storageMover 'Microsoft.StorageMover/storageMovers@2023-03-01' = {
   name: resourceName
@@ -8,7 +8,7 @@ resource storageMover 'Microsoft.StorageMover/storageMovers@2023-03-01' = {
 }
 
 resource project 'Microsoft.StorageMover/storageMovers/projects@2023-03-01' = {
-  parent: storageMover
   name: resourceName
+  parent: storageMover
   properties: {}
 }
