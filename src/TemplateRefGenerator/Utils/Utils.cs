@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -21,6 +22,9 @@ public static class Utils
         => typeof(Utils).Assembly.GetManifestResourceStream(GetManifestFilePath(pathComponents)) is Stream stream
             ? new StreamReader(stream).ReadToEnd()
             : null;
+
+    public static ImmutableArray<string> ListManifestFiles(string parentPath)
+        => [.. typeof(Utils).Assembly.GetManifestResourceNames().Where(name => name.StartsWith(parentPath, StringComparison.OrdinalIgnoreCase))];
 
     public static string ReadManifestFile(params string[] pathComponents)
         => TryReadManifestFile(pathComponents) ?? throw new InvalidOperationException($"File {GetManifestFilePath(pathComponents)} does not exist");

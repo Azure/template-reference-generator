@@ -8,6 +8,7 @@
     <GlobalPackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="All"/>
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Azure.Bicep.RpcClient" Version="0.41.2" />
     <PackageVersion Include="Azure.Bicep.Types" Version="0.6.50" />
     <PackageVersion Include="Azure.Bicep.Types.Az" Version="0.2.813" />
     <PackageVersion Include="Azure.Deployments.Testing.Utilities" Version="1.527.0" />
