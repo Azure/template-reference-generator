@@ -10,8 +10,8 @@ resource firewallPolicy 'Microsoft.Network/firewallPolicies@2022-07-01' = {
 }
 
 resource ruleCollectionGroup 'Microsoft.Network/firewallPolicies/ruleCollectionGroups@2022-07-01' = {
-  parent: firewallPolicy
   name: resourceName
+  parent: firewallPolicy
   properties: {
     priority: 500
     ruleCollections: []

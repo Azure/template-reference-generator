@@ -17,6 +17,11 @@
       "ResourceType": "Microsoft.Impact/connectors",
       "Path": "samples/connectors/main.bicep",
       "Description": "A basic example of deploying Impact Connectors."
+    },
+    {
+      "ResourceType": "Microsoft.Impact/workloadImpacts",
+      "Path": "samples/workloadimpacts/main.bicep",
+      "Description": "A basic example of deploying Impact Workload Impacts."
     }
   ]
 }

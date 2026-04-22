@@ -4,15 +4,15 @@ param location string = 'westeurope'
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: resourceName
   location: location
-  properties: {}
   sku: {
     name: 'Basic'
   }
+  properties: {}
 }
 
 resource schema 'Microsoft.Logic/integrationAccounts/schemas@2019-05-01' = {
-  parent: integrationAccount
   name: resourceName
+  parent: integrationAccount
   properties: {
     content: '''<xs:schema xmlns:b="http://schemas.microsoft.com/BizTalk/2003"
            xmlns="http://Inbound_EDI.OrderFile"

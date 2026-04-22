@@ -1,24 +1,24 @@
+@secure()
+@description('The SQL administrator login password for the Synapse workspace')
+param sqlAdministratorLoginPassword string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The SQL administrator login for the Synapse workspace')
 param sqlAdministratorLogin string
-@secure()
-@description('The SQL administrator login password for the Synapse workspace')
-param sqlAdministratorLoginPassword string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
+  parent: storageAccount
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
-  kind: 'StorageV2'
-  properties: {}
   sku: {
     name: 'Standard_LRS'
   }
+  kind: 'StorageV2'
+  properties: {}
 }
 
 resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
@@ -27,7 +27,6 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   properties: {
     defaultDataLakeStorage: {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
-      filesystem: container.name
     }
     managedVirtualNetwork: ''
     publicNetworkAccess: 'Enabled'
@@ -37,20 +36,20 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
 }
 
 resource sqlPool 'Microsoft.Synapse/workspaces/sqlPools@2021-06-01' = {
-  parent: workspace
   name: resourceName
   location: location
-  properties: {
-    createMode: 'Default'
-  }
+  parent: workspace
   sku: {
     name: 'DW100c'
+  }
+  properties: {
+    createMode: 'Default'
   }
 }
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
   name: resourceName
+  parent: blobService
   properties: {
     metadata: {
       key: 'value'
@@ -59,8 +58,8 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
 }
 
 resource workloadGroup 'Microsoft.Synapse/workspaces/sqlPools/workloadGroups@2021-06-01' = {
-  parent: sqlPool
   name: resourceName
+  parent: sqlPool
   properties: {
     importance: 'normal'
     maxResourcePercent: 100

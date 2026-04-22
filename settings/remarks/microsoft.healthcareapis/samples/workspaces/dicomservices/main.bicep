@@ -7,9 +7,9 @@ resource workspace 'Microsoft.HealthcareApis/workspaces@2022-12-01' = {
 }
 
 resource dicomService 'Microsoft.HealthcareApis/workspaces/dicomServices@2022-12-01' = {
-  parent: workspace
   name: resourceName
   location: location
+  parent: workspace
   properties: {
     publicNetworkAccess: 'Enabled'
   }

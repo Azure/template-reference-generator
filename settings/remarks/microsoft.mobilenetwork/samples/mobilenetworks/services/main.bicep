@@ -13,9 +13,9 @@ resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
 }
 
 resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
     pccRules: [
       {

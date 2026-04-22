@@ -6,5 +6,12 @@
       "Path": "samples/recommendations/suppressions/main.tf",
       "Description": "A basic example of deploying Specifies a suppression for an Azure Advisor recommendation."
     }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.Advisor/recommendations/suppressions",
+      "Path": "samples/recommendations/suppressions/main.bicep",
+      "Description": "A basic example of deploying Specifies a suppression for an Azure Advisor recommendation."
+    }
   ]
 }

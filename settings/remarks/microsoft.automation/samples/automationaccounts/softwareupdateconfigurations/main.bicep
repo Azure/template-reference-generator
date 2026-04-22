@@ -16,27 +16,20 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource softwareUpdateConfiguration 'Microsoft.Automation/automationAccounts/softwareUpdateConfigurations@2019-06-01' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     scheduleInfo: {
-      description: ''
+      nextRunOffsetMinutes: 0
+      timeZone: 'Etc/UTC'
       expiryTimeOffsetMinutes: 0
       frequency: 'OneTime'
+      startTimeOffsetMinutes: 0
+      description: ''
       interval: 0
       isEnabled: true
-      nextRunOffsetMinutes: 0
-      startTimeOffsetMinutes: 0
-      timeZone: 'Etc/UTC'
     }
     updateConfiguration: {
-      duration: 'PT2H'
-      linux: {
-        excludedPackageNameMasks: []
-        includedPackageClassifications: 'Security'
-        includedPackageNameMasks: []
-        rebootSetting: 'IfRequired'
-      }
       operatingSystem: 'Linux'
       targets: {
         azureQueries: [
@@ -49,6 +42,13 @@ resource softwareUpdateConfiguration 'Microsoft.Automation/automationAccounts/so
             ]
           }
         ]
+      }
+      duration: 'PT2H'
+      linux: {
+        excludedPackageNameMasks: []
+        includedPackageClassifications: 'Security'
+        includedPackageNameMasks: []
+        rebootSetting: 'IfRequired'
       }
     }
   }

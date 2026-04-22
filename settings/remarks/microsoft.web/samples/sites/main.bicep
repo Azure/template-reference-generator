@@ -4,14 +4,14 @@ param location string = 'westeurope'
 resource serverfarm 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'S1'
+  }
   properties: {
     hyperV: false
     perSiteScaling: false
     reserved: false
     zoneRedundant: false
-  }
-  sku: {
-    name: 'S1'
   }
 }
 
@@ -19,32 +19,32 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
   name: resourceName
   location: location
   properties: {
-    clientAffinityEnabled: false
     clientCertEnabled: false
     clientCertMode: 'Required'
     enabled: true
     httpsOnly: false
     publicNetworkAccess: 'Enabled'
+    vnetRouteAllEnabled: false
+    clientAffinityEnabled: false
     serverFarmId: serverfarm.id
     siteConfig: {
+      windowsFxVersion: ''
+      scmMinTlsVersion: '1.2'
       acrUseManagedIdentityCreds: false
       alwaysOn: true
-      autoHealEnabled: false
       ftpsState: 'Disabled'
       http20Enabled: false
       loadBalancing: 'LeastRequests'
       localMySqlEnabled: false
-      managedPipelineMode: 'Integrated'
       minTlsVersion: '1.2'
-      publicNetworkAccess: 'Enabled'
+      managedPipelineMode: 'Integrated'
       remoteDebuggingEnabled: false
-      scmIpSecurityRestrictionsUseMain: false
-      scmMinTlsVersion: '1.2'
       use32BitWorkerProcess: true
       vnetRouteAllEnabled: false
       webSocketsEnabled: false
-      windowsFxVersion: ''
+      scmIpSecurityRestrictionsUseMain: false
+      autoHealEnabled: false
+      publicNetworkAccess: 'Enabled'
     }
-    vnetRouteAllEnabled: false
   }
 }

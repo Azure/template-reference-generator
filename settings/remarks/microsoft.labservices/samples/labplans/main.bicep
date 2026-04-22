@@ -6,7 +6,7 @@ resource labPlan 'Microsoft.LabServices/labPlans@2022-08-01' = {
   location: location
   properties: {
     allowedRegions: [
-      'westeurope'
+      '${location}'
     ]
   }
 }

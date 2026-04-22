@@ -4,21 +4,13 @@ param location string = 'westeurope'
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    tier: 'Standard'
+    capacity: 1
+    name: 'Standard_F2'
+  }
   properties: {
-    additionalCapabilities: {}
-    doNotRunExtensionsOnOverprovisionedVMs: false
-    orchestrationMode: 'Uniform'
-    overprovision: true
-    scaleInPolicy: {
-      forceDeletion: false
-      rules: [
-        'Default'
-      ]
-    }
     singlePlacementGroup: true
-    upgradePolicy: {
-      mode: 'Manual'
-    }
     virtualMachineProfile: {
       diagnosticsProfile: {
         bootDiagnostics: {
@@ -34,35 +26,34 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           {
             name: 'example'
             properties: {
-              dnsSettings: {
-                dnsServers: []
-              }
-              enableAcceleratedNetworking: false
               enableIPForwarding: false
               ipConfigurations: [
                 {
                   name: 'internal'
                   properties: {
+                    privateIPAddressVersion: 'IPv4'
+                    subnet: {}
                     applicationGatewayBackendAddressPools: []
                     applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
                     primary: true
-                    privateIPAddressVersion: 'IPv4'
-                    subnet: {
-                      id: subnet.id
-                    }
                   }
                 }
               ]
               primary: true
+              dnsSettings: {
+                dnsServers: []
+              }
+              enableAcceleratedNetworking: false
             }
           }
         ]
       }
       osProfile: {
+        secrets: []
         adminUsername: 'adminuser'
-        computerNamePrefix: 'acctest0001'
+        computerNamePrefix: resourceName
         linuxConfiguration: {
           disablePasswordAuthentication: true
           provisionVMAgent: true
@@ -75,7 +66,6 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
             ]
           }
         }
-        secrets: []
       }
       priority: 'Regular'
       storageProfile: {
@@ -87,21 +77,29 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           version: 'latest'
         }
         osDisk: {
+          writeAcceleratorEnabled: false
           caching: 'ReadWrite'
           createOption: 'FromImage'
           managedDisk: {
             storageAccountType: 'Standard_LRS'
           }
           osType: 'Linux'
-          writeAcceleratorEnabled: false
         }
       }
     }
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard_F2'
-    tier: 'Standard'
+    additionalCapabilities: {}
+    doNotRunExtensionsOnOverprovisionedVMs: false
+    orchestrationMode: 'Uniform'
+    overprovision: true
+    scaleInPolicy: {
+      rules: [
+        'Default'
+      ]
+      forceDeletion: false
+    }
+    upgradePolicy: {
+      mode: 'Manual'
+    }
   }
 }
 
@@ -109,44 +107,44 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
       ]
     }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
   }
 }
 
 resource extension 'Microsoft.Compute/virtualMachineScaleSets/extensions@2023-03-01' = {
-  parent: virtualMachineScaleSet
   name: resourceName
+  parent: virtualMachineScaleSet
   properties: {
     autoUpgradeMinorVersion: true
     enableAutomaticUpgrade: false
-    provisionAfterExtensions: []
     publisher: 'Microsoft.Azure.Extensions'
     settings: {
       commandToExecute: 'echo $HOSTNAME'
     }
     suppressFailures: false
-    type: 'CustomScript'
     typeHandlerVersion: '2.0'
+    provisionAfterExtensions: []
+    type: 'CustomScript'
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
   }
 }

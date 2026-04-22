@@ -18,19 +18,19 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource connection 'Microsoft.Automation/automationAccounts/connections@2020-01-13-preview' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     connectionType: {
       name: 'AzureServicePrincipal'
     }
     description: ''
     fieldDefinitionValues: {
-      ApplicationId: null
       CertificateThumbprint: '''AEB97B81A68E8988850972916A8B8B6CD8F39813
 '''
       SubscriptionId: subscription().subscriptionId
-      TenantId: deployer().tenantId
+      TenantId: tenant().tenantId
+      ApplicationId: servicePrincipalApplicationId
     }
   }
 }

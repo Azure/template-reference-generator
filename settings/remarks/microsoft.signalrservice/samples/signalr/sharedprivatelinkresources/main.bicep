@@ -4,10 +4,18 @@ param location string = 'westeurope'
 resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_S1'
+  }
   properties: {
+    upstream: {
+      templates: []
+    }
     cors: {}
-    disableAadAuth: false
     disableLocalAuth: false
+    publicNetworkAccess: 'Enabled'
+    disableAadAuth: false
     features: [
       {
         flag: 'ServiceMode'
@@ -26,7 +34,6 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
         value: 'False'
       }
     ]
-    publicNetworkAccess: 'Enabled'
     resourceLogConfiguration: {
       categories: [
         {
@@ -49,13 +56,16 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
     tls: {
       clientCertEnabled: false
     }
-    upstream: {
-      templates: []
-    }
   }
-  sku: {
-    capacity: 1
-    name: 'Standard_S1'
+}
+
+resource sharedPrivateLinkResource 'Microsoft.SignalRService/signalR/sharedPrivateLinkResources@2023-02-01' = {
+  name: resourceName
+  parent: signalR
+  properties: {
+    groupId: 'vault'
+    privateLinkResourceId: vault.id
+    requestMessage: 'please approve'
   }
 }
 
@@ -78,31 +88,21 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant().tenantId
       }
     ]
     createMode: 'default'
-    enableRbacAuthorization: false
     enableSoftDelete: true
     enabledForDeployment: false
-    enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
+    enableRbacAuthorization: false
+    enabledForDiskEncryption: false
     sku: {
       family: 'A'
       name: 'standard'
     }
     softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
-  }
-}
-
-resource sharedPrivateLinkResource 'Microsoft.SignalRService/signalR/sharedPrivateLinkResources@2023-02-01' = {
-  parent: signalR
-  name: resourceName
-  properties: {
-    groupId: 'vault'
-    privateLinkResourceId: vault.id
-    requestMessage: 'please approve'
+    tenantId: tenant().tenantId
   }
 }

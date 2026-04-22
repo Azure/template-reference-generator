@@ -1,12 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
-  name: '${resourceName}-acct'
-  location: location
-  properties: {}
-}
-
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
   name: '${resourceName}-nsg'
   location: location
@@ -19,6 +13,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: '${resourceName}-vnet'
   location: location
   properties: {
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.88.0.0/16'
@@ -27,14 +22,19 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
     dhcpOptions: {
       dnsServers: []
     }
-    subnets: []
   }
 }
 
+resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
+  name: '${resourceName}-acct'
+  location: location
+  properties: {}
+}
+
 resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2025-01-01' = {
-  parent: netAppAccount
   name: '${resourceName}-pool'
   location: location
+  parent: netAppAccount
   properties: {
     coolAccess: false
     encryptionType: 'Single'
@@ -45,11 +45,18 @@ resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2025-01-01'
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
+    privateEndpointNetworkPolicies: 'Disabled'
     addressPrefix: '10.88.2.0/24'
     defaultOutboundAccess: true
+    networkSecurityGroup: {
+      id: networkSecurityGroup.id
+    }
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
     delegations: [
       {
         name: 'netapp-delegation'
@@ -58,22 +65,17 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
         }
       }
     ]
-    networkSecurityGroup: {
-      id: networkSecurityGroup.id
-    }
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }
 
 resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-01' = {
-  parent: capacityPool
   name: '${resourceName}-vol'
   location: location
+  parent: capacityPool
   properties: {
-    creationToken: 'acctest0001-path'
+    subnetId: subnet.id
+    usageThreshold: any('1.073741824e+11')
+    creationToken: '${resourceName}-path'
     dataProtection: {}
     exportPolicy: {
       rules: []
@@ -82,15 +84,13 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-0
       'NFSv3'
     ]
     serviceLevel: 'Standard'
-    subnetId: subnet.id
-    usageThreshold: 107374182400
   }
 }
 
 resource volumeQuotaRule 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules@2025-01-01' = {
-  parent: volume
   name: '${resourceName}-quota'
   location: location
+  parent: volume
   properties: {
     quotaSizeInKiBs: 2048
     quotaType: 'DefaultGroupQuota'

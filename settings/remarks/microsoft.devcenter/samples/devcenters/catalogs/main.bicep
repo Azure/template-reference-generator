@@ -8,8 +8,8 @@ resource devCenter 'Microsoft.DevCenter/devCenters@2025-02-01' = {
 }
 
 resource catalog 'Microsoft.DevCenter/devCenters/catalogs@2025-02-01' = {
-  parent: devCenter
   name: '${substring(resourceName, 0, 17)}-catalog'
+  parent: devCenter
   properties: {
     adoGit: {
       branch: 'main'

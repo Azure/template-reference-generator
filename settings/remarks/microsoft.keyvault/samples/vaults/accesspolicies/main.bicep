@@ -5,19 +5,19 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: resourceName
   location: location
   properties: {
-    accessPolicies: []
     enableSoftDelete: true
+    tenantId: tenant().tenantId
     sku: {
       family: 'A'
       name: 'standard'
     }
-    tenantId: deployer().tenantId
+    accessPolicies: []
   }
 }
 
 resource putAccesspolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: vault
   name: 'add'
+  parent: vault
   properties: {
     accessPolicies: [
       {
@@ -34,7 +34,7 @@ resource putAccesspolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' =
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant().tenantId
       }
     ]
   }

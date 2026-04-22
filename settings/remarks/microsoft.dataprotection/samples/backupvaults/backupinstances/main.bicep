@@ -4,84 +4,75 @@ param location string = 'westeurope'
 @description('The administrator login password for the PostgreSQL server')
 param administratorLoginPassword string
 
-resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    storageSettings: [
-      {
-        datastoreType: 'VaultStore'
-        type: 'LocallyRedundant'
-      }
-    ]
-  }
-}
-
 resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
   name: resourceName
   location: location
-  properties: {
-    administratorLogin: 'psqladmin'
-    administratorLoginPassword: null
-    createMode: 'Default'
-    infrastructureEncryption: 'Disabled'
-    minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    sslEnforcement: 'Enabled'
-    storageProfile: {
-      backupRetentionDays: 7
-      storageAutogrow: 'Enabled'
-      storageMB: 5120
-    }
-    version: '9.5'
-  }
   sku: {
     capacity: 2
     family: 'Gen5'
     name: 'B_Gen5_2'
     tier: 'Basic'
   }
+  properties: {
+    createMode: 'Default'
+    publicNetworkAccess: 'Enabled'
+    storageProfile: {
+      storageAutogrow: 'Enabled'
+      storageMB: 5120
+      backupRetentionDays: 7
+    }
+    version: '9.5'
+    administratorLogin: 'psqladmin'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    infrastructureEncryption: 'Disabled'
+    minimalTlsVersion: 'TLS1_2'
+    sslEnforcement: 'Enabled'
+  }
+}
+
+resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    storageSettings: [
+      {
+        type: 'LocallyRedundant'
+        datastoreType: 'VaultStore'
+      }
+    ]
+  }
 }
 
 resource backupInstance 'Microsoft.DataProtection/backupVaults/backupInstances@2022-04-01' = {
-  parent: backupVault
   name: resourceName
+  parent: backupVault
   properties: {
-    dataSourceInfo: {
-      datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
-      objectType: 'Datasource'
-      resourceID: database.id
-      resourceLocation: 'database.location'
-      resourceName: database.name
-      resourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
-      resourceUri: ''
-    }
     dataSourceSetInfo: {
+      resourceUri: ''
       datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
       objectType: 'DatasourceSet'
       resourceID: server.id
-      resourceLocation: 'server.location'
+      resourceLocation: server.location
       resourceName: server.name
       resourceType: 'Microsoft.DBForPostgreSQL/servers'
-      resourceUri: ''
     }
     datasourceAuthCredentials: null
-    friendlyName: 'acctest0001'
+    friendlyName: resourceName
     objectType: 'BackupInstance'
-    policyInfo: {
-      policyId: backupPolicy.id
+    policyInfo: {}
+    dataSourceInfo: {
+      objectType: 'Datasource'
+      resourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
+      resourceUri: ''
+      datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
     }
   }
 }
 
 resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022-04-01' = {
-  parent: backupVault
   name: resourceName
+  parent: backupVault
   properties: {
-    datasourceTypes: [
-      'Microsoft.DBforPostgreSQL/servers/databases'
-    ]
-    objectType: 'BackupPolicy'
     policyRules: [
       {
         backupParameters: {
@@ -103,12 +94,12 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
           }
           taggingCriteria: [
             {
-              isDefault: true
               tagInfo: {
                 id: 'Default_'
                 tagName: 'Default'
               }
               taggingPriority: 99
+              isDefault: true
             }
           ]
         }
@@ -122,8 +113,8 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
               objectType: 'AbsoluteDeleteOption'
             }
             sourceDataStore: {
-              dataStoreType: 'VaultStore'
               objectType: 'DataStoreInfoBase'
+              dataStoreType: 'VaultStore'
             }
             targetDataStoreCopySettings: []
           }
@@ -132,12 +123,16 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
         objectType: 'AzureRetentionRule'
       }
     ]
+    datasourceTypes: [
+      'Microsoft.DBforPostgreSQL/servers/databases'
+    ]
+    objectType: 'BackupPolicy'
   }
 }
 
 resource database 'Microsoft.DBforPostgreSQL/servers/databases@2017-12-01' = {
-  parent: server
   name: resourceName
+  parent: server
   properties: {
     charset: 'UTF8'
     collation: 'English_United States.1252'

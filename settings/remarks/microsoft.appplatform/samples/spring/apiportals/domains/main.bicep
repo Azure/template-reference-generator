@@ -4,32 +4,32 @@ param location string = 'westeurope'
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    zoneRedundant: false
-  }
   sku: {
     name: 'E0'
+  }
+  properties: {
+    zoneRedundant: false
   }
 }
 
 resource apiPortal 'Microsoft.AppPlatform/Spring/apiPortals@2023-05-01-preview' = {
-  parent: spring
   name: 'default'
+  parent: spring
+  sku: {
+    name: 'E0'
+    tier: 'Enterprise'
+    capacity: 1
+  }
   properties: {
     gatewayIds: []
     httpsOnly: false
     public: false
   }
-  sku: {
-    capacity: 1
-    name: 'E0'
-    tier: 'Enterprise'
-  }
 }
 
 resource domain 'Microsoft.AppPlatform/Spring/apiPortals/domains@2023-05-01-preview' = {
-  parent: apiPortal
   name: '${resourceName}.azuremicroservices.io'
+  parent: apiPortal
   properties: {
     thumbprint: ''
   }

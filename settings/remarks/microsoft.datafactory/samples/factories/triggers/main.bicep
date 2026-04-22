@@ -11,8 +11,8 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
 }
 
 resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     annotations: []
     description: ''
@@ -27,9 +27,15 @@ resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
 }
 
 resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
+    typeProperties: {
+      frequency: 'Minute'
+      interval: 15
+      maxConcurrency: 50
+      startTime: '2022-09-21T00:00:00Z'
+    }
     description: ''
     pipeline: {
       parameters: {}
@@ -39,11 +45,5 @@ resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
       }
     }
     type: 'TumblingWindowTrigger'
-    typeProperties: {
-      frequency: 'Minute'
-      interval: 15
-      maxConcurrency: 50
-      startTime: '2022-09-21T00:00:00Z'
-    }
   }
 }

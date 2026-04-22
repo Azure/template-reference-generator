@@ -20,8 +20,8 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
           ]
           resources: {
             requests: {
-              cpu: any('0.5')
               memoryInGB: any('0.5')
+              cpu: any('0.5')
             }
           }
         }
@@ -45,5 +45,4 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
   tags: {
     environment: 'Testing'
   }
-  zones: []
 }

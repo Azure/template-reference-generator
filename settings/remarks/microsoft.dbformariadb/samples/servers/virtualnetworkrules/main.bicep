@@ -9,25 +9,25 @@ param administratorLoginPassword string
 resource server 'Microsoft.DBforMariaDB/servers@2018-06-01' = {
   name: resourceName
   location: location
-  properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
-    createMode: 'Default'
-    minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    sslEnforcement: 'Enabled'
-    storageProfile: {
-      backupRetentionDays: 7
-      storageAutogrow: 'Enabled'
-      storageMB: 51200
-    }
-    version: '10.2'
-  }
   sku: {
     capacity: 2
     family: 'Gen5'
     name: 'GP_Gen5_2'
     tier: 'GeneralPurpose'
+  }
+  properties: {
+    publicNetworkAccess: 'Enabled'
+    storageProfile: {
+      storageAutogrow: 'Enabled'
+      storageMB: 51200
+      backupRetentionDays: 7
+    }
+    administratorLogin: '${administratorLogin}'
+    sslEnforcement: 'Enabled'
+    version: '10.2'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    createMode: 'Default'
+    minimalTlsVersion: 'TLS1_2'
   }
 }
 
@@ -35,25 +35,22 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.7.29.0/29'
       ]
     }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
   }
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
-    addressPrefix: '10.7.29.0/29'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: [
@@ -61,12 +58,15 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
         service: 'Microsoft.Sql'
       }
     ]
+    addressPrefix: '10.7.29.0/29'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
   }
 }
 
 resource virtualNetworkRule 'Microsoft.DBforMariaDB/servers/virtualNetworkRules@2018-06-01' = {
-  parent: server
   name: resourceName
+  parent: server
   properties: {
     ignoreMissingVnetServiceEndpoint: false
     virtualNetworkSubnetId: subnet.id

@@ -4,15 +4,25 @@ param location string = 'westeurope'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'BlobStorage'
   properties: {
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
     encryption: {
-      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -21,29 +31,20 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
           keyType: 'Service'
         }
       }
+      keySource: 'Microsoft.Storage'
     }
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 
 resource managementPolicy 'Microsoft.Storage/storageAccounts/managementPolicies@2021-09-01' = {
-  parent: storageAccount
   name: 'default'
+  parent: storageAccount
   properties: {
     policy: {
       rules: [
         {
+          type: 'Lifecycle'
           definition: {
             actions: {
               baseBlob: {
@@ -74,7 +75,6 @@ resource managementPolicy 'Microsoft.Storage/storageAccounts/managementPolicies@
           }
           enabled: true
           name: 'rule-1'
-          type: 'Lifecycle'
         }
       ]
     }

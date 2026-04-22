@@ -8,39 +8,41 @@ param administratorLoginPassword string
 @description('The administrator login name for the PostgreSQL server admin')
 param adminLogin string
 
+param clientId string
+
 resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
   name: resourceName
   location: location
-  properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
-    createMode: 'Default'
-    infrastructureEncryption: 'Disabled'
-    minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    sslEnforcement: 'Enabled'
-    storageProfile: {
-      backupRetentionDays: 7
-      storageAutogrow: 'Enabled'
-      storageMB: 51200
-    }
-    version: '9.6'
-  }
   sku: {
     capacity: 2
     family: 'Gen5'
     name: 'GP_Gen5_2'
     tier: 'GeneralPurpose'
   }
+  properties: {
+    administratorLogin: '${administratorLogin}'
+    administratorLoginPassword: '${administratorLoginPassword}'
+    createMode: 'Default'
+    minimalTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    sslEnforcement: 'Enabled'
+    storageProfile: {
+      storageAutogrow: 'Enabled'
+      storageMB: 51200
+      backupRetentionDays: 7
+    }
+    version: '9.6'
+    infrastructureEncryption: 'Disabled'
+  }
 }
 
 resource administrator 'Microsoft.DBforPostgreSQL/servers/administrators@2017-12-01' = {
-  parent: server
   name: 'activeDirectory'
+  parent: server
   properties: {
     administratorType: 'ActiveDirectory'
-    login: null
-    sid: deployer().objectId
-    tenantId: deployer().tenantId
+    login: adminLogin
+    sid: clientId
+    tenantId: tenant().tenantId
   }
 }
