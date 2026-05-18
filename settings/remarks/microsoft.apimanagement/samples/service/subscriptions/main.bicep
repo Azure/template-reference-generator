@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Developer'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -31,15 +35,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 1
-    name: 'Developer'
-  }
 }
 
 resource product 'Microsoft.ApiManagement/service/products@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     description: ''
     displayName: 'Test Product'
@@ -50,8 +50,8 @@ resource product 'Microsoft.ApiManagement/service/products@2021-08-01' = {
 }
 
 resource subscription 'Microsoft.ApiManagement/service/subscriptions@2021-08-01' = {
-  parent: service
   name: '0f393927-8f2d-499d-906f-c03943328d31'
+  parent: service
   properties: {
     allowTracing: true
     displayName: 'Butter Parser API Enterprise Edition'
@@ -62,8 +62,8 @@ resource subscription 'Microsoft.ApiManagement/service/subscriptions@2021-08-01'
 }
 
 resource user 'Microsoft.ApiManagement/service/users@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     email: 'azure-acctest230630032559695401@example.com'
     firstName: 'Acceptance'

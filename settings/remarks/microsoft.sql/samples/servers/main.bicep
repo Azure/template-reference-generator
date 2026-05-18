@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: sqlAdministratorPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'

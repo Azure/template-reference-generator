@@ -23,8 +23,8 @@ resource redis 'Microsoft.Cache/redis@2024-11-01' = {
 }
 
 resource accessPolicy 'Microsoft.Cache/redis/accessPolicies@2024-11-01' = {
-  parent: redis
   name: '${resourceName}-accessPolicy'
+  parent: redis
   properties: {
     permissions: '+@read +@connection +cluster|info allkeys'
   }

@@ -1,15 +1,15 @@
-param resourceName string = 'acctest0001'
-param location string = 'westus'
 @secure()
 @description('The administrator login password for the SQL server')
 param administratorLoginPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: resourceName
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,8 +18,8 @@ resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
 }
 
 resource encryptionProtector 'Microsoft.Sql/servers/encryptionProtector@2023-08-01-preview' = {
-  parent: server
   name: 'current'
+  parent: server
   properties: {
     autoRotationEnabled: false
     serverKeyName: ''

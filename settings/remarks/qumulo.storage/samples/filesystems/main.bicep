@@ -8,7 +8,7 @@ resource qumuloFileSystem 'Qumulo.Storage/fileSystems@2024-06-19' = {
   name: resourceName
   location: location
   properties: {
-    adminPassword: null
+    adminPassword: qumuloPassword
     availabilityZone: '1'
     delegatedSubnetId: subnet.id
     marketplaceDetails: {
@@ -38,9 +38,9 @@ resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: vnet
   name: resourceName
   location: location
+  parent: vnet
   properties: {
     addressPrefix: '10.0.1.0/24'
     defaultOutboundAccess: true

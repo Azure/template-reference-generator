@@ -4,28 +4,6 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param vmAdminPassword string
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
 resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
   location: location
@@ -37,7 +15,7 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
     networkManagerScopes: {
       managementGroups: []
       subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
+        '/subscriptions/${subscription().subscriptionId}'
       ]
     }
   }
@@ -61,7 +39,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: vmAdminPassword
       adminUsername: 'testadmin'
       computerName: 'hostname230630032848831819'
       linuxConfiguration: {
@@ -102,8 +80,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -115,17 +93,17 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
 }
 
 resource verifierWorkspace 'Microsoft.Network/networkManagers/verifierWorkspaces@2024-01-01-preview' = {
-  parent: networkManager
   name: resourceName
   location: location
+  parent: networkManager
   properties: {
     description: 'A sample workspace'
   }
 }
 
 resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents@2024-01-01-preview' = {
-  parent: verifierWorkspace
   name: resourceName
+  parent: verifierWorkspace
   properties: {
     description: 'A sample reachability analysis intent'
     destinationResourceId: virtualMachine.id
@@ -147,5 +125,27 @@ resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierW
       ]
     }
     sourceResourceId: virtualMachine.id
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration1'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

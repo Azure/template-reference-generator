@@ -20,6 +20,9 @@ resource batchAccount 'Microsoft.Batch/batchAccounts@2022-10-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -48,14 +51,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource application 'Microsoft.Batch/batchAccounts/applications@2022-10-01' = {
-  parent: batchAccount
   name: resourceName
+  parent: batchAccount
   properties: {
     allowUpdates: true
     defaultVersion: ''

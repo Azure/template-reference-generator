@@ -1,9 +1,13 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'S1'
+  }
   properties: {
     cloudToDevice: {}
     enableFileUploadNotifications: false
@@ -19,10 +23,6 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
       }
     }
     storageEndpoints: {}
-  }
-  sku: {
-    capacity: 1
-    name: 'S1'
   }
 }
 
@@ -56,15 +56,15 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
 }
 
 resource input 'Microsoft.StreamAnalytics/streamingJobs/inputs@2020-03-01' = {
-  parent: streamingJob
   name: resourceName
+  parent: streamingJob
   properties: {
     datasource: {
       properties: {
         consumerGroupName: '$Default'
         endpoint: 'messages/events'
-        iotHubNamespace: iothub.name
-        sharedAccessPolicyKey: iothub.listkeys().value[0].primaryKey
+        iotHubNamespace: iotHub.name
+        sharedAccessPolicyKey: iotHub.listKeys().value[0].primaryKey
         sharedAccessPolicyName: 'iothubowner'
       }
       type: 'Microsoft.Devices/IotHubs'

@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource maintenanceConfiguration 'Microsoft.Maintenance/maintenanceConfigurations@2022-07-01-preview' = {
   name: resourceName

@@ -1,9 +1,25 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
+
+resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-preview' = {
+  name: resourceName
+  location: location
+  properties: {
+    agentPoolProfiles: [
+      {
+        count: 1
+        mode: 'System'
+        name: 'default'
+        vmSize: 'Standard_DS2_v2'
+      }
+    ]
+    dnsPrefix: resourceName
+  }
+}
 
 resource extension 'Microsoft.KubernetesConfiguration/extensions@2022-11-01' = {
-  scope: managedCluster
   name: resourceName
+  scope: managedCluster
   properties: {
     autoUpgradeMinorVersion: true
     extensionType: 'microsoft.flux'
@@ -11,8 +27,11 @@ resource extension 'Microsoft.KubernetesConfiguration/extensions@2022-11-01' = {
 }
 
 resource fluxConfiguration 'Microsoft.KubernetesConfiguration/fluxConfigurations@2022-03-01' = {
-  scope: managedCluster
   name: resourceName
+  scope: managedCluster
+  dependsOn: [
+    extension
+  ]
   properties: {
     gitRepository: {
       repositoryRef: {
@@ -47,24 +66,5 @@ resource fluxConfiguration 'Microsoft.KubernetesConfiguration/fluxConfigurations
     scope: 'cluster'
     sourceKind: 'GitRepository'
     suspend: false
-  }
-  dependsOn: [
-    extension
-  ]
-}
-
-resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-preview' = {
-  name: resourceName
-  location: location
-  properties: {
-    agentPoolProfiles: [
-      {
-        count: 1
-        mode: 'System'
-        name: 'default'
-        vmSize: 'Standard_DS2_v2'
-      }
-    ]
-    dnsPrefix: 'acctest0001'
   }
 }

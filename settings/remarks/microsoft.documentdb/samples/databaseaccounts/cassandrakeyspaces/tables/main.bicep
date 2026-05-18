@@ -1,16 +1,15 @@
-param resourceName string = 'acctest0001'
 param location string = 'eastus'
+param resourceName string = 'acctest0001'
 
+var accountName = toLower(replace(resourceName, '-', ''))
 var keyspaceName = '${toLower(resourceName)}ks'
 var tableName = '${toLower(resourceName)}tbl'
-var accountName = toLower(replace(resourceName, '-', ''))
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   name: accountName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    backupPolicy: null
     capabilities: [
       {
         name: 'EnableCassandra'
@@ -37,7 +36,7 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
       {
         failoverPriority: 0
         isZoneRedundant: false
-        locationName: 'eastus'
+        locationName: location
       }
     ]
     minimalTlsVersion: 'Tls12'
@@ -49,8 +48,8 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
 }
 
 resource cassandraKeyspace 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces@2021-10-15' = {
-  parent: databaseAccount
   name: keyspaceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
@@ -60,8 +59,8 @@ resource cassandraKeyspace 'Microsoft.DocumentDB/databaseAccounts/cassandraKeysp
 }
 
 resource table 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables@2021-10-15' = {
-  parent: cassandraKeyspace
   name: tableName
+  parent: cassandraKeyspace
   properties: {
     options: {}
     resource: {

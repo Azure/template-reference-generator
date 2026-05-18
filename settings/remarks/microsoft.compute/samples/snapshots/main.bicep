@@ -4,6 +4,9 @@ param location string = 'westus'
 resource disk 'Microsoft.Compute/disks@2023-04-02' = {
   name: '${resourceName}disk'
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   properties: {
     creationData: {
       createOption: 'Empty'
@@ -16,9 +19,6 @@ resource disk 'Microsoft.Compute/disks@2023-04-02' = {
     networkAccessPolicy: 'AllowAll'
     optimizedForFrequentAttach: false
     publicNetworkAccess: 'Enabled'
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 

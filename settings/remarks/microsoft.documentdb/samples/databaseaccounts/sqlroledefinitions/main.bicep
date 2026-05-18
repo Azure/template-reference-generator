@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
@@ -37,8 +37,8 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
 }
 
 resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2021-10-15' = {
-  parent: databaseAccount
   name: 'c3ce1661-d0b9-3476-0a7c-2654ce2f3055'
+  parent: databaseAccount
   properties: {
     assignableScopes: [
       databaseAccount.id
@@ -50,7 +50,7 @@ resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinit
         ]
       }
     ]
-    roleName: 'acctest0001'
+    roleName: resourceName
     type: 'CustomRole'
   }
 }

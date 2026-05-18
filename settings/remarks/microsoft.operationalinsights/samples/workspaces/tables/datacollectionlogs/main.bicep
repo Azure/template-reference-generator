@@ -1,8 +1,21 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
+var dataCollectionLogColumns = [
+  {
+    name: 'RawData'
+    type: 'string'
+  }
+  {
+    type: 'string'
+    name: 'FilePath'
+  }
+  {
+    type: 'datetime'
+    name: 'TimeGenerated'
+  }
+]
 var dataCollectionLogTableName = 'DataCollectionLog_CL'
-var dataCollectionLogColumns = {} // TODO: Complex type needs manual conversion
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
@@ -25,12 +38,12 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource table 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
-  parent: workspace
   name: dataCollectionLogTableName
+  parent: workspace
   properties: {
     schema: {
-      name: dataCollectionLogTableName
       columns: dataCollectionLogColumns
+      name: dataCollectionLogTableName
     }
   }
 }

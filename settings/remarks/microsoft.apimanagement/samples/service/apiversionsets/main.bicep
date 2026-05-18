@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -19,15 +23,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource apiVersionSet 'Microsoft.ApiManagement/service/apiVersionSets@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     description: 'TestDescription1'
     displayName: 'TestApiVersionSet1230630032559674766'

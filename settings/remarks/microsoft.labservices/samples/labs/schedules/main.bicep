@@ -28,7 +28,7 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
         installGpuDrivers: 'Disabled'
       }
       adminUser: {
-        password: null
+        password: adminPassword
         username: 'testadmin'
       }
       createOption: 'Image'
@@ -49,8 +49,8 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
 }
 
 resource schedule 'Microsoft.LabServices/labs/schedules@2022-08-01' = {
-  parent: lab
   name: resourceName
+  parent: lab
   properties: {
     stopAt: '2023-06-30T04:33:55Z'
     timeZoneId: 'America/Los_Angeles'

@@ -9,6 +9,10 @@ param identityProviderClientSecret string
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Developer'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -36,18 +40,14 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 1
-    name: 'Developer'
-  }
 }
 
 resource identityProvider 'Microsoft.ApiManagement/service/identityProviders@2021-08-01' = {
-  parent: service
   name: 'twitter'
+  parent: service
   properties: {
-    clientId: null
-    clientSecret: null
+    clientId: identityProviderClientId
+    clientSecret: identityProviderClientSecret
     type: 'twitter'
   }
 }

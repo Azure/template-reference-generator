@@ -1,28 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: '${resourceName}-nic'
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
 resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
   name: '${resourceName}-rpc'
   location: location
@@ -64,7 +42,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
     osProfile: {
       adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001-vm'
+      computerName: '${resourceName}-vm'
       linuxConfiguration: {
         disablePasswordAuthentication: true
         patchSettings: {
@@ -123,14 +101,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource restorePoint 'Microsoft.Compute/restorePointCollections/restorePoints@2024-03-01' = {
-  parent: restorePointCollection
   name: '${resourceName}-rp'
+  parent: restorePointCollection
   properties: {}
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.0.0/24'
     defaultOutboundAccess: true
@@ -139,5 +117,27 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: '${resourceName}-nic'
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

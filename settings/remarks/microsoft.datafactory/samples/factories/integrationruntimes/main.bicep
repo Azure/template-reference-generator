@@ -6,13 +6,12 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
   }
 }
 
 resource integrationRuntime 'Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     type: 'SelfHosted'

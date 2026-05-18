@@ -4,6 +4,9 @@ param location string = 'westeurope'
 resource bastionHost 'Microsoft.Network/bastionHosts@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Basic'
+  }
   properties: {
     disableCopyPaste: false
     enableFileCopy: false
@@ -25,14 +28,15 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2022-07-01' = {
     ]
     scaleUnits: 2
   }
-  sku: {
-    name: 'Basic'
-  }
 }
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -40,10 +44,6 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
@@ -64,8 +64,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'AzureBastionSubnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '192.168.1.224/27'
     delegations: []

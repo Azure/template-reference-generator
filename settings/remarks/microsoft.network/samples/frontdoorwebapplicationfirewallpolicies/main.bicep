@@ -1,8 +1,12 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
-resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
+resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
   name: resourceName
   location: 'global'
+  sku: {
+    name: 'Premium_AzureFrontDoor'
+  }
   properties: {
     customRules: {
       rules: [
@@ -61,8 +65,5 @@ resource frontdoorwebapplicationfirewallpolicy 'Microsoft.Network/FrontDoorWebAp
       mode: 'Prevention'
       redirectUrl: 'https://www.fabrikam.com'
     }
-  }
-  sku: {
-    name: 'Premium_AzureFrontDoor'
   }
 }

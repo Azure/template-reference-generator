@@ -10,6 +10,10 @@ param certificatePassword string
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Developer'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -37,24 +41,20 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 1
-    name: 'Developer'
-  }
 }
 
 resource certificate 'Microsoft.ApiManagement/service/certificates@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
-    data: null
-    password: null
+    data: certificateData
+    password: certificatePassword
   }
 }
 
 resource gateway 'Microsoft.ApiManagement/service/gateways@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     description: ''
     locationData: {
@@ -67,8 +67,8 @@ resource gateway 'Microsoft.ApiManagement/service/gateways@2021-08-01' = {
 }
 
 resource certificateAuthority 'Microsoft.ApiManagement/service/gateways/certificateAuthorities@2021-08-01' = {
+  name: 'azapi_resource.certificate.name'
   parent: gateway
-  name: 'certificate.name'
   properties: {
     isTrusted: false
   }

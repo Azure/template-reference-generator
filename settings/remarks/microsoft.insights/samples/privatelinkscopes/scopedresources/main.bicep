@@ -19,12 +19,13 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
 
 resource privateLinkScope 'Microsoft.Insights/privateLinkScopes@2019-10-17-preview' = {
   name: resourceName
+  location: 'Global'
   properties: {}
 }
 
 resource scopedResource 'Microsoft.Insights/privateLinkScopes/scopedResources@2019-10-17-preview' = {
-  parent: privateLinkScope
   name: resourceName
+  parent: privateLinkScope
   properties: {
     linkedResourceId: component.id
   }

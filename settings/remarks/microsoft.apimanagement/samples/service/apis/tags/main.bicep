@@ -4,6 +4,10 @@ param location string = 'westus'
 resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
   name: '${resourceName}-service'
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -19,15 +23,11 @@ resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
-  parent: service
   name: '${resourceName}-api;rev=1'
+  parent: service
   properties: {
     apiRevisionDescription: ''
     apiType: 'http'
@@ -44,9 +44,9 @@ resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
 }
 
 resource tag 'Microsoft.ApiManagement/service/tags@2022-08-01' = {
-  parent: service
   name: '${resourceName}-tag'
+  parent: service
   properties: {
-    displayName: 'acctest0001-tag'
+    displayName: '${resourceName}-tag'
   }
 }

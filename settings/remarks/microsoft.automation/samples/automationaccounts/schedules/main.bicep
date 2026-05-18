@@ -16,8 +16,8 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource schedule 'Microsoft.Automation/automationAccounts/schedules@2020-01-13-preview' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     description: ''
     frequency: 'OneTime'

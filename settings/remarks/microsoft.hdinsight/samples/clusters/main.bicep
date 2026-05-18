@@ -10,8 +10,54 @@ param vmPassword string
 param restCredentialPassword string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
+  parent: storageAccount
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
+    encryption: {
+      keySource: 'Microsoft.Storage'
+      services: {
+        queue: {
+          keyType: 'Service'
+        }
+        table: {
+          keyType: 'Service'
+        }
+      }
+    }
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+  }
+}
+
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
+  name: resourceName
+  parent: blobService
+  properties: {
+    metadata: {
+      key: 'value'
+    }
+  }
 }
 
 resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
@@ -92,51 +138,5 @@ resource cluster 'Microsoft.HDInsight/clusters@2018-06-01-preview' = {
       ]
     }
     tier: 'standard'
-  }
-}
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  kind: 'StorageV2'
-  properties: {
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
-    encryption: {
-      keySource: 'Microsoft.Storage'
-      services: {
-        queue: {
-          keyType: 'Service'
-        }
-        table: {
-          keyType: 'Service'
-        }
-      }
-    }
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
-  }
-}
-
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
-  name: resourceName
-  properties: {
-    metadata: {
-      key: 'value'
-    }
   }
 }

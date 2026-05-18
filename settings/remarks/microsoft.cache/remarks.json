@@ -75,6 +75,16 @@
       "ResourceType": "Microsoft.Cache/redisEnterprise/databases",
       "Path": "samples/redisenterprise/databases/main.bicep",
       "Description": "A basic example of deploying Redis Enterprise Database."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/linkedServers",
+      "Path": "samples/redis/linkedservers/main.bicep",
+      "Description": "A basic example of deploying Redis Linked Server."
+    },
+    {
+      "ResourceType": "Microsoft.Cache/redis/linkedServers",
+      "Path": "samples/redis/linkedservers/main-rg-module.bicep",
+      "Description": "A basic example of deploying Redis Linked Server."
     }
   ]
 }

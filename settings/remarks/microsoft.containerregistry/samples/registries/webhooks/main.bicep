@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Standard'
+  }
   properties: {
     adminUserEnabled: false
     anonymousPullEnabled: false
@@ -29,16 +33,12 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
   }
-  sku: {
-    name: 'Standard'
-    tier: 'Standard'
-  }
 }
 
 resource webHook 'Microsoft.ContainerRegistry/registries/webHooks@2021-08-01-preview' = {
-  parent: registry
   name: resourceName
   location: location
+  parent: registry
   properties: {
     actions: [
       'push'

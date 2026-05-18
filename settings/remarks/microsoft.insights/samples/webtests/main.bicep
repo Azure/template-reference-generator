@@ -31,7 +31,7 @@ resource webTest 'Microsoft.Insights/webTests@2022-06-15' = {
         Id: 'us-tx-sn1-azr'
       }
     ]
-    Name: 'acctest0001'
+    Name: resourceName
     Request: {
       FollowRedirects: false
       Headers: [
@@ -49,7 +49,7 @@ resource webTest 'Microsoft.Insights/webTests@2022-06-15' = {
       RequestUrl: 'http://microsoft.com'
     }
     RetryEnabled: false
-    SyntheticMonitorId: 'acctest0001'
+    SyntheticMonitorId: resourceName
     Timeout: 30
     ValidationRules: {
       ExpectedHttpStatusCode: 200
@@ -57,6 +57,6 @@ resource webTest 'Microsoft.Insights/webTests@2022-06-15' = {
     }
   }
   tags: {
-    'hidden-link:azapi_resource.component.id': 'Resource'
+    'hidden-link:${component.id}': 'Resource'
   }
 }

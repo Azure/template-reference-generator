@@ -1,3 +1,4 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource systemTopic 'Microsoft.EventGrid/systemTopics@2021-12-01' = {

@@ -20,6 +20,10 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -35,15 +39,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
-  parent: service
   name: '${resourceName};rev=1'
+  parent: service
   properties: {
     apiType: 'http'
     apiVersion: ''
@@ -55,8 +55,8 @@ resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
 }
 
 resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     credentials: {
       instrumentationKey: component.properties.InstrumentationKey
@@ -68,8 +68,8 @@ resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
 }
 
 resource diagnostic 'Microsoft.ApiManagement/service/apis/diagnostics@2021-08-01' = {
-  parent: api
   name: 'applicationinsights'
+  parent: api
   properties: {
     loggerId: logger.id
     operationNameFormat: 'Name'

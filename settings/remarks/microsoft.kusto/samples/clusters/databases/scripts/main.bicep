@@ -1,9 +1,14 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Dev(No SLA)_Standard_D11_v2'
+    tier: 'Basic'
+  }
   properties: {
     enableAutoStop: true
     enableDiskEncryption: false
@@ -16,24 +21,19 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     restrictOutboundNetworkAccess: 'Disabled'
     trustedExternalTenants: []
   }
-  sku: {
-    capacity: 1
-    name: 'Dev(No SLA)_Standard_D11_v2'
-    tier: 'Basic'
-  }
 }
 
 resource database 'Microsoft.Kusto/clusters/databases@2023-05-02' = {
-  parent: cluster
   name: resourceName
   location: location
+  parent: cluster
   kind: 'ReadWrite'
   properties: {}
 }
 
 resource script 'Microsoft.Kusto/clusters/databases/scripts@2023-05-02' = {
-  parent: database
   name: 'create-table-script'
+  parent: database
   properties: {
     continueOnErrors: false
     forceUpdateTag: '9e2e7874-aa37-7041-81b7-06397f03a37d'

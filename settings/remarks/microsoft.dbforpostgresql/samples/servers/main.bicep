@@ -1,17 +1,23 @@
+@secure()
+@description('The administrator login password for the PostgreSQL server')
+param administratorLoginPassword string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator login name for the PostgreSQL server')
 param administratorLogin string
-@secure()
-@description('The administrator login password for the PostgreSQL server')
-param administratorLoginPassword string
 
 resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 2
+    family: 'Gen5'
+    name: 'GP_Gen5_2'
+    tier: 'GeneralPurpose'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
     infrastructureEncryption: 'Disabled'
     minimalTlsVersion: 'TLS1_2'
@@ -23,11 +29,5 @@ resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
       storageMB: 51200
     }
     version: '9.5'
-  }
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'GP_Gen5_2'
-    tier: 'GeneralPurpose'
   }
 }

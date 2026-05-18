@@ -9,13 +9,17 @@ param administratorLoginPassword string
 resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_D2s_v3'
+    tier: 'GeneralPurpose'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     authConfig: {
       activeDirectoryAuth: 'Enabled'
       passwordAuth: 'Enabled'
-      tenantId: deployer().tenantId
+      tenantId: tenant().tenantId
     }
     availabilityZone: '2'
     backup: {
@@ -30,17 +34,13 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
     }
     version: '12'
   }
-  sku: {
-    name: 'Standard_D2s_v3'
-    tier: 'GeneralPurpose'
-  }
 }
 
 resource administrator 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-12-01' = {
+  name: deployer().objectId
   parent: flexibleServer
-  name: 'data.azurerm_client_config.current.object_id'
   properties: {
     principalType: 'ServicePrincipal'
-    tenantId: deployer().tenantId
+    tenantId: tenant().tenantId
   }
 }

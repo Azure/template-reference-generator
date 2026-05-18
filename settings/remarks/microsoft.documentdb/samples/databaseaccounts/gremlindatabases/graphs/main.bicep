@@ -41,25 +41,25 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
 }
 
 resource gremlinDatabase 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2023-04-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: resourceName
     }
   }
 }
 
 resource graph 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs@2023-04-15' = {
-  parent: gremlinDatabase
   name: resourceName
+  parent: gremlinDatabase
   properties: {
     options: {
       throughput: 400
     }
     resource: {
-      id: 'acctest0001'
+      id: resourceName
       partitionKey: {
         kind: 'Hash'
         paths: [

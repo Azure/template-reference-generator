@@ -4,9 +4,13 @@ param location string = 'westeurope'
 @description('The Base64 encoded certificate content for the IoT Hub')
 param certificateContent string
 
-resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'B1'
+  }
   properties: {
     cloudToDevice: {}
     enableFileUploadNotifications: false
@@ -23,17 +27,13 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
     }
     storageEndpoints: {}
   }
-  sku: {
-    capacity: 1
-    name: 'B1'
-  }
 }
 
 resource certificate 'Microsoft.Devices/IotHubs/certificates@2022-04-30-preview' = {
-  parent: iothub
   name: resourceName
+  parent: iotHub
   properties: {
-    certificate: null
+    certificate: certificateContent
     isVerified: false
   }
 }

@@ -4,6 +4,11 @@ param location string = 'westeurope'
 resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Dev(No SLA)_Standard_D11_v2'
+    tier: 'Basic'
+  }
   properties: {
     enableAutoStop: true
     enableDiskEncryption: false
@@ -16,16 +21,14 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     restrictOutboundNetworkAccess: 'Disabled'
     trustedExternalTenants: []
   }
-  sku: {
-    capacity: 1
-    name: 'Dev(No SLA)_Standard_D11_v2'
-    tier: 'Basic'
-  }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -54,14 +57,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource managedPrivateEndpoint 'Microsoft.Kusto/clusters/managedPrivateEndpoints@2023-05-02' = {
-  parent: cluster
   name: resourceName
+  parent: cluster
   properties: {
     groupId: 'blob'
     privateLinkResourceId: storageAccount.id

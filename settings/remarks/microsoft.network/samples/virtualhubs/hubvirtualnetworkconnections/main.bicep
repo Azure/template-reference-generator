@@ -1,21 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressPrefix: '10.0.2.0/24'
-    hubRoutingPreference: 'ExpressRoute'
-    virtualRouterAutoScaleConfiguration: {
-      minCapacity: 2
-    }
-    virtualWan: {
-      id: virtualWan.id
-    }
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
@@ -43,9 +28,24 @@ resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
   }
 }
 
-resource hubVirtualNetworkConnection 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2022-07-01' = {
-  parent: virtualHub
+resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
   name: resourceName
+  location: location
+  properties: {
+    addressPrefix: '10.0.2.0/24'
+    hubRoutingPreference: 'ExpressRoute'
+    virtualRouterAutoScaleConfiguration: {
+      minCapacity: 2
+    }
+    virtualWan: {
+      id: virtualWan.id
+    }
+  }
+}
+
+resource hubVirtualNetworkConnection 'Microsoft.Network/virtualHubs/hubVirtualNetworkConnections@2022-07-01' = {
+  name: resourceName
+  parent: virtualHub
   properties: {
     enableInternetSecurity: false
     remoteVirtualNetwork: {

@@ -1,9 +1,12 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -32,9 +35,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
@@ -58,8 +58,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource storageInsightConfig 'Microsoft.OperationalInsights/workspaces/storageInsightConfigs@2020-08-01' = {
-  parent: workspace
   name: resourceName
+  parent: workspace
   properties: {
     storageAccount: {
       id: storageAccount.id

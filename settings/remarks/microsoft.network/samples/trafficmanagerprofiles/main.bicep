@@ -1,4 +1,5 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08-01' = {
   name: resourceName

@@ -8,7 +8,7 @@ resource storageMover 'Microsoft.StorageMover/storageMovers@2023-03-01' = {
 }
 
 resource project 'Microsoft.StorageMover/storageMovers/projects@2023-03-01' = {
-  parent: storageMover
   name: resourceName
+  parent: storageMover
   properties: {}
 }

@@ -1,27 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'eastus'
-
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
+param resourceName string = 'acctest0001'
 
 resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
   name: resourceName
@@ -64,7 +42,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
     osProfile: {
       adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001'
+      computerName: resourceName
       linuxConfiguration: {
         disablePasswordAuthentication: true
         patchSettings: {
@@ -123,8 +101,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.0.0/24'
     defaultOutboundAccess: true
@@ -133,5 +111,27 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

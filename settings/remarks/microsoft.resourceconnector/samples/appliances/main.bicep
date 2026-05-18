@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource appliance 'Microsoft.ResourceConnector/appliances@2022-10-27' = {
   name: '${resourceName}-appliance'

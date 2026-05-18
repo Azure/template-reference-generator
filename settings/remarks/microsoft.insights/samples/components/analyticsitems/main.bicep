@@ -18,10 +18,6 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 resource analyticsItem 'microsoft.insights/components/analyticsItems@2015-05-01' = {
-  parent: component
   name: 'item'
-  Content: 'requests #test'
-  Name: 'testquery'
-  Scope: 'shared'
-  Type: 'query'
+  parent: component
 }

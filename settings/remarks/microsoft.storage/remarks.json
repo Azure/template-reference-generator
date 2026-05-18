@@ -107,6 +107,11 @@
       "ResourceType": "Microsoft.Storage/storageAccounts/tableServices/tables",
       "Path": "samples/storageaccounts/tableservices/tables/main.bicep",
       "Description": "A basic example of deploying Table within Azure Storage."
+    },
+    {
+      "ResourceType": "Microsoft.Storage/storageAccounts/encryptionScopes",
+      "Path": "samples/storageaccounts/encryptionscopes/main.bicep",
+      "Description": "A basic example of deploying Storage Encryption Scope."
     }
   ]
 }

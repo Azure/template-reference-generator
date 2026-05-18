@@ -9,6 +9,16 @@ resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2022-05-01' = {
   }
 }
 
+resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01' = {
+  name: resourceName
+  location: location
+  parent: netAppAccount
+  properties: {
+    serviceLevel: 'Premium'
+    size: 4398046511104
+  }
+}
+
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
@@ -25,19 +35,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   }
 }
 
-resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01' = {
-  parent: netAppAccount
-  name: resourceName
-  location: location
-  properties: {
-    serviceLevel: 'Premium'
-    size: 4398046511104
-  }
-}
-
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: [
@@ -56,9 +56,9 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
 }
 
 resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-01' = {
-  parent: capacityPool
   name: resourceName
   location: location
+  parent: capacityPool
   properties: {
     avsDataStore: 'Disabled'
     creationToken: 'my-unique-file-path-230630033642692134'
@@ -75,14 +75,13 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-0
     snapshotDirectoryVisible: false
     snapshotId: ''
     subnetId: subnet.id
-    usageThreshold: 107374182400
+    usageThreshold: any('1.073741824e+11')
     volumeType: ''
   }
-  zones: []
 }
 
 resource snapshot 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots@2022-05-01' = {
-  parent: volume
   name: resourceName
   location: location
+  parent: volume
 }

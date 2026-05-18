@@ -1,16 +1,15 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
+var roleName = '${toLower(resourceName)}role'
 var accountName = toLower(replace(resourceName, '-', ''))
 var dbName = '${toLower(resourceName)}db'
-var roleName = '${toLower(resourceName)}role'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   name: accountName
   location: location
   kind: 'MongoDB'
   properties: {
-    backupPolicy: null
     capabilities: [
       {
         name: 'EnableMongoRoleBasedAccessControl'
@@ -40,7 +39,7 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
       {
         failoverPriority: 0
         isZoneRedundant: false
-        locationName: 'eastus'
+        locationName: location
       }
     ]
     minimalTlsVersion: 'Tls12'
@@ -52,8 +51,8 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
 }
 
 resource mongodbDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: dbName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
@@ -63,14 +62,14 @@ resource mongodbDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
 }
 
 resource mongodbRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions@2022-11-15' = {
-  parent: databaseAccount
   name: '${dbName}.${roleName}'
+  parent: databaseAccount
+  dependsOn: [
+    mongodbDatabase
+  ]
   properties: {
     databaseName: dbName
     roleName: roleName
     type: 1
   }
-  dependsOn: [
-    mongodbDatabase
-  ]
 }

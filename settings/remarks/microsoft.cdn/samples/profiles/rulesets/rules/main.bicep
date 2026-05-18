@@ -1,19 +1,21 @@
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 param cdnLocation string = 'global'
 
 resource profile 'Microsoft.Cdn/profiles@2024-09-01' = {
   name: '${resourceName}-profile'
-  properties: {
-    originResponseTimeoutSeconds: 120
-  }
+  location: cdnLocation
   sku: {
     name: 'Standard_AzureFrontDoor'
+  }
+  properties: {
+    originResponseTimeoutSeconds: 120
   }
 }
 
 resource originGroup 'Microsoft.Cdn/profiles/originGroups@2024-09-01' = {
-  parent: profile
   name: '${resourceName}-origingroup'
+  parent: profile
   properties: {
     loadBalancingSettings: {
       additionalLatencyInMilliseconds: 0
@@ -25,14 +27,9 @@ resource originGroup 'Microsoft.Cdn/profiles/originGroups@2024-09-01' = {
   }
 }
 
-resource ruleSet 'Microsoft.Cdn/profiles/ruleSets@2024-09-01' = {
-  parent: profile
-  name: 'ruleSet${substring(resourceName, length(resourceName) - 4, 4)}'
-}
-
 resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2024-09-01' = {
-  parent: originGroup
   name: '${resourceName}-origin'
+  parent: originGroup
   properties: {
     enabledState: 'Enabled'
     enforceCertificateNameCheck: false
@@ -45,9 +42,14 @@ resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2024-09-01' = {
   }
 }
 
+resource ruleSet 'Microsoft.Cdn/profiles/ruleSets@2024-09-01' = {
+  name: 'ruleSet${substring(resourceName, (length(resourceName) - 4), 3)}'
+  parent: profile
+}
+
 resource rule 'Microsoft.Cdn/profiles/ruleSets/rules@2024-09-01' = {
+  name: 'rule${substring(resourceName, (length(resourceName) - 4), 3)}'
   parent: ruleSet
-  name: 'rule${substring(resourceName, length(resourceName) - 4, 4)}'
   properties: {
     actions: [
       {

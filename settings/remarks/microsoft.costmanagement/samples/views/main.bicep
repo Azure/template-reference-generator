@@ -1,6 +1,5 @@
-targetScope = 'subscription'
-
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource view 'Microsoft.CostManagement/views@2022-10-01' = {
   name: resourceName

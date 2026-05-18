@@ -16,8 +16,8 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource module 'Microsoft.Automation/automationAccounts/modules@2020-01-13-preview' = {
-  parent: automationAccount
   name: 'xActiveDirectory'
+  parent: automationAccount
   properties: {
     contentLink: {
       uri: 'https://devopsgallerystorage.blob.core.windows.net/packages/xactivedirectory.2.19.0.nupkg'

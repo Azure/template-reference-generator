@@ -4,15 +4,18 @@ param location string = 'westus'
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: '${resourceName}-ia'
   location: location
-  properties: {}
   sku: {
     name: 'Standard'
   }
+  properties: {}
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: replace(substring(toLower('${resourceName}sa'), 0, 24), '-', '')
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -47,14 +50,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource assembly 'Microsoft.Logic/integrationAccounts/assemblies@2019-05-01' = {
-  parent: integrationAccount
   name: '${resourceName}-assembly'
+  parent: integrationAccount
   properties: {
     assemblyName: 'TestAssembly2'
     assemblyVersion: '2.2.2.2'

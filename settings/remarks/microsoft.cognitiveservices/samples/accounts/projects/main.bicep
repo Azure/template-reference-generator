@@ -4,26 +4,26 @@ param location string = 'westus2'
 resource account 'Microsoft.CognitiveServices/accounts@2025-06-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'S0'
+  }
   kind: 'AIServices'
   properties: {
     allowProjectManagement: true
-    customSubDomainName: 'cog-acctest0001'
+    customSubDomainName: 'cog-${resourceName}'
     disableLocalAuth: false
     dynamicThrottlingEnabled: false
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
   }
-  sku: {
-    name: 'S0'
-  }
 }
 
 resource project 'Microsoft.CognitiveServices/accounts/projects@2025-06-01' = {
-  parent: account
   name: resourceName
   location: location
+  parent: account
   properties: {
     description: 'test project'
-    displayName: 'project-acctest0001'
+    displayName: 'project-${resourceName}'
   }
 }

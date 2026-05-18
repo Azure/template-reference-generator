@@ -37,21 +37,21 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
 }
 
 resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {
       throughput: 400
     }
     resource: {
-      id: 'acctest0001'
+      id: resourceName
     }
   }
 }
 
 resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
-  parent: sqlDatabase
   name: resourceName
+  parent: sqlDatabase
   properties: {
     options: {}
     resource: {

@@ -20,7 +20,7 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant().tenantId
       }
     ]
     createMode: 'default'
@@ -35,6 +35,6 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
       name: 'standard'
     }
     softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
+    tenantId: tenant().tenantId
   }
 }

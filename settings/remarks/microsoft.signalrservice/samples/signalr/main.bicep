@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_S1'
+  }
   properties: {
     cors: {}
     disableAadAuth: false
@@ -52,9 +56,5 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
     upstream: {
       templates: []
     }
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard_S1'
   }
 }

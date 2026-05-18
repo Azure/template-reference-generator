@@ -16,11 +16,11 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource variable 'Microsoft.Automation/automationAccounts/variables@2020-01-13-preview' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     description: ''
     isEncrypted: false
-    value: '"Hello, Terraform Basic Test."'
+    value: 'Hello, Terraform Basic Test.'
   }
 }

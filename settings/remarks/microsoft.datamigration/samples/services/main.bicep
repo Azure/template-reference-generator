@@ -4,12 +4,12 @@ param location string = 'westeurope'
 resource service 'Microsoft.DataMigration/services@2018-04-19' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_1vCores'
+  }
   kind: 'Cloud'
   properties: {
     virtualSubnetId: subnet.id
-  }
-  sku: {
-    name: 'Standard_1vCores'
   }
 }
 
@@ -30,8 +30,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.1.0/24'
     delegations: []

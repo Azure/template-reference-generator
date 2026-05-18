@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_S1'
+  }
   properties: {
     cors: {}
     disableAadAuth: false
@@ -53,10 +57,6 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
       templates: []
     }
   }
-  sku: {
-    capacity: 1
-    name: 'Standard_S1'
-  }
 }
 
 resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
@@ -78,7 +78,7 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant().tenantId
       }
     ]
     createMode: 'default'
@@ -93,13 +93,13 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
       name: 'standard'
     }
     softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
+    tenantId: tenant().tenantId
   }
 }
 
 resource sharedPrivateLinkResource 'Microsoft.SignalRService/signalR/sharedPrivateLinkResources@2023-02-01' = {
-  parent: signalR
   name: resourceName
+  parent: signalR
   properties: {
     groupId: 'vault'
     privateLinkResourceId: vault.id

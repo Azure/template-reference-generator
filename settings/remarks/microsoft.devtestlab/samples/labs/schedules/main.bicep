@@ -10,9 +10,9 @@ resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
 }
 
 resource schedule 'Microsoft.DevTestLab/labs/schedules@2018-09-15' = {
-  parent: lab
   name: 'LabVmsShutdown'
   location: location
+  parent: lab
   properties: {
     dailyRecurrence: {
       time: '0100'

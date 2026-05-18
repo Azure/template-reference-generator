@@ -4,6 +4,9 @@ param location string = 'westeurope'
 resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'standard'
+  }
   properties: {
     authOptions: {
       apiKeyOnly: {}
@@ -19,9 +22,6 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
     partitionCount: 1
     publicNetworkAccess: 'Enabled'
     replicaCount: 1
-  }
-  sku: {
-    name: 'standard'
   }
   tags: {
     environment: 'staging'

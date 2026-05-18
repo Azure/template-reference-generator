@@ -10,9 +10,9 @@ resource profile 'Microsoft.Cdn/profiles@2020-09-01' = {
 }
 
 resource endpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
-  parent: profile
   name: resourceName
   location: location
+  parent: profile
   properties: {
     isHttpAllowed: true
     isHttpsAllowed: true

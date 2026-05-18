@@ -10,7 +10,7 @@ resource networkManager 'Microsoft.Network/networkManagers@2024-05-01' = {
     networkManagerScopes: {
       managementGroups: []
       subscriptions: [
-        '/subscriptions/subscription().subscriptionId'
+        '/subscriptions/${subscription().subscriptionId}'
       ]
     }
   }
@@ -34,9 +34,9 @@ resource vnetWithipam 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource ipamPool 'Microsoft.Network/networkManagers/ipamPools@2024-05-01' = {
-  parent: networkManager
   name: resourceName
   location: location
+  parent: networkManager
   properties: {
     addressPrefixes: [
       '10.0.0.0/24'

@@ -7,12 +7,11 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   properties: {
     globalParameters: {}
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
   }
 }
 
 resource managedVirtualNetwork 'Microsoft.DataFactory/factories/managedVirtualNetworks@2018-06-01' = {
-  parent: factory
   name: 'default'
+  parent: factory
   properties: {}
 }

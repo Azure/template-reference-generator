@@ -12,29 +12,10 @@ resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2022-05-01' = {
   }
 }
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.6.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-  tags: {
-    SkipASMAzSecPack: 'true'
-  }
-}
-
 resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01' = {
-  parent: netAppAccount
   name: resourceName
   location: location
+  parent: netAppAccount
   properties: {
     serviceLevel: 'Standard'
     size: 4398046511104
@@ -44,43 +25,10 @@ resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01'
   }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
-  name: 'GatewaySubnet'
-  properties: {
-    addressPrefix: '10.6.1.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-  }
-}
-
-resource subnet2 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
-  name: resourceName
-  properties: {
-    addressPrefix: '10.6.2.0/24'
-    delegations: [
-      {
-        name: 'testdelegation'
-        properties: {
-          serviceName: 'Microsoft.Netapp/volumes'
-        }
-      }
-    ]
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-  }
-}
-
 resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-01' = {
-  parent: capacityPool
   name: resourceName
   location: location
+  parent: capacityPool
   properties: {
     avsDataStore: 'Enabled'
     creationToken: 'my-unique-file-path-230630034120103726'
@@ -106,11 +54,62 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-0
     serviceLevel: 'Standard'
     snapshotDirectoryVisible: true
     subnetId: subnet2.id
-    usageThreshold: 107374182400
+    usageThreshold: any('1.073741824e+11')
     volumeType: ''
   }
   tags: {
     SkipASMAzSecPack: 'true'
   }
-  zones: []
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.6.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+  tags: {
+    SkipASMAzSecPack: 'true'
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'GatewaySubnet'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.6.1.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
+resource subnet2 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: resourceName
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.6.2.0/24'
+    delegations: [
+      {
+        name: 'testdelegation'
+        properties: {
+          serviceName: 'Microsoft.Netapp/volumes'
+        }
+      }
+    ]
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
 }

@@ -17,41 +17,15 @@ resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   }
 }
 
-resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    administratorLogin: 'psqladmin'
-    administratorLoginPassword: null
-    createMode: 'Default'
-    infrastructureEncryption: 'Disabled'
-    minimalTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    sslEnforcement: 'Enabled'
-    storageProfile: {
-      backupRetentionDays: 7
-      storageAutogrow: 'Enabled'
-      storageMB: 5120
-    }
-    version: '9.5'
-  }
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'B_Gen5_2'
-    tier: 'Basic'
-  }
-}
-
 resource backupInstance 'Microsoft.DataProtection/backupVaults/backupInstances@2022-04-01' = {
-  parent: backupVault
   name: resourceName
+  parent: backupVault
   properties: {
     dataSourceInfo: {
       datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
       objectType: 'Datasource'
       resourceID: database.id
-      resourceLocation: 'database.location'
+      resourceLocation: database.location
       resourceName: database.name
       resourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
       resourceUri: ''
@@ -60,13 +34,12 @@ resource backupInstance 'Microsoft.DataProtection/backupVaults/backupInstances@2
       datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
       objectType: 'DatasourceSet'
       resourceID: server.id
-      resourceLocation: 'server.location'
+      resourceLocation: server.location
       resourceName: server.name
       resourceType: 'Microsoft.DBForPostgreSQL/servers'
       resourceUri: ''
     }
-    datasourceAuthCredentials: null
-    friendlyName: 'acctest0001'
+    friendlyName: resourceName
     objectType: 'BackupInstance'
     policyInfo: {
       policyId: backupPolicy.id
@@ -75,8 +48,8 @@ resource backupInstance 'Microsoft.DataProtection/backupVaults/backupInstances@2
 }
 
 resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022-04-01' = {
-  parent: backupVault
   name: resourceName
+  parent: backupVault
   properties: {
     datasourceTypes: [
       'Microsoft.DBforPostgreSQL/servers/databases'
@@ -135,9 +108,35 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
   }
 }
 
-resource database 'Microsoft.DBforPostgreSQL/servers/databases@2017-12-01' = {
-  parent: server
+resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
   name: resourceName
+  location: location
+  sku: {
+    capacity: 2
+    family: 'Gen5'
+    name: 'B_Gen5_2'
+    tier: 'Basic'
+  }
+  properties: {
+    administratorLogin: 'psqladmin'
+    administratorLoginPassword: administratorLoginPassword
+    createMode: 'Default'
+    infrastructureEncryption: 'Disabled'
+    minimalTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    sslEnforcement: 'Enabled'
+    storageProfile: {
+      backupRetentionDays: 7
+      storageAutogrow: 'Enabled'
+      storageMB: 5120
+    }
+    version: '9.5'
+  }
+}
+
+resource database 'Microsoft.DBforPostgreSQL/servers/databases@2017-12-01' = {
+  name: resourceName
+  parent: server
   properties: {
     charset: 'UTF8'
     collation: 'English_United States.1252'

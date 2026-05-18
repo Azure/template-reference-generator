@@ -1,4 +1,5 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
   name: '${resourceName}.com'
@@ -6,8 +7,8 @@ resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
 }
 
 resource a 'Microsoft.Network/dnsZones/A@2018-05-01' = {
-  parent: dnsZone
   name: resourceName
+  parent: dnsZone
   properties: {
     ARecords: [
       {

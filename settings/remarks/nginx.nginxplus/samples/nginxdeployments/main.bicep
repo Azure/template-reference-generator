@@ -1,9 +1,12 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' = {
   name: '${resourceName}-nginx'
   location: location
+  sku: {
+    name: 'standardv2_Monthly'
+  }
   properties: {
     autoUpgradeProfile: {
       upgradeChannel: 'stable'
@@ -38,14 +41,15 @@ resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' =
       preferredEmail: 'test@test.com'
     }
   }
-  sku: {
-    name: 'standardv2_Monthly'
-  }
 }
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
   name: '${resourceName}-pip'
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -53,16 +57,16 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
 resource publicipaddress1 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
   name: '${resourceName}-pip2'
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -70,10 +74,6 @@ resource publicipaddress1 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }
 
@@ -95,8 +95,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     defaultOutboundAccess: true
@@ -116,8 +116,8 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
 }
 
 resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet2'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.3.0/24'
     defaultOutboundAccess: true

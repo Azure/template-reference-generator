@@ -4,38 +4,6 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    dataFlows: [
-      {
-        destinations: [
-          'test-destination-metrics'
-        ]
-        streams: [
-          'Microsoft-InsightsMetrics'
-        ]
-      }
-    ]
-    description: ''
-    destinations: {
-      azureMonitorMetrics: {
-        name: 'test-destination-metrics'
-      }
-    }
-  }
-}
-
-resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
-  scope: virtualMachine
-  name: resourceName
-  properties: {
-    dataCollectionRuleId: dataCollectionRule.id
-    description: ''
-  }
-}
-
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: 'nic-230630033559397415'
   location: location
@@ -87,7 +55,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: adminPassword
       adminUsername: 'adminuser'
       allowExtensionOperations: true
       computerName: 'machine-230630033559397415'
@@ -143,8 +111,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'subnet-230630033559397415'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -152,5 +120,37 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    dataFlows: [
+      {
+        destinations: [
+          'test-destination-metrics'
+        ]
+        streams: [
+          'Microsoft-InsightsMetrics'
+        ]
+      }
+    ]
+    description: ''
+    destinations: {
+      azureMonitorMetrics: {
+        name: 'test-destination-metrics'
+      }
+    }
+  }
+}
+
+resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
+  name: resourceName
+  scope: virtualMachine
+  properties: {
+    dataCollectionRuleId: dataCollectionRule.id
+    description: ''
   }
 }

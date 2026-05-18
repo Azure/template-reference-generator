@@ -1,14 +1,18 @@
+@secure()
+@description('The client secret for the OpenID Connect provider')
+param openidClientSecret string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The client ID for the OpenID Connect provider')
 param openidClientId string
-@secure()
-@description('The client secret for the OpenID Connect provider')
-param openidClientSecret string
 
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -24,18 +28,14 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource openidConnectProvider 'Microsoft.ApiManagement/service/openidConnectProviders@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
-    clientId: null
-    clientSecret: null
+    clientId: openidClientId
+    clientSecret: openidClientSecret
     description: ''
     displayName: 'Initial Name'
     metadataEndpoint: 'https://azacceptance.hashicorptest.com/example/foo'

@@ -4,15 +4,15 @@ param location string = 'westeurope'
 resource integrationAccount 'Microsoft.Logic/integrationAccounts@2019-05-01' = {
   name: resourceName
   location: location
-  properties: {}
   sku: {
     name: 'Basic'
   }
+  properties: {}
 }
 
 resource map 'Microsoft.Logic/integrationAccounts/maps@2019-05-01' = {
-  parent: integrationAccount
   name: resourceName
+  parent: integrationAccount
   properties: {
     content: '''<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:msxsl="urn:schemas-microsoft-com:xslt"

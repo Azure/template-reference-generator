@@ -14,56 +14,6 @@ resource managedDisk 'Microsoft.Compute/disks@2023-10-02' existing = {
   name: osDiskName
 }
 
-resource attachedManagedDisk 'Microsoft.Compute/disks@2023-10-02' = {
-  name: attachedOsDiskName
-  location: location
-  properties: {
-    creationData: {
-      createOption: 'Copy'
-      sourceResourceId: snapshot.id
-    }
-    diskSizeGB: 30
-    encryption: {
-      type: 'EncryptionAtRestWithPlatformKey'
-    }
-    hyperVGeneration: 'V1'
-    networkAccessPolicy: 'AllowAll'
-    osType: 'Linux'
-    publicNetworkAccess: 'Enabled'
-    supportedCapabilities: {
-      architecture: 'x64'
-    }
-  }
-  sku: {
-    name: 'Standard_LRS'
-  }
-  zones: [
-    '1'
-  ]
-}
-
-resource attachedNetworkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: attachedResourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration2'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
 resource attachedVirtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: attachedResourceName
   location: location
@@ -121,6 +71,9 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
 resource snapshot 'Microsoft.Compute/snapshots@2023-10-02' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_ZRS'
+  }
   properties: {
     creationData: {
       createOption: 'Copy'
@@ -130,17 +83,90 @@ resource snapshot 'Microsoft.Compute/snapshots@2023-10-02' = {
     encryption: {
       type: 'EncryptionAtRestWithPlatformKey'
     }
-    hyperVGeneration: 'V1'
-    incremental: true
     networkAccessPolicy: 'AllowAll'
     osType: 'Linux'
+    hyperVGeneration: 'V1'
+    incremental: true
     publicNetworkAccess: 'Enabled'
     supportedCapabilities: {
       architecture: 'x64'
     }
   }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: resourceName
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
+resource attachedManagedDisk 'Microsoft.Compute/disks@2023-10-02' = {
+  name: attachedOsDiskName
+  location: location
   sku: {
-    name: 'Standard_ZRS'
+    name: 'Standard_LRS'
+  }
+  properties: {
+    creationData: {
+      createOption: 'Copy'
+      sourceResourceId: snapshot.id
+    }
+    diskSizeGB: 30
+    encryption: {
+      type: 'EncryptionAtRestWithPlatformKey'
+    }
+    networkAccessPolicy: 'AllowAll'
+    osType: 'Linux'
+    hyperVGeneration: 'V1'
+    publicNetworkAccess: 'Enabled'
+    supportedCapabilities: {
+      architecture: 'x64'
+    }
+  }
+}
+
+resource attachedNetworkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: attachedResourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration2'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }
 
@@ -183,34 +209,5 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         writeAcceleratorEnabled: false
       }
     }
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
-  name: resourceName
-  properties: {
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
   }
 }

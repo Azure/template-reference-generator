@@ -1,28 +1,20 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: resourceName
   location: 'global'
-  properties: {
-    originResponseTimeoutSeconds: 120
-  }
   sku: {
     name: 'Standard_AzureFrontDoor'
   }
-}
-
-resource afdEndpoint 'Microsoft.Cdn/profiles/afdEndpoints@2021-06-01' = {
-  parent: profile
-  name: resourceName
-  location: 'global'
   properties: {
-    enabledState: 'Enabled'
+    originResponseTimeoutSeconds: 120
   }
 }
 
 resource originGroup 'Microsoft.Cdn/profiles/originGroups@2021-06-01' = {
-  parent: profile
   name: resourceName
+  parent: profile
   properties: {
     loadBalancingSettings: {
       additionalLatencyInMilliseconds: 0
@@ -35,8 +27,8 @@ resource originGroup 'Microsoft.Cdn/profiles/originGroups@2021-06-01' = {
 }
 
 resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2021-06-01' = {
-  parent: originGroup
   name: resourceName
+  parent: originGroup
   properties: {
     enabledState: 'Enabled'
     enforceCertificateNameCheck: false
@@ -49,9 +41,18 @@ resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2021-06-01' = {
   }
 }
 
-resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2021-06-01' = {
-  parent: afdEndpoint
+resource afdEndpoint 'Microsoft.Cdn/profiles/afdEndpoints@2021-06-01' = {
   name: resourceName
+  location: 'global'
+  parent: profile
+  properties: {
+    enabledState: 'Enabled'
+  }
+}
+
+resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2021-06-01' = {
+  name: resourceName
+  parent: afdEndpoint
   properties: {
     enabledState: 'Enabled'
     forwardingProtocol: 'MatchRequest'

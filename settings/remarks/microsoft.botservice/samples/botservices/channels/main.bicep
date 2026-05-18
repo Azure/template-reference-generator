@@ -4,6 +4,9 @@ param location string = 'westus'
 resource botService 'Microsoft.BotService/botServices@2021-05-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'F0'
+  }
   kind: 'bot'
   properties: {
     cmekKeyVaultUrl: ''
@@ -11,22 +14,19 @@ resource botService 'Microsoft.BotService/botServices@2021-05-01-preview' = {
     developerAppInsightKey: ''
     developerAppInsightsApiKey: ''
     developerAppInsightsApplicationId: ''
-    displayName: 'acctest0001'
+    displayName: resourceName
     endpoint: ''
     iconUrl: 'https://docs.botframework.com/static/devportal/client/images/bot-framework-default.png'
     isCmekEnabled: false
     isStreamingSupported: false
     msaAppId: '12345678-1234-1234-1234-123456789012'
   }
-  sku: {
-    name: 'F0'
-  }
 }
 
 resource channel 'Microsoft.BotService/botServices/channels@2021-05-01-preview' = {
-  parent: botService
   name: 'AlexaChannel'
   location: location
+  parent: botService
   kind: 'bot'
   properties: {
     channelName: 'AlexaChannel'

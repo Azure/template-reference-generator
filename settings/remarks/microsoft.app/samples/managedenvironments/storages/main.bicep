@@ -19,6 +19,9 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -47,9 +50,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
   tags: {
     environment: 'accTest'
   }
@@ -76,13 +76,13 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource storage 'Microsoft.App/managedEnvironments/storages@2022-03-01' = {
-  parent: managedEnvironment
   name: resourceName
+  parent: managedEnvironment
   properties: {
     azureFile: {
       accessMode: 'ReadWrite'
       accountKey: storageAccount.listKeys().keys[0].value
-      accountName: storageAccount.properties.name
+      accountName: storageAccount.name
       shareName: 'testsharehkez7'
     }
   }

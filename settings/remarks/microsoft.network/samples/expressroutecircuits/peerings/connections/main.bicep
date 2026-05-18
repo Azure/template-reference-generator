@@ -4,7 +4,7 @@ param location string = 'westeurope'
 @description('The shared key for the Express Route circuit peering connections')
 param expressRouteConnectionSharedKey string
 
-resource expressrouteport 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
+resource expressRoutePort 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
@@ -14,7 +14,7 @@ resource expressrouteport 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
   }
 }
 
-resource expressrouteport2 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
+resource expressRoutePort2 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
@@ -27,40 +27,40 @@ resource expressrouteport2 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
 resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
   name: resourceName
   location: location
-  properties: {
-    authorizationKey: ''
-    bandwidthInGbps: 5
-    expressRoutePort: {
-      id: expressrouteport.id
-    }
-  }
   sku: {
     family: 'MeteredData'
     name: 'Standard_MeteredData'
     tier: 'Standard'
+  }
+  properties: {
+    authorizationKey: ''
+    bandwidthInGbps: 5
+    expressRoutePort: {
+      id: expressRoutePort.id
+    }
   }
 }
 
 resource expressRouteCircuit2 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
   name: resourceName
   location: location
-  properties: {
-    authorizationKey: ''
-    bandwidthInGbps: 5
-    expressRoutePort: {
-      id: expressrouteport2.id
-    }
-  }
   sku: {
     family: 'MeteredData'
     name: 'Standard_MeteredData'
     tier: 'Standard'
   }
+  properties: {
+    authorizationKey: ''
+    bandwidthInGbps: 5
+    expressRoutePort: {
+      id: expressRoutePort2.id
+    }
+  }
 }
 
 resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = {
-  parent: expressRouteCircuit
   name: 'AzurePrivatePeering'
+  parent: expressRouteCircuit
   properties: {
     azureASN: 12076
     gatewayManagerEtag: ''
@@ -68,15 +68,15 @@ resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = 
     peeringType: 'AzurePrivatePeering'
     primaryPeerAddressPrefix: '192.168.1.0/30'
     secondaryPeerAddressPrefix: '192.168.1.0/30'
-    sharedKey: null
+    sharedKey: expressRouteConnectionSharedKey
     state: 'Enabled'
     vlanId: 100
   }
 }
 
 resource peering2 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = {
-  parent: expressRouteCircuit2
   name: 'AzurePrivatePeering'
+  parent: expressRouteCircuit2
   properties: {
     azureASN: 12076
     gatewayManagerEtag: ''
@@ -84,15 +84,15 @@ resource peering2 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' =
     peeringType: 'AzurePrivatePeering'
     primaryPeerAddressPrefix: '192.168.1.0/30'
     secondaryPeerAddressPrefix: '192.168.1.0/30'
-    sharedKey: null
+    sharedKey: expressRouteConnectionSharedKey
     state: 'Enabled'
     vlanId: 100
   }
 }
 
 resource connection 'Microsoft.Network/expressRouteCircuits/peerings/connections@2022-07-01' = {
-  parent: peering
   name: resourceName
+  parent: peering
   properties: {
     addressPrefix: '192.169.8.0/29'
     expressRouteCircuitPeering: {

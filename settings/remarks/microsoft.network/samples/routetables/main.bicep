@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource routeTable 'Microsoft.Network/routeTables@2022-09-01' = {
   name: resourceName

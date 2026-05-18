@@ -37,8 +37,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource connectivityConfiguration 'Microsoft.Network/networkManagers/connectivityConfigurations@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {
     appliesToGroups: [
       {
@@ -53,7 +53,7 @@ resource connectivityConfiguration 'Microsoft.Network/networkManagers/connectivi
     hubs: [
       {
         resourceId: virtualNetwork.id
-        resourceType: virtualNetwork.properties.type
+        resourceType: virtualNetwork.type
       }
     ]
     isGlobal: 'False'
@@ -61,7 +61,7 @@ resource connectivityConfiguration 'Microsoft.Network/networkManagers/connectivi
 }
 
 resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {}
 }

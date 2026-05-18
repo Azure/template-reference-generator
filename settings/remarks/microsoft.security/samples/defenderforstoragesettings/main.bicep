@@ -1,9 +1,19 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {}
+}
+
 resource defenderForStorageSetting 'Microsoft.Security/defenderForStorageSettings@2022-12-01-preview' = {
-  scope: storageAccount
   name: 'current'
+  scope: storageAccount
   properties: {
     isEnabled: true
     malwareScanning: {
@@ -16,15 +26,5 @@ resource defenderForStorageSetting 'Microsoft.Security/defenderForStorageSetting
     sensitiveDataDiscovery: {
       isEnabled: true
     }
-  }
-}
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  kind: 'StorageV2'
-  properties: {}
-  sku: {
-    name: 'Standard_LRS'
   }
 }

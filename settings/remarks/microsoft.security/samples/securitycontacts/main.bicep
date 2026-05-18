@@ -1,6 +1,7 @@
 targetScope = 'subscription'
 
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource securityContact 'Microsoft.Security/securityContacts@2017-08-01-preview' = {
   name: resourceName

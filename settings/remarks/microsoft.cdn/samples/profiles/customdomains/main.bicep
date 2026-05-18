@@ -1,3 +1,4 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
@@ -8,22 +9,22 @@ resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
 resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: resourceName
   location: 'global'
-  properties: {
-    originResponseTimeoutSeconds: 120
-  }
   sku: {
     name: 'Premium_AzureFrontDoor'
+  }
+  properties: {
+    originResponseTimeoutSeconds: 120
   }
 }
 
 resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
-  parent: profile
   name: resourceName
+  parent: profile
   properties: {
     azureDnsZone: {
       id: dnsZone.id
     }
-    hostName: 'fabrikam.acctest0001.com'
+    hostName: 'fabrikam.${resourceName}.com'
     tlsSettings: {
       certificateType: 'ManagedCertificate'
       minimumTlsVersion: 'TLS12'

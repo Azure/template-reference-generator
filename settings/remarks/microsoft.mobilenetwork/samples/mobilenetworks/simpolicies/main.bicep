@@ -13,16 +13,16 @@ resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
 }
 
 resource dataNetwork 'Microsoft.MobileNetwork/mobileNetworks/dataNetworks@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {}
 }
 
 resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
     pccRules: [
       {
@@ -49,9 +49,9 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
 }
 
 resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
     defaultSlice: {
       id: slice.id
@@ -62,7 +62,6 @@ resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-0
         dataNetworkConfigurations: [
           {
             '5qi': 9
-            additionalAllowedSessionTypes: null
             allocationAndRetentionPriorityLevel: 9
             allowedServices: [
               {
@@ -101,9 +100,9 @@ resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-0
 }
 
 resource slice 'Microsoft.MobileNetwork/mobileNetworks/slices@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {
     snssai: {
       sst: 1

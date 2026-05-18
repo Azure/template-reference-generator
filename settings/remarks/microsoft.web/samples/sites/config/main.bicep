@@ -1,19 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
-
-resource serverfarm 'Microsoft.Web/serverfarms@2022-09-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    hyperV: false
-    perSiteScaling: false
-    reserved: false
-    zoneRedundant: false
-  }
-  sku: {
-    name: 'S1'
-  }
-}
+param resourceName string = 'acctest0001'
 
 resource site 'Microsoft.Web/sites@2022-09-01' = {
   name: resourceName
@@ -50,7 +36,21 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
 }
 
 resource config 'Microsoft.Web/sites/config@2022-09-01' = {
-  parent: site
   name: 'azurestorageaccounts'
+  parent: site
   properties: {}
+}
+
+resource serverfarm 'Microsoft.Web/serverfarms@2022-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'S1'
+  }
+  properties: {
+    hyperV: false
+    perSiteScaling: false
+    reserved: false
+    zoneRedundant: false
+  }
 }

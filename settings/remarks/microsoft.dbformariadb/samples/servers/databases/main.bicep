@@ -9,9 +9,15 @@ param administratorLoginPassword string
 resource server 'Microsoft.DBforMariaDB/servers@2018-06-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 2
+    family: 'Gen5'
+    name: 'B_Gen5_2'
+    tier: 'Basic'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
     minimalTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
@@ -23,17 +29,11 @@ resource server 'Microsoft.DBforMariaDB/servers@2018-06-01' = {
     }
     version: '10.2'
   }
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'B_Gen5_2'
-    tier: 'Basic'
-  }
 }
 
 resource database 'Microsoft.DBforMariaDB/servers/databases@2018-06-01' = {
-  parent: server
   name: resourceName
+  parent: server
   properties: {
     charset: 'utf8'
     collation: 'utf8_general_ci'

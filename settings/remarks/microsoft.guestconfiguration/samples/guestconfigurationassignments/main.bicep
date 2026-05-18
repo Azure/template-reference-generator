@@ -4,46 +4,32 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource guestConfigurationAssignment 'Microsoft.GuestConfiguration/guestConfigurationAssignments@2020-06-25' = {
-  scope: virtualMachine
-  name: 'WhitelistedApplication'
-  location: location
-  properties: {
-    guestConfiguration: {
-      assignmentType: ''
-      configurationParameter: [
-        {
-          name: '[InstalledApplication]bwhitelistedapp;Name'
-          value: 'NotePad,sql'
-        }
-      ]
-      contentHash: ''
-      contentUri: ''
-      name: 'WhitelistedApplication'
-      version: '1.*'
-    }
-  }
-}
-
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'internal'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }
 
@@ -76,7 +62,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: adminPassword
       adminUsername: 'adminuser'
       allowExtensionOperations: true
       computerName: 'acctestvmdro23'
@@ -116,31 +102,45 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   }
 }
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
+resource guestConfigurationAssignment 'Microsoft.GuestConfiguration/guestConfigurationAssignments@2020-06-25' = {
+  name: 'WhitelistedApplication'
   location: location
+  scope: virtualMachine
   properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
+    guestConfiguration: {
+      assignmentType: ''
+      configurationParameter: [
+        {
+          name: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
+          value: 'NotePad,sql'
+        }
       ]
+      contentHash: ''
+      contentUri: ''
+      name: 'WhitelistedApplication'
+      version: '1.*'
     }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
   }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
-  name: 'internal'
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
   properties: {
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

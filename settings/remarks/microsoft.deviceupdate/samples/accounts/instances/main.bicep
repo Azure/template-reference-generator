@@ -1,9 +1,13 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'S1'
+  }
   properties: {
     cloudToDevice: {}
     enableFileUploadNotifications: false
@@ -20,10 +24,6 @@ resource iothub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
     }
     storageEndpoints: {}
   }
-  sku: {
-    capacity: 1
-    name: 'S1'
-  }
 }
 
 resource account 'Microsoft.DeviceUpdate/accounts@2022-10-01' = {
@@ -36,15 +36,15 @@ resource account 'Microsoft.DeviceUpdate/accounts@2022-10-01' = {
 }
 
 resource instance 'Microsoft.DeviceUpdate/accounts/instances@2022-10-01' = {
-  parent: account
   name: resourceName
   location: location
+  parent: account
   properties: {
     accountName: account.name
     enableDiagnostics: false
     iotHubs: [
       {
-        resourceId: iothub.id
+        resourceId: iotHub.id
       }
     ]
   }

@@ -9,6 +9,10 @@ param oauthClientSecret string
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -24,24 +28,20 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource authorizationServer 'Microsoft.ApiManagement/service/authorizationServers@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     authorizationEndpoint: 'https://azacceptance.hashicorptest.com/client/authorize'
     authorizationMethods: [
       'GET'
     ]
     clientAuthenticationMethod: []
-    clientId: null
+    clientId: oauthClientId
     clientRegistrationEndpoint: 'https://azacceptance.hashicorptest.com/client/register'
-    clientSecret: null
+    clientSecret: oauthClientSecret
     defaultScope: ''
     description: ''
     displayName: 'Test Group'

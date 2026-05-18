@@ -6,13 +6,27 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
+  }
+}
+
+resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
+  name: resourceName
+  parent: factory
+  properties: {
+    description: ''
+    type: 'AzureBlobStorage'
+    typeProperties: {
+      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
+    }
   }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -41,14 +55,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource dataflow 'Microsoft.DataFactory/factories/dataflows@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     type: 'Flowlet'
@@ -87,18 +98,6 @@ source1 sink(
           name: 'source1'
         }
       ]
-    }
-  }
-}
-
-resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-  parent: factory
-  name: resourceName
-  properties: {
-    description: ''
-    type: 'AzureBlobStorage'
-    typeProperties: {
-      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
     }
   }
 }

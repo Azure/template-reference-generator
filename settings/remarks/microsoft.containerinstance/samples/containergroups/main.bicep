@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01' = {
   name: resourceName
@@ -45,5 +45,4 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
   tags: {
     environment: 'Testing'
   }
-  zones: []
 }

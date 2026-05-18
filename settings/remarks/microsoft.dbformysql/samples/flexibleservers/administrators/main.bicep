@@ -7,9 +7,13 @@ param administratorLoginPassword string
 resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
   name: '${resourceName}-mysql'
   location: location
+  sku: {
+    name: 'Standard_B1ms'
+    tier: 'Burstable'
+  }
   properties: {
     administratorLogin: 'tfadmin'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     backup: {
       backupRetentionDays: 7
       geoRedundantBackup: 'Disabled'
@@ -21,10 +25,6 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
       mode: 'Disabled'
     }
     version: '8.0.21'
-  }
-  sku: {
-    name: 'Standard_B1ms'
-    tier: 'Burstable'
   }
 }
 
@@ -39,13 +39,13 @@ resource userassignedidentity1 'Microsoft.ManagedIdentity/userAssignedIdentities
 }
 
 resource administrator 'Microsoft.DBforMySQL/flexibleServers/administrators@2023-12-30' = {
-  parent: flexibleServer
   name: 'ActiveDirectory'
+  parent: flexibleServer
   properties: {
     administratorType: 'ActiveDirectory'
     identityResourceId: userAssignedIdentity.id
     login: 'sqladmin'
     sid: deployer().objectId
-    tenantId: deployer().tenantId
+    tenantId: tenant().tenantId
   }
 }

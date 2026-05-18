@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Premium'
+    tier: 'Premium'
+  }
   properties: {
     adminUserEnabled: true
     anonymousPullEnabled: false
@@ -29,15 +33,11 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
     publicNetworkAccess: 'Enabled'
     zoneRedundancy: 'Disabled'
   }
-  sku: {
-    name: 'Premium'
-    tier: 'Premium'
-  }
 }
 
 resource token 'Microsoft.ContainerRegistry/registries/tokens@2021-08-01-preview' = {
-  parent: registry
   name: resourceName
+  parent: registry
   properties: {
     scopeMapId: resourceId('Microsoft.ContainerRegistry/registries/scopeMaps', registry.name, '_repositories_pull')
     status: 'enabled'

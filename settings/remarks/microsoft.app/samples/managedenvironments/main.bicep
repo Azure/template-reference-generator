@@ -1,21 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    appLogsConfiguration: {
-      destination: 'log-analytics'
-      logAnalyticsConfiguration: {
-        customerId: workspace.properties.customerId
-        sharedKey: workspace.listKeys().primarySharedKey
-      }
-    }
-    vnetConfiguration: {}
-  }
-}
-
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
@@ -33,5 +18,20 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     workspaceCapping: {
       dailyQuotaGb: -1
     }
+  }
+}
+
+resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    appLogsConfiguration: {
+      destination: 'log-analytics'
+      logAnalyticsConfiguration: {
+        customerId: workspace.properties.customerId
+        sharedKey: workspace.listKeys().primarySharedKey
+      }
+    }
+    vnetConfiguration: {}
   }
 }

@@ -4,28 +4,6 @@ param location string = 'eastus'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: '${resourceName}-nic'
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
 resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: '${resourceName}-uai'
   location: location
@@ -60,10 +38,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: adminPassword
       adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001-vm'
+      computerName: '${resourceName}-vm'
       linuxConfiguration: {
         disablePasswordAuthentication: false
         patchSettings: {
@@ -117,9 +95,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource runCommand 'Microsoft.Compute/virtualMachines/runCommands@2023-03-01' = {
-  parent: virtualMachine
   name: '${resourceName}-runcommand'
   location: location
+  parent: virtualMachine
   properties: {
     asyncExecution: false
     errorBlobUri: ''
@@ -137,8 +115,8 @@ resource runCommand 'Microsoft.Compute/virtualMachines/runCommands@2023-03-01' =
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     defaultOutboundAccess: true
@@ -147,5 +125,27 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: '${resourceName}-nic'
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

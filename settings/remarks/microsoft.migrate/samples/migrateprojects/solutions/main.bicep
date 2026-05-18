@@ -13,6 +13,9 @@ resource project 'Microsoft.Migrate/migrateProjects@2020-05-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -41,14 +44,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource solution 'Microsoft.Migrate/migrateProjects/solutions@2018-09-01-preview' = {
-  parent: project
   name: resourceName
+  parent: project
   properties: {
     summary: {
       instanceType: 'Servers'

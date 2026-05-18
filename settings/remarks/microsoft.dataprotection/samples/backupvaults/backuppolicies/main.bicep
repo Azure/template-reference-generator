@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   name: resourceName
@@ -15,8 +15,8 @@ resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
 }
 
 resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022-04-01' = {
-  parent: backupVault
   name: resourceName
+  parent: backupVault
   properties: {
     datasourceTypes: [
       'Microsoft.DBforPostgreSQL/servers/databases'

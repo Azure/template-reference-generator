@@ -1,39 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
-    }
-    idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Dynamic'
-  }
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
 resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
   name: resourceName
   location: location
@@ -65,8 +32,8 @@ resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07
 }
 
 resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' = {
-  parent: virtualNetworkGateway
   name: resourceName
+  parent: virtualNetworkGateway
   properties: {
     externalMappings: [
       {
@@ -83,9 +50,25 @@ resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' 
   }
 }
 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'GatewaySubnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.1.0/24'
     delegations: []
@@ -93,5 +76,22 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Regional'
+  }
+  properties: {
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
+    idleTimeoutInMinutes: 4
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Dynamic'
   }
 }

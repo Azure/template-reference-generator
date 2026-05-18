@@ -80,8 +80,8 @@ resource vpnSite 'Microsoft.Network/vpnSites@2022-07-01' = {
 }
 
 resource vpnConnection 'Microsoft.Network/vpnGateways/vpnConnections@2022-07-01' = {
-  parent: vpnGateway
   name: resourceName
+  parent: vpnGateway
   properties: {
     enableInternetSecurity: false
     remoteVpnSite: {
