@@ -305,8 +305,8 @@ resource symbolicname 'Microsoft.Compute/disks@2024-03-02' = {
 A basic example of deploying Managed Disk.
 
 ```bicep
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource disk 'Microsoft.Compute/disks@2022-03-02' = {
   name: resourceName
@@ -315,16 +315,16 @@ resource disk 'Microsoft.Compute/disks@2022-03-02' = {
     name: 'Standard_LRS'
   }
   properties: {
+    creationData: {
+      createOption: 'Empty'
+    }
+    diskSizeGB: 10
     encryption: {
       type: 'EncryptionAtRestWithPlatformKey'
     }
     networkAccessPolicy: 'AllowAll'
     osType: ''
     publicNetworkAccess: 'Enabled'
-    creationData: {
-      createOption: 'Empty'
-    }
-    diskSizeGB: 10
   }
 }
 ```
