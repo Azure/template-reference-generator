@@ -1,30 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
-  name: '${resourceName}-nsg'
-  location: location
-  properties: {
-    securityRules: []
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
-  name: '${resourceName}-vnet'
-  location: location
-  properties: {
-    subnets: []
-    addressSpace: {
-      addressPrefixes: [
-        '10.88.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-  }
-}
-
 resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
   name: '${resourceName}-acct'
   location: location
@@ -44,37 +20,11 @@ resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2025-01-01'
   }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  name: '${resourceName}-subnet'
-  parent: virtualNetwork
-  properties: {
-    privateEndpointNetworkPolicies: 'Disabled'
-    addressPrefix: '10.88.2.0/24'
-    defaultOutboundAccess: true
-    networkSecurityGroup: {
-      id: networkSecurityGroup.id
-    }
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-    delegations: [
-      {
-        name: 'netapp-delegation'
-        properties: {
-          serviceName: 'Microsoft.NetApp/volumes'
-        }
-      }
-    ]
-  }
-}
-
 resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-01' = {
   name: '${resourceName}-vol'
   location: location
   parent: capacityPool
   properties: {
-    subnetId: subnet.id
-    usageThreshold: any('1.073741824e+11')
     creationToken: '${resourceName}-path'
     dataProtection: {}
     exportPolicy: {
@@ -84,6 +34,8 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2025-01-0
       'NFSv3'
     ]
     serviceLevel: 'Standard'
+    subnetId: subnet.id
+    usageThreshold: any('1.073741824e+11')
   }
 }
 
@@ -94,5 +46,53 @@ resource volumeQuotaRule 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/
   properties: {
     quotaSizeInKiBs: 2048
     quotaType: 'DefaultGroupQuota'
+  }
+}
+
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
+  name: '${resourceName}-nsg'
+  location: location
+  properties: {
+    securityRules: []
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
+  name: '${resourceName}-vnet'
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.88.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
+  name: '${resourceName}-subnet'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.88.2.0/24'
+    defaultOutboundAccess: true
+    delegations: [
+      {
+        name: 'netapp-delegation'
+        properties: {
+          serviceName: 'Microsoft.NetApp/volumes'
+        }
+      }
+    ]
+    networkSecurityGroup: {
+      id: networkSecurityGroup.id
+    }
+    privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

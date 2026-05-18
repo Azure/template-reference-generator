@@ -14,6 +14,12 @@ resource snapshotPolicy 'Microsoft.NetApp/netAppAccounts/snapshotPolicies@2022-0
   location: location
   parent: netAppAccount
   properties: {
+    dailySchedule: {
+      hour: 22
+      minute: 15
+      snapshotsToKeep: 1
+    }
+    enabled: true
     hourlySchedule: {
       minute: 15
       snapshotsToKeep: 1
@@ -25,16 +31,10 @@ resource snapshotPolicy 'Microsoft.NetApp/netAppAccounts/snapshotPolicies@2022-0
       snapshotsToKeep: 1
     }
     weeklySchedule: {
+      day: 'Monday,Friday'
       hour: 23
       minute: 0
       snapshotsToKeep: 1
-      day: 'Monday,Friday'
     }
-    dailySchedule: {
-      hour: 22
-      minute: 15
-      snapshotsToKeep: 1
-    }
-    enabled: true
   }
 }

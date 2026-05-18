@@ -1,8 +1,8 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @secure()
 @description('The administrator password for the PostgreSQL flexible server')
 param postgresqlAdministratorPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: resourceName
@@ -12,20 +12,20 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
     tier: 'GeneralPurpose'
   }
   properties: {
+    administratorLogin: 'adminTerraform'
+    administratorLoginPassword: postgresqlAdministratorPassword
+    availabilityZone: '2'
     backup: {
       geoRedundantBackup: 'Disabled'
     }
-    network: {}
-    version: '12'
-    administratorLoginPassword: '${postgresqlAdministratorPassword}'
     highAvailability: {
       mode: 'Disabled'
     }
+    network: {}
     storage: {
       storageSizeGB: 32
     }
-    administratorLogin: 'adminTerraform'
-    availabilityZone: '2'
+    version: '12'
   }
 }
 

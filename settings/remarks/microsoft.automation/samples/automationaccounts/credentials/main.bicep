@@ -23,7 +23,7 @@ resource credential 'Microsoft.Automation/automationAccounts/credentials@2020-01
   parent: automationAccount
   properties: {
     description: ''
-    password: '${automationCredentialPassword}'
+    password: automationCredentialPassword
     userName: 'test_user'
   }
 }

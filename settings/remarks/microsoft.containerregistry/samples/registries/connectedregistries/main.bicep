@@ -1,5 +1,5 @@
-param location string = 'westus'
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
   name: '${resourceName}registry'
@@ -8,8 +8,6 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
     name: 'Premium'
   }
   properties: {
-    publicNetworkAccess: 'Enabled'
-    zoneRedundancy: 'Disabled'
     adminUserEnabled: false
     anonymousPullEnabled: false
     dataEndpointEnabled: true
@@ -24,6 +22,8 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
       retentionPolicy: {}
       trustPolicy: {}
     }
+    publicNetworkAccess: 'Enabled'
+    zoneRedundancy: 'Disabled'
   }
 }
 
@@ -31,7 +31,6 @@ resource connectedRegistry 'Microsoft.ContainerRegistry/registries/connectedRegi
   name: '${resourceName}connectedregistry'
   parent: registry
   properties: {
-    clientTokenIds: null
     logging: {
       auditLogStatus: 'Disabled'
       logLevel: 'None'
@@ -39,9 +38,10 @@ resource connectedRegistry 'Microsoft.ContainerRegistry/registries/connectedRegi
     mode: 'ReadWrite'
     parent: {
       syncProperties: {
-        syncWindow: ''
         messageTtl: 'P1D'
         schedule: '* * * * *'
+        syncWindow: ''
+        tokenId: token.id
       }
     }
   }

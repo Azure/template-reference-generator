@@ -1,27 +1,15 @@
-param resourceName string = 'acctest0001'
 param location string = 'eastus'
+param resourceName string = 'acctest0001'
 
-var keyspaceName = 'resourcenameks'
-var tableName = 'resourcenametbl'
-var accountName = 'resourcename'
+var accountName = toLower(replace(resourceName, '-', ''))
+var keyspaceName = '${toLower(resourceName)}ks'
+var tableName = '${toLower(resourceName)}tbl'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   name: accountName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    backupPolicy: null
-    enableAutomaticFailover: false
-    enableBurstCapacity: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: '${location}'
-      }
-    ]
-    minimalTlsVersion: 'Tls12'
-    virtualNetworkRules: []
     capabilities: [
       {
         name: 'EnableCassandra'
@@ -33,18 +21,29 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
       maxStalenessPrefix: 100
     }
     databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
     disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
-    enableFreeTier: false
-    enablePartitionMerge: false
-    networkAclBypassResourceIds: []
     enableAnalyticalStorage: true
-    isVirtualNetworkFilterEnabled: false
-    networkAclBypass: 'None'
-    publicNetworkAccess: 'Enabled'
-    defaultIdentity: 'FirstPartyIdentity'
+    enableAutomaticFailover: false
+    enableBurstCapacity: false
+    enableFreeTier: false
     enableMultipleWriteLocations: false
+    enablePartitionMerge: false
     ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: location
+      }
+    ]
+    minimalTlsVersion: 'Tls12'
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
   }
 }
 
@@ -54,7 +53,7 @@ resource cassandraKeyspace 'Microsoft.DocumentDB/databaseAccounts/cassandraKeysp
   properties: {
     options: {}
     resource: {
-      id: '${keyspaceName}'
+      id: keyspaceName
     }
   }
 }
@@ -66,7 +65,7 @@ resource table 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables@
     options: {}
     resource: {
       analyticalStorageTtl: 1
-      id: '${tableName}'
+      id: tableName
       schema: {
         clusterKeys: []
         columns: [

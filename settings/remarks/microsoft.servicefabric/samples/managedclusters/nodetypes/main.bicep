@@ -13,14 +13,26 @@ resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
     name: 'Standard'
   }
   properties: {
-    dnsName: '${resourceName}'
+    addonFeatures: [
+      'DnsService'
+    ]
+    adminPassword: adminPassword
+    adminUserName: adminUsername
+    clientConnectionPort: 12345
+    clusterUpgradeCadence: 'Wave0'
+    dnsName: resourceName
     httpGatewayConnectionPort: 23456
+    loadBalancingRules: [
+      {
+        backendPort: 8000
+        frontendPort: 443
+        probeProtocol: 'http'
+        probeRequestPath: '/'
+        protocol: 'tcp'
+      }
+    ]
     networkSecurityRules: [
       {
-        protocol: 'tcp'
-        sourcePortRanges: [
-          '1-65535'
-        ]
         access: 'allow'
         destinationAddressPrefixes: [
           '0.0.0.0/0'
@@ -29,29 +41,17 @@ resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
           '443'
         ]
         direction: 'inbound'
+        name: 'rule443-allow-fe'
+        priority: 1000
+        protocol: 'tcp'
         sourceAddressPrefixes: [
           '0.0.0.0/0'
         ]
-        name: 'rule443-allow-fe'
-        priority: 1000
+        sourcePortRanges: [
+          '1-65535'
+        ]
       }
     ]
-    addonFeatures: [
-      'DnsService'
-    ]
-    adminPassword: '${adminPassword}'
-    clientConnectionPort: 12345
-    clusterUpgradeCadence: 'Wave0'
-    loadBalancingRules: [
-      {
-        probeProtocol: 'http'
-        probeRequestPath: '/'
-        protocol: 'tcp'
-        backendPort: 8000
-        frontendPort: 443
-      }
-    ]
-    adminUserName: '${adminUsername}'
   }
   tags: {
     Test: 'value'
@@ -62,27 +62,27 @@ resource nodeType 'Microsoft.ServiceFabric/managedClusters/nodeTypes@2021-05-01'
   name: resourceName
   parent: managedCluster
   properties: {
-    isPrimary: true
-    vmImageVersion: 'latest'
-    capacities: {}
-    isStateless: false
-    vmImageOffer: 'WindowsServer'
-    vmImagePublisher: 'MicrosoftWindowsServer'
-    vmSecrets: []
     applicationPorts: {
       endPort: 9000
       startPort: 7000
     }
+    capacities: {}
     dataDiskSizeGB: 130
-    multiplePlacementGroups: false
-    vmSize: 'Standard_DS2_v2'
-    vmInstanceCount: 5
     dataDiskType: 'Standard_LRS'
     ephemeralPorts: {
       endPort: 20000
       startPort: 10000
     }
+    isPrimary: true
+    isStateless: false
+    multiplePlacementGroups: false
     placementProperties: {}
+    vmImageOffer: 'WindowsServer'
+    vmImagePublisher: 'MicrosoftWindowsServer'
     vmImageSku: '2016-Datacenter'
+    vmImageVersion: 'latest'
+    vmInstanceCount: 5
+    vmSecrets: []
+    vmSize: 'Standard_DS2_v2'
   }
 }

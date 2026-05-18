@@ -8,7 +8,7 @@ resource configurationStore 'Microsoft.AppConfiguration/configurationStores@2023
     name: 'standard'
   }
   properties: {
-    enablePurgeProtection: false
     disableLocalAuth: false
+    enablePurgeProtection: false
   }
 }

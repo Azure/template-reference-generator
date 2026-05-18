@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource emailService 'Microsoft.Communication/emailServices@2023-04-01-preview' = {
   name: resourceName

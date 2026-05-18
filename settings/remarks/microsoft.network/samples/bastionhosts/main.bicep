@@ -1,35 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '192.168.1.0/24'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: 'AzureBastionSubnet'
-  parent: virtualNetwork
-  properties: {
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-    addressPrefix: '192.168.1.224/27'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-  }
-}
-
 resource bastionHost 'Microsoft.Network/bastionHosts@2022-07-01' = {
   name: resourceName
   location: location
@@ -46,8 +17,12 @@ resource bastionHost 'Microsoft.Network/bastionHosts@2022-07-01' = {
       {
         name: 'ip-configuration'
         properties: {
-          publicIPAddress: {}
-          subnet: {}
+          publicIPAddress: {
+            id: publicIPAddress.id
+          }
+          subnet: {
+            id: subnet.id
+          }
         }
       }
     ]
@@ -69,5 +44,34 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '192.168.1.0/24'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'AzureBastionSubnet'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '192.168.1.224/27'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

@@ -18,8 +18,8 @@ resource partner 'Microsoft.Logic/integrationAccounts/partners@2019-05-01' = {
       b2b: {
         businessIdentities: [
           {
-            value: 'FabrikamNY'
             qualifier: 'AS2Identity'
+            value: 'FabrikamNY'
           }
         ]
       }

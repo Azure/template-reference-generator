@@ -1,11 +1,12 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource project 'Microsoft.Migrate/migrateProjects@2020-05-01' = {
   name: resourceName
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
+    utilityStorageAccountId: storageAccount.id
   }
 }
 
@@ -17,6 +18,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -28,9 +34,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
-    publicNetworkAccess: 'Enabled'
-    allowBlobPublicAccess: true
-    defaultToOAuthAuthentication: false
     isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
@@ -38,9 +41,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     networkAcls: {
       defaultAction: 'Allow'
     }
+    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
   }
 }

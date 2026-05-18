@@ -4,26 +4,6 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param vmAdminPassword string
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-        }
-      }
-    ]
-  }
-}
-
 resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   name: resourceName
   location: location
@@ -45,28 +25,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    osProfile: {
-      linuxConfiguration: {
-        disablePasswordAuthentication: false
-      }
-      adminPassword: vmAdminPassword
-      adminUsername: 'testadmin'
-      computerName: 'hostname230630032848831819'
-    }
-    storageProfile: {
-      osDisk: {
-        name: 'myosdisk1'
-        writeAcceleratorEnabled: false
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-      }
-      imageReference: {
-        publisher: 'Canonical'
-        sku: '16.04-LTS'
-        version: 'latest'
-        offer: 'UbuntuServer'
-      }
-    }
     hardwareProfile: {
       vmSize: 'Standard_F2'
     }
@@ -80,6 +38,28 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         }
       ]
     }
+    osProfile: {
+      adminPassword: vmAdminPassword
+      adminUsername: 'testadmin'
+      computerName: 'hostname230630032848831819'
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+      }
+    }
+    storageProfile: {
+      imageReference: {
+        offer: 'UbuntuServer'
+        publisher: 'Canonical'
+        sku: '16.04-LTS'
+        version: 'latest'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        name: 'myosdisk1'
+        writeAcceleratorEnabled: false
+      }
+    }
   }
 }
 
@@ -87,15 +67,15 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
       ]
     }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
   }
 }
 
@@ -103,12 +83,12 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
   }
 }
 
@@ -125,7 +105,6 @@ resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierW
   name: resourceName
   parent: verifierWorkspace
   properties: {
-    sourceResourceId: virtualMachine.id
     description: 'A sample reachability analysis intent'
     destinationResourceId: virtualMachine.id
     ipTraffic: {
@@ -145,5 +124,28 @@ resource reachabilityAnalysisIntent 'Microsoft.Network/networkManagers/verifierW
         '0'
       ]
     }
+    sourceResourceId: virtualMachine.id
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration1'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

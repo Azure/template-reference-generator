@@ -12,6 +12,11 @@
       "ResourceType": "Microsoft.AADIAM/diagnosticSettings",
       "Path": "samples/diagnosticsettings/main.bicep",
       "Description": "A basic example of deploying Azure Active Directory Diagnostic Setting for Azure Monitor."
+    },
+    {
+      "ResourceType": "Microsoft.AADIAM/diagnosticSettings",
+      "Path": "samples/diagnosticsettings/main-rg-module.bicep",
+      "Description": "A basic example of deploying Azure Active Directory Diagnostic Setting for Azure Monitor."
     }
   ]
 }

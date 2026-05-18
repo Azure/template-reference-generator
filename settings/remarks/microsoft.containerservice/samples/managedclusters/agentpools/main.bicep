@@ -13,7 +13,7 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-p
         vmSize: 'Standard_DS2_v2'
       }
     ]
-    dnsPrefix: '${resourceName}'
+    dnsPrefix: resourceName
   }
 }
 

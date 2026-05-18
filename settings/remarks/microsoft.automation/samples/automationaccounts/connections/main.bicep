@@ -26,11 +26,11 @@ resource connection 'Microsoft.Automation/automationAccounts/connections@2020-01
     }
     description: ''
     fieldDefinitionValues: {
+      ApplicationId: servicePrincipalApplicationId
       CertificateThumbprint: '''AEB97B81A68E8988850972916A8B8B6CD8F39813
 '''
       SubscriptionId: subscription().subscriptionId
       TenantId: tenant().tenantId
-      ApplicationId: servicePrincipalApplicationId
     }
   }
 }

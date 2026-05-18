@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2025-01-01' = {
   name: resourceName

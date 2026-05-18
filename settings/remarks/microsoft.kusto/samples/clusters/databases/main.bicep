@@ -13,13 +13,13 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     enableAutoStop: true
     enableDiskEncryption: false
     enableDoubleEncryption: false
-    engineType: 'V2'
-    publicNetworkAccess: 'Enabled'
-    trustedExternalTenants: []
     enablePurge: false
     enableStreamingIngest: false
+    engineType: 'V2'
     publicIPType: 'IPv4'
+    publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
+    trustedExternalTenants: []
   }
 }
 

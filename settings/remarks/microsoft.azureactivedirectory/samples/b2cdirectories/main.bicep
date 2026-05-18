@@ -17,7 +17,7 @@ resource b2cDirectory 'Microsoft.AzureActiveDirectory/b2cDirectories@2021-04-01-
   properties: {
     createTenantProperties: {
       countryCode: 'US'
-      displayName: '${resourceName}'
+      displayName: resourceName
     }
   }
 }

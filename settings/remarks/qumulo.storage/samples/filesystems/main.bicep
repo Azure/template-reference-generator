@@ -10,10 +10,11 @@ resource qumuloFileSystem 'Qumulo.Storage/fileSystems@2024-06-19' = {
   properties: {
     adminPassword: qumuloPassword
     availabilityZone: '1'
+    delegatedSubnetId: subnet.id
     marketplaceDetails: {
-      publisherId: 'qumulo1584033880660'
       offerId: 'qumulo-saas-mpp'
       planId: 'azure-native-qumulo-v3'
+      publisherId: 'qumulo1584033880660'
     }
     storageSku: 'Cold_LRS'
     userDetails: {
@@ -41,6 +42,8 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   location: location
   parent: vnet
   properties: {
+    addressPrefix: '10.0.1.0/24'
+    defaultOutboundAccess: true
     delegations: [
       {
         name: 'delegation'
@@ -54,7 +57,5 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
     ]
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
-    addressPrefix: '10.0.1.0/24'
-    defaultOutboundAccess: true
   }
 }

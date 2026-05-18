@@ -10,13 +10,13 @@ resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08
       ttl: 30
     }
     monitorConfig: {
-      protocol: 'HTTPS'
-      timeoutInSeconds: 10
-      toleratedNumberOfFailures: 3
       expectedStatusCodeRanges: []
       intervalInSeconds: 30
       path: '/'
       port: 443
+      protocol: 'HTTPS'
+      timeoutInSeconds: 10
+      toleratedNumberOfFailures: 3
     }
     trafficRoutingMethod: 'Weighted'
   }
@@ -31,13 +31,13 @@ resource trafficManagerProfile2 'Microsoft.Network/trafficManagerProfiles@2018-0
       ttl: 30
     }
     monitorConfig: {
-      protocol: 'HTTPS'
-      timeoutInSeconds: 10
-      toleratedNumberOfFailures: 3
       expectedStatusCodeRanges: []
       intervalInSeconds: 30
       path: '/'
       port: 443
+      protocol: 'HTTPS'
+      timeoutInSeconds: 10
+      toleratedNumberOfFailures: 3
     }
     trafficRoutingMethod: 'Priority'
   }
@@ -47,11 +47,11 @@ resource nestedEndpoint 'Microsoft.Network/trafficManagerProfiles/NestedEndpoint
   name: resourceName
   parent: trafficManagerProfile
   properties: {
+    customHeaders: []
     endpointStatus: 'Enabled'
     minChildEndpoints: 5
     subnets: []
     targetResourceId: trafficManagerProfile2.id
     weight: 3
-    customHeaders: []
   }
 }

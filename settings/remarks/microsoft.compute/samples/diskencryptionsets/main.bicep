@@ -37,7 +37,9 @@ resource diskEncryptionSet 'Microsoft.Compute/diskEncryptionSets@2022-03-02' = {
   location: location
   properties: {
     activeKey: {
-      sourceVault: {}
+      sourceVault: {
+        id: vault.id
+      }
     }
     encryptionType: 'EncryptionAtRestWithCustomerKey'
     rotationToLatestKeyVersionEnabled: false

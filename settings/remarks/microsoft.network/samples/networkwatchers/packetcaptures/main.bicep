@@ -44,13 +44,13 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   name: 'internal'
   parent: virtualNetwork
   properties: {
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     defaultOutboundAccess: true
     delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }
 
@@ -58,6 +58,7 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
   name: '${resourceName}-nic'
   location: location
   properties: {
+    enableAcceleratedNetworking: false
     enableIPForwarding: false
     ipConfigurations: [
       {
@@ -66,11 +67,12 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
+          subnet: {
+            id: subnet.id
+          }
         }
       }
     ]
-    enableAcceleratedNetworking: false
   }
 }
 
@@ -101,10 +103,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        sku: '22_04-lts'
-        version: 'latest'
         offer: '0001-com-ubuntu-server-jammy'
         publisher: 'Canonical'
+        sku: '22_04-lts'
+        version: 'latest'
       }
       osDisk: {
         caching: 'ReadWrite'

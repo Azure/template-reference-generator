@@ -8,9 +8,9 @@ resource expressRoutePort 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    bandwidthInGbps: 10
     encapsulation: 'Dot1Q'
     peeringLocation: 'CDC-Canberra'
-    bandwidthInGbps: 10
   }
 }
 
@@ -35,14 +35,14 @@ resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = 
   name: 'AzurePrivatePeering'
   parent: expressRouteCircuit
   properties: {
-    secondaryPeerAddressPrefix: '192.168.2.0/30'
-    sharedKey: '${expressRouteSharedKey}'
-    state: 'Enabled'
     azureASN: 12076
     gatewayManagerEtag: ''
     peerASN: 100
-    primaryPeerAddressPrefix: '192.168.1.0/30'
-    vlanId: 100
     peeringType: 'AzurePrivatePeering'
+    primaryPeerAddressPrefix: '192.168.1.0/30'
+    secondaryPeerAddressPrefix: '192.168.2.0/30'
+    sharedKey: expressRouteSharedKey
+    state: 'Enabled'
+    vlanId: 100
   }
 }

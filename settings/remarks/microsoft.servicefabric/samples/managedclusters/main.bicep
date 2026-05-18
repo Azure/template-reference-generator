@@ -1,10 +1,10 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator username for the Service Fabric managed cluster')
 param adminUsername string
 @secure()
 @description('The administrator password for the Service Fabric managed cluster')
 param adminPassword string
+param resourceName string = 'acctest0001'
 
 resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
   name: resourceName
@@ -13,34 +13,14 @@ resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
     name: 'Standard'
   }
   properties: {
-    networkSecurityRules: [
-      {
-        access: 'allow'
-        destinationAddressPrefixes: [
-          '0.0.0.0/0'
-        ]
-        destinationPortRanges: [
-          '443'
-        ]
-        name: 'rule443-allow-fe'
-        priority: 1000
-        protocol: 'tcp'
-        direction: 'inbound'
-        sourceAddressPrefixes: [
-          '0.0.0.0/0'
-        ]
-        sourcePortRanges: [
-          '1-65535'
-        ]
-      }
-    ]
     addonFeatures: [
       'DnsService'
     ]
-    adminUserName: '${adminUsername}'
+    adminPassword: adminPassword
+    adminUserName: adminUsername
     clientConnectionPort: 12345
     clusterUpgradeCadence: 'Wave0'
-    dnsName: '${resourceName}'
+    dnsName: resourceName
     httpGatewayConnectionPort: 23456
     loadBalancingRules: [
       {
@@ -51,7 +31,27 @@ resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
         protocol: 'tcp'
       }
     ]
-    adminPassword: '${adminPassword}'
+    networkSecurityRules: [
+      {
+        access: 'allow'
+        destinationAddressPrefixes: [
+          '0.0.0.0/0'
+        ]
+        destinationPortRanges: [
+          '443'
+        ]
+        direction: 'inbound'
+        name: 'rule443-allow-fe'
+        priority: 1000
+        protocol: 'tcp'
+        sourceAddressPrefixes: [
+          '0.0.0.0/0'
+        ]
+        sourcePortRanges: [
+          '1-65535'
+        ]
+      }
+    ]
   }
   tags: {
     Test: 'value'

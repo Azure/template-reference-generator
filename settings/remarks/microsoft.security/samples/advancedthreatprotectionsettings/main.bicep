@@ -9,31 +9,31 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        table: {
+        queue: {
           keyType: 'Service'
         }
-        queue: {
+        table: {
           keyType: 'Service'
         }
       }
     }
+    isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
-    defaultToOAuthAuthentication: false
-    isHnsEnabled: false
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
   }
   tags: {
     environment: 'production'

@@ -1,5 +1,41 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
+
+resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
+  name: resourceName
+  location: 'global'
+  sku: {
+    name: 'Premium_AzureFrontDoor'
+  }
+  properties: {
+    originResponseTimeoutSeconds: 120
+  }
+}
+
+resource securityPolicy 'Microsoft.Cdn/profiles/securityPolicies@2021-06-01' = {
+  name: resourceName
+  parent: profile
+  properties: {
+    parameters: {
+      associations: [
+        {
+          domains: [
+            {
+              id: customDomain.id
+            }
+          ]
+          patternsToMatch: [
+            '/*'
+          ]
+        }
+      ]
+      type: 'WebApplicationFirewall'
+      wafPolicy: {
+        id: frontDoorWebApplicationFirewallPolicy.id
+      }
+    }
+  }
+}
 
 resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@2020-11-01' = {
   name: resourceName
@@ -24,10 +60,10 @@ resource frontDoorWebApplicationFirewallPolicy 'Microsoft.Network/FrontDoorWebAp
               operator: 'IPMatch'
             }
           ]
-          priority: 1
-          rateLimitThreshold: 10
           name: 'Rule1'
+          priority: 1
           rateLimitDurationInMinutes: 1
+          rateLimitThreshold: 10
           ruleType: 'MatchRule'
         }
       ]
@@ -73,17 +109,6 @@ resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
   location: 'global'
 }
 
-resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
-  name: resourceName
-  location: 'global'
-  sku: {
-    name: 'Premium_AzureFrontDoor'
-  }
-  properties: {
-    originResponseTimeoutSeconds: 120
-  }
-}
-
 resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
   name: resourceName
   parent: profile
@@ -95,31 +120,6 @@ resource customDomain 'Microsoft.Cdn/profiles/customDomains@2021-06-01' = {
     tlsSettings: {
       certificateType: 'ManagedCertificate'
       minimumTlsVersion: 'TLS12'
-    }
-  }
-}
-
-resource securityPolicy 'Microsoft.Cdn/profiles/securityPolicies@2021-06-01' = {
-  name: resourceName
-  parent: profile
-  properties: {
-    parameters: {
-      associations: [
-        {
-          domains: [
-            {
-              id: customDomain.id
-            }
-          ]
-          patternsToMatch: [
-            '/*'
-          ]
-        }
-      ]
-      type: 'WebApplicationFirewall'
-      wafPolicy: {
-        id: frontDoorWebApplicationFirewallPolicy.id
-      }
     }
   }
 }

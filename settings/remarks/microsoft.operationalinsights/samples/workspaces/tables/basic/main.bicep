@@ -4,12 +4,12 @@ param location string = 'westeurope'
 var sentinelTiAlertsTableName = 'SentinelTIAlerts_CL'
 var sentinelTiAlertsColumns = [
   {
-    type: 'int'
     name: 'ConfidenceScore'
+    type: 'int'
   }
   {
-    name: 'ExternalIndicatorId'
     type: 'string'
+    name: 'ExternalIndicatorId'
   }
   {
     name: 'IndicatorType'
@@ -20,8 +20,8 @@ var sentinelTiAlertsColumns = [
     type: 'string'
   }
   {
-    type: 'datetime'
     name: 'TimeGenerated'
+    type: 'datetime'
   }
   {
     name: 'MatchType'
@@ -41,6 +41,11 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
     sku: {
@@ -49,11 +54,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     workspaceCapping: {
       dailyQuotaGb: -1
     }
-    features: {
-      disableLocalAuth: false
-      enableLogAccessUsingOnlyResourcePermissions: true
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
   }
 }
 
@@ -63,8 +63,8 @@ resource table 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
   properties: {
     retentionInDays: 30
     schema: {
-      columns: '${sentinelTiAlertsColumns}'
-      name: '${sentinelTiAlertsTableName}'
+      columns: sentinelTiAlertsColumns
+      name: sentinelTiAlertsTableName
     }
     totalRetentionInDays: 30
   }

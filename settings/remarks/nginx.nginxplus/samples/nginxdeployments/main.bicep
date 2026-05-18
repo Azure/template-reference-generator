@@ -1,65 +1,6 @@
 param location string = 'westus'
 param resourceName string = 'acctest0001'
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
-  name: '${resourceName}-vnet'
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    privateEndpointVNetPolicies: 'Disabled'
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  name: '${resourceName}-subnet'
-  parent: virtualNetwork
-  properties: {
-    defaultOutboundAccess: true
-    delegations: [
-      {
-        name: 'delegation'
-        properties: {
-          serviceName: 'NGINX.NGINXPLUS/nginxDeployments'
-        }
-      }
-    ]
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-    addressPrefix: '10.0.2.0/24'
-  }
-}
-
-resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  name: '${resourceName}-subnet2'
-  parent: virtualNetwork
-  properties: {
-    serviceEndpoints: []
-    addressPrefix: '10.0.3.0/24'
-    defaultOutboundAccess: true
-    delegations: [
-      {
-        name: 'delegation'
-        properties: {
-          serviceName: 'NGINX.NGINXPLUS/nginxDeployments'
-        }
-      }
-    ]
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-  }
-}
-
 resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' = {
   name: '${resourceName}-nginx'
   location: location
@@ -72,11 +13,15 @@ resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' =
     }
     enableDiagnosticsSupport: false
     networkProfile: {
-      networkInterfaceConfiguration: {}
       frontEndIPConfiguration: {
         publicIPAddresses: [
-          {}
+          {
+            id: publicIPAddress.id
+          }
         ]
+      }
+      networkInterfaceConfiguration: {
+        subnetId: subnet.id
       }
     }
     scalingProperties: {
@@ -123,11 +68,70 @@ resource publicipaddress1 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
     tier: 'Regional'
   }
   properties: {
-    idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Static'
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
     }
+    idleTimeoutInMinutes: 4
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Static'
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
+  name: '${resourceName}-vnet'
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    privateEndpointVNetPolicies: 'Disabled'
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
+  name: '${resourceName}-subnet'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.2.0/24'
+    defaultOutboundAccess: true
+    delegations: [
+      {
+        name: 'delegation'
+        properties: {
+          serviceName: 'NGINX.NGINXPLUS/nginxDeployments'
+        }
+      }
+    ]
+    privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
+resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
+  name: '${resourceName}-subnet2'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.3.0/24'
+    defaultOutboundAccess: true
+    delegations: [
+      {
+        name: 'delegation'
+        properties: {
+          serviceName: 'NGINX.NGINXPLUS/nginxDeployments'
+        }
+      }
+    ]
+    privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

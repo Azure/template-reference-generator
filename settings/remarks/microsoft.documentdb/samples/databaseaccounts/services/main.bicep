@@ -1,38 +1,38 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    isVirtualNetworkFilterEnabled: false
-    networkAclBypassResourceIds: []
     capabilities: []
     consistencyPolicy: {
       defaultConsistencyLevel: 'BoundedStaleness'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    publicNetworkAccess: 'Enabled'
     databaseAccountOfferType: 'Standard'
-    enableAnalyticalStorage: false
-    enableMultipleWriteLocations: false
-    ipRules: []
-    virtualNetworkRules: []
     defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
     enableAutomaticFailover: false
     enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
     locations: [
       {
-        locationName: 'West Europe'
         failoverPriority: 0
         isZoneRedundant: false
+        locationName: 'West Europe'
       }
     ]
     networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
   }
 }
 

@@ -19,9 +19,10 @@ resource logProfile 'Microsoft.Insights/logProfiles@2016-03-01' = {
       'westeurope'
     ]
     retentionPolicy: {
-      enabled: true
       days: 7
+      enabled: true
     }
+    storageAccountId: module1.outputs.storageAccountId
   }
 }
 

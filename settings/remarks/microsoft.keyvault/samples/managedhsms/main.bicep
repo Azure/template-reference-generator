@@ -9,14 +9,14 @@ resource managedHSM 'Microsoft.KeyVault/managedHSMs@2021-10-01' = {
     name: 'Standard_B1'
   }
   properties: {
-    publicNetworkAccess: 'Enabled'
-    softDeleteRetentionInDays: 90
-    tenantId: tenant().tenantId
     createMode: 'default'
     enablePurgeProtection: false
     enableSoftDelete: true
     initialAdminObjectIds: [
       deployer().objectId
     ]
+    publicNetworkAccess: 'Enabled'
+    softDeleteRetentionInDays: 90
+    tenantId: tenant().tenantId
   }
 }

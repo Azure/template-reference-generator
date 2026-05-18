@@ -8,56 +8,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
   properties: {
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: true
-          }
-        }
-      ]
-    }
-    osProfile: {
-      computerName: resourceName
-      linuxConfiguration: {
-        ssh: {
-          publicKeys: []
-        }
-        disablePasswordAuthentication: false
-        patchSettings: {
-          assessmentMode: 'ImageDefault'
-          patchMode: 'ImageDefault'
-        }
-        provisionVMAgent: true
-      }
-      secrets: []
-      adminPassword: adminPassword
-      adminUsername: 'adminuser'
-      allowExtensionOperations: true
-    }
-    storageProfile: {
-      dataDisks: []
-      imageReference: {
-        sku: '16.04-LTS'
-        version: 'latest'
-        offer: 'UbuntuServer'
-        publisher: 'Canonical'
-      }
-      osDisk: {
-        managedDisk: {
-          storageAccountType: 'Standard_LRS'
-        }
-        osType: 'Linux'
-        writeAcceleratorEnabled: false
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-      }
-    }
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
-    priority: 'Regular'
     additionalCapabilities: {}
     applicationProfile: {
       galleryApplications: []
@@ -69,6 +19,56 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       }
     }
     extensionsTimeBudget: 'PT1H30M'
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+          properties: {
+            primary: true
+          }
+        }
+      ]
+    }
+    osProfile: {
+      adminPassword: adminPassword
+      adminUsername: 'adminuser'
+      allowExtensionOperations: true
+      computerName: resourceName
+      linuxConfiguration: {
+        disablePasswordAuthentication: false
+        patchSettings: {
+          assessmentMode: 'ImageDefault'
+          patchMode: 'ImageDefault'
+        }
+        provisionVMAgent: true
+        ssh: {
+          publicKeys: []
+        }
+      }
+      secrets: []
+    }
+    priority: 'Regular'
+    storageProfile: {
+      dataDisks: []
+      imageReference: {
+        offer: 'UbuntuServer'
+        publisher: 'Canonical'
+        sku: '16.04-LTS'
+        version: 'latest'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+        osType: 'Linux'
+        writeAcceleratorEnabled: false
+      }
+    }
   }
 }
 
@@ -104,7 +104,10 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
 resource configurationAssignment 'Microsoft.Maintenance/configurationAssignments@2022-07-01-preview' = {
   name: resourceName
   scope: virtualMachine
-  properties: {}
+  properties: {
+    maintenanceConfigurationId: maintenanceConfiguration.id
+    resourceId: virtualMachine.id
+  }
 }
 
 resource maintenanceConfiguration 'Microsoft.Maintenance/maintenanceConfigurations@2022-07-01-preview' = {
@@ -131,7 +134,9 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
+          subnet: {
+            id: subnet.id
+          }
         }
       }
     ]

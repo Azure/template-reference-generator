@@ -9,14 +9,13 @@ resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
   }
   kind: 'OpenAI'
   properties: {
+    disableLocalAuth: false
     dynamicThrottlingEnabled: false
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
-    disableLocalAuth: false
   }
   identity: {
     type: 'None'
-    userAssignedIdentities: null
   }
 }
 
@@ -25,8 +24,8 @@ resource deployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01
   parent: account
   properties: {
     model: {
-      name: 'text-embedding-ada-002'
       format: 'OpenAI'
+      name: 'text-embedding-ada-002'
     }
   }
 }

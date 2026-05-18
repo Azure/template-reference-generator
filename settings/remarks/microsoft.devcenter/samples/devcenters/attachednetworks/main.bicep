@@ -18,7 +18,6 @@ resource devCenter 'Microsoft.DevCenter/devcenters@2023-04-01' = {
   location: location
   identity: {
     type: 'SystemAssigned'
-    userAssignedIdentities: null
   }
 }
 
@@ -42,5 +41,6 @@ resource networkConnection 'Microsoft.DevCenter/networkConnections@2023-04-01' =
   name: resourceName
   properties: {
     domainJoinType: 'AzureADJoin'
+    subnetId: subnet.id
   }
 }

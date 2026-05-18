@@ -18,10 +18,10 @@ resource defaultDatabase 'Microsoft.Cache/redisEnterprise/databases@2025-04-01' 
   name: 'default'
   parent: redisEnterprise
   properties: {
-    port: 10000
     clientProtocol: 'Encrypted'
     clusteringPolicy: 'OSSCluster'
     evictionPolicy: 'VolatileLRU'
     modules: []
+    port: 10000
   }
 }

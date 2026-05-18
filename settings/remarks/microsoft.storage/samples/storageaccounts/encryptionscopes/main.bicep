@@ -12,9 +12,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: false
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
-    minimumTlsVersion: 'TLS1_2'
-    supportsHttpsTrafficOnly: true
+    dnsEndpointType: 'Standard'
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -28,18 +28,18 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     }
     isHnsEnabled: false
     isLocalUserEnabled: true
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
-      resourceAccessRules: []
-      virtualNetworkRules: []
       bypass: 'AzureServices'
       defaultAction: 'Allow'
       ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
     }
     publicNetworkAccess: 'Enabled'
-    allowSharedKeyAccess: true
-    dnsEndpointType: 'Standard'
-    isNfsV3Enabled: false
-    isSftpEnabled: false
+    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -50,15 +50,11 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
     storageAccount
   ]
   properties: {
-    createMode: 'default'
-    enableRbacAuthorization: false
-    enableSoftDelete: true
-    enabledForDiskEncryption: false
-    publicNetworkAccess: 'Enabled'
-    tenantId: tenant().tenantId
     accessPolicies: [
       {
+        objectId: deployer().objectId
         permissions: {
+          certificates: []
           keys: [
             'Get'
             'Create'
@@ -77,12 +73,11 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
           ]
           secrets: []
           storage: []
-          certificates: []
         }
         tenantId: tenant().tenantId
-        objectId: deployer().objectId
       }
       {
+        objectId: storageAccount.identity.principalId
         permissions: {
           certificates: []
           keys: [
@@ -94,16 +89,21 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
           storage: []
         }
         tenantId: tenant().tenantId
-        objectId: storageAccount.identity.principalId
       }
     ]
+    createMode: 'default'
     enablePurgeProtection: true
+    enableRbacAuthorization: false
+    enableSoftDelete: true
     enabledForDeployment: false
+    enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
+    publicNetworkAccess: 'Enabled'
     sku: {
       family: 'A'
       name: 'standard'
     }
+    tenantId: tenant().tenantId
   }
 }
 
@@ -114,7 +114,9 @@ resource encryptionScope 'Microsoft.Storage/storageAccounts/encryptionScopes@202
     vault
   ]
   properties: {
-    keyVaultProperties: {}
+    keyVaultProperties: {
+      keyUri: key.properties.keyUriWithVersion
+    }
     source: 'Microsoft.KeyVault'
     state: 'Enabled'
   }

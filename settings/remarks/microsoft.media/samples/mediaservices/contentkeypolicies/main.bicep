@@ -1,16 +1,53 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_GRS'
+  }
+  kind: 'StorageV2'
+  properties: {
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
+    encryption: {
+      keySource: 'Microsoft.Storage'
+      services: {
+        queue: {
+          keyType: 'Service'
+        }
+        table: {
+          keyType: 'Service'
+        }
+      }
+    }
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+  }
+}
+
 resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
   name: resourceName
   location: location
   properties: {
+    publicNetworkAccess: 'Enabled'
     storageAccounts: [
       {
+        id: storageAccount.id
         type: 'Primary'
       }
     ]
-    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -38,41 +75,5 @@ resource contentKeyPolicy 'Microsoft.Media/mediaServices/contentKeyPolicies@2022
         }
       }
     ]
-  }
-}
-
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  sku: {
-    name: 'Standard_GRS'
-  }
-  kind: 'StorageV2'
-  properties: {
-    defaultToOAuthAuthentication: false
-    encryption: {
-      keySource: 'Microsoft.Storage'
-      services: {
-        queue: {
-          keyType: 'Service'
-        }
-        table: {
-          keyType: 'Service'
-        }
-      }
-    }
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    allowBlobPublicAccess: true
-    isHnsEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
   }
 }

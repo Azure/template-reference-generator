@@ -10,25 +10,25 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: resourceName
   location: location
   sku: {
-    tier: 'Burstable'
     name: 'Standard_B1s'
+    tier: 'Burstable'
   }
   properties: {
-    network: {}
-    version: ''
-    administratorLogin: '${administratorLogin}'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    dataEncryption: {
-      type: 'SystemManaged'
-    }
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     backup: {
       backupRetentionDays: 7
       geoRedundantBackup: 'Disabled'
     }
     createMode: ''
+    dataEncryption: {
+      type: 'SystemManaged'
+    }
     highAvailability: {
       mode: 'Disabled'
     }
+    network: {}
+    version: ''
   }
 }
 

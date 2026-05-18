@@ -13,7 +13,7 @@ resource route 'Microsoft.Network/routeTables/routes@2022-09-01' = {
   name: resourceName
   parent: routeTable
   properties: {
-    nextHopType: 'VnetLocal'
     addressPrefix: '10.1.0.0/16'
+    nextHopType: 'VnetLocal'
   }
 }

@@ -16,16 +16,15 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    disableLocalAuth: false
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
+    databaseAccountOfferType: 'Standard'
     defaultIdentity: 'FirstPartyIdentity'
     disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
     enableAnalyticalStorage: false
+    enableAutomaticFailover: false
     enableFreeTier: false
-    networkAclBypass: 'None'
-    virtualNetworkRules: []
     enableMultipleWriteLocations: false
+    ipRules: []
     isVirtualNetworkFilterEnabled: false
     locations: [
       {
@@ -34,9 +33,10 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    databaseAccountOfferType: 'Standard'
-    enableAutomaticFailover: false
-    ipRules: []
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
   }
 }
 
@@ -46,7 +46,7 @@ resource gremlinDatabase 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases
   properties: {
     options: {}
     resource: {
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }
@@ -59,7 +59,7 @@ resource graph 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs@20
       throughput: 400
     }
     resource: {
-      id: '${resourceName}'
+      id: resourceName
       partitionKey: {
         kind: 'Hash'
         paths: [

@@ -6,13 +6,7 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
   }
-}
-
-resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
 }
 
 resource credential 'Microsoft.DataFactory/factories/credentials@2018-06-01' = {
@@ -28,4 +22,9 @@ resource credential 'Microsoft.DataFactory/factories/credentials@2018-06-01' = {
       resourceId: userAssignedIdentity.id
     }
   }
+}
+
+resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
 }

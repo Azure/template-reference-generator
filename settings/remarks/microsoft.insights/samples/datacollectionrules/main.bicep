@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' = {
   name: resourceName
@@ -7,11 +7,11 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
   properties: {
     dataFlows: [
       {
-        streams: [
-          'Microsoft-InsightsMetrics'
-        ]
         destinations: [
           'test-destination-metrics'
+        ]
+        streams: [
+          'Microsoft-InsightsMetrics'
         ]
       }
     ]

@@ -9,8 +9,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -26,14 +29,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     isNfsV3Enabled: false
     isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
   }
 }
 
@@ -41,12 +41,11 @@ resource eventSubscription 'Microsoft.EventGrid/eventSubscriptions@2021-12-01' =
   name: resourceName
   scope: storageAccount
   properties: {
-    deadLetterDestination: null
     destination: {
-      properties: {
-        deliveryAttributeMappings: null
-      }
       endpointType: 'EventHub'
+      properties: {
+        resourceId: eventhub.id
+      }
     }
     eventDeliverySchema: 'EventGridSchema'
     filter: {

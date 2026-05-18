@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource service 'Microsoft.DataMigration/services@2018-04-19' = {
   name: resourceName
@@ -8,7 +8,9 @@ resource service 'Microsoft.DataMigration/services@2018-04-19' = {
     name: 'Standard_1vCores'
   }
   kind: 'Cloud'
-  properties: {}
+  properties: {
+    virtualSubnetId: subnet.id
+  }
 }
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {

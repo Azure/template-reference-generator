@@ -11,29 +11,29 @@ param paymentScaId string
 resource billingProfile 'Microsoft.Billing/billingAccounts/billingProfiles@2024-04-01' = {
   name: resourceName
   properties: {
+    billTo: {
+      addressLine1: 'TestWay'
+      city: 'Redmond'
+      companyName: 'TestCompany'
+      country: 'US'
+      isValidAddress: true
+      postalCode: '12345-1234'
+      region: 'WA'
+    }
+    displayName: resourceName
     enabledAzurePlans: [
       {
         skuId: '0001'
       }
     ]
     shipTo: {
-      postalCode: '12345-1234'
-      region: 'WA'
       addressLine1: 'TestWay'
       city: 'Redmond'
       companyName: 'TestCompany'
       country: 'US'
       isValidAddress: true
-    }
-    billTo: {
-      companyName: 'TestCompany'
-      country: 'US'
-      isValidAddress: true
       postalCode: '12345-1234'
       region: 'WA'
-      addressLine1: 'TestWay'
-      city: 'Redmond'
     }
-    displayName: '${resourceName}'
   }
 }

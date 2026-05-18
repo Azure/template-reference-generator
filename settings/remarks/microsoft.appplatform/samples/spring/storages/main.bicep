@@ -1,17 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
-  name: resourceName
-  location: location
-  sku: {
-    name: 'S0'
-  }
-  properties: {
-    zoneRedundant: false
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -20,15 +9,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
-    defaultToOAuthAuthentication: false
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    isSftpEnabled: false
     allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -40,11 +25,26 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
+  }
+}
+
+resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'S0'
+  }
+  properties: {
+    zoneRedundant: false
   }
 }
 

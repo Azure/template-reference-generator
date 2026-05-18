@@ -1,8 +1,8 @@
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 @secure()
 @description('The administrator password for the MySQL flexible server')
 param mysqlAdministratorPassword string
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 
 resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   name: resourceName
@@ -13,19 +13,19 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2021-05-01' = {
   }
   properties: {
     administratorLogin: 'adminTerraform'
-    administratorLoginPassword: '${mysqlAdministratorPassword}'
+    administratorLoginPassword: mysqlAdministratorPassword
     backup: {
       backupRetentionDays: 7
       geoRedundantBackup: 'Disabled'
     }
     createMode: ''
+    dataEncryption: {
+      type: 'SystemManaged'
+    }
     highAvailability: {
       mode: 'Disabled'
     }
     network: {}
-    dataEncryption: {
-      type: 'SystemManaged'
-    }
     version: '5.7'
   }
 }

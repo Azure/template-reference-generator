@@ -23,11 +23,11 @@ resource raiPolicy 'Microsoft.CognitiveServices/accounts/raiPolicies@2024-10-01'
     basePolicyName: 'Microsoft.Default'
     contentFilters: [
       {
+        blocking: true
         enabled: true
         name: 'Hate'
         severityThreshold: 'High'
         source: 'Prompt'
-        blocking: true
       }
     ]
   }

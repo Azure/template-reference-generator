@@ -1,16 +1,18 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
+    addressPrefix: '10.0.0.0/24'
     hubRoutingPreference: 'ExpressRoute'
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {}
-    addressPrefix: '10.0.0.0/24'
+    virtualWan: {
+      id: virtualWan.id
+    }
   }
 }
 

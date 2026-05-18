@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
-param location string = 'eastus'
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
   name: resourceName
@@ -10,6 +10,7 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01'
   properties: {
     displayName: ''
     enforcementMode: 'Default'
+    policyDefinitionId: policyDefinition.id
     scope: subscription().id
   }
 }
@@ -17,6 +18,19 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01'
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: resourceName
   properties: {
+    description: ''
+    displayName: 'my-policy-definition'
+    mode: 'All'
+    parameters: {
+      allowedLocations: {
+        metadata: {
+          description: 'The list of allowed locations for resources.'
+          displayName: 'Allowed locations'
+          strongType: 'location'
+        }
+        type: 'Array'
+      }
+    }
     policyRule: {
       if: {
         not: {
@@ -29,19 +43,6 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       }
     }
     policyType: 'Custom'
-    description: ''
-    displayName: 'my-policy-definition'
-    mode: 'All'
-    parameters: {
-      allowedLocations: {
-        type: 'Array'
-        metadata: {
-          strongType: 'location'
-          description: 'The list of allowed locations for resources.'
-          displayName: 'Allowed locations'
-        }
-      }
-    }
   }
 }
 

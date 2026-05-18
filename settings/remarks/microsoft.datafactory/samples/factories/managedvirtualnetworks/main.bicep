@@ -5,7 +5,6 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: resourceName
   location: location
   properties: {
-    repoConfiguration: null
     globalParameters: {}
     publicNetworkAccess: 'Enabled'
   }

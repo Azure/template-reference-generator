@@ -1,6 +1,21 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    appLogsConfiguration: {
+      destination: 'log-analytics'
+      logAnalyticsConfiguration: {
+        customerId: workspace.properties.customerId
+        sharedKey: workspace.listKeys().primarySharedKey
+      }
+    }
+    vnetConfiguration: {}
+  }
+}
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -9,6 +24,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -22,9 +41,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       }
     }
     isHnsEnabled: false
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
     isNfsV3Enabled: false
     isSftpEnabled: false
     minimumTlsVersion: 'TLS1_2'
@@ -32,8 +48,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
+    supportsHttpsTrafficOnly: true
   }
   tags: {
     environment: 'accTest'
@@ -44,9 +59,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    workspaceCapping: {
-      dailyQuotaGb: -1
-    }
     features: {
       disableLocalAuth: false
       enableLogAccessUsingOnlyResourcePermissions: true
@@ -57,20 +69,9 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     sku: {
       name: 'PerGB2018'
     }
-  }
-}
-
-resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    appLogsConfiguration: {
-      destination: 'log-analytics'
-      logAnalyticsConfiguration: {
-        sharedKey: workspace.listKeys().primarySharedKey
-      }
+    workspaceCapping: {
+      dailyQuotaGb: -1
     }
-    vnetConfiguration: {}
   }
 }
 

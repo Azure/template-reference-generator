@@ -1,34 +1,14 @@
+param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator username for the virtual machine')
 param adminUsername string
 @secure()
 @description('The administrator password for the virtual machine')
 param adminPassword string
-param resourceName string = 'acctest0001'
 
+var dataDiskName = 'mydatadisk1'
 var attachedDataDiskName = 'myattacheddatadisk1'
 var osDiskName = 'myosdisk1'
-var dataDiskName = 'mydatadisk1'
-
-resource attachedDisk 'Microsoft.Compute/disks@2022-03-02' = {
-  name: attachedDataDiskName
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  properties: {
-    osType: 'Linux'
-    publicNetworkAccess: 'Enabled'
-    creationData: {
-      createOption: 'Empty'
-    }
-    diskSizeGB: 1
-    encryption: {
-      type: 'EncryptionAtRestWithPlatformKey'
-    }
-    networkAccessPolicy: 'AllowAll'
-  }
-}
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: resourceName
@@ -43,7 +23,9 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
+          subnet: {
+            id: subnet.id
+          }
         }
       }
     ]
@@ -77,10 +59,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        version: 'latest'
         offer: 'UbuntuServer'
         publisher: 'Canonical'
         sku: '16.04-LTS'
+        version: 'latest'
       }
       osDisk: {
         caching: 'ReadWrite'
@@ -90,6 +72,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       }
       dataDisks: [
         {
+          caching: 'ReadWrite'
           createOption: 'Empty'
           name: dataDiskName
           diskSizeGB: 1
@@ -97,7 +80,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
           managedDisk: {
             storageAccountType: 'Standard_LRS'
           }
-          caching: 'ReadWrite'
         }
         {
           caching: 'ReadWrite'
@@ -139,5 +121,25 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource attachedDisk 'Microsoft.Compute/disks@2022-03-02' = {
+  name: attachedDataDiskName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {
+    creationData: {
+      createOption: 'Empty'
+    }
+    diskSizeGB: 1
+    encryption: {
+      type: 'EncryptionAtRestWithPlatformKey'
+    }
+    networkAccessPolicy: 'AllowAll'
+    osType: 'Linux'
+    publicNetworkAccess: 'Enabled'
   }
 }

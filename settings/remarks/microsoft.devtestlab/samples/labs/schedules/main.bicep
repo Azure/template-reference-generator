@@ -14,7 +14,6 @@ resource schedule 'Microsoft.DevTestLab/labs/schedules@2018-09-15' = {
   location: location
   parent: lab
   properties: {
-    timeZoneId: 'India Standard Time'
     dailyRecurrence: {
       time: '0100'
     }
@@ -25,6 +24,7 @@ resource schedule 'Microsoft.DevTestLab/labs/schedules@2018-09-15' = {
     }
     status: 'Disabled'
     taskType: 'LabVmsShutdownTask'
+    timeZoneId: 'India Standard Time'
   }
   tags: {
     environment: 'Production'

@@ -34,8 +34,8 @@ module module1 'main-rg-module.bicep' = {
   name: 'deploy-rg-resources'
   scope: resourceGroup
   params: {
-    adminPassword: adminPassword
     resourceName: resourceName
+    adminPassword: adminPassword
     location: location
   }
 }

@@ -1,40 +1,11 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: 'subnet-230630033653837171'
-  parent: virtualNetwork
-  properties: {
-    addressPrefix: '10.0.0.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Disabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-  }
-}
-
 resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    trustedClientCertificates: []
+    authenticationCertificates: []
     backendAddressPools: [
       {
         name: '${virtualNetwork.name}-beap'
@@ -43,35 +14,34 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
         }
       }
     ]
-    privateLinkConfigurations: []
-    sslCertificates: []
-    sslPolicy: {}
-    sslProfiles: []
-    trustedRootCertificates: []
-    authenticationCertificates: []
+    backendHttpSettingsCollection: [
+      {
+        name: '${virtualNetwork.name}-be-htst'
+        properties: {
+          authenticationCertificates: []
+          cookieBasedAffinity: 'Disabled'
+          path: ''
+          pickHostNameFromBackendAddress: false
+          port: 80
+          protocol: 'Http'
+          requestTimeout: 1
+          trustedRootCertificates: []
+        }
+      }
+    ]
     customErrorConfigurations: []
+    enableHttp2: false
     frontendIPConfigurations: [
       {
+        name: '${virtualNetwork.name}-feip'
         properties: {
           privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {}
+          publicIPAddress: {
+            id: publicIPAddress.id
+          }
         }
-        name: '${virtualNetwork.name}-feip'
       }
     ]
-    gatewayIPConfigurations: [
-      {
-        properties: {
-          subnet: {}
-        }
-        name: 'my-gateway-ip-configuration'
-      }
-    ]
-    sku: {
-      capacity: 2
-      name: 'Standard_v2'
-      tier: 'Standard_v2'
-    }
     frontendPorts: [
       {
         name: '${virtualNetwork.name}-feport'
@@ -80,11 +50,48 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
         }
       }
     ]
+    gatewayIPConfigurations: [
+      {
+        name: 'my-gateway-ip-configuration'
+        properties: {
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
+    httpListeners: [
+      {
+        name: '${virtualNetwork.name}-httplstn'
+        properties: {
+          customErrorConfigurations: []
+          frontendIPConfiguration: {
+            id: resourceId(
+              'Microsoft.Network/applicationGateways/frontendIPConfigurations',
+              resourceGroup().name,
+              resourceName,
+              '${virtualNetwork.name}-feip'
+            )
+          }
+          frontendPort: {
+            id: resourceId(
+              'Microsoft.Network/applicationGateways/frontendPorts',
+              resourceGroup().name,
+              resourceName,
+              '${virtualNetwork.name}-feport'
+            )
+          }
+          protocol: 'Http'
+          requireServerNameIndication: false
+        }
+      }
+    ]
+    privateLinkConfigurations: []
+    probes: []
     redirectConfigurations: []
-    rewriteRuleSets: []
-    urlPathMaps: []
     requestRoutingRules: [
       {
+        name: '${virtualNetwork.name}-rqrt'
         properties: {
           backendAddressPool: {
             id: resourceId(
@@ -113,52 +120,20 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2022-07-01' =
           ruleType: 'Basic'
           priority: 10
         }
-        name: '-rqrt'
       }
     ]
-    backendHttpSettingsCollection: [
-      {
-        properties: {
-          protocol: 'Http'
-          requestTimeout: 1
-          trustedRootCertificates: []
-          path: ''
-          port: 80
-          authenticationCertificates: []
-          cookieBasedAffinity: 'Disabled'
-          pickHostNameFromBackendAddress: false
-        }
-        name: '${virtualNetwork.name}-be-htst'
-      }
-    ]
-    enableHttp2: false
-    httpListeners: [
-      {
-        name: '${virtualNetwork.name}-httplstn'
-        properties: {
-          frontendPort: {
-            id: resourceId(
-              'Microsoft.Network/applicationGateways/frontendPorts',
-              resourceGroup().name,
-              resourceName,
-              '${virtualNetwork.name}-feport'
-            )
-          }
-          protocol: 'Http'
-          requireServerNameIndication: false
-          customErrorConfigurations: []
-          frontendIPConfiguration: {
-            id: resourceId(
-              'Microsoft.Network/applicationGateways/frontendIPConfigurations',
-              resourceGroup().name,
-              resourceName,
-              '${virtualNetwork.name}-feip'
-            )
-          }
-        }
-      }
-    ]
-    probes: []
+    rewriteRuleSets: []
+    sku: {
+      capacity: 2
+      name: 'Standard_v2'
+      tier: 'Standard_v2'
+    }
+    sslCertificates: []
+    sslPolicy: {}
+    sslProfiles: []
+    trustedClientCertificates: []
+    trustedRootCertificates: []
+    urlPathMaps: []
   }
 }
 
@@ -176,5 +151,34 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'subnet-230630033653837171'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.0.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Disabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

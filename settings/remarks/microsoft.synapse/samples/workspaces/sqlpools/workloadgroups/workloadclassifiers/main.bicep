@@ -15,13 +15,14 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   name: resourceName
   location: location
   properties: {
+    defaultDataLakeStorage: {
+      accountUrl: storageAccount.properties.primaryEndpoints.dfs
+      filesystem: container.name
+    }
     managedVirtualNetwork: ''
     publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
     sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
-    defaultDataLakeStorage: {
-      accountUrl: storageAccount.properties.primaryEndpoints.dfs
-    }
   }
 }
 
@@ -37,25 +38,15 @@ resource sqlPool 'Microsoft.Synapse/workspaces/sqlPools@2021-06-01' = {
   }
 }
 
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  name: resourceName
-  parent: blobService
-  properties: {
-    metadata: {
-      key: 'value'
-    }
-  }
-}
-
 resource workloadGroup 'Microsoft.Synapse/workspaces/sqlPools/workloadGroups@2021-06-01' = {
   name: resourceName
   parent: sqlPool
   properties: {
-    minResourcePercent: 0
-    minResourcePercentPerRequest: 3
     importance: 'normal'
     maxResourcePercent: 100
     maxResourcePercentPerRequest: 3
+    minResourcePercent: 0
+    minResourcePercentPerRequest: 3
   }
 }
 
@@ -75,4 +66,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {}
+}
+
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
+  name: resourceName
+  parent: blobService
+  properties: {
+    metadata: {
+      key: 'value'
+    }
+  }
 }

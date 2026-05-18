@@ -1,37 +1,28 @@
+@description('The SQL administrator login for the Synapse workspace')
+param sqlAdministratorLogin string
 @secure()
 @description('The SQL administrator login password for the Synapse workspace')
 param sqlAdministratorLoginPassword string
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
-@description('The SQL administrator login for the Synapse workspace')
-param sqlAdministratorLogin string
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
   name: 'default'
   parent: storageAccount
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
-  name: resourceName
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind: 'StorageV2'
-  properties: {}
-}
-
 resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
   name: resourceName
   location: location
   properties: {
-    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
     defaultDataLakeStorage: {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
+      filesystem: container.name
     }
     managedVirtualNetwork: ''
     publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
+    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
   }
 }
 
@@ -40,19 +31,6 @@ resource bigDataPool 'Microsoft.Synapse/workspaces/bigDataPools@2021-06-01-previ
   location: location
   parent: workspace
   properties: {
-    defaultSparkLogFolder: '/logs'
-    dynamicExecutorAllocation: {
-      minExecutors: 0
-      enabled: false
-      maxExecutors: 0
-    }
-    nodeCount: 3
-    nodeSize: 'Small'
-    nodeSizeFamily: 'MemoryOptimized'
-    isComputeIsolationEnabled: false
-    sessionLevelPackagesEnabled: false
-    sparkEventsFolder: '/events'
-    sparkVersion: '2.4'
     autoPause: {
       enabled: false
     }
@@ -60,6 +38,19 @@ resource bigDataPool 'Microsoft.Synapse/workspaces/bigDataPools@2021-06-01-previ
       enabled: false
     }
     cacheSize: 0
+    defaultSparkLogFolder: '/logs'
+    dynamicExecutorAllocation: {
+      enabled: false
+      maxExecutors: 0
+      minExecutors: 0
+    }
+    isComputeIsolationEnabled: false
+    nodeCount: 3
+    nodeSize: 'Small'
+    nodeSizeFamily: 'MemoryOptimized'
+    sessionLevelPackagesEnabled: false
+    sparkEventsFolder: '/events'
+    sparkVersion: '2.4'
   }
 }
 
@@ -71,4 +62,14 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
       key: 'value'
     }
   }
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+  properties: {}
 }

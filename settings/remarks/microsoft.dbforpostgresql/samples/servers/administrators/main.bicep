@@ -1,4 +1,3 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator login name for the PostgreSQL server')
 param administratorLogin string
@@ -7,6 +6,7 @@ param administratorLogin string
 param administratorLoginPassword string
 @description('The administrator login name for the PostgreSQL server admin')
 param adminLogin string
+param resourceName string = 'acctest0001'
 
 param clientId string
 
@@ -20,19 +20,19 @@ resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
     tier: 'GeneralPurpose'
   }
   properties: {
-    administratorLogin: '${administratorLogin}'
-    administratorLoginPassword: '${administratorLoginPassword}'
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
+    infrastructureEncryption: 'Disabled'
     minimalTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
     sslEnforcement: 'Enabled'
     storageProfile: {
+      backupRetentionDays: 7
       storageAutogrow: 'Enabled'
       storageMB: 51200
-      backupRetentionDays: 7
     }
     version: '9.6'
-    infrastructureEncryption: 'Disabled'
   }
 }
 

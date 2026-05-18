@@ -6,14 +6,14 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
-    DisableLocalAuth: false
-    RetentionInDays: 90
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
     Application_Type: 'web'
     DisableIpMasking: false
+    DisableLocalAuth: false
     ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
     SamplingPercentage: 100
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
   }
 }
 
@@ -27,11 +27,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   properties: {
     certificates: []
     customProperties: {
-      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
     }
     disableGateway: false
     publicNetworkAccess: 'Enabled'
@@ -58,12 +58,12 @@ resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
   name: resourceName
   parent: service
   properties: {
-    isBuffered: true
-    loggerType: 'applicationInsights'
     credentials: {
       instrumentationKey: component.properties.InstrumentationKey
     }
     description: ''
+    isBuffered: true
+    loggerType: 'applicationInsights'
   }
 }
 
@@ -71,7 +71,7 @@ resource diagnostic 'Microsoft.ApiManagement/service/apis/diagnostics@2021-08-01
   name: 'applicationinsights'
   parent: api
   properties: {
-    operationNameFormat: 'Name'
     loggerId: logger.id
+    operationNameFormat: 'Name'
   }
 }

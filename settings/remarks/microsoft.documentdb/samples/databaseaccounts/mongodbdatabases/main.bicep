@@ -11,32 +11,32 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         name: 'EnableMongo'
       }
     ]
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Strong'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
     defaultIdentity: 'FirstPartyIdentity'
     disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
     enableAutomaticFailover: false
+    enableFreeTier: false
     enableMultipleWriteLocations: false
     ipRules: []
+    isVirtualNetworkFilterEnabled: false
     locations: [
       {
-        locationName: 'West Europe'
         failoverPriority: 0
         isZoneRedundant: false
+        locationName: 'West Europe'
       }
     ]
     networkAclBypass: 'None'
-    consistencyPolicy: {
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-      defaultConsistencyLevel: 'Strong'
-    }
-    databaseAccountOfferType: 'Standard'
-    enableFreeTier: false
-    isVirtualNetworkFilterEnabled: false
+    networkAclBypassResourceIds: []
     publicNetworkAccess: 'Enabled'
     virtualNetworkRules: []
-    disableLocalAuth: false
-    networkAclBypassResourceIds: []
-    enableAnalyticalStorage: false
   }
 }
 
@@ -46,7 +46,7 @@ resource mongodbDatabase 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases
   properties: {
     options: {}
     resource: {
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }

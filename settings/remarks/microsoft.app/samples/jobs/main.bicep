@@ -1,6 +1,17 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
+resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+  name: '${resourceName}-law'
+  location: location
+  properties: {
+    retentionInDays: 30
+    sku: {
+      name: 'PerGB2018'
+    }
+  }
+}
+
 resource job 'Microsoft.App/jobs@2025-01-01' = {
   name: '${resourceName}-cajob'
   location: location
@@ -14,6 +25,7 @@ resource job 'Microsoft.App/jobs@2025-01-01' = {
       replicaTimeout: 10
       triggerType: 'Manual'
     }
+    environmentId: managedEnvironment.id
     template: {
       containers: [
         {
@@ -41,19 +53,9 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2025-01-01' = {
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
+        customerId: workspace.properties.customerId
         sharedKey: workspace.listKeys().primarySharedKey
       }
-    }
-  }
-}
-
-resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
-  name: '${resourceName}-law'
-  location: location
-  properties: {
-    retentionInDays: 30
-    sku: {
-      name: 'PerGB2018'
     }
   }
 }

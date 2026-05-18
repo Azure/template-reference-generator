@@ -11,26 +11,19 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2020-06-01' = {
 resource budget 'Microsoft.Consumption/budgets@2019-10-01' = {
   name: resourceName
   properties: {
-    timeGrain: 'Monthly'
-    timePeriod: {
-      startDate: '2025-08-01T00:00:00Z'
-    }
     amount: 1000
     category: 'Cost'
     filter: {
       tags: {
+        name: 'foo'
+        operator: 'In'
         values: [
           'bar'
         ]
-        name: 'foo'
-        operator: 'In'
       }
     }
     notifications: {
       'Actual_EqualTo_90.000000_Percent': {
-        operator: 'EqualTo'
-        threshold: 90
-        thresholdType: 'Actual'
         contactEmails: [
           'foo@example.com'
           'bar@example.com'
@@ -38,7 +31,14 @@ resource budget 'Microsoft.Consumption/budgets@2019-10-01' = {
         contactGroups: []
         contactRoles: []
         enabled: true
+        operator: 'EqualTo'
+        threshold: 90
+        thresholdType: 'Actual'
       }
+    }
+    timeGrain: 'Monthly'
+    timePeriod: {
+      startDate: '2025-08-01T00:00:00Z'
     }
   }
 }

@@ -1,5 +1,33 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
+
+resource p2svpnGateway 'Microsoft.Network/p2svpnGateways@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    isRoutingPreferenceInternet: false
+    p2SConnectionConfigurations: [
+      {
+        name: 'first'
+        properties: {
+          enableInternetSecurity: false
+          vpnClientAddressPool: {
+            addressPrefixes: [
+              '172.100.0.0/14'
+            ]
+          }
+        }
+      }
+    ]
+    virtualHub: {
+      id: virtualHub.id
+    }
+    vpnGatewayScaleUnit: 1
+    vpnServerConfiguration: {
+      id: vpnServerConfiguration.id
+    }
+  }
+}
 
 resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
   name: resourceName
@@ -10,7 +38,9 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
     virtualRouterAutoScaleConfiguration: {
       minCapacity: 2
     }
-    virtualWan: {}
+    virtualWan: {
+      id: virtualWan.id
+    }
   }
 }
 
@@ -64,29 +94,5 @@ M/s/1JRtO3bDSzD9TazRVzn2oBqzSa8VgIo5C1nOnoAKJTlsClJKvIhnRlaLQqk=
       'OpenVPN'
       'IkeV2'
     ]
-  }
-}
-
-resource p2svpnGateway 'Microsoft.Network/p2svpnGateways@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    isRoutingPreferenceInternet: false
-    p2SConnectionConfigurations: [
-      {
-        name: 'first'
-        properties: {
-          enableInternetSecurity: false
-          vpnClientAddressPool: {
-            addressPrefixes: [
-              '172.100.0.0/14'
-            ]
-          }
-        }
-      }
-    ]
-    virtualHub: {}
-    vpnGatewayScaleUnit: 1
-    vpnServerConfiguration: {}
   }
 }

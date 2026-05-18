@@ -10,10 +10,10 @@ resource redisPrimary 'Microsoft.Cache/redis@2024-11-01' = {
     minimumTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     redisConfiguration: {
-      'preferred-data-persistence-auth-method': ''
       'maxmemory-delta': '642'
       'maxmemory-policy': 'allkeys-lru'
       'maxmemory-reserved': '642'
+      'preferred-data-persistence-auth-method': ''
     }
     redisVersion: '6'
     sku: {
@@ -28,6 +28,10 @@ resource redisSecondary 'Microsoft.Cache/redis@2024-11-01' = {
   name: '${resourceName}-secondary'
   location: location
   properties: {
+    disableAccessKeyAuthentication: false
+    enableNonSslPort: false
+    minimumTlsVersion: '1.2'
+    publicNetworkAccess: 'Enabled'
     redisConfiguration: {
       'maxmemory-delta': '642'
       'maxmemory-policy': 'allkeys-lru'
@@ -40,10 +44,6 @@ resource redisSecondary 'Microsoft.Cache/redis@2024-11-01' = {
       family: 'P'
       name: 'Premium'
     }
-    disableAccessKeyAuthentication: false
-    enableNonSslPort: false
-    minimumTlsVersion: '1.2'
-    publicNetworkAccess: 'Enabled'
   }
 }
 

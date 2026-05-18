@@ -6,7 +6,6 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
   }
 }
 
@@ -30,12 +29,6 @@ resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
   name: resourceName
   parent: factory
   properties: {
-    typeProperties: {
-      frequency: 'Minute'
-      interval: 15
-      maxConcurrency: 50
-      startTime: '2022-09-21T00:00:00Z'
-    }
     description: ''
     pipeline: {
       parameters: {}
@@ -45,5 +38,11 @@ resource trigger 'Microsoft.DataFactory/factories/triggers@2018-06-01' = {
       }
     }
     type: 'TumblingWindowTrigger'
+    typeProperties: {
+      frequency: 'Minute'
+      interval: 15
+      maxConcurrency: 50
+      startTime: '2022-09-21T00:00:00Z'
+    }
   }
 }

@@ -9,17 +9,17 @@ resource botService 'Microsoft.BotService/botServices@2021-05-01-preview' = {
   }
   kind: 'bot'
   properties: {
+    cmekKeyVaultUrl: ''
+    description: ''
+    developerAppInsightKey: ''
+    developerAppInsightsApiKey: ''
+    developerAppInsightsApplicationId: ''
+    displayName: resourceName
     endpoint: ''
     iconUrl: 'https://docs.botframework.com/static/devportal/client/images/bot-framework-default.png'
     isCmekEnabled: false
-    msaAppId: '12345678-1234-1234-1234-123456789012'
-    developerAppInsightKey: ''
-    developerAppInsightsApiKey: ''
     isStreamingSupported: false
-    cmekKeyVaultUrl: ''
-    description: ''
-    developerAppInsightsApplicationId: ''
-    displayName: '${resourceName}'
+    msaAppId: '12345678-1234-1234-1234-123456789012'
   }
 }
 

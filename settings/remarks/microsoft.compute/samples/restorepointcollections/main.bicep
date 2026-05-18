@@ -1,62 +1,13 @@
-param resourceName string = 'acctest0001'
 param location string = 'eastus'
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    privateEndpointVNetPolicies: 'Disabled'
-    subnets: []
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  name: resourceName
-  parent: virtualNetwork
-  properties: {
-    privateEndpointNetworkPolicies: 'Disabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-    addressPrefix: '10.0.0.0/24'
-    defaultOutboundAccess: true
-    delegations: []
-  }
-}
-
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    ipConfigurations: [
-      {
-        name: 'internal'
-        properties: {
-          primary: false
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
-        }
-      }
-    ]
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-  }
-}
+param resourceName string = 'acctest0001'
 
 resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-03-01' = {
   name: resourceName
   location: location
   properties: {
-    source: {}
+    source: {
+      id: virtualMachine.id
+    }
   }
 }
 
@@ -64,6 +15,17 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: resourceName
   location: location
   properties: {
+    additionalCapabilities: {}
+    applicationProfile: {
+      galleryApplications: []
+    }
+    diagnosticsProfile: {
+      bootDiagnostics: {
+        enabled: false
+        storageUri: ''
+      }
+    }
+    extensionsTimeBudget: 'PT1H30M'
     hardwareProfile: {
       vmSize: 'Standard_F2'
     }
@@ -76,28 +38,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
           }
         }
       ]
-    }
-    priority: 'Regular'
-    storageProfile: {
-      osDisk: {
-        writeAcceleratorEnabled: false
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: 'Standard_LRS'
-        }
-        osType: 'Linux'
-      }
-      dataDisks: []
-      imageReference: {
-        version: 'latest'
-        offer: '0001-com-ubuntu-server-jammy'
-        publisher: 'Canonical'
-        sku: '22_04-lts'
-      }
-    }
-    applicationProfile: {
-      galleryApplications: []
     }
     osProfile: {
       adminUsername: 'adminuser'
@@ -121,13 +61,77 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
       }
       secrets: []
     }
-    additionalCapabilities: {}
-    diagnosticsProfile: {
-      bootDiagnostics: {
-        enabled: false
-        storageUri: ''
+    priority: 'Regular'
+    storageProfile: {
+      dataDisks: []
+      imageReference: {
+        offer: '0001-com-ubuntu-server-jammy'
+        publisher: 'Canonical'
+        sku: '22_04-lts'
+        version: 'latest'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+        osType: 'Linux'
+        writeAcceleratorEnabled: false
       }
     }
-    extensionsTimeBudget: 'PT1H30M'
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    privateEndpointVNetPolicies: 'Disabled'
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
+  name: resourceName
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.0.0/24'
+    defaultOutboundAccess: true
+    delegations: []
+    privateEndpointNetworkPolicies: 'Disabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          primary: false
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

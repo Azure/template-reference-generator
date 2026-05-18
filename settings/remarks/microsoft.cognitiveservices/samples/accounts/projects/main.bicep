@@ -9,12 +9,12 @@ resource account 'Microsoft.CognitiveServices/accounts@2025-06-01' = {
   }
   kind: 'AIServices'
   properties: {
-    restrictOutboundNetworkAccess: false
     allowProjectManagement: true
     customSubDomainName: 'cog-${resourceName}'
     disableLocalAuth: false
     dynamicThrottlingEnabled: false
     publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: false
   }
 }
 
@@ -23,7 +23,7 @@ resource project 'Microsoft.CognitiveServices/accounts/projects@2025-06-01' = {
   location: location
   parent: account
   properties: {
-    displayName: 'project-${resourceName}'
     description: 'test project'
+    displayName: 'project-${resourceName}'
   }
 }

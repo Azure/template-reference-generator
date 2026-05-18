@@ -9,18 +9,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    isNfsV3Enabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
     accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
     allowSharedKeyAccess: true
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -34,6 +26,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
       }
     }
     isHnsEnabled: false
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -44,6 +44,7 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
     publicNetworkAccess: 'Enabled'
     storageAccounts: [
       {
+        id: storageAccount.id
         type: 'Primary'
       }
     ]

@@ -12,9 +12,9 @@ resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01'
   properties: {
     authorizationKey: ''
     serviceProviderProperties: {
-      serviceProviderName: 'Equinix'
       bandwidthInMbps: 50
       peeringLocation: 'Silicon Valley'
+      serviceProviderName: 'Equinix'
     }
   }
   tags: {

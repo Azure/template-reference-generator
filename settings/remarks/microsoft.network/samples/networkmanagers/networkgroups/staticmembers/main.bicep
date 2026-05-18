@@ -18,18 +18,26 @@ resource networkManager 'Microsoft.Network/networkManagers@2024-10-01' = {
   }
 }
 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-10-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/22'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
 resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2024-10-01' = {
   name: resourceName
   parent: networkManager
   properties: {}
-}
-
-resource staticMember 'Microsoft.Network/networkManagers/networkGroups/staticMembers@2024-10-01' = {
-  name: resourceName
-  parent: networkGroup
-  properties: {
-    resourceId: virtualNetwork.id
-  }
 }
 
 resource networkGroupForSubnet 'Microsoft.Network/networkManagers/networkGroups@2024-10-01' = {
@@ -41,30 +49,6 @@ resource networkGroupForSubnet 'Microsoft.Network/networkManagers/networkGroups@
   }
 }
 
-resource staticMemberForSubnet 'Microsoft.Network/networkManagers/networkGroups/staticMembers@2024-10-01' = {
-  name: '${resourceName}-subnet'
-  parent: networkGroupForSubnet
-  properties: {
-    resourceId: subnet.id
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    subnets: []
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/22'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-  }
-}
-
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-10-01' = {
   name: resourceName
   parent: virtualNetwork
@@ -72,5 +56,21 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-10-01' = {
     addressPrefixes: [
       '10.0.0.0/24'
     ]
+  }
+}
+
+resource staticMember 'Microsoft.Network/networkManagers/networkGroups/staticMembers@2024-10-01' = {
+  name: resourceName
+  parent: networkGroup
+  properties: {
+    resourceId: virtualNetwork.id
+  }
+}
+
+resource staticMemberForSubnet 'Microsoft.Network/networkManagers/networkGroups/staticMembers@2024-10-01' = {
+  name: '${resourceName}-subnet'
+  parent: networkGroupForSubnet
+  properties: {
+    resourceId: subnet.id
   }
 }

@@ -5,8 +5,8 @@ resource environment 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
   name: resourceName
   location: location
   sku: {
-    name: 'S1'
     capacity: 1
+    name: 'S1'
   }
   kind: 'Gen1'
   properties: {

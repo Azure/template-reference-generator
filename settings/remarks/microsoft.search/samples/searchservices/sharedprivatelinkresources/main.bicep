@@ -8,12 +8,6 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
     name: 'standard'
   }
   properties: {
-    hostingMode: 'default'
-    networkRuleSet: {
-      ipRules: []
-    }
-    partitionCount: 1
-    replicaCount: 1
     authOptions: {
       apiKeyOnly: {}
     }
@@ -21,7 +15,13 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
     encryptionWithCmk: {
       enforcement: 'Disabled'
     }
+    hostingMode: 'default'
+    networkRuleSet: {
+      ipRules: []
+    }
+    partitionCount: 1
     publicNetworkAccess: 'Enabled'
+    replicaCount: 1
   }
   tags: {
     environment: 'staging'
@@ -37,6 +37,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -52,15 +55,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
-    supportsHttpsTrafficOnly: true
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    minimumTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }
 

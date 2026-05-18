@@ -5,7 +5,6 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-p
   name: resourceName
   location: location
   properties: {
-    dnsPrefix: '${resourceName}'
     agentPoolProfiles: [
       {
         count: 1
@@ -14,5 +13,6 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-p
         vmSize: 'Standard_DS2_v2'
       }
     ]
+    dnsPrefix: resourceName
   }
 }

@@ -1,21 +1,12 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
+var systemTopicName = '${resourceName}-st'
+var storageAccountName = '${resourceName}sa01'
 var queueServiceId = '${storageAccount.id}/queueServices/default'
-var storageAccountName = 'resourceNamesa01'
-var queueName = 'resourceNamequeue'
-var eventSubscription1Name = 'resourceName-es1'
-var eventSubscription2Name = 'resourceName-es2'
-var systemTopicName = 'resourceName-st'
-
-resource systemTopic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
-  name: systemTopicName
-  location: 'global'
-  properties: {
-    source: resourceGroup().id
-    topicType: 'Microsoft.Resources.ResourceGroups'
-  }
-}
+var queueName = '${resourceName}queue'
+var eventSubscription1Name = '${resourceName}-es1'
+var eventSubscription2Name = '${resourceName}-es2'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storageAccountName
@@ -25,11 +16,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    allowCrossTenantReplication: false
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
+    accessTier: 'Hot'
     allowBlobPublicAccess: true
+    allowCrossTenantReplication: false
     allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
+    dnsEndpointType: 'Standard'
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -41,7 +33,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
         }
       }
     }
+    isHnsEnabled: false
     isLocalUserEnabled: true
+    isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Allow'
@@ -49,13 +45,8 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       resourceAccessRules: []
       virtualNetworkRules: []
     }
-    supportsHttpsTrafficOnly: true
-    defaultToOAuthAuthentication: false
-    dnsEndpointType: 'Standard'
-    isHnsEnabled: false
-    isSftpEnabled: false
     publicNetworkAccess: 'Enabled'
-    accessTier: 'Hot'
+    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -66,6 +57,45 @@ resource queue 'Microsoft.Storage/storageAccounts/queueServices/queues@2023-05-0
   ]
 }
 
+resource systemTopic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
+  name: systemTopicName
+  location: 'global'
+  properties: {
+    source: resourceGroup().id
+    topicType: 'Microsoft.Resources.ResourceGroups'
+  }
+}
+
+resource eventsubscription1 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
+  name: eventSubscription2Name
+  parent: systemTopic
+  dependsOn: [
+    queue
+  ]
+  properties: {
+    destination: {
+      endpointType: 'StorageQueue'
+      properties: {
+        queueName: queueName
+        resourceId: storageAccount.id
+      }
+    }
+    eventDeliverySchema: 'EventGridSchema'
+    filter: {
+      advancedFilters: [
+        {
+          key: 'subject'
+          operatorType: 'StringEndsWith'
+          values: [
+            'bar'
+          ]
+        }
+      ]
+    }
+    labels: []
+  }
+}
+
 resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
   name: eventSubscription1Name
   parent: systemTopic
@@ -73,7 +103,6 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
     queue
   ]
   properties: {
-    deadLetterDestination: null
     destination: {
       endpointType: 'StorageQueue'
       properties: {
@@ -89,37 +118,6 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
           operatorType: 'StringBeginsWith'
           values: [
             'foo'
-          ]
-        }
-      ]
-    }
-    labels: []
-  }
-}
-
-resource eventsubscription1 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
-  name: eventSubscription2Name
-  parent: systemTopic
-  dependsOn: [
-    queue
-  ]
-  properties: {
-    deadLetterDestination: null
-    destination: {
-      properties: {
-        queueName: queueName
-        resourceId: storageAccount.id
-      }
-      endpointType: 'StorageQueue'
-    }
-    eventDeliverySchema: 'EventGridSchema'
-    filter: {
-      advancedFilters: [
-        {
-          key: 'subject'
-          operatorType: 'StringEndsWith'
-          values: [
-            'bar'
           ]
         }
       ]

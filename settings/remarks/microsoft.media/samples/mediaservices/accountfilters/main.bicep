@@ -1,6 +1,20 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    publicNetworkAccess: 'Enabled'
+    storageAccounts: [
+      {
+        id: storageAccount.id
+        type: 'Primary'
+      }
+    ]
+  }
+}
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -9,11 +23,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
     accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
     allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
+      keySource: 'Microsoft.Storage'
       services: {
         queue: {
           keyType: 'Service'
@@ -22,31 +38,16 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
           keyType: 'Service'
         }
       }
-      keySource: 'Microsoft.Storage'
     }
+    isHnsEnabled: false
     isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
-    allowBlobPublicAccess: true
-    allowCrossTenantReplication: true
-    defaultToOAuthAuthentication: false
-    isHnsEnabled: false
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-  }
-}
-
-resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
-  name: resourceName
-  location: location
-  properties: {
     publicNetworkAccess: 'Enabled'
-    storageAccounts: [
-      {
-        type: 'Primary'
-      }
-    ]
+    supportsHttpsTrafficOnly: true
   }
 }
 

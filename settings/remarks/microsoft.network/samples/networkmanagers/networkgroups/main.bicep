@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource networkManager 'Microsoft.Network/networkManagers@2024-10-01' = {
   name: resourceName
@@ -10,10 +10,10 @@ resource networkManager 'Microsoft.Network/networkManagers@2024-10-01' = {
       'Routing'
     ]
     networkManagerScopes: {
+      managementGroups: []
       subscriptions: [
         subscription().id
       ]
-      managementGroups: []
     }
   }
 }
@@ -22,7 +22,7 @@ resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2024-10-0
   name: resourceName
   parent: networkManager
   properties: {
-    memberType: 'VirtualNetwork'
     description: 'example network group'
+    memberType: 'VirtualNetwork'
   }
 }

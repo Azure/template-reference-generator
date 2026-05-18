@@ -19,25 +19,31 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
       aS2: {
         receiveAgreement: {
           protocolSettings: {
+            acknowledgementConnectionSettings: {
+              ignoreCertificateNameMismatch: false
+              keepHttpConnectionAlive: false
+              supportHttpStatusCodeContinue: false
+              unfoldHttpHeaders: false
+            }
             envelopeSettings: {
-              suspendMessageOnFileNameGenerationError: true
-              transmitFileNameInMimeHeader: false
               autogenerateFileName: false
               fileNameTemplate: '%FILE().ReceivedFileName%'
               messageContentType: 'text/plain'
+              suspendMessageOnFileNameGenerationError: true
+              transmitFileNameInMimeHeader: false
             }
             errorSettings: {
               resendIfMDNNotReceived: false
               suspendDuplicateMessage: false
             }
             mdnSettings: {
+              dispositionNotificationTo: 'http://localhost'
+              micHashingAlgorithm: 'SHA1'
               needMDN: false
               sendInboundMDNToMessageBox: true
               sendMDNAsynchronously: false
               signMDN: false
               signOutboundMDNIfOptional: false
-              dispositionNotificationTo: 'http://localhost'
-              micHashingAlgorithm: 'SHA1'
             }
             messageConnectionSettings: {
               ignoreCertificateNameMismatch: false
@@ -55,27 +61,21 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
               overrideGroupSigningCertificate: false
             }
             validationSettings: {
+              checkCertificateRevocationListOnReceive: false
+              checkCertificateRevocationListOnSend: false
               checkDuplicateMessage: false
               compressMessage: false
               encryptMessage: false
               encryptionAlgorithm: 'DES3'
-              overrideMessageProperties: false
-              checkCertificateRevocationListOnReceive: false
               interchangeDuplicatesValidityDays: 5
+              overrideMessageProperties: false
               signMessage: false
               signingAlgorithm: 'Default'
-              checkCertificateRevocationListOnSend: false
-            }
-            acknowledgementConnectionSettings: {
-              supportHttpStatusCodeContinue: false
-              unfoldHttpHeaders: false
-              ignoreCertificateNameMismatch: false
-              keepHttpConnectionAlive: false
             }
           }
           receiverBusinessIdentity: {
-            value: 'FabrikamNY'
             qualifier: 'AS2Identity'
+            value: 'FabrikamNY'
           }
           senderBusinessIdentity: {
             qualifier: 'AS2Identity'
@@ -84,18 +84,6 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
         }
         sendAgreement: {
           protocolSettings: {
-            validationSettings: {
-              overrideMessageProperties: false
-              signingAlgorithm: 'Default'
-              checkDuplicateMessage: false
-              compressMessage: false
-              encryptionAlgorithm: 'DES3'
-              interchangeDuplicatesValidityDays: 5
-              signMessage: false
-              checkCertificateRevocationListOnReceive: false
-              checkCertificateRevocationListOnSend: false
-              encryptMessage: false
-            }
             acknowledgementConnectionSettings: {
               ignoreCertificateNameMismatch: false
               keepHttpConnectionAlive: false
@@ -103,24 +91,24 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
               unfoldHttpHeaders: false
             }
             envelopeSettings: {
-              transmitFileNameInMimeHeader: false
               autogenerateFileName: false
               fileNameTemplate: '%FILE().ReceivedFileName%'
               messageContentType: 'text/plain'
               suspendMessageOnFileNameGenerationError: true
+              transmitFileNameInMimeHeader: false
             }
             errorSettings: {
               resendIfMDNNotReceived: false
               suspendDuplicateMessage: false
             }
             mdnSettings: {
+              dispositionNotificationTo: 'http://localhost'
+              micHashingAlgorithm: 'SHA1'
+              needMDN: false
               sendInboundMDNToMessageBox: true
               sendMDNAsynchronously: false
               signMDN: false
               signOutboundMDNIfOptional: false
-              dispositionNotificationTo: 'http://localhost'
-              micHashingAlgorithm: 'SHA1'
-              needMDN: false
             }
             messageConnectionSettings: {
               ignoreCertificateNameMismatch: false
@@ -129,13 +117,25 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
               unfoldHttpHeaders: true
             }
             securitySettings: {
+              enableNRRForInboundDecodedMessages: false
+              enableNRRForInboundEncodedMessages: false
+              enableNRRForInboundMDN: false
               enableNRRForOutboundDecodedMessages: false
               enableNRRForOutboundEncodedMessages: false
               enableNRRForOutboundMDN: false
               overrideGroupSigningCertificate: false
-              enableNRRForInboundDecodedMessages: false
-              enableNRRForInboundEncodedMessages: false
-              enableNRRForInboundMDN: false
+            }
+            validationSettings: {
+              checkCertificateRevocationListOnReceive: false
+              checkCertificateRevocationListOnSend: false
+              checkDuplicateMessage: false
+              compressMessage: false
+              encryptMessage: false
+              encryptionAlgorithm: 'DES3'
+              interchangeDuplicatesValidityDays: 5
+              overrideMessageProperties: false
+              signMessage: false
+              signingAlgorithm: 'Default'
             }
           }
           receiverBusinessIdentity: {
@@ -153,10 +153,12 @@ resource agreement 'Microsoft.Logic/integrationAccounts/agreements@2019-05-01' =
       qualifier: 'AS2Identity'
       value: 'FabrikamDC'
     }
+    guestPartner: partner2.name
     hostIdentity: {
       qualifier: 'AS2Identity'
       value: 'FabrikamNY'
     }
+    hostPartner: partner.name
   }
 }
 

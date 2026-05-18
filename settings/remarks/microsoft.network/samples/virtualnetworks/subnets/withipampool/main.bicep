@@ -1,21 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource networkManager 'Microsoft.Network/networkManagers@2024-05-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    networkManagerScopes: {
-      managementGroups: []
-      subscriptions: [
-        '/subscriptions/${subscription().subscriptionId}'
-      ]
-    }
-    description: ''
-    networkManagerScopeAccesses: []
-  }
-}
-
 resource vnetWithipam 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: resourceName
   location: location
@@ -24,8 +9,25 @@ resource vnetWithipam 'Microsoft.Network/virtualNetworks@2024-05-01' = {
       ipamPoolPrefixAllocations: [
         {
           numberOfIpAddresses: '100'
-          pool: {}
+          pool: {
+            id: ipamPool.id
+          }
         }
+      ]
+    }
+  }
+}
+
+resource networkManager 'Microsoft.Network/networkManagers@2024-05-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    description: ''
+    networkManagerScopeAccesses: []
+    networkManagerScopes: {
+      managementGroups: []
+      subscriptions: [
+        '/subscriptions/${subscription().subscriptionId}'
       ]
     }
   }
@@ -36,12 +38,12 @@ resource ipamPool 'Microsoft.Network/networkManagers/ipamPools@2024-05-01' = {
   location: location
   parent: networkManager
   properties: {
-    parentPoolName: ''
     addressPrefixes: [
       '10.0.0.0/24'
     ]
     description: 'Test description.'
     displayName: 'testDisplayName'
+    parentPoolName: ''
   }
 }
 

@@ -5,7 +5,9 @@ resource restorePointCollection 'Microsoft.Compute/restorePointCollections@2024-
   name: '${resourceName}-rpc'
   location: location
   properties: {
-    source: {}
+    source: {
+      id: virtualMachine.id
+    }
   }
 }
 
@@ -13,6 +15,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: '${resourceName}-vm'
   location: location
   properties: {
+    additionalCapabilities: {}
     applicationProfile: {
       galleryApplications: []
     }
@@ -21,6 +24,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         enabled: false
         storageUri: ''
       }
+    }
+    extensionsTimeBudget: 'PT1H30M'
+    hardwareProfile: {
+      vmSize: 'Standard_F2'
     }
     networkProfile: {
       networkInterfaces: [
@@ -32,12 +39,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         }
       ]
     }
-    additionalCapabilities: {}
-    extensionsTimeBudget: 'PT1H30M'
-    hardwareProfile: {
-      vmSize: 'Standard_F2'
-    }
     osProfile: {
+      adminUsername: 'adminuser'
+      allowExtensionOperations: true
+      computerName: '${resourceName}-vm'
       linuxConfiguration: {
         disablePasswordAuthentication: true
         patchSettings: {
@@ -55,9 +60,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
         }
       }
       secrets: []
-      adminUsername: 'adminuser'
-      allowExtensionOperations: true
-      computerName: '${resourceName}-vm'
     }
     priority: 'Regular'
     storageProfile: {
@@ -108,13 +110,13 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
   name: '${resourceName}-subnet'
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.0.0.0/24'
+    defaultOutboundAccess: true
+    delegations: []
     privateEndpointNetworkPolicies: 'Disabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.0.0.0/24'
-    defaultOutboundAccess: true
-    delegations: []
   }
 }
 
@@ -126,13 +128,15 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
     enableIPForwarding: false
     ipConfigurations: [
       {
+        name: 'internal'
         properties: {
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
           primary: false
           privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
         }
-        name: 'internal'
       }
     ]
   }

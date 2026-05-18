@@ -1,6 +1,14 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
+resource gallery 'Microsoft.Compute/galleries@2022-03-03' = {
+  name: '${resourceName}sig'
+  location: location
+  properties: {
+    description: ''
+  }
+}
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: '${resourceName}acc'
   location: location
@@ -9,20 +17,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: []
-      resourceAccessRules: []
-      virtualNetworkRules: []
-    }
-    allowSharedKeyAccess: true
-    isSftpEnabled: false
-    allowCrossTenantReplication: false
-    isHnsEnabled: false
     accessTier: 'Hot'
     allowBlobPublicAccess: true
+    allowCrossTenantReplication: false
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
     encryption: {
@@ -36,10 +34,29 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
         }
       }
     }
+    isHnsEnabled: false
     isLocalUserEnabled: true
     isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+      ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
+    }
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
+  }
+}
+
+resource application 'Microsoft.Compute/galleries/applications@2022-03-03' = {
+  name: '${resourceName}-app'
+  location: location
+  parent: gallery
+  properties: {
+    supportedOSType: 'Linux'
   }
 }
 
@@ -53,23 +70,6 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
   parent: storageaccountBlobservices
   properties: {
     publicAccess: 'Blob'
-  }
-}
-
-resource gallery 'Microsoft.Compute/galleries@2022-03-03' = {
-  name: '${resourceName}sig'
-  location: location
-  properties: {
-    description: ''
-  }
-}
-
-resource application 'Microsoft.Compute/galleries/applications@2022-03-03' = {
-  name: '${resourceName}-app'
-  location: location
-  parent: gallery
-  properties: {
-    supportedOSType: 'Linux'
   }
 }
 

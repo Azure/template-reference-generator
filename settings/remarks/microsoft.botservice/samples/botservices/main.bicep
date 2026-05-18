@@ -11,14 +11,14 @@ resource botService 'Microsoft.BotService/botServices@2021-05-01-preview' = {
   }
   kind: 'sdk'
   properties: {
-    displayName: resourceName
-    endpoint: ''
-    luisKey: ''
-    msaAppId: clientId
-    luisAppIds: []
     developerAppInsightKey: ''
     developerAppInsightsApiKey: ''
     developerAppInsightsApplicationId: ''
+    displayName: resourceName
+    endpoint: ''
+    luisAppIds: []
+    luisKey: ''
+    msaAppId: clientId
   }
   tags: {
     environment: 'production'

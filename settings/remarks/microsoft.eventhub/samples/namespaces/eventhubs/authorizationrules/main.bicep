@@ -10,10 +10,10 @@ resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
     tier: 'Basic'
   }
   properties: {
-    zoneRedundant: false
     disableLocalAuth: false
     isAutoInflateEnabled: false
     publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
   }
 }
 

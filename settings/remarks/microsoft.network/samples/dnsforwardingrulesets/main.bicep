@@ -1,24 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource dnsForwardingRuleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    dnsResolverOutboundEndpoints: [
-      {}
-    ]
-  }
-}
-
-resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    virtualNetwork: {}
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
@@ -35,12 +17,24 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   }
 }
 
+resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    virtualNetwork: {
+      id: virtualNetwork.id
+    }
+  }
+}
+
 resource outboundEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-01' = {
   name: resourceName
   location: location
   parent: dnsResolver
   properties: {
-    subnet: {}
+    subnet: {
+      id: subnet.id
+    }
   }
 }
 
@@ -48,7 +42,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: 'outbounddns'
   parent: virtualNetwork
   properties: {
-    serviceEndpoints: []
     addressPrefix: '10.0.0.64/28'
     delegations: [
       {
@@ -61,5 +54,18 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
+resource dnsForwardingRuleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    dnsResolverOutboundEndpoints: [
+      {
+        id: outboundEndpoint.id
+      }
+    ]
   }
 }

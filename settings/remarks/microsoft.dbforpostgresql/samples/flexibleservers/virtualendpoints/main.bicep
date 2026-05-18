@@ -1,8 +1,8 @@
+param resourceName string = 'acctest0001'
 param location string = 'westus'
 @secure()
 @description('The administrator login password for the PostgreSQL flexible server')
 param administratorLoginPassword string
-param resourceName string = 'acctest0001'
 
 resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
   name: '${resourceName}-primary'
@@ -12,33 +12,12 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' =
     tier: 'GeneralPurpose'
   }
   properties: {
-    administratorLoginPassword: '${administratorLoginPassword}'
-    highAvailability: {
-      mode: 'Disabled'
-    }
-    network: {
-      publicNetworkAccess: 'Disabled'
-    }
     administratorLogin: 'psqladmin'
+    administratorLoginPassword: administratorLoginPassword
     availabilityZone: '1'
     backup: {
       geoRedundantBackup: 'Disabled'
     }
-    storage: {
-      autoGrow: 'Disabled'
-      storageSizeGB: 32
-      tier: 'P30'
-    }
-    version: '16'
-  }
-}
-
-resource flexibleserver1 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
-  name: '${resourceName}-replica'
-  location: location
-  properties: {
-    availabilityZone: '1'
-    createMode: 'Replica'
     highAvailability: {
       mode: 'Disabled'
     }
@@ -46,15 +25,11 @@ resource flexibleserver1 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' 
       publicNetworkAccess: 'Disabled'
     }
     storage: {
+      autoGrow: 'Disabled'
       storageSizeGB: 32
       tier: 'P30'
-      autoGrow: 'Disabled'
     }
     version: '16'
-    backup: {
-      geoRedundantBackup: 'Disabled'
-    }
-    sourceServerResourceId: flexibleServer.id
   }
 }
 
@@ -66,5 +41,30 @@ resource virtualEndpoint 'Microsoft.DBforPostgreSQL/flexibleServers/virtualEndpo
     members: [
       flexibleserver1.name
     ]
+  }
+}
+
+resource flexibleserver1 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
+  name: '${resourceName}-replica'
+  location: location
+  properties: {
+    availabilityZone: '1'
+    backup: {
+      geoRedundantBackup: 'Disabled'
+    }
+    createMode: 'Replica'
+    highAvailability: {
+      mode: 'Disabled'
+    }
+    network: {
+      publicNetworkAccess: 'Disabled'
+    }
+    sourceServerResourceId: flexibleServer.id
+    storage: {
+      autoGrow: 'Disabled'
+      storageSizeGB: 32
+      tier: 'P30'
+    }
+    version: '16'
   }
 }

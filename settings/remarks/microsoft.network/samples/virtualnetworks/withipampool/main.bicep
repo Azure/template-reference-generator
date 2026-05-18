@@ -24,7 +24,9 @@ resource vnetWithipam 'Microsoft.Network/virtualNetworks@2024-05-01' = {
       ipamPoolPrefixAllocations: [
         {
           numberOfIpAddresses: '100'
-          pool: {}
+          pool: {
+            id: ipamPool.id
+          }
         }
       ]
     }
@@ -36,11 +38,11 @@ resource ipamPool 'Microsoft.Network/networkManagers/ipamPools@2024-05-01' = {
   location: location
   parent: networkManager
   properties: {
-    parentPoolName: ''
     addressPrefixes: [
       '10.0.0.0/24'
     ]
     description: 'Test description.'
     displayName: 'testDisplayName'
+    parentPoolName: ''
   }
 }

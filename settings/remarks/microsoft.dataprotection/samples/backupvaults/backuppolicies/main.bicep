@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   name: resourceName
@@ -24,6 +24,14 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
     objectType: 'BackupPolicy'
     policyRules: [
       {
+        backupParameters: {
+          backupType: 'Full'
+          objectType: 'AzureBackupParams'
+        }
+        dataStore: {
+          dataStoreType: 'VaultStore'
+          objectType: 'DataStoreInfoBase'
+        }
         name: 'BackupIntervals'
         objectType: 'AzureBackupRule'
         trigger: {
@@ -35,22 +43,14 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
           }
           taggingCriteria: [
             {
+              isDefault: true
               tagInfo: {
-                tagName: 'Default'
                 id: 'Default_'
+                tagName: 'Default'
               }
               taggingPriority: 99
-              isDefault: true
             }
           ]
-        }
-        backupParameters: {
-          backupType: 'Full'
-          objectType: 'AzureBackupParams'
-        }
-        dataStore: {
-          objectType: 'DataStoreInfoBase'
-          dataStoreType: 'VaultStore'
         }
       }
       {
@@ -58,8 +58,8 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
         lifecycles: [
           {
             deleteAfter: {
-              objectType: 'AbsoluteDeleteOption'
               duration: 'P4M'
+              objectType: 'AbsoluteDeleteOption'
             }
             sourceDataStore: {
               dataStoreType: 'VaultStore'

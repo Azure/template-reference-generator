@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
   name: resourceName
@@ -7,7 +7,8 @@ resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
 }
 
 resource policy 'Microsoft.DevTestLab/labs/policySets/policies@2018-09-15' = {
-  name: 'policySets/default/LabVmCount'
+  name: 'LabVmCount'
+  parent: policySet
   properties: {
     description: ''
     evaluatorType: 'MaxValuePolicy'
@@ -15,4 +16,9 @@ resource policy 'Microsoft.DevTestLab/labs/policySets/policies@2018-09-15' = {
     factName: 'LabVmCount'
     threshold: '999'
   }
+}
+
+resource policySet 'Microsoft.DevTestLab/labs/policySets@2018-09-15' existing = {
+  name: 'default'
+  parent: lab
 }

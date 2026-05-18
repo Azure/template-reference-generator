@@ -8,14 +8,14 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
     name: 'standard'
   }
   properties: {
-    disableLocalAuth: false
-    hostingMode: 'default'
     authOptions: {
       apiKeyOnly: {}
     }
+    disableLocalAuth: false
     encryptionWithCmk: {
       enforcement: 'Disabled'
     }
+    hostingMode: 'default'
     networkRuleSet: {
       ipRules: []
     }

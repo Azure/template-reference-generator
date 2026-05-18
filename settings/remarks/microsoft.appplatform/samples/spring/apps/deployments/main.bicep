@@ -37,11 +37,11 @@ resource deployment 'Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-pr
     }
     source: {
       customContainer: {
+        args: []
         command: []
         containerImage: 'springio/gs-spring-boot-docker'
         languageFramework: ''
         server: 'docker.io'
-        args: []
       }
       type: 'Container'
     }

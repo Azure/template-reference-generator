@@ -17,9 +17,9 @@ resource app 'Microsoft.AppPlatform/Spring/apps@2023-05-01-preview' = {
   location: location
   parent: spring
   properties: {
+    customPersistentDisks: []
     enableEndToEndTLS: false
     public: false
-    customPersistentDisks: []
   }
 }
 
@@ -39,12 +39,12 @@ resource redis 'Microsoft.Cache/redis@2023-04-01' = {
   name: resourceName
   location: location
   properties: {
+    enableNonSslPort: true
+    minimumTlsVersion: '1.2'
     sku: {
       capacity: 2
       family: 'C'
       name: 'Standard'
     }
-    enableNonSslPort: true
-    minimumTlsVersion: '1.2'
   }
 }

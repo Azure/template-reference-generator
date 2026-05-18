@@ -9,28 +9,6 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   location: location
   kind: 'MongoDB'
   properties: {
-    enableAutomaticFailover: false
-    minimalTlsVersion: 'Tls12'
-    networkAclBypass: 'None'
-    publicNetworkAccess: 'Enabled'
-    databaseAccountOfferType: 'Standard'
-    enableMultipleWriteLocations: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: '${location}'
-      }
-    ]
-    enableAnalyticalStorage: false
-    enableBurstCapacity: false
-    enablePartitionMerge: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    networkAclBypassResourceIds: []
-    virtualNetworkRules: []
-    backupPolicy: null
-    enableFreeTier: false
     capabilities: [
       {
         name: 'EnableMongoRoleBasedAccessControl'
@@ -40,23 +18,33 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
       }
     ]
     consistencyPolicy: {
-      maxStalenessPrefix: 100
       defaultConsistencyLevel: 'Strong'
       maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
     }
+    databaseAccountOfferType: 'Standard'
     disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
-  }
-}
-
-resource mongodbDatabas 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
-  name: '${resourceName}-mongodb'
-  parent: databaseAccount
-  properties: {
-    options: {}
-    resource: {
-      id: '${resourceName}-mongodb'
-    }
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableBurstCapacity: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    enablePartitionMerge: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: location
+      }
+    ]
+    minimalTlsVersion: 'Tls12'
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
   }
 }
 
@@ -68,5 +56,16 @@ resource mongodbUserDefinition 'Microsoft.DocumentDB/databaseAccounts/mongodbUse
     mechanisms: 'SCRAM-SHA-256'
     password: mongodbUserPassword
     userName: 'myUserName'
+  }
+}
+
+resource mongodbDatabas 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
+  name: '${resourceName}-mongodb'
+  parent: databaseAccount
+  properties: {
+    options: {}
+    resource: {
+      id: '${resourceName}-mongodb'
+    }
   }
 }

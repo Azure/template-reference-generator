@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
   name: resourceName
@@ -13,7 +13,9 @@ resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
       {
         name: resourceName
         properties: {
-          publicIPAddress: {}
+          publicIPAddress: {
+            id: publicIPAddress.id
+          }
         }
       }
     ]

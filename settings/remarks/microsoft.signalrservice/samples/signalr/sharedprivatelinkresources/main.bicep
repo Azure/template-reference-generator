@@ -9,13 +9,9 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
     name: 'Standard_S1'
   }
   properties: {
-    upstream: {
-      templates: []
-    }
     cors: {}
-    disableLocalAuth: false
-    publicNetworkAccess: 'Enabled'
     disableAadAuth: false
+    disableLocalAuth: false
     features: [
       {
         flag: 'ServiceMode'
@@ -34,6 +30,7 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
         value: 'False'
       }
     ]
+    publicNetworkAccess: 'Enabled'
     resourceLogConfiguration: {
       categories: [
         {
@@ -56,16 +53,9 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
     tls: {
       clientCertEnabled: false
     }
-  }
-}
-
-resource sharedPrivateLinkResource 'Microsoft.SignalRService/signalR/sharedPrivateLinkResources@2023-02-01' = {
-  name: resourceName
-  parent: signalR
-  properties: {
-    groupId: 'vault'
-    privateLinkResourceId: vault.id
-    requestMessage: 'please approve'
+    upstream: {
+      templates: []
+    }
   }
 }
 
@@ -92,17 +82,27 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
       }
     ]
     createMode: 'default'
+    enableRbacAuthorization: false
     enableSoftDelete: true
     enabledForDeployment: false
+    enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
-    enableRbacAuthorization: false
-    enabledForDiskEncryption: false
     sku: {
       family: 'A'
       name: 'standard'
     }
     softDeleteRetentionInDays: 7
     tenantId: tenant().tenantId
+  }
+}
+
+resource sharedPrivateLinkResource 'Microsoft.SignalRService/signalR/sharedPrivateLinkResources@2023-02-01' = {
+  name: resourceName
+  parent: signalR
+  properties: {
+    groupId: 'vault'
+    privateLinkResourceId: vault.id
+    requestMessage: 'please approve'
   }
 }

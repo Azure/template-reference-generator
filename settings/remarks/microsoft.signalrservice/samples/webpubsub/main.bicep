@@ -5,15 +5,15 @@ resource webPubSub 'Microsoft.SignalRService/webPubSub@2023-02-01' = {
   name: resourceName
   location: location
   sku: {
-    name: 'Standard_S1'
     capacity: 1
+    name: 'Standard_S1'
   }
   properties: {
+    disableAadAuth: false
     disableLocalAuth: false
     publicNetworkAccess: 'Enabled'
     tls: {
       clientCertEnabled: false
     }
-    disableAadAuth: false
   }
 }

@@ -1,14 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource resourceGuard 'Microsoft.DataProtection/resourceGuards@2022-04-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    vaultCriticalOperationExclusionList: []
-  }
-}
-
 resource vault 'Microsoft.RecoveryServices/vaults@2022-10-01' = {
   name: resourceName
   location: location
@@ -25,5 +17,13 @@ resource backupResourceGuardProxy 'Microsoft.RecoveryServices/vaults/backupResou
   parent: vault
   properties: {
     resourceGuardResourceId: resourceGuard.id
+  }
+}
+
+resource resourceGuard 'Microsoft.DataProtection/resourceGuards@2022-04-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    vaultCriticalOperationExclusionList: []
   }
 }

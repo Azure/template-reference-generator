@@ -9,19 +9,19 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     name: 'Consumption'
   }
   properties: {
-    publicNetworkAccess: 'Enabled'
-    publisherEmail: 'pub1@email.com'
-    publisherName: 'pub1'
-    virtualNetworkType: 'None'
     certificates: []
     customProperties: {
-      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
     }
     disableGateway: false
+    publicNetworkAccess: 'Enabled'
+    publisherEmail: 'pub1@email.com'
+    publisherName: 'pub1'
+    virtualNetworkType: 'None'
   }
 }
 
@@ -43,13 +43,13 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
+    Application_Type: 'web'
+    DisableIpMasking: false
+    DisableLocalAuth: false
     ForceCustomerStorageForProfiler: false
     RetentionInDays: 90
     SamplingPercentage: 100
-    Application_Type: 'web'
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
-    DisableIpMasking: false
-    DisableLocalAuth: false
   }
 }

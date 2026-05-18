@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName
@@ -20,13 +20,13 @@ resource topic 'Microsoft.ServiceBus/namespaces/topics@2021-06-01-preview' = {
   name: resourceName
   parent: namespace
   properties: {
+    enableBatchedOperations: false
+    enableExpress: false
+    enablePartitioning: false
     maxSizeInMegabytes: 5120
     requiresDuplicateDetection: false
     status: 'Active'
     supportOrdering: false
-    enableBatchedOperations: false
-    enableExpress: false
-    enablePartitioning: false
   }
 }
 

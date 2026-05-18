@@ -6,6 +6,22 @@ resource deployment 'Microsoft.Resources/deployments@2020-06-01' = {
   properties: {
     mode: 'Complete'
     template: {
+      '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
+      contentVersion: '1.0.0.0'
+      parameters: {
+        storageAccountType: {
+          allowedValues: [
+            'Standard_LRS'
+            'Standard_GRS'
+            'Standard_ZRS'
+          ]
+          defaultValue: 'Standard_LRS'
+          metadata: {
+            description: 'Storage Account type'
+          }
+          type: 'string'
+        }
+      }
       resources: [
         {
           apiVersion: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
@@ -17,16 +33,16 @@ resource deployment 'Microsoft.Resources/deployments@2020-06-01' = {
           type: 'Microsoft.Storage/storageAccounts'
         }
         {
-          type: 'Microsoft.Network/publicIPAddresses'
           apiVersion: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
           location: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
           name: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
           properties: {
-            publicIPAllocationMethod: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
             dnsSettings: {
               domainNameLabel: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
             }
+            publicIPAllocationMethod: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
           }
+          type: 'Microsoft.Network/publicIPAddresses'
         }
       ]
       variables: {
@@ -36,22 +52,6 @@ resource deployment 'Microsoft.Resources/deployments@2020-06-01' = {
         publicIPAddressName: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         publicIPAddressType: 'Dynamic'
         storageAccountName: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
-      }
-      '$schema': 'https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#'
-      contentVersion: '1.0.0.0'
-      parameters: {
-        storageAccountType: {
-          defaultValue: 'Standard_LRS'
-          metadata: {
-            description: 'Storage Account type'
-          }
-          type: 'string'
-          allowedValues: [
-            'Standard_LRS'
-            'Standard_GRS'
-            'Standard_ZRS'
-          ]
-        }
       }
     }
   }

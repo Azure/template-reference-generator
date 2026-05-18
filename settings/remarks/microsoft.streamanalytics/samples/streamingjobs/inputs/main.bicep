@@ -1,22 +1,47 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
+  name: resourceName
+  location: location
+  sku: {
+    capacity: 1
+    name: 'S1'
+  }
+  properties: {
+    cloudToDevice: {}
+    enableFileUploadNotifications: false
+    messagingEndpoints: {}
+    routing: {
+      fallbackRoute: {
+        condition: 'true'
+        endpointNames: [
+          'events'
+        ]
+        isEnabled: true
+        source: 'DeviceMessages'
+      }
+    }
+    storageEndpoints: {}
+  }
+}
+
 resource streamingJob 'Microsoft.StreamAnalytics/streamingJobs@2020-03-01' = {
   name: resourceName
   location: location
   properties: {
     cluster: {}
     compatibilityLevel: '1.0'
+    contentStoragePolicy: 'SystemAccount'
     dataLocale: 'en-GB'
     eventsLateArrivalMaxDelayInSeconds: 60
     eventsOutOfOrderMaxDelayInSeconds: 50
     eventsOutOfOrderPolicy: 'Adjust'
+    jobType: 'Cloud'
     outputErrorPolicy: 'Drop'
     sku: {
       name: 'Standard'
     }
-    contentStoragePolicy: 'SystemAccount'
-    jobType: 'Cloud'
     transformation: {
       name: 'main'
       properties: {
@@ -49,30 +74,5 @@ resource input 'Microsoft.StreamAnalytics/streamingJobs/inputs@2020-03-01' = {
       type: 'Avro'
     }
     type: 'Stream'
-  }
-}
-
-resource iotHub 'Microsoft.Devices/IotHubs@2022-04-30-preview' = {
-  name: resourceName
-  location: location
-  sku: {
-    capacity: 1
-    name: 'S1'
-  }
-  properties: {
-    routing: {
-      fallbackRoute: {
-        endpointNames: [
-          'events'
-        ]
-        isEnabled: true
-        source: 'DeviceMessages'
-        condition: 'true'
-      }
-    }
-    storageEndpoints: {}
-    cloudToDevice: {}
-    enableFileUploadNotifications: false
-    messagingEndpoints: {}
   }
 }

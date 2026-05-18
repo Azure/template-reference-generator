@@ -9,6 +9,7 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
     scopes: [
       {
         description: 'Security Export for the subscription'
+        scopePath: resourceGroup().id
       }
     ]
     sources: [
@@ -49,49 +50,49 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
         eventSource: 'SubAssessmentsSnapshot'
       }
       {
+        eventSource: 'Alerts'
         ruleSets: [
           {
             rules: [
               {
-                operator: 'Equals'
                 propertyJPath: 'Severity'
                 propertyType: 'String'
                 expectedValue: 'low'
+                operator: 'Equals'
               }
             ]
           }
           {
             rules: [
               {
+                propertyJPath: 'Severity'
                 propertyType: 'String'
                 expectedValue: 'medium'
                 operator: 'Equals'
-                propertyJPath: 'Severity'
               }
             ]
           }
           {
             rules: [
               {
-                operator: 'Equals'
                 propertyJPath: 'Severity'
                 propertyType: 'String'
                 expectedValue: 'high'
+                operator: 'Equals'
               }
             ]
           }
           {
             rules: [
               {
+                propertyJPath: 'Severity'
                 propertyType: 'String'
                 expectedValue: 'informational'
                 operator: 'Equals'
-                propertyJPath: 'Severity'
               }
             ]
           }
         ]
-        eventSource: 'Alerts'
       }
       {
         eventSource: 'SecureScores'
@@ -114,6 +115,7 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
     ]
     actions: [
       {
+        workspaceResourceId: workspace.id
         actionType: 'Workspace'
       }
     ]
@@ -124,12 +126,6 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
-    sku: {
-      name: 'PerGB2018'
-    }
-    workspaceCapping: {
-      dailyQuotaGb: -1
-    }
     features: {
       disableLocalAuth: false
       enableLogAccessUsingOnlyResourcePermissions: true
@@ -137,5 +133,11 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
     retentionInDays: 30
+    sku: {
+      name: 'PerGB2018'
+    }
+    workspaceCapping: {
+      dailyQuotaGb: -1
+    }
   }
 }

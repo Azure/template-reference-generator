@@ -30,6 +30,8 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
         rulePrecedence: 1
         serviceDataFlowTemplates: [
           {
+            direction: 'Uplink'
+            ports: []
             protocol: [
               'ip'
             ]
@@ -37,8 +39,6 @@ resource service 'Microsoft.MobileNetwork/mobileNetworks/services@2022-11-01' = 
               '10.3.4.0/24'
             ]
             templateName: 'IP-to-server'
-            direction: 'Uplink'
-            ports: []
           }
         ]
         trafficControl: 'Enabled'
@@ -53,42 +53,45 @@ resource simPolicy 'Microsoft.MobileNetwork/mobileNetworks/simPolicies@2022-11-0
   location: location
   parent: mobileNetwork
   properties: {
-    defaultSlice: {}
+    defaultSlice: {
+      id: slice.id
+    }
     registrationTimer: 3240
     sliceConfigurations: [
       {
-        defaultDataNetwork: {
-          id: dataNetwork.id
-        }
-        slice: {}
         dataNetworkConfigurations: [
           {
+            '5qi': 9
             allocationAndRetentionPriorityLevel: 9
-            dataNetwork: {
-              id: dataNetwork.id
-            }
-            defaultSessionType: 'IPv4'
-            preemptionVulnerability: 'Preemptable'
             allowedServices: [
               {
                 id: service.id
               }
             ]
+            dataNetwork: {
+              id: dataNetwork.id
+            }
+            defaultSessionType: 'IPv4'
             maximumNumberOfBufferedPackets: 10
             preemptionCapability: 'NotPreempt'
+            preemptionVulnerability: 'Preemptable'
             sessionAmbr: {
-              uplink: '500 Mbps'
               downlink: '1 Gbps'
+              uplink: '500 Mbps'
             }
-            '5qi': 9
-            additionalAllowedSessionTypes: null
           }
         ]
+        defaultDataNetwork: {
+          id: dataNetwork.id
+        }
+        slice: {
+          id: slice.id
+        }
       }
     ]
     ueAmbr: {
-      uplink: '500 Mbps'
       downlink: '1 Gbps'
+      uplink: '500 Mbps'
     }
   }
   tags: {

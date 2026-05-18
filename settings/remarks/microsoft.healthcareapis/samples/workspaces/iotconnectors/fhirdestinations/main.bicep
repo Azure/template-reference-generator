@@ -1,6 +1,11 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource workspace 'Microsoft.HealthcareApis/workspaces@2022-12-01' = {
+  name: resourceName
+  location: location
+}
+
 resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
@@ -21,15 +26,10 @@ resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   name: resourceName
   parent: namespace
   properties: {
-    status: 'Active'
     messageRetentionInDays: 1
     partitionCount: 2
+    status: 'Active'
   }
-}
-
-resource workspace 'Microsoft.HealthcareApis/workspaces@2022-12-01' = {
-  name: resourceName
-  location: location
 }
 
 resource fhirService 'Microsoft.HealthcareApis/workspaces/fhirServices@2022-12-01' = {
@@ -45,10 +45,10 @@ resource fhirService 'Microsoft.HealthcareApis/workspaces/fhirServices@2022-12-0
       smartProxyEnabled: false
     }
     corsConfiguration: {
+      allowCredentials: false
       headers: []
       methods: []
       origins: []
-      allowCredentials: false
     }
   }
 }
@@ -58,15 +58,16 @@ resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12
   location: location
   parent: workspace
   properties: {
-    ingestionEndpointConfiguration: {
-      eventHubName: eventhub.name
-      fullyQualifiedEventHubNamespace: '${namespace.name}.servicebus.windows.net'
-    }
     deviceMapping: {
       content: {
         template: []
         templateType: 'CollectionContent'
       }
+    }
+    ingestionEndpointConfiguration: {
+      consumerGroup: consumerGroup.id
+      eventHubName: eventhub.name
+      fullyQualifiedEventHubNamespace: '${namespace.name}.servicebus.windows.net'
     }
   }
 }

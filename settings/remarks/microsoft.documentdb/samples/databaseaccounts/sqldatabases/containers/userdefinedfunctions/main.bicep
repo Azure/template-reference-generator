@@ -6,10 +6,22 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
     databaseAccountOfferType: 'Standard'
-    disableLocalAuth: false
-    isVirtualNetworkFilterEnabled: false
     defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
     locations: [
       {
         failoverPriority: 0
@@ -18,21 +30,9 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
       }
     ]
     networkAclBypass: 'None'
-    capabilities: []
-    disableKeyBasedMetadataWriteAccess: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
+    networkAclBypassResourceIds: []
     publicNetworkAccess: 'Enabled'
     virtualNetworkRules: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    enableAnalyticalStorage: false
-    enableMultipleWriteLocations: false
-    ipRules: []
-    networkAclBypassResourceIds: []
   }
 }
 
@@ -40,10 +40,10 @@ resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10
   name: resourceName
   parent: databaseAccount
   properties: {
-    resource: {
-      id: '${resourceName}'
-    }
     options: {}
+    resource: {
+      id: resourceName
+    }
   }
 }
 
@@ -53,7 +53,7 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
   properties: {
     options: {}
     resource: {
-      id: '${resourceName}'
+      id: resourceName
       partitionKey: {
         kind: 'Hash'
         paths: [
@@ -76,7 +76,7 @@ resource userDefinedFunction 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases
 		response.setBody(''Hello, World'');
 	}
 '''
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }

@@ -9,18 +9,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
     allowCrossTenantReplication: false
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     dnsEndpointType: 'Standard'
-    isNfsV3Enabled: false
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: []
-      resourceAccessRules: []
-      virtualNetworkRules: []
-    }
-    publicNetworkAccess: 'Enabled'
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -33,42 +27,19 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       }
     }
     isHnsEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: true
-    allowSharedKeyAccess: true
     isLocalUserEnabled: true
-    supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
+    isNfsV3Enabled: false
     isSftpEnabled: false
-  }
-}
-
-resource storageaccountBlobservices 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
-  name: 'default'
-  parent: storageAccount
-}
-
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
-  name: 'datacontainer'
-  parent: storageaccountBlobservices
-  properties: {
-    publicAccess: 'None'
-  }
-}
-
-resource component 'Microsoft.Insights/components@2020-02-02' = {
-  name: '${resourceName}-ai'
-  location: location
-  kind: 'web'
-  properties: {
-    DisableIpMasking: false
-    DisableLocalAuth: false
-    ForceCustomerStorageForProfiler: false
-    RetentionInDays: 90
-    SamplingPercentage: 100
-    publicNetworkAccessForIngestion: 'Enabled'
-    Application_Type: 'web'
-    publicNetworkAccessForQuery: 'Enabled'
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+      ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -76,20 +47,20 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: '${resourceName}vault'
   location: location
   properties: {
+    accessPolicies: []
     createMode: 'default'
+    enablePurgeProtection: true
+    enableRbacAuthorization: false
     enableSoftDelete: true
+    enabledForDeployment: false
     enabledForDiskEncryption: false
     enabledForTemplateDeployment: false
+    publicNetworkAccess: 'Enabled'
     sku: {
       family: 'A'
       name: 'standard'
     }
     tenantId: tenant().tenantId
-    accessPolicies: []
-    enablePurgeProtection: true
-    enableRbacAuthorization: false
-    enabledForDeployment: false
-    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -110,6 +81,19 @@ resource workspace 'Microsoft.MachineLearningServices/workspaces@2024-04-01' = {
   }
 }
 
+resource storageaccountBlobservices 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
+  name: 'datacontainer'
+  parent: storageaccountBlobservices
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
 resource dataStore 'Microsoft.MachineLearningServices/workspaces/dataStores@2024-04-01' = {
   name: replace('${resourceName}_ds', '-', '_')
   parent: workspace
@@ -118,17 +102,33 @@ resource dataStore 'Microsoft.MachineLearningServices/workspaces/dataStores@2024
   ]
   properties: {
     accountName: storageAccount.name
+    containerName: container.name
     credentials: {
       credentialsType: 'AccountKey'
       secrets: {
-        secretsType: 'AccountKey'
         key: base64(storageAccount.listKeys().keys[0].value)
+        secretsType: 'AccountKey'
       }
     }
     datastoreType: 'AzureBlob'
     description: ''
     endpoint: 'core.windows.net'
     serviceDataAccessAuthIdentity: 'None'
-    tags: null
+  }
+}
+
+resource component 'Microsoft.Insights/components@2020-02-02' = {
+  name: '${resourceName}-ai'
+  location: location
+  kind: 'web'
+  properties: {
+    Application_Type: 'web'
+    DisableIpMasking: false
+    DisableLocalAuth: false
+    ForceCustomerStorageForProfiler: false
+    RetentionInDays: 90
+    SamplingPercentage: 100
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
   }
 }

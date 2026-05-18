@@ -1,11 +1,10 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource spacecraft 'Microsoft.Orbital/spacecrafts@2022-11-01' = {
   name: resourceName
   location: location
   properties: {
-    tleLine2: '2 23455  99.0090 272.6745 0008546 223.1686 136.8816 14.11711747148495'
     links: [
       {
         bandwidthMHz: 100
@@ -18,5 +17,6 @@ resource spacecraft 'Microsoft.Orbital/spacecrafts@2022-11-01' = {
     noradId: '12345'
     titleLine: 'AQUA'
     tleLine1: '1 23455U 94089A   97320.90946019  .00000140  00000-0  10191-3 0  2621'
+    tleLine2: '2 23455  99.0090 272.6745 0008546 223.1686 136.8816 14.11711747148495'
   }
 }

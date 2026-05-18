@@ -6,7 +6,18 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
+  }
+}
+
+resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
+  name: resourceName
+  parent: factory
+  properties: {
+    description: ''
+    type: 'AzureBlobStorage'
+    typeProperties: {
+      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
+    }
   }
 }
 
@@ -18,31 +29,31 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
-        table: {
+        queue: {
           keyType: 'Service'
         }
-        queue: {
+        table: {
           keyType: 'Service'
         }
       }
     }
+    isHnsEnabled: false
+    isNfsV3Enabled: false
     isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    defaultToOAuthAuthentication: false
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
   }
 }
 
@@ -69,8 +80,9 @@ source1 sink(
         {
           description: ''
           linkedService: {
-            type: 'LinkedServiceReference'
             parameters: {}
+            referenceName: linkedservice.name
+            type: 'LinkedServiceReference'
           }
           name: 'sink1'
         }
@@ -80,23 +92,12 @@ source1 sink(
           description: ''
           linkedService: {
             parameters: {}
+            referenceName: linkedservice.name
             type: 'LinkedServiceReference'
           }
           name: 'source1'
         }
       ]
-    }
-  }
-}
-
-resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-  name: resourceName
-  parent: factory
-  properties: {
-    description: ''
-    type: 'AzureBlobStorage'
-    typeProperties: {
-      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
     }
   }
 }

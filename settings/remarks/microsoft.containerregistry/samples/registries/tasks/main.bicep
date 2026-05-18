@@ -11,11 +11,11 @@ resource registry 'Microsoft.ContainerRegistry/registries@2021-08-01-preview' = 
   properties: {
     adminUserEnabled: false
     anonymousPullEnabled: false
+    dataEndpointEnabled: false
     encryption: {
       status: 'disabled'
     }
     networkRuleBypassOptions: 'AzureServices'
-    dataEndpointEnabled: false
     policies: {
       exportPolicy: {
         status: 'enabled'
@@ -40,9 +40,8 @@ resource task 'Microsoft.ContainerRegistry/registries/tasks@2019-06-01-preview' 
   location: location
   parent: registry
   properties: {
-    step: null
-    timeout: 3600
     isSystemTask: true
     status: 'Enabled'
+    timeout: 3600
   }
 }

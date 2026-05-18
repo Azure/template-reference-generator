@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-preview' = {
   name: resourceName
@@ -13,7 +13,7 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2023-04-02-p
         vmSize: 'Standard_DS2_v2'
       }
     ]
-    dnsPrefix: '${resourceName}'
+    dnsPrefix: resourceName
   }
 }
 
@@ -33,14 +33,13 @@ resource fluxConfiguration 'Microsoft.KubernetesConfiguration/fluxConfigurations
     extension
   ]
   properties: {
-    suspend: false
     gitRepository: {
-      syncIntervalInSeconds: 120
-      timeoutInSeconds: 120
-      url: 'https://github.com/Azure/arc-k8s-demo'
       repositoryRef: {
         branch: 'branch'
       }
+      syncIntervalInSeconds: 120
+      timeoutInSeconds: 120
+      url: 'https://github.com/Azure/arc-k8s-demo'
     }
     kustomizations: {
       applications: {
@@ -55,16 +54,17 @@ resource fluxConfiguration 'Microsoft.KubernetesConfiguration/fluxConfigurations
         timeoutInSeconds: 600
       }
       shared: {
+        force: false
         path: 'cluster-config/shared'
         prune: false
         retryIntervalInSeconds: 60
         syncIntervalInSeconds: 60
         timeoutInSeconds: 600
-        force: false
       }
     }
     namespace: 'flux-system'
     scope: 'cluster'
     sourceKind: 'GitRepository'
+    suspend: false
   }
 }

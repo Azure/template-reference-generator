@@ -5,13 +5,15 @@ resource actionRule 'Microsoft.AlertsManagement/actionRules@2021-08-08' = {
   name: resourceName
   location: 'global'
   properties: {
-    enabled: true
-    scopes: []
     actions: [
       {
         actionType: 'RemoveAllActionGroups'
       }
     ]
     description: ''
+    enabled: true
+    scopes: [
+      resourceGroup().id
+    ]
   }
 }

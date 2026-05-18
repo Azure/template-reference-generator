@@ -16,17 +16,17 @@ resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
     tier: 'GeneralPurpose'
   }
   properties: {
-    administratorLogin: '${administratorLogin}'
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
+    createMode: 'Default'
     infrastructureEncryption: 'Disabled'
     minimalTlsVersion: 'TLS1_1'
+    publicNetworkAccess: 'Enabled'
     sslEnforcement: 'Enabled'
     storageProfile: {
       storageAutogrow: 'Enabled'
       storageMB: 51200
     }
-    administratorLoginPassword: '${administratorLoginPassword}'
-    createMode: 'Default'
-    publicNetworkAccess: 'Enabled'
     version: '5.7'
   }
 }

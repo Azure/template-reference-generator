@@ -22,7 +22,6 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
       tenantId: tenant().tenantId
     }
     availabilityZone: '2'
-    version: '12'
     backup: {
       geoRedundantBackup: 'Disabled'
     }
@@ -33,6 +32,7 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
     storage: {
       storageSizeGB: 32
     }
+    version: '12'
   }
 }
 

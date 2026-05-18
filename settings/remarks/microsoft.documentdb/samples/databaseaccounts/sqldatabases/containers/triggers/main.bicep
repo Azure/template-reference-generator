@@ -1,38 +1,38 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   name: resourceName
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
+    capabilities: []
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session'
       maxIntervalInSeconds: 5
       maxStalenessPrefix: 100
     }
-    isVirtualNetworkFilterEnabled: false
-    ipRules: []
-    publicNetworkAccess: 'Enabled'
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
     disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
     enableAutomaticFailover: false
     enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
     locations: [
       {
+        failoverPriority: 0
         isZoneRedundant: false
         locationName: 'West Europe'
-        failoverPriority: 0
       }
     ]
     networkAclBypass: 'None'
     networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
     virtualNetworkRules: []
-    capabilities: []
-    databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableMultipleWriteLocations: false
   }
 }
 
@@ -42,7 +42,7 @@ resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10
   properties: {
     options: {}
     resource: {
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }
@@ -53,7 +53,7 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
   properties: {
     options: {}
     resource: {
-      id: '${resourceName}'
+      id: resourceName
       partitionKey: {
         kind: 'Hash'
         paths: [
@@ -71,7 +71,7 @@ resource trigger 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/
     options: {}
     resource: {
       body: 'function trigger(){}'
-      id: '${resourceName}'
+      id: resourceName
       triggerOperation: 'All'
       triggerType: 'Pre'
     }

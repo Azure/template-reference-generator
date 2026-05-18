@@ -17,7 +17,9 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
           primary: true
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
+          subnet: {
+            id: subnet.id
+          }
         }
       }
     ]
@@ -51,10 +53,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
     }
     storageProfile: {
       imageReference: {
-        sku: '16.04-LTS'
-        version: 'latest'
         offer: 'UbuntuServer'
         publisher: 'Canonical'
+        sku: '16.04-LTS'
+        version: 'latest'
       }
       osDisk: {
         caching: 'ReadWrite'
@@ -87,6 +89,7 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
   location: location
   parent: virtualMachine
   properties: {
+    autoUpgradeMinorVersion: false
     enableAutomaticUpgrade: false
     publisher: 'Microsoft.Azure.Extensions'
     settings: {
@@ -95,7 +98,6 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
     suppressFailures: false
     type: 'CustomScript'
     typeHandlerVersion: '2.0'
-    autoUpgradeMinorVersion: false
   }
   tags: {
     environment: 'Production'
@@ -106,11 +108,11 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
-    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

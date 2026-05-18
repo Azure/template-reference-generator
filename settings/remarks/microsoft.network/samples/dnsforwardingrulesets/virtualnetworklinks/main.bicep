@@ -1,6 +1,16 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    virtualNetwork: {
+      id: virtualNetwork.id
+    }
+  }
+}
+
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
@@ -17,23 +27,34 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   }
 }
 
+resource outboundEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-01' = {
+  name: resourceName
+  location: location
+  parent: dnsResolver
+  properties: {
+    subnet: {
+      id: subnet.id
+    }
+  }
+}
+
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: 'outbounddns'
   parent: virtualNetwork
   properties: {
-    serviceEndpoints: []
     addressPrefix: '10.0.0.64/28'
     delegations: [
       {
+        name: 'Microsoft.Network.dnsResolvers'
         properties: {
           serviceName: 'Microsoft.Network/dnsResolvers'
         }
-        name: 'Microsoft.Network.dnsResolvers'
       }
     ]
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }
 
@@ -42,7 +63,9 @@ resource dnsForwardingRuleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-0
   location: location
   properties: {
     dnsResolverOutboundEndpoints: [
-      {}
+      {
+        id: outboundEndpoint.id
+      }
     ]
   }
 }
@@ -51,26 +74,8 @@ resource virtualNetworkLink 'Microsoft.Network/dnsForwardingRulesets/virtualNetw
   name: resourceName
   parent: dnsForwardingRuleset
   properties: {
-    metadata: null
     virtualNetwork: {
       id: virtualNetwork.id
     }
-  }
-}
-
-resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    virtualNetwork: {}
-  }
-}
-
-resource outboundEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-01' = {
-  name: resourceName
-  location: location
-  parent: dnsResolver
-  properties: {
-    subnet: {}
   }
 }

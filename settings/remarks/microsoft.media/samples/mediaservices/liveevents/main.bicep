@@ -17,6 +17,7 @@ resource mediaService 'Microsoft.Media/mediaServices@2021-11-01' = {
     publicNetworkAccess: 'Enabled'
     storageAccounts: [
       {
+        id: storageAccount.id
         type: 'Primary'
       }
     ]
@@ -29,19 +30,19 @@ resource liveEvent 'Microsoft.Media/mediaServices/liveEvents@2022-08-01' = {
   parent: mediaService
   properties: {
     input: {
-      keyFrameIntervalDuration: 'PT6S'
-      streamingProtocol: 'RTMP'
       accessControl: {
         ip: {
           allow: [
             {
-              subnetPrefixLength: 0
               address: '0.0.0.0'
               name: 'AllowAll'
+              subnetPrefixLength: 0
             }
           ]
         }
       }
+      keyFrameIntervalDuration: 'PT6S'
+      streamingProtocol: 'RTMP'
     }
   }
 }

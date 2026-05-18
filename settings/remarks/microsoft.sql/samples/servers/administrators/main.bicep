@@ -11,7 +11,7 @@ resource server 'Microsoft.Sql/servers@2015-05-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: '${administratorLoginPassword}'
+    administratorLoginPassword: administratorLoginPassword
     version: '12.0'
   }
 }

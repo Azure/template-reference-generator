@@ -5,10 +5,10 @@ resource serverfarm 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: resourceName
   location: location
   sku: {
+    capacity: 1
     name: 'S1'
     size: 'S1'
     tier: 'Standard'
-    capacity: 1
   }
   kind: 'Windows'
   properties: {
@@ -20,12 +20,12 @@ resource site 'Microsoft.Web/sites@2021-02-01' = {
   name: resourceName
   location: location
   properties: {
-    siteConfig: {}
     clientAffinityEnabled: false
     clientCertEnabled: false
     enabled: true
     httpsOnly: false
     serverFarmId: serverfarm.id
+    siteConfig: {}
   }
 }
 

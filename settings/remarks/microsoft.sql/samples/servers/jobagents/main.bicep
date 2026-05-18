@@ -8,12 +8,12 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLoginPassword: '${sqlAdministratorPassword}'
+    administratorLogin: '4dministr4t0r'
+    administratorLoginPassword: sqlAdministratorPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
-    administratorLogin: '4dministr4t0r'
   }
 }
 
@@ -22,17 +22,17 @@ resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
   location: location
   parent: server
   properties: {
+    autoPauseDelay: 0
+    collation: 'SQL_Latin1_General_CP1_CI_AS'
+    createMode: 'Default'
+    elasticPoolId: ''
+    highAvailabilityReplicaCount: 0
     isLedgerOn: false
     maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
-    zoneRedundant: false
-    autoPauseDelay: 0
-    elasticPoolId: ''
     minCapacity: 0
     readScale: 'Disabled'
     requestedBackupStorageRedundancy: 'Geo'
-    collation: 'SQL_Latin1_General_CP1_CI_AS'
-    createMode: 'Default'
-    highAvailabilityReplicaCount: 0
+    zoneRedundant: false
   }
 }
 

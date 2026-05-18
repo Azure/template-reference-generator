@@ -1,18 +1,18 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 var dataCollectionLogColumns = [
   {
-    type: 'string'
     name: 'RawData'
-  }
-  {
-    name: 'FilePath'
     type: 'string'
   }
   {
-    name: 'TimeGenerated'
+    type: 'string'
+    name: 'FilePath'
+  }
+  {
     type: 'datetime'
+    name: 'TimeGenerated'
   }
 ]
 var dataCollectionLogTableName = 'DataCollectionLog_CL'
@@ -42,8 +42,8 @@ resource table 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
   parent: workspace
   properties: {
     schema: {
-      columns: '${dataCollectionLogColumns}'
-      name: '${dataCollectionLogTableName}'
+      columns: dataCollectionLogColumns
+      name: dataCollectionLogTableName
     }
   }
 }

@@ -8,12 +8,12 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLoginPassword: '${administratorLoginPassword}'
+    administratorLogin: '4dm1n157r470r'
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
-    administratorLogin: '4dm1n157r470r'
   }
 }
 
@@ -22,10 +22,10 @@ resource elasticPool 'Microsoft.Sql/servers/elasticPools@2020-11-01-preview' = {
   location: location
   parent: server
   sku: {
-    name: 'BasicPool'
-    tier: 'Basic'
     capacity: 50
     family: ''
+    name: 'BasicPool'
+    tier: 'Basic'
   }
   properties: {
     maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')

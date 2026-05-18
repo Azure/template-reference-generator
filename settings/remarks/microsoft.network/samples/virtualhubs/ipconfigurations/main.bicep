@@ -55,7 +55,9 @@ resource ipConfiguration 'Microsoft.Network/virtualHubs/ipConfigurations@2022-07
     publicIPAddress: {
       id: publicIPAddress.id
     }
-    subnet: {}
+    subnet: {
+      id: subnet.id
+    }
   }
 }
 
@@ -63,11 +65,11 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: 'RouteServerSubnet'
   parent: virtualNetwork
   properties: {
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
     addressPrefix: '10.5.1.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

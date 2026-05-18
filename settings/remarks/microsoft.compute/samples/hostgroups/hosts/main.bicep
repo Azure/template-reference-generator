@@ -17,8 +17,8 @@ resource host 'Microsoft.Compute/hostGroups/hosts@2021-11-01' = {
     name: 'DSv3-Type1'
   }
   properties: {
+    autoReplaceOnFailure: true
     licenseType: 'None'
     platformFaultDomain: 1
-    autoReplaceOnFailure: true
   }
 }

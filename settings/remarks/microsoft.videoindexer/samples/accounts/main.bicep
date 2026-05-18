@@ -6,6 +6,7 @@ resource account 'Microsoft.VideoIndexer/accounts@2025-04-01' = {
   location: location
   properties: {
     storageServices: {
+      resourceId: storageAccount.id
       userAssignedIdentity: ''
     }
   }
@@ -19,21 +20,12 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      bypass: 'AzureServices'
-      defaultAction: 'Allow'
-      ipRules: []
-      resourceAccessRules: []
-      virtualNetworkRules: []
-    }
     accessTier: 'Hot'
-    allowSharedKeyAccess: true
-    dnsEndpointType: 'Standard'
-    isLocalUserEnabled: true
+    allowBlobPublicAccess: true
     allowCrossTenantReplication: false
-    isNfsV3Enabled: false
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
+    dnsEndpointType: 'Standard'
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -46,10 +38,19 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
       }
     }
     isHnsEnabled: false
+    isLocalUserEnabled: true
+    isNfsV3Enabled: false
     isSftpEnabled: false
-    supportsHttpsTrafficOnly: true
-    allowBlobPublicAccess: true
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      bypass: 'AzureServices'
+      defaultAction: 'Allow'
+      ipRules: []
+      resourceAccessRules: []
+      virtualNetworkRules: []
+    }
     publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }
 

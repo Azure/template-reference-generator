@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
-param location string = 'westus'
 param resourceName string = 'acctest0001'
+param location string = 'westus'
 
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: resourceName
@@ -37,15 +37,14 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
 resource policySetDefinition 'Microsoft.Authorization/policySetDefinitions@2025-01-01' = {
   name: 'acctestpolset-${resourceName}'
   properties: {
-    policyType: 'Custom'
     description: ''
     displayName: 'acctestpolset-${resourceName}'
     parameters: {
       allowedLocations: {
         metadata: {
-          strongType: 'location'
           description: 'The list of allowed locations for resources.'
           displayName: 'Allowed locations'
+          strongType: 'location'
         }
         type: 'Array'
       }
@@ -62,5 +61,6 @@ resource policySetDefinition 'Microsoft.Authorization/policySetDefinitions@2025-
         policyDefinitionReferenceId: ''
       }
     ]
+    policyType: 'Custom'
   }
 }

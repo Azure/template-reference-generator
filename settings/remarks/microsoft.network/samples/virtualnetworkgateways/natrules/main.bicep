@@ -1,20 +1,52 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
+resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
   name: resourceName
   location: location
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
-  }
   properties: {
-    idleTimeoutInMinutes: 4
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Dynamic'
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
+    activeActive: false
+    enableBgp: false
+    enablePrivateIpAddress: false
+    gatewayType: 'Vpn'
+    ipConfigurations: [
+      {
+        name: 'vnetGatewayConfig'
+        properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          publicIPAddress: {
+            id: publicIPAddress.id
+          }
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
+    sku: {
+      name: 'Basic'
+      tier: 'Basic'
     }
+    vpnType: 'RouteBased'
+  }
+}
+
+resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' = {
+  name: resourceName
+  parent: virtualNetworkGateway
+  properties: {
+    externalMappings: [
+      {
+        addressSpace: '10.1.0.0/26'
+      }
+    ]
+    internalMappings: [
+      {
+        addressSpace: '10.3.0.0/26'
+      }
+    ]
+    mode: 'EgressSnat'
+    type: 'Static'
   }
 }
 
@@ -34,53 +66,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   }
 }
 
-resource virtualNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    sku: {
-      name: 'Basic'
-      tier: 'Basic'
-    }
-    vpnType: 'RouteBased'
-    activeActive: false
-    enableBgp: false
-    enablePrivateIpAddress: false
-    gatewayType: 'Vpn'
-    ipConfigurations: [
-      {
-        properties: {
-          publicIPAddress: {
-            id: publicIPAddress.id
-          }
-          subnet: {}
-          privateIPAllocationMethod: 'Dynamic'
-        }
-        name: 'vnetGatewayConfig'
-      }
-    ]
-  }
-}
-
-resource natRule 'Microsoft.Network/virtualNetworkGateways/natRules@2022-07-01' = {
-  name: resourceName
-  parent: virtualNetworkGateway
-  properties: {
-    type: 'Static'
-    externalMappings: [
-      {
-        addressSpace: '10.1.0.0/26'
-      }
-    ]
-    internalMappings: [
-      {
-        addressSpace: '10.3.0.0/26'
-      }
-    ]
-    mode: 'EgressSnat'
-  }
-}
-
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: 'GatewaySubnet'
   parent: virtualNetwork
@@ -91,5 +76,22 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Regional'
+  }
+  properties: {
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
+    idleTimeoutInMinutes: 4
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Dynamic'
   }
 }

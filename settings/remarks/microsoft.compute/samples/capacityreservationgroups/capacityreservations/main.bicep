@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource capacityReservationGroup 'Microsoft.Compute/capacityReservationGroups@2022-03-01' = {
   name: '${resourceName}-ccrg'

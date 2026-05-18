@@ -10,8 +10,6 @@ resource pTR 'Microsoft.Network/dnsZones/PTR@2018-05-01' = {
   name: resourceName
   parent: dnsZone
   properties: {
-    TTL: 300
-    metadata: {}
     PTRRecords: [
       {
         ptrdname: 'hashicorp.com'
@@ -20,5 +18,7 @@ resource pTR 'Microsoft.Network/dnsZones/PTR@2018-05-01' = {
         ptrdname: 'microsoft.com'
       }
     ]
+    TTL: 300
+    metadata: {}
   }
 }

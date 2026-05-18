@@ -1,14 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
-resource account 'Microsoft.Monitor/accounts@2023-04-03' = {
-  name: '${resourceName}-mw'
-  location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-  }
-}
-
 resource grafana 'Microsoft.Dashboard/grafana@2023-09-01' = {
   name: '${resourceName}-graf'
   location: location
@@ -30,12 +22,20 @@ resource managedPrivateEndpoint 'Microsoft.Dashboard/grafana/managedPrivateEndpo
   location: location
   parent: grafana
   properties: {
+    groupIds: [
+      'prometheusMetrics'
+    ]
     privateLinkResourceId: account.id
     privateLinkResourceRegion: location
     privateLinkServiceUrl: ''
     requestMessage: ''
-    groupIds: [
-      'prometheusMetrics'
-    ]
+  }
+}
+
+resource account 'Microsoft.Monitor/accounts@2023-04-03' = {
+  name: '${resourceName}-mw'
+  location: location
+  properties: {
+    publicNetworkAccess: 'Enabled'
   }
 }

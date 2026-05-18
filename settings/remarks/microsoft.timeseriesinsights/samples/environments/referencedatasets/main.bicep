@@ -20,12 +20,12 @@ resource referenceDataSet 'Microsoft.TimeSeriesInsights/environments/referenceDa
   location: location
   parent: environment
   properties: {
+    dataStringComparisonBehavior: 'Ordinal'
     keyProperties: [
       {
-        type: 'String'
         name: 'keyProperty1'
+        type: 'String'
       }
     ]
-    dataStringComparisonBehavior: 'Ordinal'
   }
 }

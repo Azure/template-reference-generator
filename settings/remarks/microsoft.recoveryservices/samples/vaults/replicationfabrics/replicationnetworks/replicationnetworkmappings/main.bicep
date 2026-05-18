@@ -1,40 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westus'
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
-  name: '${resourceName}-vnet1'
-  location: location
-  properties: {
-    dhcpOptions: {
-      dnsServers: []
-    }
-    privateEndpointVNetPolicies: 'Disabled'
-    subnets: []
-    addressSpace: {
-      addressPrefixes: [
-        '192.168.1.0/24'
-      ]
-    }
-  }
-}
-
-resource virtualnetwork1 'Microsoft.Network/virtualNetworks@2024-05-01' = {
-  name: '${resourceName}-vnet2'
-  location: 'centralus'
-  properties: {
-    privateEndpointVNetPolicies: 'Disabled'
-    subnets: []
-    addressSpace: {
-      addressPrefixes: [
-        '192.168.2.0/24'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-  }
-}
-
 resource vault 'Microsoft.RecoveryServices/vaults@2024-01-01' = {
   name: '${resourceName}-rsv'
   location: location
@@ -42,11 +8,11 @@ resource vault 'Microsoft.RecoveryServices/vaults@2024-01-01' = {
     name: 'Standard'
   }
   properties: {
-    redundancySettings: {
-      standardTierStorageRedundancy: 'GeoRedundant'
-      crossRegionRestore: 'Disabled'
-    }
     publicNetworkAccess: 'Enabled'
+    redundancySettings: {
+      crossRegionRestore: 'Disabled'
+      standardTierStorageRedundancy: 'GeoRedundant'
+    }
   }
 }
 
@@ -56,7 +22,7 @@ resource replicationFabric 'Microsoft.RecoveryServices/vaults/replicationFabrics
   properties: {
     customDetails: {
       instanceType: 'Azure'
-      location: '${location}'
+      location: location
     }
   }
 }
@@ -81,5 +47,39 @@ resource replicationNetworkMapping 'Microsoft.RecoveryServices/vaults/replicatio
     }
     recoveryFabricName: replicationfabric1.name
     recoveryNetworkId: virtualnetwork1.id
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
+  name: '${resourceName}-vnet1'
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '192.168.1.0/24'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    privateEndpointVNetPolicies: 'Disabled'
+    subnets: []
+  }
+}
+
+resource virtualnetwork1 'Microsoft.Network/virtualNetworks@2024-05-01' = {
+  name: '${resourceName}-vnet2'
+  location: 'centralus'
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '192.168.2.0/24'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    privateEndpointVNetPolicies: 'Disabled'
+    subnets: []
   }
 }

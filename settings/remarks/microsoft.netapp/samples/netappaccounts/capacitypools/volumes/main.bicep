@@ -25,19 +25,56 @@ resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01'
   }
 }
 
+resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-01' = {
+  name: resourceName
+  location: location
+  parent: capacityPool
+  properties: {
+    avsDataStore: 'Enabled'
+    creationToken: 'my-unique-file-path-230630034120103726'
+    dataProtection: {}
+    exportPolicy: {
+      rules: [
+        {
+          allowedClients: '0.0.0.0/0'
+          cifs: false
+          hasRootAccess: true
+          nfsv3: true
+          nfsv41: false
+          ruleIndex: 1
+          unixReadOnly: false
+          unixReadWrite: true
+        }
+      ]
+    }
+    networkFeatures: 'Basic'
+    protocolTypes: [
+      'NFSv3'
+    ]
+    serviceLevel: 'Standard'
+    snapshotDirectoryVisible: true
+    subnetId: subnet2.id
+    usageThreshold: any('1.073741824e+11')
+    volumeType: ''
+  }
+  tags: {
+    SkipASMAzSecPack: 'true'
+  }
+}
+
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.6.0.0/16'
       ]
     }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
   }
   tags: {
     SkipASMAzSecPack: 'true'
@@ -61,6 +98,7 @@ resource subnet2 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.6.2.0/24'
     delegations: [
       {
         name: 'testdelegation'
@@ -73,43 +111,5 @@ resource subnet2 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.6.2.0/24'
-  }
-}
-
-resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-01' = {
-  name: resourceName
-  location: location
-  parent: capacityPool
-  properties: {
-    exportPolicy: {
-      rules: [
-        {
-          nfsv3: true
-          nfsv41: false
-          ruleIndex: 1
-          allowedClients: '0.0.0.0/0'
-          cifs: false
-          hasRootAccess: true
-          unixReadOnly: false
-          unixReadWrite: true
-        }
-      ]
-    }
-    networkFeatures: 'Basic'
-    serviceLevel: 'Standard'
-    snapshotDirectoryVisible: true
-    usageThreshold: any('1.073741824e+11')
-    volumeType: ''
-    avsDataStore: 'Enabled'
-    creationToken: 'my-unique-file-path-230630034120103726'
-    dataProtection: {}
-    protocolTypes: [
-      'NFSv3'
-    ]
-    subnetId: subnet2.id
-  }
-  tags: {
-    SkipASMAzSecPack: 'true'
   }
 }

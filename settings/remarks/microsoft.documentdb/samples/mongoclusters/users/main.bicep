@@ -22,8 +22,8 @@ resource mongoClusterSSDv2 'Microsoft.DocumentDB/mongoClusters@2025-09-01' = {
       shardCount: 1
     }
     storage: {
-      type: 'PremiumSSDv2'
       sizeGb: 64
+      type: 'PremiumSSDv2'
     }
   }
 }
@@ -45,8 +45,8 @@ resource mongouserEntraserviceprincipal 'Microsoft.DocumentDB/mongoClusters/user
     }
     roles: [
       {
-        role: 'root'
         db: 'admin'
+        role: 'root'
       }
     ]
   }

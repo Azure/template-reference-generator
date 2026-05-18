@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource dnsZone 'Microsoft.Network/dnsZones@2018-05-01' = {
   name: '${resourceName}.com'
@@ -18,14 +18,14 @@ resource cAA 'Microsoft.Network/dnsZones/CAA@2018-05-01' = {
         value: ';'
       }
       {
+        flags: 0
         tag: 'iodef'
         value: 'mailto:terraform@nonexist.tld'
-        flags: 0
       }
       {
-        value: 'example.com'
         flags: 0
         tag: 'issue'
+        value: 'example.com'
       }
       {
         flags: 0

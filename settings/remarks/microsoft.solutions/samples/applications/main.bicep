@@ -6,29 +6,9 @@ resource application 'Microsoft.Solutions/applications@2021-07-01' = {
   location: location
   kind: 'ServiceCatalog'
   properties: {
+    applicationDefinitionId: applicationDefinition.id
     managedResourceGroupId: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceName}-infragroup'
     parameters: {
-      intParameter: {
-        value: 100
-      }
-      objectParameter: {
-        value: {
-          nested_bool: true
-          nested_object: {
-            key_0: 0
-          }
-          nested_array: [
-            'value_1'
-            'value_2'
-          ]
-        }
-      }
-      secureStringParameter: {
-        value: ''
-      }
-      stringParameter: {
-        value: 'value_1'
-      }
       arrayParameter: {
         value: [
           'value_1'
@@ -38,6 +18,27 @@ resource application 'Microsoft.Solutions/applications@2021-07-01' = {
       boolParameter: {
         value: true
       }
+      intParameter: {
+        value: 100
+      }
+      objectParameter: {
+        value: {
+          nested_array: [
+            'value_1'
+            'value_2'
+          ]
+          nested_bool: true
+          nested_object: {
+            key_0: 0
+          }
+        }
+      }
+      secureStringParameter: {
+        value: ''
+      }
+      stringParameter: {
+        value: 'value_1'
+      }
     }
   }
 }
@@ -46,10 +47,6 @@ resource applicationDefinition 'Microsoft.Solutions/applicationDefinitions@2021-
   name: '${resourceName}-appdef'
   location: location
   properties: {
-    displayName: 'TestManagedAppDefinition'
-    isEnabled: true
-    lockLevel: 'ReadOnly'
-    mainTemplate: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
     authorizations: [
       {
         principalId: deployer().objectId
@@ -58,5 +55,9 @@ resource applicationDefinition 'Microsoft.Solutions/applicationDefinitions@2021-
     ]
     createUiDefinition: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
     description: 'Test Managed App Definition'
+    displayName: 'TestManagedAppDefinition'
+    isEnabled: true
+    lockLevel: 'ReadOnly'
+    mainTemplate: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
   }
 }

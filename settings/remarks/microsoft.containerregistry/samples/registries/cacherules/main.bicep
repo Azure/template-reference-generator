@@ -8,22 +8,22 @@ resource registry 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = 
     name: 'Basic'
   }
   properties: {
-    zoneRedundancy: 'Disabled'
     adminUserEnabled: false
     anonymousPullEnabled: false
     dataEndpointEnabled: false
     networkRuleBypassOptions: 'AzureServices'
     policies: {
+      exportPolicy: {
+        status: 'enabled'
+      }
       quarantinePolicy: {
         status: 'disabled'
       }
       retentionPolicy: {}
       trustPolicy: {}
-      exportPolicy: {
-        status: 'enabled'
-      }
     }
     publicNetworkAccess: 'Enabled'
+    zoneRedundancy: 'Disabled'
   }
 }
 

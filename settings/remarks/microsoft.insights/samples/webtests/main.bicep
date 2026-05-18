@@ -6,13 +6,13 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
   location: location
   kind: 'web'
   properties: {
+    Application_Type: 'web'
     DisableIpMasking: false
     DisableLocalAuth: false
     ForceCustomerStorageForProfiler: false
     RetentionInDays: 90
     SamplingPercentage: 100
     publicNetworkAccessForIngestion: 'Enabled'
-    Application_Type: 'web'
     publicNetworkAccessForQuery: 'Enabled'
   }
 }
@@ -22,18 +22,22 @@ resource webTest 'Microsoft.Insights/webTests@2022-06-15' = {
   location: location
   kind: 'standard'
   properties: {
-    RetryEnabled: false
-    SyntheticMonitorId: resourceName
+    Description: ''
     Enabled: false
     Frequency: 300
     Kind: 'standard'
+    Locations: [
+      {
+        Id: 'us-tx-sn1-azr'
+      }
+    ]
     Name: resourceName
     Request: {
       FollowRedirects: false
       Headers: [
         {
-          value: 'testheader'
           key: 'x-header'
+          value: 'testheader'
         }
         {
           key: 'x-header-2'
@@ -44,17 +48,13 @@ resource webTest 'Microsoft.Insights/webTests@2022-06-15' = {
       ParseDependentRequests: false
       RequestUrl: 'http://microsoft.com'
     }
+    RetryEnabled: false
+    SyntheticMonitorId: resourceName
     Timeout: 30
     ValidationRules: {
       ExpectedHttpStatusCode: 200
       SSLCheck: false
     }
-    Description: ''
-    Locations: [
-      {
-        Id: 'us-tx-sn1-azr'
-      }
-    ]
   }
   tags: {
     'hidden-link:${component.id}': 'Resource'

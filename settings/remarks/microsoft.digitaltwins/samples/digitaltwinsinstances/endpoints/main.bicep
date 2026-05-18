@@ -6,18 +6,6 @@ resource digitalTwinsInstance 'Microsoft.DigitalTwins/digitalTwinsInstances@2020
   location: location
 }
 
-resource endpoint 'Microsoft.DigitalTwins/digitalTwinsInstances/endpoints@2020-12-01' = {
-  name: resourceName
-  parent: digitalTwinsInstance
-  properties: {
-    authenticationType: 'KeyBased'
-    deadLetterSecret: ''
-    endpointType: 'ServiceBus'
-    primaryConnectionString: authorizationRule.listKeys().primaryConnectionString
-    secondaryConnectionString: authorizationRule.listKeys().secondaryConnectionString
-  }
-}
-
 resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
   name: resourceName
   location: location
@@ -30,6 +18,18 @@ resource namespace 'Microsoft.ServiceBus/namespaces@2022-01-01-preview' = {
     disableLocalAuth: false
     publicNetworkAccess: 'Enabled'
     zoneRedundant: false
+  }
+}
+
+resource endpoint 'Microsoft.DigitalTwins/digitalTwinsInstances/endpoints@2020-12-01' = {
+  name: resourceName
+  parent: digitalTwinsInstance
+  properties: {
+    authenticationType: 'KeyBased'
+    deadLetterSecret: ''
+    endpointType: 'ServiceBus'
+    primaryConnectionString: authorizationRule.listKeys().primaryConnectionString
+    secondaryConnectionString: authorizationRule.listKeys().secondaryConnectionString
   }
 }
 

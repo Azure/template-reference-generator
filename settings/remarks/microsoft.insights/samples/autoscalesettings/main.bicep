@@ -6,47 +6,6 @@ param adminUsername string
 @description('The administrator password for the virtual machine scale set')
 param adminPassword string
 
-resource autoScaleSetting 'Microsoft.Insights/autoScaleSettings@2022-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enabled: true
-    notifications: []
-    profiles: [
-      {
-        rules: [
-          {
-            metricTrigger: {
-              timeGrain: 'PT1M'
-              timeWindow: 'PT5M'
-              threshold: 75
-              timeAggregation: 'Last'
-              dimensions: []
-              dividePerInstance: true
-              metricName: 'Percentage CPU'
-              metricNamespace: ''
-              operator: 'GreaterThan'
-              statistic: 'Average'
-            }
-            scaleAction: {
-              direction: 'Increase'
-              type: 'ChangeCount'
-              value: '1'
-              cooldown: 'PT1M'
-            }
-          }
-        ]
-        capacity: {
-          default: '1'
-          maximum: '10'
-          minimum: '1'
-        }
-        name: 'metricRules'
-      }
-    ]
-  }
-}
-
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
@@ -57,12 +16,16 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
   }
   properties: {
     additionalCapabilities: {}
+    doNotRunExtensionsOnOverprovisionedVMs: false
+    orchestrationMode: 'Uniform'
+    overprovision: true
     scaleInPolicy: {
       forceDeletion: false
       rules: [
         'Default'
       ]
     }
+    singlePlacementGroup: true
     upgradePolicy: {
       mode: 'Manual'
     }
@@ -79,8 +42,8 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       networkProfile: {
         networkInterfaceConfigurations: [
           {
+            name: 'TestNetworkProfile-230630033559396108'
             properties: {
-              primary: true
               dnsSettings: {
                 dnsServers: []
               }
@@ -90,18 +53,20 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
                 {
                   name: 'TestIPConfiguration'
                   properties: {
-                    privateIPAddressVersion: 'IPv4'
-                    subnet: {}
                     applicationGatewayBackendAddressPools: []
                     applicationSecurityGroups: []
                     loadBalancerBackendAddressPools: []
                     loadBalancerInboundNatPools: []
                     primary: true
+                    privateIPAddressVersion: 'IPv4'
+                    subnet: {
+                      id: subnet.id
+                    }
                   }
                 }
               ]
+              primary: true
             }
-            name: 'TestNetworkProfile-230630033559396108'
           }
         ]
       }
@@ -125,15 +90,6 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
       priority: 'Regular'
       storageProfile: {
-        osDisk: {
-          osType: 'Linux'
-          writeAcceleratorEnabled: false
-          caching: 'ReadWrite'
-          createOption: 'FromImage'
-          managedDisk: {
-            storageAccountType: 'StandardSSD_LRS'
-          }
-        }
         dataDisks: []
         imageReference: {
           offer: 'UbuntuServer'
@@ -141,12 +97,17 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
           sku: '16.04-LTS'
           version: 'latest'
         }
+        osDisk: {
+          caching: 'ReadWrite'
+          createOption: 'FromImage'
+          managedDisk: {
+            storageAccountType: 'StandardSSD_LRS'
+          }
+          osType: 'Linux'
+          writeAcceleratorEnabled: false
+        }
       }
     }
-    doNotRunExtensionsOnOverprovisionedVMs: false
-    orchestrationMode: 'Uniform'
-    overprovision: true
-    singlePlacementGroup: true
   }
 }
 
@@ -154,7 +115,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
@@ -163,6 +123,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     dhcpOptions: {
       dnsServers: []
     }
+    subnets: []
   }
 }
 
@@ -176,5 +137,48 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource autoScaleSetting 'Microsoft.Insights/autoScaleSettings@2022-10-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enabled: true
+    notifications: []
+    profiles: [
+      {
+        capacity: {
+          default: '1'
+          maximum: '10'
+          minimum: '1'
+        }
+        name: 'metricRules'
+        rules: [
+          {
+            metricTrigger: {
+              dimensions: []
+              dividePerInstance: true
+              metricName: 'Percentage CPU'
+              metricNamespace: ''
+              metricResourceUri: virtualMachineScaleSet.id
+              operator: 'GreaterThan'
+              statistic: 'Average'
+              threshold: 75
+              timeAggregation: 'Last'
+              timeGrain: 'PT1M'
+              timeWindow: 'PT5M'
+            }
+            scaleAction: {
+              cooldown: 'PT1M'
+              direction: 'Increase'
+              type: 'ChangeCount'
+              value: '1'
+            }
+          }
+        ]
+      }
+    ]
+    targetResourceUri: virtualMachineScaleSet.id
   }
 }

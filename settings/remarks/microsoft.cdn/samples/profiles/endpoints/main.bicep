@@ -14,6 +14,8 @@ resource endpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
   location: location
   parent: profile
   properties: {
+    isHttpAllowed: true
+    isHttpsAllowed: true
     origins: [
       {
         name: 'acceptanceTestCdnOrigin1'
@@ -25,7 +27,5 @@ resource endpoint 'Microsoft.Cdn/profiles/endpoints@2020-09-01' = {
       }
     ]
     queryStringCachingBehavior: 'IgnoreQueryString'
-    isHttpAllowed: true
-    isHttpsAllowed: true
   }
 }

@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
   name: resourceName
@@ -10,16 +10,16 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     tier: 'Basic'
   }
   properties: {
+    enableAutoStop: true
     enableDiskEncryption: false
     enableDoubleEncryption: false
     enablePurge: false
     enableStreamingIngest: false
     engineType: 'V2'
-    publicNetworkAccess: 'Enabled'
-    trustedExternalTenants: []
-    enableAutoStop: true
     publicIPType: 'IPv4'
+    publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
+    trustedExternalTenants: []
   }
 }
 
@@ -35,6 +35,7 @@ resource script 'Microsoft.Kusto/clusters/databases/scripts@2023-05-02' = {
   name: 'create-table-script'
   parent: database
   properties: {
+    continueOnErrors: false
     forceUpdateTag: '9e2e7874-aa37-7041-81b7-06397f03a37d'
     scriptContent: '''.create table TestTable(Id:string, Name:string, _ts:long, _timestamp:datetime)
 .create table TestTable ingestion json mapping "TestMapping"
@@ -46,6 +47,5 @@ resource script 'Microsoft.Kusto/clusters/databases/scripts@2023-05-02' = {
 '']''
 .alter table TestTable policy ingestionbatching "{''MaximumBatchingTimeSpan'': ''0:0:10'', ''MaximumNumberOfItems'': 10000}"
 '''
-    continueOnErrors: false
   }
 }

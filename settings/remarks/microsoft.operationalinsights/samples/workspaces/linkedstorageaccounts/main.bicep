@@ -5,19 +5,19 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
   location: location
   properties: {
+    features: {
+      disableLocalAuth: false
+      enableLogAccessUsingOnlyResourcePermissions: true
+    }
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    retentionInDays: 30
     sku: {
       name: 'PerGB2018'
     }
     workspaceCapping: {
       dailyQuotaGb: -1
     }
-    features: {
-      enableLogAccessUsingOnlyResourcePermissions: true
-      disableLocalAuth: false
-    }
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    retentionInDays: 30
   }
 }
 
@@ -39,17 +39,9 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    isSftpEnabled: false
-    minimumTlsVersion: 'TLS1_2'
-    publicNetworkAccess: 'Enabled'
     accessTier: 'Hot'
-    allowCrossTenantReplication: true
-    isHnsEnabled: false
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    supportsHttpsTrafficOnly: true
     allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
     allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
@@ -63,6 +55,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    isHnsEnabled: false
     isNfsV3Enabled: false
+    isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }

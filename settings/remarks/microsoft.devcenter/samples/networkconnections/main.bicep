@@ -6,6 +6,7 @@ resource networkConnection 'Microsoft.DevCenter/networkConnections@2023-04-01' =
   location: location
   properties: {
     domainJoinType: 'AzureADJoin'
+    subnetId: subnet.id
   }
 }
 

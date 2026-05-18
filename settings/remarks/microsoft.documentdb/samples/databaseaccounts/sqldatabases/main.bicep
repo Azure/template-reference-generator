@@ -6,22 +6,22 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    isVirtualNetworkFilterEnabled: false
-    networkAclBypass: 'None'
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
     disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
     enableAnalyticalStorage: false
-    ipRules: []
-    networkAclBypassResourceIds: []
-    virtualNetworkRules: []
-    capabilities: []
-    consistencyPolicy: {
-      maxIntervalInSeconds: 10
-      maxStalenessPrefix: 200
-      defaultConsistencyLevel: 'BoundedStaleness'
-    }
-    defaultIdentity: 'FirstPartyIdentity'
     enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
     locations: [
       {
         failoverPriority: 0
@@ -29,10 +29,10 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    databaseAccountOfferType: 'Standard'
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
     publicNetworkAccess: 'Enabled'
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
+    virtualNetworkRules: []
   }
 }
 
@@ -44,7 +44,7 @@ resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10
       throughput: 400
     }
     resource: {
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }

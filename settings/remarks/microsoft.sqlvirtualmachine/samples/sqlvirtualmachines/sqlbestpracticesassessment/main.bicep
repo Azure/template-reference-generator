@@ -27,6 +27,50 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   }
 }
 
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  properties: {
+    securityRules: [
+      {
+        name: 'MSSQLRule'
+        properties: {
+          access: 'Allow'
+          destinationAddressPrefix: '*'
+          destinationAddressPrefixes: []
+          destinationPortRange: '1433'
+          destinationPortRanges: []
+          direction: 'Inbound'
+          priority: 1001
+          protocol: 'Tcp'
+          sourceAddressPrefix: '167.220.255.0/25'
+          sourceAddressPrefixes: []
+          sourcePortRange: '*'
+          sourcePortRanges: []
+        }
+      }
+    ]
+  }
+}
+
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  sku: {
+    name: 'Basic'
+    tier: 'Regional'
+  }
+  properties: {
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
+    idleTimeoutInMinutes: 4
+    ipTags: []
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Dynamic'
+  }
+}
+
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   name: resourceName
   location: 'azapi_resource.resourceGroup.location'
@@ -56,16 +100,16 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
         version: 'latest'
       }
       osDisk: {
+        diskSizeGB: 127
         managedDisk: {
           storageAccountType: 'Premium_LRS'
         }
         name: 'acctvm-250116171212663925OSDisk'
-        caching: 'ReadOnly'
-        deleteOption: 'Detach'
-        diskSizeGB: 127
         osType: 'Windows'
         writeAcceleratorEnabled: false
+        caching: 'ReadOnly'
         createOption: 'FromImage'
+        deleteOption: 'Detach'
       }
     }
     hardwareProfile: {
@@ -84,41 +128,17 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   }
 }
 
-resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
-  name: 'azapi_resource.workspace.output.properties.customerId_azapi_resource.resourceGroup.location_DCRA_1'
-  scope: virtualMachine
+resource extension 'Microsoft.Compute/virtualMachines/extensions@2024-07-01' = {
+  name: 'AzureMonitorWindowsAgent'
+  location: 'westeurope'
+  parent: virtualMachine
   properties: {
-    dataCollectionRuleId: dataCollectionRule.id
-  }
-}
-
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
-  properties: {
-    dnsSettings: {
-      dnsServers: []
-    }
-    enableAcceleratedNetworking: false
-    ipConfigurations: [
-      {
-        properties: {
-          subnet: {}
-          primary: true
-          privateIPAddress: '10.0.0.4'
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {}
-        }
-        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
-        name: 'testconfiguration1'
-      }
-    ]
-    disableTcpStateTracking: false
-    enableIPForwarding: false
-    nicType: 'Standard'
-    auxiliaryMode: 'None'
-    auxiliarySku: 'None'
+    autoUpgradeMinorVersion: true
+    enableAutomaticUpgrade: true
+    publisher: 'Microsoft.Azure.Monitor'
+    suppressFailures: false
+    type: 'AzureMonitorWindowsAgent'
+    typeHandlerVersion: '1.0'
   }
 }
 
@@ -181,6 +201,21 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
     table
   ]
   properties: {
+    streamDeclarations: {
+      'Custom-SqlAssessment_CL': {
+        columns: [
+          {
+            name: 'TimeGenerated'
+            type: 'datetime'
+          }
+          {
+            type: 'string'
+            name: 'RawData'
+          }
+        ]
+      }
+    }
+    dataCollectionEndpointId: dataCollectionEndpoint.id
     dataFlows: [
       {
         outputStream: 'Custom-SqlAssessment_CL'
@@ -188,7 +223,9 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
           'Custom-SqlAssessment_CL'
         ]
         transformKql: 'source'
-        destinations: []
+        destinations: [
+          workspace.name
+        ]
       }
     ]
     dataSources: {
@@ -213,82 +250,54 @@ resource dataCollectionRule 'Microsoft.Insights/dataCollectionRules@2022-06-01' 
     description: ''
     destinations: {
       logAnalytics: [
-        {}
+        {
+          name: workspace.name
+          workspaceResourceId: workspace.id
+        }
       ]
     }
-    streamDeclarations: {
-      'Custom-SqlAssessment_CL': {
-        columns: [
-          {
-            name: 'TimeGenerated'
-            type: 'datetime'
-          }
-          {
-            type: 'string'
-            name: 'RawData'
-          }
-        ]
-      }
-    }
-    dataCollectionEndpointId: dataCollectionEndpoint.id
   }
 }
 
-resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
+resource dataCollectionRuleAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2022-06-01' = {
+  name: 'azapi_resource.workspace.output.properties.customerId_azapi_resource.resourceGroup.location_DCRA_1'
+  scope: virtualMachine
+  properties: {
+    dataCollectionRuleId: dataCollectionRule.id
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
   name: resourceName
   location: 'azapi_resource.resourceGroup.location'
   properties: {
-    securityRules: [
+    disableTcpStateTracking: false
+    dnsSettings: {
+      dnsServers: []
+    }
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
       {
-        name: 'MSSQLRule'
+        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
+        name: 'testconfiguration1'
         properties: {
-          destinationPortRange: '1433'
-          priority: 1001
-          sourceAddressPrefix: '167.220.255.0/25'
-          sourcePortRange: '*'
-          access: 'Allow'
-          destinationAddressPrefixes: []
-          destinationPortRanges: []
-          direction: 'Inbound'
-          protocol: 'Tcp'
-          sourceAddressPrefixes: []
-          sourcePortRanges: []
-          destinationAddressPrefix: '*'
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          publicIPAddress: {
+            id: publicIPAddress.id
+          }
+          subnet: {
+            id: subnet.id
+          }
+          primary: true
+          privateIPAddress: '10.0.0.4'
         }
       }
     ]
-  }
-}
-
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
-  }
-  properties: {
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
-    }
-    idleTimeoutInMinutes: 4
-    ipTags: []
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Dynamic'
-  }
-}
-
-resource extension 'Microsoft.Compute/virtualMachines/extensions@2024-07-01' = {
-  name: 'AzureMonitorWindowsAgent'
-  location: 'westeurope'
-  parent: virtualMachine
-  properties: {
-    suppressFailures: false
-    type: 'AzureMonitorWindowsAgent'
-    typeHandlerVersion: '1.0'
-    autoUpgradeMinorVersion: true
-    enableAutomaticUpgrade: true
-    publisher: 'Microsoft.Azure.Monitor'
+    nicType: 'Standard'
+    auxiliaryMode: 'None'
+    auxiliarySku: 'None'
   }
 }
 
@@ -300,6 +309,11 @@ resource sqlvirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2023-
     extension
   ]
   properties: {
+    sqlServerLicenseType: 'PAYG'
+    virtualMachineResourceId: virtualMachine.id
+    enableAutomaticUpgrade: true
+    leastPrivilegeMode: 'Enabled'
+    sqlImageOffer: 'SQL2017-WS2016'
     sqlImageSku: 'Developer'
     sqlManagement: 'Full'
     assessmentSettings: {
@@ -312,9 +326,5 @@ resource sqlvirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2023-
         weeklyInterval: 1
       }
     }
-    sqlServerLicenseType: 'PAYG'
-    enableAutomaticUpgrade: true
-    leastPrivilegeMode: 'Enabled'
-    sqlImageOffer: 'SQL2017-WS2016'
   }
 }

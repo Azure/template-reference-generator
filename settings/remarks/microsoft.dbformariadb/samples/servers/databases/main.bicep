@@ -10,24 +10,24 @@ resource server 'Microsoft.DBforMariaDB/servers@2018-06-01' = {
   name: resourceName
   location: location
   sku: {
-    tier: 'Basic'
     capacity: 2
     family: 'Gen5'
     name: 'B_Gen5_2'
+    tier: 'Basic'
   }
   properties: {
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
+    createMode: 'Default'
+    minimalTlsVersion: 'TLS1_2'
     publicNetworkAccess: 'Enabled'
     sslEnforcement: 'Enabled'
-    administratorLogin: '${administratorLogin}'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    minimalTlsVersion: 'TLS1_2'
     storageProfile: {
+      backupRetentionDays: 7
       storageAutogrow: 'Enabled'
       storageMB: 51200
-      backupRetentionDays: 7
     }
     version: '10.2'
-    createMode: 'Default'
   }
 }
 

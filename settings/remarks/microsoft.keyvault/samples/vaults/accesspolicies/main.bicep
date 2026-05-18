@@ -5,13 +5,13 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: resourceName
   location: location
   properties: {
-    enableSoftDelete: true
-    tenantId: tenant().tenantId
     sku: {
       family: 'A'
       name: 'standard'
     }
     accessPolicies: []
+    enableSoftDelete: true
+    tenantId: tenant().tenantId
   }
 }
 

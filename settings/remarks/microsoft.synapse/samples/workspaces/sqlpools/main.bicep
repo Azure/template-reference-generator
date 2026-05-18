@@ -11,6 +11,33 @@ resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01'
   parent: storageAccount
 }
 
+resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    defaultDataLakeStorage: {
+      accountUrl: storageAccount.properties.primaryEndpoints.dfs
+      filesystem: container.name
+    }
+    managedVirtualNetwork: ''
+    publicNetworkAccess: 'Enabled'
+    sqlAdministratorLogin: sqlAdministratorLogin
+    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
+  }
+}
+
+resource sqlPool 'Microsoft.Synapse/workspaces/sqlPools@2021-06-01' = {
+  name: resourceName
+  location: location
+  parent: workspace
+  sku: {
+    name: 'DW100c'
+  }
+  properties: {
+    createMode: 'Default'
+  }
+}
+
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
   name: resourceName
   parent: blobService
@@ -29,30 +56,4 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {}
-}
-
-resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-    sqlAdministratorLogin: sqlAdministratorLogin
-    sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
-    defaultDataLakeStorage: {
-      accountUrl: storageAccount.properties.primaryEndpoints.dfs
-    }
-    managedVirtualNetwork: ''
-  }
-}
-
-resource sqlPool 'Microsoft.Synapse/workspaces/sqlPools@2021-06-01' = {
-  name: resourceName
-  location: location
-  parent: workspace
-  sku: {
-    name: 'DW100c'
-  }
-  properties: {
-    createMode: 'Default'
-  }
 }

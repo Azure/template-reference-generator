@@ -6,11 +6,22 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
-    ipRules: []
-    networkAclBypass: 'None'
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+      maxIntervalInSeconds: 5
+      maxStalenessPrefix: 100
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
     disableLocalAuth: false
     enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
     enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
     locations: [
       {
         failoverPriority: 0
@@ -18,19 +29,8 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
         locationName: 'West Europe'
       }
     ]
-    isVirtualNetworkFilterEnabled: false
-    capabilities: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session'
-      maxIntervalInSeconds: 5
-      maxStalenessPrefix: 100
-    }
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
+    networkAclBypass: 'None'
     networkAclBypassResourceIds: []
-    databaseAccountOfferType: 'Standard'
     publicNetworkAccess: 'Enabled'
     virtualNetworkRules: []
   }
@@ -42,7 +42,7 @@ resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10
   properties: {
     options: {}
     resource: {
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }
@@ -53,7 +53,7 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
   properties: {
     options: {}
     resource: {
-      id: '${resourceName}'
+      id: resourceName
       partitionKey: {
         kind: 'Hash'
         paths: [
@@ -76,7 +76,7 @@ resource storedProcedure 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/con
 		response.setBody(''Hello, World'');
 	}
 '''
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }

@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource networkProfile 'Microsoft.Network/networkProfiles@2022-07-01' = {
   name: resourceName
@@ -11,10 +11,12 @@ resource networkProfile 'Microsoft.Network/networkProfiles@2022-07-01' = {
         properties: {
           ipConfigurations: [
             {
-              properties: {
-                subnet: {}
-              }
               name: 'acctestipconfig-230630033653886950'
+              properties: {
+                subnet: {
+                  id: subnet.id
+                }
+              }
             }
           ]
         }
@@ -43,10 +45,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
     addressPrefix: '10.1.0.0/24'
     delegations: [
       {
@@ -56,5 +54,9 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
         }
       }
     ]
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
   }
 }

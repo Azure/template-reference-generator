@@ -4,33 +4,10 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
-        }
-      }
-    ]
-  }
-}
-
 resource schedule 'Microsoft.DevTestLab/schedules@2018-09-15' = {
   name: resourceName
   location: location
   properties: {
-    status: 'Enabled'
-    taskType: 'ComputeVmShutdownTask'
-    timeZoneId: 'Pacific Standard Time'
     dailyRecurrence: {
       time: '0100'
     }
@@ -40,6 +17,10 @@ resource schedule 'Microsoft.DevTestLab/schedules@2018-09-15' = {
       timeInMinutes: 30
       webhookUrl: ''
     }
+    status: 'Enabled'
+    targetResourceId: virtualMachine.id
+    taskType: 'ComputeVmShutdownTask'
+    timeZoneId: 'Pacific Standard Time'
   }
   tags: {
     environment: 'Production'
@@ -51,27 +32,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   location: location
   properties: {
     additionalCapabilities: {}
-    extensionsTimeBudget: 'PT1H30M'
-    priority: 'Regular'
-    storageProfile: {
-      imageReference: {
-        sku: '18.04-LTS'
-        version: 'latest'
-        offer: 'UbuntuServer'
-        publisher: 'Canonical'
-      }
-      osDisk: {
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: 'Standard_LRS'
-        }
-        name: 'myosdisk-230630033106863551'
-        osType: 'Linux'
-        writeAcceleratorEnabled: false
-      }
-      dataDisks: []
-    }
     applicationProfile: {
       galleryApplications: []
     }
@@ -81,6 +41,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         storageUri: ''
       }
     }
+    extensionsTimeBudget: 'PT1H30M'
     hardwareProfile: {
       vmSize: 'Standard_B2s'
     }
@@ -95,10 +56,12 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
+      adminPassword: adminPassword
       adminUsername: 'testadmin'
       allowExtensionOperations: true
       computerName: resourceName
       linuxConfiguration: {
+        disablePasswordAuthentication: false
         patchSettings: {
           assessmentMode: 'ImageDefault'
           patchMode: 'ImageDefault'
@@ -107,10 +70,28 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
         ssh: {
           publicKeys: []
         }
-        disablePasswordAuthentication: false
       }
       secrets: []
-      adminPassword: adminPassword
+    }
+    priority: 'Regular'
+    storageProfile: {
+      dataDisks: []
+      imageReference: {
+        offer: 'UbuntuServer'
+        publisher: 'Canonical'
+        sku: '18.04-LTS'
+        version: 'latest'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Standard_LRS'
+        }
+        name: 'myosdisk-230630033106863551'
+        osType: 'Linux'
+        writeAcceleratorEnabled: false
+      }
     }
   }
 }
@@ -119,7 +100,6 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    subnets: []
     addressSpace: {
       addressPrefixes: [
         '10.0.0.0/16'
@@ -128,6 +108,7 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     dhcpOptions: {
       dnsServers: []
     }
+    subnets: []
   }
 }
 
@@ -135,11 +116,33 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
-    serviceEndpoints: []
     addressPrefix: '10.0.2.0/24'
     delegations: []
     privateEndpointNetworkPolicies: 'Enabled'
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration1'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

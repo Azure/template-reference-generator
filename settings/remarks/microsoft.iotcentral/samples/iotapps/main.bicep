@@ -8,7 +8,7 @@ resource iotApp 'Microsoft.IoTCentral/iotApps@2021-11-01-preview' = {
     name: 'ST1'
   }
   properties: {
-    displayName: '${resourceName}'
+    displayName: resourceName
     publicNetworkAccess: 'Enabled'
     subdomain: 'subdomain-2306300333537'
     template: 'iotc-pnp-preview@1.0.0'

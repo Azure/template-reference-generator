@@ -19,8 +19,8 @@ resource accessPolicyAssignment 'Microsoft.Cache/redis/accessPolicyAssignments@2
   name: resourceName
   parent: redis
   properties: {
-    objectIdAlias: 'ServicePrincipal'
     accessPolicyName: 'Data Contributor'
     objectId: deployer().objectId
+    objectIdAlias: 'ServicePrincipal'
   }
 }

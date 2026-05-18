@@ -4,62 +4,6 @@ param location string = 'westeurope'
 param vmAdminPassword string
 param resourceName string = 'acctest0001'
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
-  properties: {
-    disableTcpStateTracking: false
-    dnsSettings: {
-      dnsServers: []
-    }
-    ipConfigurations: [
-      {
-        properties: {
-          primary: true
-          privateIPAddress: '10.0.0.4'
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          publicIPAddress: {}
-          subnet: {}
-        }
-        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
-        name: 'testconfiguration1'
-      }
-    ]
-    nicType: 'Standard'
-    auxiliaryMode: 'None'
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    auxiliarySku: 'None'
-  }
-}
-
-resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
-  name: resourceName
-  location: 'azapi_resource.resourceGroup.location'
-  properties: {
-    securityRules: [
-      {
-        name: 'MSSQLRule'
-        properties: {
-          access: 'Allow'
-          destinationPortRange: '1433'
-          priority: 1001
-          protocol: 'Tcp'
-          sourceAddressPrefixes: []
-          sourcePortRange: '*'
-          sourcePortRanges: []
-          destinationAddressPrefix: '*'
-          destinationAddressPrefixes: []
-          destinationPortRanges: []
-          direction: 'Inbound'
-          sourceAddressPrefix: '167.220.255.0/25'
-        }
-      }
-    ]
-  }
-}
-
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
   name: resourceName
   location: 'azapi_resource.resourceGroup.location'
@@ -82,12 +26,13 @@ resource sqlvirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2023-
   name: 'azapi_resource.virtualMachine.name'
   location: 'azapi_resource.virtualMachine.location'
   properties: {
-    sqlManagement: 'Full'
     sqlServerLicenseType: 'PAYG'
+    virtualMachineResourceId: virtualMachine.id
     enableAutomaticUpgrade: true
     leastPrivilegeMode: 'Enabled'
     sqlImageOffer: 'SQL2017-WS2016'
     sqlImageSku: 'Developer'
+    sqlManagement: 'Full'
   }
 }
 
@@ -96,40 +41,40 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   location: 'azapi_resource.resourceGroup.location'
   properties: {
     osProfile: {
+      adminUsername: 'testadmin'
+      adminPassword: vmAdminPassword
+      allowExtensionOperations: true
       computerName: 'winhost01'
       secrets: []
       windowsConfiguration: {
+        timeZone: 'Pacific Standard Time'
         enableAutomaticUpdates: true
         patchSettings: {
           patchMode: 'AutomaticByOS'
           assessmentMode: 'ImageDefault'
         }
         provisionVMAgent: true
-        timeZone: 'Pacific Standard Time'
       }
-      adminUsername: 'testadmin'
-      adminPassword: vmAdminPassword
-      allowExtensionOperations: true
     }
     storageProfile: {
+      dataDisks: []
+      imageReference: {
+        offer: 'SQL2017-WS2016'
+        publisher: 'MicrosoftSQLServer'
+        sku: 'SQLDEV'
+        version: 'latest'
+      }
       osDisk: {
-        name: 'acctvm-250116171212663925OSDisk'
-        writeAcceleratorEnabled: false
-        deleteOption: 'Detach'
         diskSizeGB: 127
         managedDisk: {
           storageAccountType: 'Premium_LRS'
         }
+        name: 'acctvm-250116171212663925OSDisk'
         osType: 'Windows'
+        writeAcceleratorEnabled: false
         caching: 'ReadOnly'
         createOption: 'FromImage'
-      }
-      dataDisks: []
-      imageReference: {
-        sku: 'SQLDEV'
-        version: 'latest'
-        offer: 'SQL2017-WS2016'
-        publisher: 'MicrosoftSQLServer'
+        deleteOption: 'Detach'
       }
     }
     hardwareProfile: {
@@ -168,5 +113,65 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     networkSecurityGroup: {
       id: networkSecurityGroup.id
     }
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  properties: {
+    disableTcpStateTracking: false
+    dnsSettings: {
+      dnsServers: []
+    }
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
+        name: 'testconfiguration1'
+        properties: {
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          publicIPAddress: {
+            id: publicIPAddress.id
+          }
+          subnet: {
+            id: subnet.id
+          }
+          primary: true
+          privateIPAddress: '10.0.0.4'
+        }
+      }
+    ]
+    nicType: 'Standard'
+    auxiliaryMode: 'None'
+    auxiliarySku: 'None'
+  }
+}
+
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  properties: {
+    securityRules: [
+      {
+        name: 'MSSQLRule'
+        properties: {
+          access: 'Allow'
+          destinationAddressPrefix: '*'
+          destinationAddressPrefixes: []
+          destinationPortRange: '1433'
+          destinationPortRanges: []
+          direction: 'Inbound'
+          priority: 1001
+          protocol: 'Tcp'
+          sourceAddressPrefix: '167.220.255.0/25'
+          sourceAddressPrefixes: []
+          sourcePortRange: '*'
+          sourcePortRanges: []
+        }
+      }
+    ]
   }
 }

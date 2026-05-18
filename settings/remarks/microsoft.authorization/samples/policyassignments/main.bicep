@@ -18,6 +18,7 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01'
         ]
       }
     }
+    policyDefinitionId: policyDefinition.id
     scope: subscription().id
   }
 }
@@ -25,18 +26,6 @@ resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01'
 resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: resourceName
   properties: {
-    policyRule: {
-      if: {
-        not: {
-          field: 'location'
-          in: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
-        }
-      }
-      then: {
-        effect: 'audit'
-      }
-    }
-    policyType: 'Custom'
     description: ''
     displayName: 'my-policy-definition'
     mode: 'All'
@@ -50,5 +39,17 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
         type: 'Array'
       }
     }
+    policyRule: {
+      if: {
+        not: {
+          field: 'location'
+          in: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
+        }
+      }
+      then: {
+        effect: 'audit'
+      }
+    }
+    policyType: 'Custom'
   }
 }

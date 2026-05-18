@@ -5,38 +5,40 @@ resource metricAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
   name: resourceName
   location: 'global'
   properties: {
-    scopes: []
+    actions: []
+    autoMitigate: true
     criteria: {
       allOf: [
         {
+          criterionType: 'StaticThresholdCriterion'
           dimensions: []
           metricName: 'UsedCapacity'
           metricNamespace: 'Microsoft.Storage/storageAccounts'
           name: 'Metric1'
           operator: 'GreaterThan'
           skipMetricValidation: false
-          timeAggregation: 'Average'
-          criterionType: 'StaticThresholdCriterion'
           threshold: any('55.5')
+          timeAggregation: 'Average'
         }
       ]
       'odata.type': 'Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria'
     }
+    description: ''
+    enabled: true
     evaluationFrequency: 'PT1M'
+    scopes: [
+      storageAccount.id
+    ]
     severity: 3
     targetResourceRegion: ''
     targetResourceType: ''
     windowSize: 'PT1H'
-    actions: []
-    autoMitigate: true
-    description: ''
-    enabled: true
   }
   tags: {
+    CUSTOMER: 'CUSTOMERx'
     Example: 'Example123'
     terraform: 'Coolllll'
     test: '123'
-    CUSTOMER: 'CUSTOMERx'
   }
 }
 
@@ -48,18 +50,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    publicNetworkAccess: 'Enabled'
-    supportsHttpsTrafficOnly: true
-    allowSharedKeyAccess: true
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
     accessTier: 'Hot'
     allowBlobPublicAccess: true
     allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
     defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
@@ -72,6 +66,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    isHnsEnabled: false
+    isNfsV3Enabled: false
     isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
+    supportsHttpsTrafficOnly: true
   }
 }

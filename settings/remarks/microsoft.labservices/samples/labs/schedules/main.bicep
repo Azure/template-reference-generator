@@ -8,6 +8,17 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
   name: resourceName
   location: location
   properties: {
+    autoShutdownProfile: {
+      shutdownOnDisconnect: 'Disabled'
+      shutdownOnIdle: 'None'
+      shutdownWhenNotConnected: 'Disabled'
+    }
+    connectionProfile: {
+      clientRdpAccess: 'None'
+      clientSshAccess: 'None'
+      webRdpAccess: 'None'
+      webSshAccess: 'None'
+    }
     securityProfile: {
       openAccess: 'Disabled'
     }
@@ -17,7 +28,7 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
         installGpuDrivers: 'Disabled'
       }
       adminUser: {
-        password: '${adminPassword}'
+        password: adminPassword
         username: 'testadmin'
       }
       createOption: 'Image'
@@ -33,17 +44,6 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
       }
       usageQuota: 'PT0S'
       useSharedPassword: 'Disabled'
-    }
-    autoShutdownProfile: {
-      shutdownOnDisconnect: 'Disabled'
-      shutdownOnIdle: 'None'
-      shutdownWhenNotConnected: 'Disabled'
-    }
-    connectionProfile: {
-      webSshAccess: 'None'
-      clientRdpAccess: 'None'
-      clientSshAccess: 'None'
-      webRdpAccess: 'None'
     }
   }
 }

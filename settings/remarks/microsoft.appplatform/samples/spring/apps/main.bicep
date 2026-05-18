@@ -17,8 +17,8 @@ resource app 'Microsoft.AppPlatform/Spring/apps@2023-05-01-preview' = {
   location: location
   parent: spring
   properties: {
+    customPersistentDisks: []
     enableEndToEndTLS: false
     public: false
-    customPersistentDisks: []
   }
 }

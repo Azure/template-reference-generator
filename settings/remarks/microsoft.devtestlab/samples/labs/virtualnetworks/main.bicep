@@ -16,8 +16,6 @@ resource virtualNetwork 'Microsoft.DevTestLab/labs/virtualNetworks@2018-09-15' =
     description: ''
     subnetOverrides: [
       {
-        useInVmCreationPermission: 'Allow'
-        usePublicIpAddressPermission: 'Allow'
         labSubnetName: '${resourceName}Subnet'
         resourceId: resourceId(
           'Microsoft.Network/virtualNetworks/subnets',
@@ -25,6 +23,8 @@ resource virtualNetwork 'Microsoft.DevTestLab/labs/virtualNetworks@2018-09-15' =
           resourceName,
           '${resourceName}Subnet'
         )
+        useInVmCreationPermission: 'Allow'
+        usePublicIpAddressPermission: 'Allow'
       }
     ]
   }

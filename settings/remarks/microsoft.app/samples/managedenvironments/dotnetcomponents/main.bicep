@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
   name: resourceName
@@ -8,6 +8,7 @@ resource managedEnvironment 'Microsoft.App/managedEnvironments@2022-03-01' = {
     appLogsConfiguration: {
       destination: 'log-analytics'
       logAnalyticsConfiguration: {
+        customerId: workspace.properties.customerId
         sharedKey: workspace.listKeys().primarySharedKey
       }
     }

@@ -1,22 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
-}
-
 resource netAppAccount 'Microsoft.NetApp/netAppAccounts@2022-05-01' = {
   name: resourceName
   location: location
@@ -35,10 +19,27 @@ resource capacityPool 'Microsoft.NetApp/netAppAccounts/capacityPools@2022-05-01'
   }
 }
 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   name: resourceName
   parent: virtualNetwork
   properties: {
+    addressPrefix: '10.0.2.0/24'
     delegations: [
       {
         name: 'netapp'
@@ -51,7 +52,6 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
-    addressPrefix: '10.0.2.0/24'
   }
 }
 
@@ -60,23 +60,23 @@ resource volume 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2022-05-0
   location: location
   parent: capacityPool
   properties: {
-    serviceLevel: 'Premium'
-    snapshotDirectoryVisible: false
-    usageThreshold: any('1.073741824e+11')
     avsDataStore: 'Disabled'
     creationToken: 'my-unique-file-path-230630033642692134'
     dataProtection: {}
     exportPolicy: {
       rules: []
     }
-    securityStyle: 'Unix'
-    snapshotId: ''
-    subnetId: subnet.id
-    volumeType: ''
     networkFeatures: 'Basic'
     protocolTypes: [
       'NFSv3'
     ]
+    securityStyle: 'Unix'
+    serviceLevel: 'Premium'
+    snapshotDirectoryVisible: false
+    snapshotId: ''
+    subnetId: subnet.id
+    usageThreshold: any('1.073741824e+11')
+    volumeType: ''
   }
 }
 

@@ -9,11 +9,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    isHnsEnabled: false
-    isNfsV3Enabled: false
-    minimumTlsVersion: 'TLS1_2'
-    supportsHttpsTrafficOnly: true
+    accessTier: 'Hot'
     allowBlobPublicAccess: true
+    allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -25,15 +25,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    isHnsEnabled: false
+    isNfsV3Enabled: false
     isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
     networkAcls: {
       defaultAction: 'Allow'
     }
     publicNetworkAccess: 'Enabled'
-    accessTier: 'Hot'
-    allowCrossTenantReplication: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
+    supportsHttpsTrafficOnly: true
   }
 }
 
@@ -41,16 +41,16 @@ resource localUser 'Microsoft.Storage/storageAccounts/localUsers@2021-09-01' = {
   name: resourceName
   parent: storageAccount
   properties: {
+    hasSharedKey: true
+    hasSshKey: false
     hasSshPassword: false
     homeDirectory: 'containername/'
     permissionScopes: [
       {
-        service: 'blob'
         permissions: 'cwl'
         resourceName: 'containername'
+        service: 'blob'
       }
     ]
-    hasSharedKey: true
-    hasSshKey: false
   }
 }

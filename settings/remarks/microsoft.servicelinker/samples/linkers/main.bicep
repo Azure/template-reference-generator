@@ -1,6 +1,41 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  name: resourceName
+  location: location
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
@@ -52,49 +87,14 @@ resource linker 'Microsoft.ServiceLinker/linkers@2022-05-01' = {
   name: resourceName
   scope: deployment
   properties: {
-    clientType: 'none'
-    targetService: {
-      resourceProperties: null
-      type: 'AzureResource'
-    }
     authInfo: {
       authType: 'systemAssignedIdentity'
     }
-  }
-}
-
-resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
-  name: resourceName
-  location: location
-  kind: 'GlobalDocumentDB'
-  properties: {
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'BoundedStaleness'
-      maxIntervalInSeconds: 10
-      maxStalenessPrefix: 200
+    clientType: 'none'
+    targetService: {
+      id: sqlDatabase.id
+      type: 'AzureResource'
     }
-    defaultIdentity: 'FirstPartyIdentity'
-    disableLocalAuth: false
-    ipRules: []
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'West Europe'
-      }
-    ]
-    networkAclBypassResourceIds: []
-    disableKeyBasedMetadataWriteAccess: false
-    capabilities: []
-    enableMultipleWriteLocations: false
-    isVirtualNetworkFilterEnabled: false
-    virtualNetworkRules: []
-    databaseAccountOfferType: 'Standard'
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
-    networkAclBypass: 'None'
-    publicNetworkAccess: 'Enabled'
   }
 }
 
@@ -106,7 +106,7 @@ resource sqlDatabase 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2021-10
       throughput: 400
     }
     resource: {
-      id: '${resourceName}'
+      id: resourceName
     }
   }
 }

@@ -1,6 +1,7 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+var auditLogTableName = 'AuditLog_CL'
 var auditLogColumns = [
   {
     name: 'appId'
@@ -15,7 +16,6 @@ var auditLogColumns = [
     type: 'datetime'
   }
 ]
-var auditLogTableName = 'AuditLog_CL'
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
@@ -42,8 +42,8 @@ resource table 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
   parent: workspace
   properties: {
     schema: {
-      name: '${auditLogTableName}'
-      columns: '${auditLogColumns}'
+      columns: auditLogColumns
+      name: auditLogTableName
     }
   }
 }

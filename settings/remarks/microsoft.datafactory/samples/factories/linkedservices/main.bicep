@@ -1,27 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
-  }
-}
-
-resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-  name: resourceName
-  parent: factory
-  properties: {
-    type: 'AzureBlobStorage'
-    typeProperties: {
-      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
-    }
-    description: ''
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
@@ -30,12 +9,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   }
   kind: 'StorageV2'
   properties: {
-    minimumTlsVersion: 'TLS1_2'
-    networkAcls: {
-      defaultAction: 'Allow'
-    }
-    publicNetworkAccess: 'Enabled'
+    accessTier: 'Hot'
+    allowBlobPublicAccess: true
     allowCrossTenantReplication: true
+    allowSharedKeyAccess: true
+    defaultToOAuthAuthentication: false
     encryption: {
       keySource: 'Microsoft.Storage'
       services: {
@@ -47,13 +25,34 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
         }
       }
     }
+    isHnsEnabled: false
     isNfsV3Enabled: false
     isSftpEnabled: false
+    minimumTlsVersion: 'TLS1_2'
+    networkAcls: {
+      defaultAction: 'Allow'
+    }
+    publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-    accessTier: 'Hot'
-    allowBlobPublicAccess: true
-    allowSharedKeyAccess: true
-    defaultToOAuthAuthentication: false
-    isHnsEnabled: false
+  }
+}
+
+resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    publicNetworkAccess: 'Enabled'
+  }
+}
+
+resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
+  name: resourceName
+  parent: factory
+  properties: {
+    description: ''
+    type: 'AzureBlobStorage'
+    typeProperties: {
+      serviceEndpoint: storageAccount.properties.primaryEndpoints.blob
+    }
   }
 }

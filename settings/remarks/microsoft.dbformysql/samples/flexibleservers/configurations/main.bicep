@@ -12,12 +12,8 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
     tier: 'Burstable'
   }
   properties: {
-    highAvailability: {
-      mode: 'Disabled'
-    }
-    version: '8.0.21'
     administratorLogin: 'tfadmin'
-    administratorLoginPassword: '${administratorLoginPassword}'
+    administratorLoginPassword: administratorLoginPassword
     backup: {
       backupRetentionDays: 7
       geoRedundantBackup: 'Disabled'
@@ -25,6 +21,10 @@ resource flexibleServer 'Microsoft.DBforMySQL/flexibleServers@2023-12-30' = {
     dataEncryption: {
       type: 'SystemManaged'
     }
+    highAvailability: {
+      mode: 'Disabled'
+    }
+    version: '8.0.21'
   }
 }
 

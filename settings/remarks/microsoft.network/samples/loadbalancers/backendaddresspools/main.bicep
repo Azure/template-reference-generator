@@ -13,7 +13,9 @@ resource loadBalancer 'Microsoft.Network/loadBalancers@2022-07-01' = {
       {
         name: 'internal'
         properties: {
-          publicIPAddress: {}
+          publicIPAddress: {
+            id: publicIPAddress.id
+          }
         }
       }
     ]
@@ -30,8 +32,8 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
   sku: {
-    tier: 'Regional'
     name: 'Standard'
+    tier: 'Regional'
   }
   properties: {
     ddosSettings: {

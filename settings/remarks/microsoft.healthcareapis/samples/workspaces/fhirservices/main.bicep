@@ -14,9 +14,9 @@ resource fhirService 'Microsoft.HealthcareApis/workspaces/fhirServices@2022-12-0
   properties: {
     acrConfiguration: {}
     authenticationConfiguration: {
+      audience: 'https://acctestfhir.fhir.azurehealthcareapis.com'
       authority: 'https://login.microsoftonline.com/${tenant().tenantId}'
       smartProxyEnabled: false
-      audience: 'https://acctestfhir.fhir.azurehealthcareapis.com'
     }
     corsConfiguration: {
       allowCredentials: false

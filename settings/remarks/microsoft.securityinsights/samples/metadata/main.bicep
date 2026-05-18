@@ -37,18 +37,18 @@ resource alertRule 'Microsoft.SecurityInsights/alertRules@2022-10-01-preview' = 
   ]
   kind: 'NRT'
   properties: {
+    description: ''
     displayName: 'Some Rule'
     enabled: true
-    suppressionDuration: 'PT5H'
-    tactics: []
-    description: ''
     query: '''AzureActivity |
   where OperationName == "Create or Update Virtual Machine" or OperationName =="Create Deployment" |
   where ActivityStatus == "Succeeded" |
   make-series dcount(ResourceId) default=0 on EventSubmissionTimestamp in range(ago(7d), now(), 1d) by Caller
 '''
     severity: 'High'
+    suppressionDuration: 'PT5H'
     suppressionEnabled: false
+    tactics: []
     techniques: []
   }
 }
@@ -57,9 +57,9 @@ resource metadata 'Microsoft.SecurityInsights/metadata@2022-10-01-preview' = {
   name: resourceName
   scope: workspace
   properties: {
-    parentId: alertRule.id
     contentId: resourceName
     contentSchemaVersion: '2.0'
     kind: 'AnalyticsRule'
+    parentId: alertRule.id
   }
 }

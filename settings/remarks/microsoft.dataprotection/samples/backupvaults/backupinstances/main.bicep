@@ -4,40 +4,14 @@ param location string = 'westeurope'
 @description('The administrator login password for the PostgreSQL server')
 param administratorLoginPassword string
 
-resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
-  name: resourceName
-  location: location
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'B_Gen5_2'
-    tier: 'Basic'
-  }
-  properties: {
-    createMode: 'Default'
-    publicNetworkAccess: 'Enabled'
-    storageProfile: {
-      storageAutogrow: 'Enabled'
-      storageMB: 5120
-      backupRetentionDays: 7
-    }
-    version: '9.5'
-    administratorLogin: 'psqladmin'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    infrastructureEncryption: 'Disabled'
-    minimalTlsVersion: 'TLS1_2'
-    sslEnforcement: 'Enabled'
-  }
-}
-
 resource backupVault 'Microsoft.DataProtection/backupVaults@2022-04-01' = {
   name: resourceName
   location: location
   properties: {
     storageSettings: [
       {
-        type: 'LocallyRedundant'
         datastoreType: 'VaultStore'
+        type: 'LocallyRedundant'
       }
     ]
   }
@@ -47,24 +21,28 @@ resource backupInstance 'Microsoft.DataProtection/backupVaults/backupInstances@2
   name: resourceName
   parent: backupVault
   properties: {
-    dataSourceSetInfo: {
+    dataSourceInfo: {
+      datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
+      objectType: 'Datasource'
+      resourceID: database.id
+      resourceLocation: database.location
+      resourceName: database.name
+      resourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
       resourceUri: ''
+    }
+    dataSourceSetInfo: {
       datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
       objectType: 'DatasourceSet'
       resourceID: server.id
       resourceLocation: server.location
       resourceName: server.name
       resourceType: 'Microsoft.DBForPostgreSQL/servers'
+      resourceUri: ''
     }
-    datasourceAuthCredentials: null
     friendlyName: resourceName
     objectType: 'BackupInstance'
-    policyInfo: {}
-    dataSourceInfo: {
-      objectType: 'Datasource'
-      resourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
-      resourceUri: ''
-      datasourceType: 'Microsoft.DBforPostgreSQL/servers/databases'
+    policyInfo: {
+      policyId: backupPolicy.id
     }
   }
 }
@@ -73,6 +51,10 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
   name: resourceName
   parent: backupVault
   properties: {
+    datasourceTypes: [
+      'Microsoft.DBforPostgreSQL/servers/databases'
+    ]
+    objectType: 'BackupPolicy'
     policyRules: [
       {
         backupParameters: {
@@ -94,12 +76,12 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
           }
           taggingCriteria: [
             {
+              isDefault: true
               tagInfo: {
                 id: 'Default_'
                 tagName: 'Default'
               }
               taggingPriority: 99
-              isDefault: true
             }
           ]
         }
@@ -113,8 +95,8 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
               objectType: 'AbsoluteDeleteOption'
             }
             sourceDataStore: {
-              objectType: 'DataStoreInfoBase'
               dataStoreType: 'VaultStore'
+              objectType: 'DataStoreInfoBase'
             }
             targetDataStoreCopySettings: []
           }
@@ -123,10 +105,32 @@ resource backupPolicy 'Microsoft.DataProtection/backupVaults/backupPolicies@2022
         objectType: 'AzureRetentionRule'
       }
     ]
-    datasourceTypes: [
-      'Microsoft.DBforPostgreSQL/servers/databases'
-    ]
-    objectType: 'BackupPolicy'
+  }
+}
+
+resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    capacity: 2
+    family: 'Gen5'
+    name: 'B_Gen5_2'
+    tier: 'Basic'
+  }
+  properties: {
+    administratorLogin: 'psqladmin'
+    administratorLoginPassword: administratorLoginPassword
+    createMode: 'Default'
+    infrastructureEncryption: 'Disabled'
+    minimalTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'Enabled'
+    sslEnforcement: 'Enabled'
+    storageProfile: {
+      backupRetentionDays: 7
+      storageAutogrow: 'Enabled'
+      storageMB: 5120
+    }
+    version: '9.5'
   }
 }
 

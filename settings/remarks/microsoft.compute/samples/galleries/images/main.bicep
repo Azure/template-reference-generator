@@ -1,5 +1,5 @@
-param location string = 'westeurope'
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource gallery 'Microsoft.Compute/galleries@2022-03-03' = {
   name: resourceName
@@ -15,18 +15,16 @@ resource image 'Microsoft.Compute/galleries/images@2022-03-03' = {
   parent: gallery
   properties: {
     architecture: 'x64'
+    description: ''
     disallowed: {
       diskTypes: []
     }
-    features: null
     hyperVGeneration: 'V1'
     identifier: {
       offer: 'AccTesOffer230630032848825313'
       publisher: 'AccTesPublisher230630032848825313'
       sku: 'AccTesSku230630032848825313'
     }
-    releaseNoteUri: ''
-    description: ''
     osState: 'Generalized'
     osType: 'Linux'
     privacyStatementUri: ''
@@ -34,5 +32,6 @@ resource image 'Microsoft.Compute/galleries/images@2022-03-03' = {
       memory: {}
       vCPUs: {}
     }
+    releaseNoteUri: ''
   }
 }

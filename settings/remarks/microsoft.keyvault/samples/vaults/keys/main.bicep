@@ -6,8 +6,8 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   location: location
   properties: {
     sku: {
-      name: 'standard'
       family: 'A'
+      name: 'standard'
     }
     accessPolicies: []
     enableSoftDelete: true
@@ -22,9 +22,11 @@ resource putAccesspolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' =
   properties: {
     accessPolicies: [
       {
-        tenantId: tenant().tenantId
         objectId: deployer().objectId
         permissions: {
+          certificates: [
+            'ManageContacts'
+          ]
           keys: [
             'Get'
             'Create'
@@ -44,10 +46,8 @@ resource putAccesspolicy 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' =
             'Get'
           ]
           storage: []
-          certificates: [
-            'ManageContacts'
-          ]
         }
+        tenantId: tenant().tenantId
       }
     ]
   }

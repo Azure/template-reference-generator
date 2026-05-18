@@ -1,6 +1,17 @@
 param resourceName string = 'acctest0001'
 param location string = 'eastus'
 
+resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    publicLandMobileNetworkIdentifier: {
+      mcc: '001'
+      mnc: '01'
+    }
+  }
+}
+
 resource packetCoreControlPlane 'Microsoft.MobileNetwork/packetCoreControlPlanes@2022-11-01' = {
   name: resourceName
   location: location
@@ -16,21 +27,12 @@ resource packetCoreControlPlane 'Microsoft.MobileNetwork/packetCoreControlPlanes
       type: 'AKS-HCI'
     }
     sites: [
-      {}
+      {
+        id: site.id
+      }
     ]
     sku: 'G0'
     ueMtu: 1440
-  }
-}
-
-resource mobileNetwork 'Microsoft.MobileNetwork/mobileNetworks@2022-11-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    publicLandMobileNetworkIdentifier: {
-      mnc: '01'
-      mcc: '001'
-    }
   }
 }
 

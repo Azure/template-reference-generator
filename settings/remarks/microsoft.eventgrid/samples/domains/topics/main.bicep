@@ -9,7 +9,6 @@ resource domain 'Microsoft.EventGrid/domains@2021-12-01' = {
     autoDeleteTopicWithLastSubscription: true
     disableLocalAuth: false
     inputSchema: 'EventGridSchema'
-    inputSchemaMapping: null
     publicNetworkAccess: 'Enabled'
   }
 }

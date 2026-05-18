@@ -13,32 +13,20 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
   name: '${resourceName}-vm'
   location: location
   properties: {
-    hardwareProfile: {
-      vmSize: 'Standard_B2s'
-    }
-    priority: 'Regular'
-    storageProfile: {
-      dataDisks: []
-      imageReference: {
-        offer: '0001-com-ubuntu-server-jammy'
-        publisher: 'Canonical'
-        sku: '22_04-lts'
-        version: 'latest'
-      }
-      osDisk: {
-        osType: 'Linux'
-        writeAcceleratorEnabled: false
-        caching: 'ReadWrite'
-        createOption: 'FromImage'
-        managedDisk: {
-          storageAccountType: 'Premium_LRS'
-        }
-      }
-    }
+    additionalCapabilities: {}
     applicationProfile: {
       galleryApplications: []
     }
+    diagnosticsProfile: {
+      bootDiagnostics: {
+        enabled: false
+        storageUri: ''
+      }
+    }
     extensionsTimeBudget: 'PT1H30M'
+    hardwareProfile: {
+      vmSize: 'Standard_B2s'
+    }
     networkProfile: {
       networkInterfaces: [
         {
@@ -50,7 +38,6 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
       ]
     }
     osProfile: {
-      secrets: []
       adminPassword: adminPassword
       adminUsername: 'adminuser'
       allowExtensionOperations: true
@@ -66,12 +53,25 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-03-01' = {
           publicKeys: []
         }
       }
+      secrets: []
     }
-    additionalCapabilities: {}
-    diagnosticsProfile: {
-      bootDiagnostics: {
-        enabled: false
-        storageUri: ''
+    priority: 'Regular'
+    storageProfile: {
+      dataDisks: []
+      imageReference: {
+        offer: '0001-com-ubuntu-server-jammy'
+        publisher: 'Canonical'
+        sku: '22_04-lts'
+        version: 'latest'
+      }
+      osDisk: {
+        caching: 'ReadWrite'
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Premium_LRS'
+        }
+        osType: 'Linux'
+        writeAcceleratorEnabled: false
       }
     }
   }
@@ -99,18 +99,18 @@ resource runCommand 'Microsoft.Compute/virtualMachines/runCommands@2023-03-01' =
   location: location
   parent: virtualMachine
   properties: {
+    asyncExecution: false
+    errorBlobUri: ''
+    outputBlobUri: ''
     parameters: []
     protectedParameters: []
+    runAsPassword: ''
     runAsUser: ''
     source: {
       script: 'echo \'hello world\''
     }
     timeoutInSeconds: 1200
     treatFailureAsDeploymentFailure: true
-    asyncExecution: false
-    errorBlobUri: ''
-    outputBlobUri: ''
-    runAsPassword: ''
   }
 }
 
@@ -132,6 +132,8 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
   name: '${resourceName}-nic'
   location: location
   properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
     ipConfigurations: [
       {
         name: 'internal'
@@ -139,11 +141,11 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
           primary: false
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
-          subnet: {}
+          subnet: {
+            id: subnet.id
+          }
         }
       }
     ]
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
   }
 }

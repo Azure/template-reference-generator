@@ -23,17 +23,17 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
   properties: {
     accessPolicies: []
     createMode: 'default'
+    enableRbacAuthorization: false
     enableSoftDelete: true
     enabledForDeployment: false
     enabledForDiskEncryption: false
+    enabledForTemplateDeployment: false
     publicNetworkAccess: 'Enabled'
     sku: {
-      name: 'standard'
       family: 'A'
+      name: 'standard'
     }
     tenantId: tenant().tenantId
-    enableRbacAuthorization: false
-    enabledForTemplateDeployment: false
   }
 }
 
@@ -53,6 +53,8 @@ resource diagnosticSetting 'Microsoft.Insights/diagnosticSettings@2021-05-01-pre
   name: resourceName
   scope: vault
   properties: {
+    eventHubAuthorizationRuleId: authorizationRule.id
+    eventHubName: namespace.name
     logs: [
       {
         categoryGroup: 'Audit'

@@ -12,16 +12,16 @@ resource cluster 'Microsoft.Kusto/clusters@2023-05-02' = {
     tier: 'Basic'
   }
   properties: {
-    restrictOutboundNetworkAccess: 'Disabled'
-    trustedExternalTenants: []
     enableAutoStop: true
     enableDiskEncryption: false
-    engineType: 'V2'
     enableDoubleEncryption: false
     enablePurge: false
     enableStreamingIngest: false
+    engineType: 'V2'
     publicIPType: 'IPv4'
     publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: 'Disabled'
+    trustedExternalTenants: []
   }
 }
 

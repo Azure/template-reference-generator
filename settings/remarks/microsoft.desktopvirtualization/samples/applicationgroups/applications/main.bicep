@@ -6,6 +6,21 @@ resource applicationGroup 'Microsoft.DesktopVirtualization/applicationGroups@202
   location: location
   properties: {
     applicationGroupType: 'RemoteApp'
+    hostPoolArmPath: hostPool.id
+  }
+}
+
+resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2023-09-05' = {
+  name: resourceName
+  location: location
+  properties: {
+    hostPoolType: 'Pooled'
+    loadBalancerType: 'BreadthFirst'
+    maxSessionLimit: 999999
+    preferredAppGroupType: 'Desktop'
+    publicNetworkAccess: 'Enabled'
+    startVMOnConnect: false
+    validationEnvironment: false
   }
 }
 
@@ -17,19 +32,5 @@ resource application 'Microsoft.DesktopVirtualization/applicationGroups/applicat
     commandLineSetting: 'DoNotAllow'
     filePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
     showInPortal: false
-  }
-}
-
-resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2023-09-05' = {
-  name: resourceName
-  location: location
-  properties: {
-    startVMOnConnect: false
-    validationEnvironment: false
-    hostPoolType: 'Pooled'
-    loadBalancerType: 'BreadthFirst'
-    maxSessionLimit: 999999
-    preferredAppGroupType: 'Desktop'
-    publicNetworkAccess: 'Enabled'
   }
 }

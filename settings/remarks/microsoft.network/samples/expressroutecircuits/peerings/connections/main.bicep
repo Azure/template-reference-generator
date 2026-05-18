@@ -4,20 +4,23 @@ param location string = 'westeurope'
 @description('The shared key for the Express Route circuit peering connections')
 param expressRouteConnectionSharedKey string
 
-resource expressRouteCircuit2 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
+resource expressRoutePort 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
   name: resourceName
   location: location
-  sku: {
-    family: 'MeteredData'
-    name: 'Standard_MeteredData'
-    tier: 'Standard'
-  }
   properties: {
-    authorizationKey: ''
-    bandwidthInGbps: 5
-    expressRoutePort: {
-      id: expressRoutePort2.id
-    }
+    bandwidthInGbps: 10
+    encapsulation: 'Dot1Q'
+    peeringLocation: 'Airtel-Chennai2-CLS'
+  }
+}
+
+resource expressRoutePort2 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    bandwidthInGbps: 10
+    encapsulation: 'Dot1Q'
+    peeringLocation: 'CDC-Canberra'
   }
 }
 
@@ -38,19 +41,36 @@ resource expressRouteCircuit 'Microsoft.Network/expressRouteCircuits@2022-07-01'
   }
 }
 
+resource expressRouteCircuit2 'Microsoft.Network/expressRouteCircuits@2022-07-01' = {
+  name: resourceName
+  location: location
+  sku: {
+    family: 'MeteredData'
+    name: 'Standard_MeteredData'
+    tier: 'Standard'
+  }
+  properties: {
+    authorizationKey: ''
+    bandwidthInGbps: 5
+    expressRoutePort: {
+      id: expressRoutePort2.id
+    }
+  }
+}
+
 resource peering 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' = {
   name: 'AzurePrivatePeering'
   parent: expressRouteCircuit
   properties: {
-    gatewayManagerEtag: ''
-    peeringType: 'AzurePrivatePeering'
-    secondaryPeerAddressPrefix: '192.168.1.0/30'
-    sharedKey: '${expressRouteConnectionSharedKey}'
-    vlanId: 100
     azureASN: 12076
+    gatewayManagerEtag: ''
     peerASN: 100
+    peeringType: 'AzurePrivatePeering'
     primaryPeerAddressPrefix: '192.168.1.0/30'
+    secondaryPeerAddressPrefix: '192.168.1.0/30'
+    sharedKey: expressRouteConnectionSharedKey
     state: 'Enabled'
+    vlanId: 100
   }
 }
 
@@ -58,15 +78,15 @@ resource peering2 'Microsoft.Network/expressRouteCircuits/peerings@2022-07-01' =
   name: 'AzurePrivatePeering'
   parent: expressRouteCircuit2
   properties: {
-    primaryPeerAddressPrefix: '192.168.1.0/30'
-    secondaryPeerAddressPrefix: '192.168.1.0/30'
-    sharedKey: '${expressRouteConnectionSharedKey}'
-    vlanId: 100
+    azureASN: 12076
     gatewayManagerEtag: ''
     peerASN: 100
-    state: 'Enabled'
-    azureASN: 12076
     peeringType: 'AzurePrivatePeering'
+    primaryPeerAddressPrefix: '192.168.1.0/30'
+    secondaryPeerAddressPrefix: '192.168.1.0/30'
+    sharedKey: expressRouteConnectionSharedKey
+    state: 'Enabled'
+    vlanId: 100
   }
 }
 
@@ -81,25 +101,5 @@ resource connection 'Microsoft.Network/expressRouteCircuits/peerings/connections
     peerExpressRouteCircuitPeering: {
       id: peering2.id
     }
-  }
-}
-
-resource expressRoutePort 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    peeringLocation: 'Airtel-Chennai2-CLS'
-    bandwidthInGbps: 10
-    encapsulation: 'Dot1Q'
-  }
-}
-
-resource expressRoutePort2 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    bandwidthInGbps: 10
-    encapsulation: 'Dot1Q'
-    peeringLocation: 'CDC-Canberra'
   }
 }

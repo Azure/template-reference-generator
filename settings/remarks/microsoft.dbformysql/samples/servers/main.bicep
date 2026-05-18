@@ -1,10 +1,10 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator login for the MySQL server')
 param administratorLogin string
 @secure()
 @description('The administrator login password for the MySQL server')
 param administratorLoginPassword string
+param resourceName string = 'acctest0001'
 
 resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
   name: resourceName
@@ -16,9 +16,11 @@ resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
     tier: 'GeneralPurpose'
   }
   properties: {
-    minimalTlsVersion: 'TLS1_1'
-    administratorLogin: '${administratorLogin}'
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
+    infrastructureEncryption: 'Disabled'
+    minimalTlsVersion: 'TLS1_1'
     publicNetworkAccess: 'Enabled'
     sslEnforcement: 'Enabled'
     storageProfile: {
@@ -26,7 +28,5 @@ resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
       storageMB: 51200
     }
     version: '5.7'
-    administratorLoginPassword: '${administratorLoginPassword}'
-    infrastructureEncryption: 'Disabled'
   }
 }

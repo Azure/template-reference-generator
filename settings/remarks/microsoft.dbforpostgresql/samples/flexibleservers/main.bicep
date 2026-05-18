@@ -1,10 +1,10 @@
-param resourceName string = 'acctest0001'
 param location string = 'eastus'
 @description('The administrator login name for the PostgreSQL flexible server')
 param administratorLogin string
 @secure()
 @description('The administrator login password for the PostgreSQL flexible server')
 param administratorLoginPassword string
+param resourceName string = 'acctest0001'
 
 resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-preview' = {
   name: resourceName
@@ -14,7 +14,8 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-pr
     tier: 'GeneralPurpose'
   }
   properties: {
-    administratorLoginPassword: '${administratorLoginPassword}'
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     availabilityZone: '2'
     backup: {
       geoRedundantBackup: 'Disabled'
@@ -27,10 +28,8 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2023-06-01-pr
       storageSizeGB: 32
     }
     version: '12'
-    administratorLogin: '${administratorLogin}'
   }
   identity: {
     type: 'None'
-    userAssignedIdentities: null
   }
 }

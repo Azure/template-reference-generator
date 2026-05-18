@@ -10,8 +10,8 @@ resource server 'Microsoft.Sql/servers@2015-05-01-preview' = {
   name: resourceName
   location: location
   properties: {
-    administratorLogin: '${administratorLogin}'
-    administratorLoginPassword: '${administratorLoginPassword}'
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     version: '12.0'
   }
 }

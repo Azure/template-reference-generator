@@ -9,8 +9,28 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
     name: 'Standard_S1'
   }
   properties: {
+    cors: {}
     disableAadAuth: false
     disableLocalAuth: false
+    features: [
+      {
+        flag: 'ServiceMode'
+        value: 'Default'
+      }
+      {
+        flag: 'EnableConnectivityLogs'
+        value: 'False'
+      }
+      {
+        flag: 'EnableMessagingLogs'
+        value: 'False'
+      }
+      {
+        flag: 'EnableLiveTrace'
+        value: 'False'
+      }
+    ]
+    publicNetworkAccess: 'Enabled'
     resourceLogConfiguration: {
       categories: [
         {
@@ -33,26 +53,6 @@ resource signalR 'Microsoft.SignalRService/signalR@2023-02-01' = {
     tls: {
       clientCertEnabled: false
     }
-    cors: {}
-    features: [
-      {
-        flag: 'ServiceMode'
-        value: 'Default'
-      }
-      {
-        flag: 'EnableConnectivityLogs'
-        value: 'False'
-      }
-      {
-        flag: 'EnableMessagingLogs'
-        value: 'False'
-      }
-      {
-        flag: 'EnableLiveTrace'
-        value: 'False'
-      }
-    ]
-    publicNetworkAccess: 'Enabled'
     upstream: {
       templates: []
     }
