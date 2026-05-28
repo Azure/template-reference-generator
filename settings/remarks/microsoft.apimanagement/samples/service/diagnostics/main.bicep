@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource component 'Microsoft.Insights/components@2020-02-02' = {
   name: resourceName
@@ -20,6 +20,10 @@ resource component 'Microsoft.Insights/components@2020-02-02' = {
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -35,15 +39,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource diagnostic 'Microsoft.ApiManagement/service/diagnostics@2021-08-01' = {
-  parent: service
   name: 'applicationinsights'
+  parent: service
   properties: {
     loggerId: logger.id
     operationNameFormat: 'Name'
@@ -51,8 +51,8 @@ resource diagnostic 'Microsoft.ApiManagement/service/diagnostics@2021-08-01' = {
 }
 
 resource logger 'Microsoft.ApiManagement/service/loggers@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     credentials: {
       instrumentationKey: component.properties.InstrumentationKey

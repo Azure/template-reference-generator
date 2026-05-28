@@ -31,8 +31,8 @@ resource mongoCluster 'Microsoft.DocumentDB/mongoClusters@2025-09-01' = {
 }
 
 resource firewallRule 'Microsoft.DocumentDB/mongoClusters/firewallRules@2025-09-01' = {
-  parent: mongoCluster
   name: resourceName
+  parent: mongoCluster
   properties: {
     endIpAddress: '0.0.0.0'
     startIpAddress: '0.0.0.0'

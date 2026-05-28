@@ -7,7 +7,6 @@ resource topic 'Microsoft.EventGrid/topics@2021-12-01' = {
   properties: {
     disableLocalAuth: false
     inputSchema: 'EventGridSchema'
-    inputSchemaMapping: null
     publicNetworkAccess: 'Enabled'
   }
 }

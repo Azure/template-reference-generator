@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -19,15 +23,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
-  parent: service
   name: '${resourceName};rev=1'
+  parent: service
   properties: {
     apiRevisionDescription: ''
     apiType: 'http'
@@ -47,8 +47,8 @@ resource api 'Microsoft.ApiManagement/service/apis@2021-08-01' = {
 }
 
 resource schema 'Microsoft.ApiManagement/service/apis/schemas@2021-08-01' = {
-  parent: api
   name: resourceName
+  parent: api
   properties: {
     contentType: 'application/vnd.ms-azure-apim.xsd+xml'
     document: {

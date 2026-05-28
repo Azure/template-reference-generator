@@ -1,6 +1,17 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    allowBranchToBranchTraffic: true
+    disableVpnEncryption: false
+    office365LocalBreakoutCategory: 'None'
+    type: 'Standard'
+  }
+}
+
 resource expressRouteGateway 'Microsoft.Network/expressRouteGateways@2022-07-01' = {
   name: resourceName
   location: location
@@ -29,16 +40,5 @@ resource virtualHub 'Microsoft.Network/virtualHubs@2022-07-01' = {
     virtualWan: {
       id: virtualWan.id
     }
-  }
-}
-
-resource virtualWan 'Microsoft.Network/virtualWans@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    allowBranchToBranchTraffic: true
-    disableVpnEncryption: false
-    office365LocalBreakoutCategory: 'None'
-    type: 'Standard'
   }
 }

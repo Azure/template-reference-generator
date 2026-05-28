@@ -1,24 +1,34 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @description('The SQL administrator login for the Synapse workspace')
 param sqlAdministratorLogin string
 @secure()
 @description('The SQL administrator login password for the Synapse workspace')
 param sqlAdministratorLoginPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' existing = {
-  parent: storageAccount
   name: 'default'
+  parent: storageAccount
+}
+
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
+  name: resourceName
+  parent: blobService
+  properties: {
+    metadata: {
+      key: 'value'
+    }
+  }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
-  kind: 'StorageV2'
-  properties: {}
   sku: {
     name: 'Standard_LRS'
   }
+  kind: 'StorageV2'
+  properties: {}
 }
 
 resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
@@ -29,7 +39,6 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
       accountUrl: storageAccount.properties.primaryEndpoints.dfs
       filesystem: container.name
     }
-
     managedVirtualNetwork: ''
     publicNetworkAccess: 'Enabled'
     sqlAdministratorLogin: sqlAdministratorLogin
@@ -38,20 +47,10 @@ resource workspace 'Microsoft.Synapse/workspaces@2021-06-01' = {
 }
 
 resource firewallRule 'Microsoft.Synapse/workspaces/firewallRules@2021-06-01' = {
-  parent: workspace
   name: 'AllowAll'
+  parent: workspace
   properties: {
     endIpAddress: '255.255.255.255'
     startIpAddress: '0.0.0.0'
-  }
-}
-
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
-  parent: blobService
-  name: resourceName
-  properties: {
-    metadata: {
-      key: 'value'
-    }
   }
 }

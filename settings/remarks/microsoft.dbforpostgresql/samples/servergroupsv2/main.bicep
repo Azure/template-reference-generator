@@ -8,7 +8,7 @@ resource serverGroupsv2 'Microsoft.DBforPostgreSQL/serverGroupsv2@2022-11-08' = 
   name: resourceName
   location: location
   properties: {
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     coordinatorEnablePublicIpAccess: true
     coordinatorServerEdition: 'GeneralPurpose'
     coordinatorStorageQuotaInMb: 131072

@@ -8,14 +8,12 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   properties: {
     azPowerShellVersion: '8.3'
     cleanupPreference: 'Always'
-    environmentVariables: null
     retentionInterval: 'P1D'
     scriptContent: '''		$output = ''Hello''
 		Write-Output $output
 		$DeploymentScriptOutputs = @{}
 		$DeploymentScriptOutputs[''text''] = $output
 '''
-    supportingScriptUris: null
     timeout: 'P1D'
   }
 }

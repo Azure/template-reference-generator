@@ -4,6 +4,10 @@ param location string = 'westus'
 resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
   name: '${resourceName}-service'
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -19,15 +23,19 @@ resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
+}
+
+resource tag 'Microsoft.ApiManagement/service/tags@2022-08-01' = {
+  name: '${resourceName}-tag'
+  parent: service
+  properties: {
+    displayName: '${resourceName}-tag'
   }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
-  parent: service
   name: '${resourceName}-api;rev=1'
+  parent: service
   properties: {
     apiRevisionDescription: ''
     apiType: 'http'
@@ -43,17 +51,9 @@ resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
   }
 }
 
-resource tag 'Microsoft.ApiManagement/service/tags@2022-08-01' = {
-  parent: service
-  name: '${resourceName}-tag'
-  properties: {
-    displayName: 'acctest0001-tag'
-  }
-}
-
 resource tagDescription 'Microsoft.ApiManagement/service/apis/tagDescriptions@2022-08-01' = {
-  parent: api
   name: '${resourceName}-tag'
+  parent: api
   properties: {
     description: 'tag description'
     externalDocsDescription: 'external tag description'
@@ -62,6 +62,6 @@ resource tagDescription 'Microsoft.ApiManagement/service/apis/tagDescriptions@20
 }
 
 resource tag1 'Microsoft.ApiManagement/service/apis/tags@2022-08-01' = {
-  parent: api
   name: '${resourceName}-tag'
+  parent: api
 }

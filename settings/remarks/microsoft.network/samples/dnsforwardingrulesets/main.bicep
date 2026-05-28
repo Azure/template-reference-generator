@@ -1,28 +1,6 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource dnsForwardingRuleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    dnsResolverOutboundEndpoints: [
-      {
-        id: outboundEndpoint.id
-      }
-    ]
-  }
-}
-
-resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    virtualNetwork: {
-      id: virtualNetwork.id
-    }
-  }
-}
-
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   name: resourceName
   location: location
@@ -39,10 +17,20 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   }
 }
 
-resource outboundEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-01' = {
-  parent: dnsResolver
+resource dnsResolver 'Microsoft.Network/dnsResolvers@2022-07-01' = {
   name: resourceName
   location: location
+  properties: {
+    virtualNetwork: {
+      id: virtualNetwork.id
+    }
+  }
+}
+
+resource outboundEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022-07-01' = {
+  name: resourceName
+  location: location
+  parent: dnsResolver
   properties: {
     subnet: {
       id: subnet.id
@@ -51,8 +39,8 @@ resource outboundEndpoint 'Microsoft.Network/dnsResolvers/outboundEndpoints@2022
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'outbounddns'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.0.64/28'
     delegations: [
@@ -67,5 +55,17 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource dnsForwardingRuleset 'Microsoft.Network/dnsForwardingRulesets@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    dnsResolverOutboundEndpoints: [
+      {
+        id: outboundEndpoint.id
+      }
+    ]
   }
 }

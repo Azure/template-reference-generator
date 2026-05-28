@@ -1,7 +1,7 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource expressrouteport 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
+resource expressRoutePort 'Microsoft.Network/ExpressRoutePorts@2022-07-01' = {
   name: resourceName
   location: location
   properties: {

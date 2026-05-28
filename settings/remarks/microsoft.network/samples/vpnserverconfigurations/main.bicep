@@ -11,12 +11,12 @@ resource vpnServerConfiguration 'Microsoft.Network/vpnServerConfigurations@2022-
     radiusClientRootCertificates: []
     radiusServerAddress: ''
     radiusServerRootCertificates: []
-    radiusServerSecret: null
+    radiusServerSecret: radiusServerSecret
     radiusServers: [
       {
         radiusServerAddress: '10.105.1.1'
         radiusServerScore: 15
-        radiusServerSecret: null
+        radiusServerSecret: radiusServerSecret
       }
     ]
     vpnAuthenticationTypes: [

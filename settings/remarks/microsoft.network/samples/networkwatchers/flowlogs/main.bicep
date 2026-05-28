@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'eastus2'
+param resourceName string = 'acctest0001'
 
 resource networkWatchers 'Microsoft.Network/networkWatchers@2023-11-01' = {
   name: resourceName
@@ -7,9 +7,36 @@ resource networkWatchers 'Microsoft.Network/networkWatchers@2023-11-01' = {
   properties: {}
 }
 
+resource flowLog 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
+  name: resourceName
+  location: location
+  parent: networkWatchers
+  properties: {
+    enabled: true
+    flowAnalyticsConfiguration: {
+      networkWatcherFlowAnalyticsConfiguration: {
+        enabled: false
+      }
+    }
+    format: {
+      type: 'JSON'
+      version: 2
+    }
+    retentionPolicy: {
+      days: 7
+      enabled: true
+    }
+    storageId: storageAccount.id
+    targetResourceId: virtualNetwork.id
+  }
+}
+
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -38,9 +65,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
@@ -56,29 +80,5 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
       dnsServers: []
     }
     subnets: []
-  }
-}
-
-resource flowLog 'Microsoft.Network/networkWatchers/flowLogs@2023-11-01' = {
-  parent: networkWatchers
-  name: resourceName
-  location: location
-  properties: {
-    enabled: true
-    flowAnalyticsConfiguration: {
-      networkWatcherFlowAnalyticsConfiguration: {
-        enabled: false
-      }
-    }
-    format: {
-      type: 'JSON'
-      version: 2
-    }
-    retentionPolicy: {
-      days: 7
-      enabled: true
-    }
-    storageId: storageAccount.id
-    targetResourceId: virtualNetwork.id
   }
 }

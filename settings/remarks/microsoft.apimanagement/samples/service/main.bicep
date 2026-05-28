@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Developer'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -30,9 +34,5 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherEmail: 'pub1@email.com'
     publisherName: 'pub1'
     virtualNetworkType: 'None'
-  }
-  sku: {
-    capacity: 1
-    name: 'Developer'
   }
 }

@@ -7,9 +7,13 @@ param postgresqlAdministratorPassword string
 resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_D2s_v3'
+    tier: 'GeneralPurpose'
+  }
   properties: {
     administratorLogin: 'adminTerraform'
-    administratorLoginPassword: null
+    administratorLoginPassword: postgresqlAdministratorPassword
     availabilityZone: '2'
     backup: {
       geoRedundantBackup: 'Disabled'
@@ -23,15 +27,11 @@ resource flexibleServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' =
     }
     version: '12'
   }
-  sku: {
-    name: 'Standard_D2s_v3'
-    tier: 'GeneralPurpose'
-  }
 }
 
 resource firewallRule 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2022-12-01' = {
-  parent: flexibleServer
   name: resourceName
+  parent: flexibleServer
   properties: {
     endIpAddress: '122.122.0.0'
     startIpAddress: '122.122.0.0'

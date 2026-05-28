@@ -1,4 +1,5 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08-01' = {
   name: resourceName
@@ -42,9 +43,9 @@ resource trafficManagerProfile2 'Microsoft.Network/trafficManagerProfiles@2018-0
   }
 }
 
-resource nestedendpoint 'Microsoft.Network/trafficManagerProfiles/NestedEndpoints@2018-08-01' = {
-  parent: trafficManagerProfile
+resource nestedEndpoint 'Microsoft.Network/trafficManagerProfiles/NestedEndpoints@2018-08-01' = {
   name: resourceName
+  parent: trafficManagerProfile
   properties: {
     customHeaders: []
     endpointStatus: 'Enabled'

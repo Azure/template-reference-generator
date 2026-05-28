@@ -9,12 +9,11 @@ resource domain 'Microsoft.EventGrid/domains@2021-12-01' = {
     autoDeleteTopicWithLastSubscription: true
     disableLocalAuth: false
     inputSchema: 'EventGridSchema'
-    inputSchemaMapping: null
     publicNetworkAccess: 'Enabled'
   }
 }
 
 resource topic 'Microsoft.EventGrid/domains/topics@2021-12-01' = {
-  parent: domain
   name: resourceName
+  parent: domain
 }

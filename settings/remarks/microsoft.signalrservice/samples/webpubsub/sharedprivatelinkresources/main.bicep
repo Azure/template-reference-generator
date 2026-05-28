@@ -20,7 +20,7 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
           ]
           storage: []
         }
-        tenantId: deployer().tenantId
+        tenantId: tenant().tenantId
       }
     ]
     createMode: 'default'
@@ -35,13 +35,17 @@ resource vault 'Microsoft.KeyVault/vaults@2021-10-01' = {
       name: 'standard'
     }
     softDeleteRetentionInDays: 7
-    tenantId: deployer().tenantId
+    tenantId: tenant().tenantId
   }
 }
 
 resource webPubSub 'Microsoft.SignalRService/webPubSub@2023-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_S1'
+  }
   properties: {
     disableAadAuth: false
     disableLocalAuth: false
@@ -50,15 +54,11 @@ resource webPubSub 'Microsoft.SignalRService/webPubSub@2023-02-01' = {
       clientCertEnabled: false
     }
   }
-  sku: {
-    capacity: 1
-    name: 'Standard_S1'
-  }
 }
 
 resource sharedPrivateLinkResource 'Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources@2023-02-01' = {
-  parent: webPubSub
   name: resourceName
+  parent: webPubSub
   properties: {
     groupId: 'vault'
     privateLinkResourceId: vault.id

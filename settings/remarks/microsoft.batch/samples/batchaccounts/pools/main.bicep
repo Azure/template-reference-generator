@@ -14,10 +14,9 @@ resource batchAccount 'Microsoft.Batch/batchAccounts@2022-10-01' = {
 }
 
 resource pool 'Microsoft.Batch/batchAccounts/pools@2022-10-01' = {
-  parent: batchAccount
   name: resourceName
+  parent: batchAccount
   properties: {
-    certificates: null
     deploymentConfiguration: {
       virtualMachineConfiguration: {
         imageReference: {

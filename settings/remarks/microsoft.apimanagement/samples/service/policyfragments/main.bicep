@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Developer'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -31,15 +35,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 1
-    name: 'Developer'
-  }
 }
 
 resource policyFragment 'Microsoft.ApiManagement/service/policyFragments@2021-12-01-preview' = {
-  parent: service
   name: 'error-handler'
+  parent: service
   properties: {
     description: 'Fragment for Error Handling'
     format: 'xml'

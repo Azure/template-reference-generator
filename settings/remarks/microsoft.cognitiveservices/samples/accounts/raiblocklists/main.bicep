@@ -4,6 +4,9 @@ param location string = 'westus'
 resource account 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: '${resourceName}-ca'
   location: location
+  sku: {
+    name: 'S0'
+  }
   kind: 'OpenAI'
   properties: {
     allowedFqdnList: []
@@ -14,14 +17,11 @@ resource account 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
   }
-  sku: {
-    name: 'S0'
-  }
 }
 
 resource raiBlocklist 'Microsoft.CognitiveServices/accounts/raiBlocklists@2024-10-01' = {
-  parent: account
   name: '${resourceName}-crb'
+  parent: account
   properties: {
     description: 'Acceptance test data new azurerm resource'
   }

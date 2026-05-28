@@ -9,7 +9,6 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   location: location
   kind: 'MongoDB'
   properties: {
-    backupPolicy: null
     capabilities: [
       {
         name: 'EnableMongoRoleBasedAccessControl'
@@ -38,7 +37,7 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
       {
         failoverPriority: 0
         isZoneRedundant: false
-        locationName: 'westus'
+        locationName: location
       }
     ]
     minimalTlsVersion: 'Tls12'
@@ -49,24 +48,24 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2024-08-15' = {
   }
 }
 
-resource mongodbDatabas 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
-  parent: databaseAccount
-  name: '${resourceName}-mongodb'
-  properties: {
-    options: {}
-    resource: {
-      id: 'acctest0001-mongodb'
-    }
-  }
-}
-
 resource mongodbUserDefinition 'Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions@2022-11-15' = {
-  parent: databaseAccount
   name: '${mongodbDatabas.name}.myUserName'
+  parent: databaseAccount
   properties: {
     databaseName: mongodbDatabas.name
     mechanisms: 'SCRAM-SHA-256'
-    password: null
+    password: mongodbUserPassword
     userName: 'myUserName'
+  }
+}
+
+resource mongodbDatabas 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2021-10-15' = {
+  name: '${resourceName}-mongodb'
+  parent: databaseAccount
+  properties: {
+    options: {}
+    resource: {
+      id: '${resourceName}-mongodb'
+    }
   }
 }

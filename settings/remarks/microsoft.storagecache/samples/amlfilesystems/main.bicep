@@ -4,6 +4,9 @@ param location string = 'westus'
 resource amlFilesystem 'Microsoft.StorageCache/amlFilesystems@2024-07-01' = {
   name: '${resourceName}-amlfs'
   location: location
+  sku: {
+    name: 'AMLFS-Durable-Premium-250'
+  }
   properties: {
     filesystemSubnet: subnet.id
     maintenanceWindow: {
@@ -12,12 +15,6 @@ resource amlFilesystem 'Microsoft.StorageCache/amlFilesystems@2024-07-01' = {
     }
     storageCapacityTiB: 8
   }
-  sku: {
-    name: 'AMLFS-Durable-Premium-250'
-  }
-  zones: [
-    '1'
-  ]
 }
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
@@ -38,8 +35,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     defaultOutboundAccess: true

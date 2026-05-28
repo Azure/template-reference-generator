@@ -4,22 +4,22 @@ param location string = 'westeurope'
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    zoneRedundant: false
-  }
   sku: {
     name: 'E0'
+  }
+  properties: {
+    zoneRedundant: false
   }
 }
 
 resource applicationAccelerator 'Microsoft.AppPlatform/Spring/applicationAccelerators@2023-05-01-preview' = {
-  parent: spring
   name: 'default'
+  parent: spring
 }
 
 resource customizedAccelerator 'Microsoft.AppPlatform/Spring/applicationAccelerators/customizedAccelerators@2023-05-01-preview' = {
-  parent: applicationAccelerator
   name: resourceName
+  parent: applicationAccelerator
   properties: {
     description: ''
     displayName: ''

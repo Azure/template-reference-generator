@@ -3,13 +3,8 @@ param location string = 'westeurope'
 
 resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
   name: 'ExportToWorkspace'
+  location: 'azapi_resource.resourceGroup.location'
   properties: {
-    actions: [
-      {
-        actionType: 'Workspace'
-        workspaceResourceId: workspace.id
-      }
-    ]
     isEnabled: true
     scopes: [
       {
@@ -24,10 +19,10 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
           {
             rules: [
               {
-                expectedValue: 'Microsoft.Security/assessments'
-                operator: 'Contains'
                 propertyJPath: 'type'
                 propertyType: 'String'
+                expectedValue: 'Microsoft.Security/assessments'
+                operator: 'Contains'
               }
             ]
           }
@@ -39,10 +34,10 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
           {
             rules: [
               {
-                expectedValue: 'Microsoft.Security/assessments'
-                operator: 'Contains'
                 propertyJPath: 'type'
                 propertyType: 'String'
+                expectedValue: 'Microsoft.Security/assessments'
+                operator: 'Contains'
               }
             ]
           }
@@ -60,40 +55,40 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
           {
             rules: [
               {
+                propertyJPath: 'Severity'
+                propertyType: 'String'
                 expectedValue: 'low'
                 operator: 'Equals'
-                propertyJPath: 'Severity'
-                propertyType: 'String'
               }
             ]
           }
           {
             rules: [
               {
+                propertyJPath: 'Severity'
+                propertyType: 'String'
                 expectedValue: 'medium'
                 operator: 'Equals'
-                propertyJPath: 'Severity'
-                propertyType: 'String'
               }
             ]
           }
           {
             rules: [
               {
+                propertyJPath: 'Severity'
+                propertyType: 'String'
                 expectedValue: 'high'
                 operator: 'Equals'
-                propertyJPath: 'Severity'
-                propertyType: 'String'
               }
             ]
           }
           {
             rules: [
               {
-                expectedValue: 'informational'
-                operator: 'Equals'
                 propertyJPath: 'Severity'
                 propertyType: 'String'
+                expectedValue: 'informational'
+                operator: 'Equals'
               }
             ]
           }
@@ -116,6 +111,12 @@ resource automation 'Microsoft.Security/automations@2019-01-01-preview' = {
       }
       {
         eventSource: 'RegulatoryComplianceAssessmentSnapshot'
+      }
+    ]
+    actions: [
+      {
+        workspaceResourceId: workspace.id
+        actionType: 'Workspace'
       }
     ]
   }

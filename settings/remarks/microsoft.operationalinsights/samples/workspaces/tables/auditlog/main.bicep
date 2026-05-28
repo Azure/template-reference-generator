@@ -2,7 +2,20 @@ param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
 var auditLogTableName = 'AuditLog_CL'
-var auditLogColumns = {} // TODO: Complex type needs manual conversion
+var auditLogColumns = [
+  {
+    name: 'appId'
+    type: 'string'
+  }
+  {
+    name: 'correlationId'
+    type: 'string'
+  }
+  {
+    name: 'TimeGenerated'
+    type: 'datetime'
+  }
+]
 
 resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: resourceName
@@ -25,12 +38,12 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource table 'Microsoft.OperationalInsights/workspaces/tables@2022-10-01' = {
-  parent: workspace
   name: auditLogTableName
+  parent: workspace
   properties: {
     schema: {
-      name: auditLogTableName
       columns: auditLogColumns
+      name: auditLogTableName
     }
   }
 }

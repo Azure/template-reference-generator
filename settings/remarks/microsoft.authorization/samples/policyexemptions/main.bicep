@@ -1,9 +1,12 @@
 targetScope = 'subscription'
 
 param resourceName string = 'acctest0001'
+param location string = 'eastus'
 
 resource policyAssignment 'Microsoft.Authorization/policyAssignments@2022-06-01' = {
   name: resourceName
+  location: 'westeurope'
+  scope: subscription()
   properties: {
     displayName: ''
     enforcementMode: 'Default'
@@ -32,7 +35,7 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
       if: {
         not: {
           field: 'location'
-          in: '[parameters(\'allowedLocations\')]'
+          in: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         }
       }
       then: {
@@ -45,6 +48,7 @@ resource policyDefinition 'Microsoft.Authorization/policyDefinitions@2021-06-01'
 
 resource policyExemption 'Microsoft.Authorization/policyExemptions@2020-07-01-preview' = {
   name: resourceName
+  scope: subscription()
   properties: {
     exemptionCategory: 'Mitigated'
     policyAssignmentId: policyAssignment.id

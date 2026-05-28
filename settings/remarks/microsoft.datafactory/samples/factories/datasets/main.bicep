@@ -6,13 +6,15 @@ resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
   }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -41,14 +43,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource dataset 'Microsoft.DataFactory/factories/datasets@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     linkedServiceName: {
@@ -69,8 +68,8 @@ resource dataset 'Microsoft.DataFactory/factories/datasets@2018-06-01' = {
 }
 
 resource linkedservice 'Microsoft.DataFactory/factories/linkedservices@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     description: ''
     type: 'AzureBlobStorage'

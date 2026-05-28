@@ -4,49 +4,6 @@ param location string = 'westeurope'
 @description('The administrator password for the virtual machine')
 param adminPassword string
 
-resource configurationAssignment 'Microsoft.Maintenance/configurationAssignments@2022-07-01-preview' = {
-  scope: virtualMachine
-  name: resourceName
-  location: 'westeurope'
-  properties: {
-    maintenanceConfigurationId: maintenanceConfiguration.id
-    resourceId: virtualMachine.id
-  }
-}
-
-resource maintenanceConfiguration 'Microsoft.Maintenance/maintenanceConfigurations@2022-07-01-preview' = {
-  name: resourceName
-  location: location
-  properties: {
-    extensionProperties: {}
-    maintenanceScope: 'SQLDB'
-    namespace: 'Microsoft.Maintenance'
-    visibility: 'Custom'
-  }
-}
-
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
-  }
-}
-
 resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   name: resourceName
   location: location
@@ -76,10 +33,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: adminPassword
       adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001'
+      computerName: resourceName
       linuxConfiguration: {
         disablePasswordAuthentication: false
         patchSettings: {
@@ -132,8 +89,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -141,5 +98,47 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource configurationAssignment 'Microsoft.Maintenance/configurationAssignments@2022-07-01-preview' = {
+  name: resourceName
+  scope: virtualMachine
+  properties: {
+    maintenanceConfigurationId: maintenanceConfiguration.id
+    resourceId: virtualMachine.id
+  }
+}
+
+resource maintenanceConfiguration 'Microsoft.Maintenance/maintenanceConfigurations@2022-07-01-preview' = {
+  name: resourceName
+  location: location
+  properties: {
+    extensionProperties: {}
+    maintenanceScope: 'SQLDB'
+    namespace: 'Microsoft.Maintenance'
+    visibility: 'Custom'
+  }
+}
+
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration1'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }

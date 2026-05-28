@@ -1,9 +1,30 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_F2'
+    tier: 'Standard'
+  }
   properties: {
     additionalCapabilities: {}
     doNotRunExtensionsOnOverprovisionedVMs: false
@@ -62,7 +83,7 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
       osProfile: {
         adminUsername: 'adminuser'
-        computerNamePrefix: 'acctest0001'
+        computerNamePrefix: resourceName
         linuxConfiguration: {
           disablePasswordAuthentication: true
           provisionVMAgent: true
@@ -98,32 +119,11 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
     }
   }
-  sku: {
-    capacity: 1
-    name: 'Standard_F2'
-    tier: 'Standard'
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
-  }
 }
 
 resource extension 'Microsoft.Compute/virtualMachineScaleSets/extensions@2023-03-01' = {
-  parent: virtualMachineScaleSet
   name: resourceName
+  parent: virtualMachineScaleSet
   properties: {
     autoUpgradeMinorVersion: true
     enableAutomaticUpgrade: false
@@ -139,8 +139,8 @@ resource extension 'Microsoft.Compute/virtualMachineScaleSets/extensions@2023-03
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []

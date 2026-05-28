@@ -1,26 +1,14 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' existing = {
+  name: resourceName
   parent: virtualNetwork
-  name: resourceName
-}
-
-resource instancePool 'Microsoft.Sql/instancePools@2022-05-01-preview' = {
-  name: resourceName
-  properties: {
-    licenseType: 'LicenseIncluded'
-    subnetId: subnet.id
-    vCores: 8
-  }
-  sku: {
-    family: 'Gen5'
-    name: 'GP_Gen5'
-    tier: 'GeneralPurpose'
-  }
 }
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
   properties: {
     securityRules: [
       {
@@ -141,6 +129,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-04-0
 
 resource routeTable 'Microsoft.Network/routeTables@2023-04-01' = {
   name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
   properties: {
     disableBgpRoutePropagation: false
   }
@@ -148,6 +137,7 @@ resource routeTable 'Microsoft.Network/routeTables@2023-04-01' = {
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-04-01' = {
   name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -162,9 +152,15 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-04-01' = {
         }
       }
       {
-        name: 'acctest0001'
+        name: resourceName
         properties: {
           addressPrefix: '10.0.1.0/24'
+          networkSecurityGroup: {
+            id: networkSecurityGroup.id
+          }
+          routeTable: {
+            id: routeTable.id
+          }
           delegations: [
             {
               name: 'miDelegation'
@@ -173,14 +169,23 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-04-01' = {
               }
             }
           ]
-          networkSecurityGroup: {
-            id: networkSecurityGroup.id
-          }
-          routeTable: {
-            id: routeTable.id
-          }
         }
       }
     ]
+  }
+}
+
+resource instancePool 'Microsoft.Sql/instancePools@2022-05-01-preview' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  sku: {
+    family: 'Gen5'
+    name: 'GP_Gen5'
+    tier: 'GeneralPurpose'
+  }
+  properties: {
+    licenseType: 'LicenseIncluded'
+    subnetId: subnet.id
+    vCores: 8
   }
 }

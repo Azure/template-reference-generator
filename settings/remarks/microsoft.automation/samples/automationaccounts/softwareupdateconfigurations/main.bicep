@@ -16,8 +16,8 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
 }
 
 resource softwareUpdateConfiguration 'Microsoft.Automation/automationAccounts/softwareUpdateConfigurations@2019-06-01' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     scheduleInfo: {
       description: ''

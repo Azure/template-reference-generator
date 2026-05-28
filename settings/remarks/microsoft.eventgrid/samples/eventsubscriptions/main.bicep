@@ -1,52 +1,12 @@
 param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 
-resource eventSubscription 'Microsoft.EventGrid/eventSubscriptions@2021-12-01' = {
-  scope: storageAccount
-  name: resourceName
-  properties: {
-    deadLetterDestination: null
-    destination: {
-      endpointType: 'EventHub'
-      properties: {
-        deliveryAttributeMappings: null
-        resourceId: eventhub.id
-      }
-    }
-    eventDeliverySchema: 'EventGridSchema'
-    filter: {
-      includedEventTypes: [
-        'Microsoft.Storage.BlobCreated'
-        'Microsoft.Storage.BlobRenamed'
-      ]
-    }
-    labels: []
-    retryPolicy: {
-      eventTimeToLiveInMinutes: 144
-      maxDeliveryAttempts: 10
-    }
-  }
-}
-
-resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
-  name: resourceName
-  location: location
-  properties: {
-    disableLocalAuth: false
-    isAutoInflateEnabled: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard'
-    tier: 'Standard'
-  }
-}
-
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -75,14 +35,52 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
+}
+
+resource eventSubscription 'Microsoft.EventGrid/eventSubscriptions@2021-12-01' = {
+  name: resourceName
+  scope: storageAccount
+  properties: {
+    destination: {
+      endpointType: 'EventHub'
+      properties: {
+        resourceId: eventhub.id
+      }
+    }
+    eventDeliverySchema: 'EventGridSchema'
+    filter: {
+      includedEventTypes: [
+        'Microsoft.Storage.BlobCreated'
+        'Microsoft.Storage.BlobRenamed'
+      ]
+    }
+    labels: []
+    retryPolicy: {
+      eventTimeToLiveInMinutes: 144
+      maxDeliveryAttempts: 10
+    }
+  }
+}
+
+resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
+  name: resourceName
+  location: location
   sku: {
-    name: 'Standard_LRS'
+    capacity: 1
+    name: 'Standard'
+    tier: 'Standard'
+  }
+  properties: {
+    disableLocalAuth: false
+    isAutoInflateEnabled: false
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
   }
 }
 
 resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: namespace
   name: resourceName
+  parent: namespace
   properties: {
     messageRetentionInDays: 1
     partitionCount: 1

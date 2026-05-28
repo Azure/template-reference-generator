@@ -1,8 +1,8 @@
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
 @secure()
 @description('The administrator password for the lab virtual machine')
 param adminPassword string
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
   name: resourceName
@@ -28,7 +28,7 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
         installGpuDrivers: 'Disabled'
       }
       adminUser: {
-        password: null
+        password: adminPassword
         username: 'testadmin'
       }
       createOption: 'Image'
@@ -49,8 +49,8 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
 }
 
 resource user 'Microsoft.LabServices/labs/users@2022-08-01' = {
-  parent: lab
   name: resourceName
+  parent: lab
   properties: {
     additionalUsageQuota: 'PT0S'
     email: 'terraform-acctest@hashicorp.com'

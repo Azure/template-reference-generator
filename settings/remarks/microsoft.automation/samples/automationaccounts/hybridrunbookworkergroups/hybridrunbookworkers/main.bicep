@@ -7,6 +7,35 @@ param automationWorkerPassword string
 @description('The administrator password for the virtual machine')
 param vmAdminPassword string
 
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    dhcpOptions: {
+      dnsServers: []
+    }
+    subnets: []
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: 'internal'
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.2.0/24'
+    delegations: []
+    privateEndpointNetworkPolicies: 'Enabled'
+    privateLinkServiceNetworkPolicies: 'Enabled'
+    serviceEndpointPolicies: []
+    serviceEndpoints: []
+  }
+}
+
 resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' = {
   name: resourceName
   location: location
@@ -21,25 +50,16 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2021-06-22' 
   }
 }
 
-resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+resource hybridRunbookWorkerGroup 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups@2021-06-22' = {
   name: resourceName
-  location: location
+  parent: automationAccount
+}
+
+resource hybridRunbookWorker 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers@2021-06-22' = {
+  name: 'c7714056-5ba8-4bbe-920e-2993171164eb'
+  parent: hybridRunbookWorkerGroup
   properties: {
-    enableAcceleratedNetworking: false
-    enableIPForwarding: false
-    ipConfigurations: [
-      {
-        name: 'testconfiguration1'
-        properties: {
-          primary: true
-          privateIPAddressVersion: 'IPv4'
-          privateIPAllocationMethod: 'Dynamic'
-          subnet: {
-            id: subnet.id
-          }
-        }
-      }
-    ]
+    vmResourceId: virtualMachine.id
   }
 }
 
@@ -72,10 +92,10 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: vmAdminPassword
       adminUsername: 'adminuser'
       allowExtensionOperations: true
-      computerName: 'acctest0001'
+      computerName: resourceName
       linuxConfiguration: {
         disablePasswordAuthentication: false
         patchSettings: {
@@ -111,57 +131,34 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   }
 }
 
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+resource networkInterface 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   name: resourceName
   location: location
   properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-    dhcpOptions: {
-      dnsServers: []
-    }
-    subnets: []
+    enableAcceleratedNetworking: false
+    enableIPForwarding: false
+    ipConfigurations: [
+      {
+        name: 'testconfiguration1'
+        properties: {
+          primary: true
+          privateIPAddressVersion: 'IPv4'
+          privateIPAllocationMethod: 'Dynamic'
+          subnet: {
+            id: subnet.id
+          }
+        }
+      }
+    ]
   }
 }
 
 resource credential 'Microsoft.Automation/automationAccounts/credentials@2020-01-13-preview' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     description: ''
-    password: null
+    password: automationWorkerPassword
     userName: 'test_user'
-  }
-}
-
-resource hybridRunbookWorkerGroup 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups@2021-06-22' = {
-  parent: automationAccount
-  name: resourceName
-  credential: {
-    name: credential.name
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
-  name: 'internal'
-  properties: {
-    addressPrefix: '10.0.2.0/24'
-    delegations: []
-    privateEndpointNetworkPolicies: 'Enabled'
-    privateLinkServiceNetworkPolicies: 'Enabled'
-    serviceEndpointPolicies: []
-    serviceEndpoints: []
-  }
-}
-
-resource hybridRunbookWorker 'Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers@2021-06-22' = {
-  parent: hybridRunbookWorkerGroup
-  name: 'c7714056-5ba8-4bbe-920e-2993171164eb'
-  properties: {
-    vmResourceId: virtualMachine.id
   }
 }

@@ -28,9 +28,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource inboundEndpoint 'Microsoft.Network/dnsResolvers/inboundEndpoints@2022-07-01' = {
-  parent: dnsResolver
   name: resourceName
   location: location
+  parent: dnsResolver
   properties: {
     ipConfigurations: [
       {
@@ -44,8 +44,8 @@ resource inboundEndpoint 'Microsoft.Network/dnsResolvers/inboundEndpoints@2022-0
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'inbounddns'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.0.0/28'
     delegations: [

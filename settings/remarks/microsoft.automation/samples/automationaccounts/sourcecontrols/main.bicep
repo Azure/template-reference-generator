@@ -1,8 +1,8 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @secure()
 @description('GitHub Personal Access Token')
 param pat string
+param resourceName string = 'acctest0001'
 
 resource automationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' = {
   name: resourceName
@@ -19,8 +19,8 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' 
 }
 
 resource sourceControl 'Microsoft.Automation/automationAccounts/sourceControls@2023-11-01' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     autoSync: false
     branch: 'master'
@@ -28,7 +28,7 @@ resource sourceControl 'Microsoft.Automation/automationAccounts/sourceControls@2
     publishRunbook: false
     repoUrl: 'https://github.com/Azure-Samples/acr-build-helloworld-node.git'
     securityToken: {
-      accessToken: null
+      accessToken: pat
       tokenType: 'PersonalAccessToken'
     }
     sourceType: 'GitHub'

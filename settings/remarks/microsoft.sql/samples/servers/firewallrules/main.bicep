@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'msincredible'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,8 +18,8 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource firewallRule 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: server
   name: resourceName
+  parent: server
   properties: {
     endIpAddress: '255.255.255.255'
     startIpAddress: '0.0.0.0'

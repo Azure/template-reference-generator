@@ -43,7 +43,6 @@ resource containerGroupProfile 'Microsoft.ContainerInstance/containerGroupProfil
 
 resource standbyContainerGroupPool 'Microsoft.StandbyPool/standbyContainerGroupPools@2025-03-01' = {
   name: '${resourceName}-CGPool'
-  location: 'eastus'
   properties: {
     containerGroupProperties: {
       containerGroupProfile: {
@@ -85,8 +84,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []

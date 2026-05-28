@@ -1,3 +1,4 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
@@ -5,9 +6,9 @@ resource privateDnsZone 'Microsoft.Network/privateDnsZones@2018-09-01' = {
   location: 'global'
 }
 
-resource cname 'Microsoft.Network/privateDnsZones/CNAME@2018-09-01' = {
-  parent: privateDnsZone
+resource cNAME 'Microsoft.Network/privateDnsZones/CNAME@2018-09-01' = {
   name: resourceName
+  parent: privateDnsZone
   properties: {
     cnameRecord: {
       cname: 'contoso.com'

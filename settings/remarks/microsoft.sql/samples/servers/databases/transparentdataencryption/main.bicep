@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,9 +18,9 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
-  parent: server
   name: resourceName
   location: location
+  parent: server
   properties: {
     autoPauseDelay: 0
     createMode: 'Default'
@@ -37,8 +37,8 @@ resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
 }
 
 resource transparentDataEncryption 'Microsoft.Sql/servers/databases/transparentDataEncryption@2014-04-01' = {
-  parent: database
   name: 'current'
+  parent: database
   properties: {
     status: 'Enabled'
   }

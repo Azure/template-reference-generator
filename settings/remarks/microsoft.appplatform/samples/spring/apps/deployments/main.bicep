@@ -4,18 +4,18 @@ param location string = 'westeurope'
 resource spring 'Microsoft.AppPlatform/Spring@2023-05-01-preview' = {
   name: resourceName
   location: location
-  properties: {
-    zoneRedundant: false
-  }
   sku: {
     name: 'E0'
+  }
+  properties: {
+    zoneRedundant: false
   }
 }
 
 resource app 'Microsoft.AppPlatform/Spring/apps@2023-05-01-preview' = {
-  parent: spring
   name: resourceName
   location: location
+  parent: spring
   properties: {
     customPersistentDisks: []
     enableEndToEndTLS: false
@@ -24,8 +24,13 @@ resource app 'Microsoft.AppPlatform/Spring/apps@2023-05-01-preview' = {
 }
 
 resource deployment 'Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-preview' = {
-  parent: app
   name: resourceName
+  parent: app
+  sku: {
+    capacity: 1
+    name: 'E0'
+    tier: 'Enterprise'
+  }
   properties: {
     deploymentSettings: {
       environmentVariables: {}
@@ -40,10 +45,5 @@ resource deployment 'Microsoft.AppPlatform/Spring/apps/deployments@2023-05-01-pr
       }
       type: 'Container'
     }
-  }
-  sku: {
-    capacity: 1
-    name: 'E0'
-    tier: 'Enterprise'
   }
 }

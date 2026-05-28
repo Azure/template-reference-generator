@@ -10,55 +10,17 @@ resource server 'Microsoft.Sql/servers@2023-08-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
     version: '12.0'
-  }
-}
-
-resource server1 'Microsoft.Sql/servers@2023-08-01-preview' = {
-  name: '${resourceName}-secondary'
-  properties: {
-    administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
-    minimalTlsVersion: '1.2'
-    publicNetworkAccess: 'Enabled'
-    restrictOutboundNetworkAccess: 'Disabled'
-    version: '12.0'
-  }
-}
-
-resource database 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
-  parent: server
-  name: '${resourceName}-db'
-  location: location
-  properties: {
-    autoPauseDelay: 0
-    collation: 'SQL_Latin1_General_CP1_CI_AS'
-    createMode: 'Default'
-    elasticPoolId: ''
-    encryptionProtectorAutoRotation: false
-    highAvailabilityReplicaCount: 0
-    isLedgerOn: false
-    licenseType: ''
-    maxSizeBytes: 214748364800
-    minCapacity: 0
-    readScale: 'Disabled'
-    requestedBackupStorageRedundancy: 'Geo'
-    sampleName: ''
-    secondaryType: ''
-    zoneRedundant: false
-  }
-  sku: {
-    name: 'S1'
   }
 }
 
 resource failoverGroup 'Microsoft.Sql/servers/failoverGroups@2023-08-01-preview' = {
-  parent: server
   name: '${resourceName}-fg'
+  parent: server
   properties: {
     databases: [
       database.id
@@ -75,5 +37,44 @@ resource failoverGroup 'Microsoft.Sql/servers/failoverGroups@2023-08-01-preview'
       failoverPolicy: 'Automatic'
       failoverWithDataLossGracePeriodMinutes: 60
     }
+  }
+}
+
+resource server1 'Microsoft.Sql/servers@2023-08-01-preview' = {
+  name: '${resourceName}-secondary'
+  location: secondaryLocation
+  properties: {
+    administratorLogin: 'mradministrator'
+    administratorLoginPassword: administratorLoginPassword
+    minimalTlsVersion: '1.2'
+    publicNetworkAccess: 'Enabled'
+    restrictOutboundNetworkAccess: 'Disabled'
+    version: '12.0'
+  }
+}
+
+resource database 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
+  name: '${resourceName}-db'
+  location: location
+  parent: server
+  sku: {
+    name: 'S1'
+  }
+  properties: {
+    autoPauseDelay: 0
+    collation: 'SQL_Latin1_General_CP1_CI_AS'
+    createMode: 'Default'
+    elasticPoolId: ''
+    encryptionProtectorAutoRotation: false
+    highAvailabilityReplicaCount: 0
+    isLedgerOn: false
+    licenseType: ''
+    maxSizeBytes: 214748364800
+    minCapacity: 0
+    readScale: 'Disabled'
+    requestedBackupStorageRedundancy: 'Geo'
+    sampleName: ''
+    secondaryType: ''
+    zoneRedundant: false
   }
 }

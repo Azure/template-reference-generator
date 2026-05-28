@@ -5,19 +5,19 @@ resource vault 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: resourceName
   location: location
   properties: {
-    accessPolicies: []
-    enableSoftDelete: true
     sku: {
       family: 'A'
       name: 'standard'
     }
-    tenantId: deployer().tenantId
+    accessPolicies: []
+    enableSoftDelete: true
+    tenantId: tenant().tenantId
   }
 }
 
 resource putSecret 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: vault
   name: resourceName
+  parent: vault
   properties: {
     value: 'szechuan'
   }

@@ -1,23 +1,26 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @description('The administrator username for the Service Fabric managed cluster')
 param adminUsername string
 @secure()
 @description('The administrator password for the Service Fabric managed cluster')
 param adminPassword string
+param resourceName string = 'acctest0001'
 
 resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+  }
   properties: {
     addonFeatures: [
       'DnsService'
     ]
-    adminPassword: null
-    adminUserName: null
+    adminPassword: adminPassword
+    adminUserName: adminUsername
     clientConnectionPort: 12345
     clusterUpgradeCadence: 'Wave0'
-    dnsName: 'acctest0001'
+    dnsName: resourceName
     httpGatewayConnectionPort: 23456
     loadBalancingRules: [
       {
@@ -49,9 +52,6 @@ resource managedCluster 'Microsoft.ServiceFabric/managedClusters@2021-05-01' = {
         ]
       }
     ]
-  }
-  sku: {
-    name: 'Standard'
   }
   tags: {
     Test: 'value'

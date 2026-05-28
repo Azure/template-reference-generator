@@ -1,15 +1,15 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @secure()
 @description('The administrator login password for the SQL server')
 param administratorLoginPassword string
+param resourceName string = 'acctest0001'
 
 resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: resourceName
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,9 +18,9 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
-  parent: server
   name: resourceName
   location: location
+  parent: server
   properties: {
     autoPauseDelay: 0
     createMode: 'Default'
@@ -37,8 +37,8 @@ resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
 }
 
 resource securityAlertPolicy 'Microsoft.Sql/servers/databases/securityAlertPolicies@2020-11-01-preview' = {
-  parent: database
   name: 'default'
+  parent: database
   properties: {
     state: 'Disabled'
   }

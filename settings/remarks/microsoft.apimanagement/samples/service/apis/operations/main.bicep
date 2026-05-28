@@ -1,9 +1,13 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
   name: '${resourceName}-am'
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -19,15 +23,11 @@ resource service 'Microsoft.ApiManagement/service@2022-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
-  parent: service
   name: '${resourceName}-api;rev=1'
+  parent: service
   properties: {
     apiRevisionDescription: ''
     apiType: 'http'
@@ -51,8 +51,8 @@ resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
 }
 
 resource operation 'Microsoft.ApiManagement/service/apis/operations@2022-08-01' = {
-  parent: api
   name: '${resourceName}-operation'
+  parent: api
   properties: {
     description: ''
     displayName: 'DELETE Resource'

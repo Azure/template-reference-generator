@@ -1,14 +1,125 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
 @secure()
 @description('The administrator password for the SQL virtual machine')
 param vmAdminPassword string
+param resourceName string = 'acctest0001'
+
+resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  sku: {
+    name: 'Basic'
+    tier: 'Regional'
+  }
+  properties: {
+    ddosSettings: {
+      protectionMode: 'VirtualNetworkInherited'
+    }
+    idleTimeoutInMinutes: 4
+    ipTags: []
+    publicIPAddressVersion: 'IPv4'
+    publicIPAllocationMethod: 'Dynamic'
+  }
+}
+
+resource sqlvirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2023-10-01' = {
+  name: 'azapi_resource.virtualMachine.name'
+  location: 'azapi_resource.virtualMachine.location'
+  properties: {
+    sqlServerLicenseType: 'PAYG'
+    virtualMachineResourceId: virtualMachine.id
+    enableAutomaticUpgrade: true
+    leastPrivilegeMode: 'Enabled'
+    sqlImageOffer: 'SQL2017-WS2016'
+    sqlImageSku: 'Developer'
+    sqlManagement: 'Full'
+  }
+}
+
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
+  name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
+  properties: {
+    osProfile: {
+      adminUsername: 'testadmin'
+      adminPassword: vmAdminPassword
+      allowExtensionOperations: true
+      computerName: 'winhost01'
+      secrets: []
+      windowsConfiguration: {
+        timeZone: 'Pacific Standard Time'
+        enableAutomaticUpdates: true
+        patchSettings: {
+          patchMode: 'AutomaticByOS'
+          assessmentMode: 'ImageDefault'
+        }
+        provisionVMAgent: true
+      }
+    }
+    storageProfile: {
+      dataDisks: []
+      imageReference: {
+        offer: 'SQL2017-WS2016'
+        publisher: 'MicrosoftSQLServer'
+        sku: 'SQLDEV'
+        version: 'latest'
+      }
+      osDisk: {
+        diskSizeGB: 127
+        managedDisk: {
+          storageAccountType: 'Premium_LRS'
+        }
+        name: 'acctvm-250116171212663925OSDisk'
+        osType: 'Windows'
+        writeAcceleratorEnabled: false
+        caching: 'ReadOnly'
+        createOption: 'FromImage'
+        deleteOption: 'Detach'
+      }
+    }
+    hardwareProfile: {
+      vmSize: 'Standard_F2s'
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          properties: {
+            primary: false
+          }
+          id: networkInterface.id
+        }
+      ]
+    }
+  }
+}
+
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+  }
+}
+
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+  name: resourceName
+  parent: virtualNetwork
+  properties: {
+    addressPrefix: '10.0.0.0/24'
+    networkSecurityGroup: {
+      id: networkSecurityGroup.id
+    }
+  }
+}
 
 resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
   name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
   properties: {
-    auxiliaryMode: 'None'
-    auxiliarySku: 'None'
     disableTcpStateTracking: false
     dnsSettings: {
       dnsServers: []
@@ -17,10 +128,9 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
     enableIPForwarding: false
     ipConfigurations: [
       {
+        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
         name: 'testconfiguration1'
         properties: {
-          primary: true
-          privateIPAddress: '10.0.0.4'
           privateIPAddressVersion: 'IPv4'
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
@@ -29,16 +139,20 @@ resource networkInterface 'Microsoft.Network/networkInterfaces@2024-05-01' = {
           subnet: {
             id: subnet.id
           }
+          primary: true
+          privateIPAddress: '10.0.0.4'
         }
-        type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
       }
     ]
     nicType: 'Standard'
+    auxiliaryMode: 'None'
+    auxiliarySku: 'None'
   }
 }
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-01' = {
   name: resourceName
+  location: 'azapi_resource.resourceGroup.location'
   properties: {
     securityRules: [
       {
@@ -59,114 +173,5 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-05-0
         }
       }
     ]
-  }
-}
-
-resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
-  name: resourceName
-  properties: {
-    ddosSettings: {
-      protectionMode: 'VirtualNetworkInherited'
-    }
-    idleTimeoutInMinutes: 4
-    ipTags: []
-    publicIPAddressVersion: 'IPv4'
-    publicIPAllocationMethod: 'Dynamic'
-  }
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
-  }
-}
-
-resource sqlvirtualMachine 'Microsoft.SqlVirtualMachine/sqlVirtualMachines@2023-10-01' = {
-  name: 'virtualMachine.name'
-  properties: {
-    enableAutomaticUpgrade: true
-    leastPrivilegeMode: 'Enabled'
-    sqlImageOffer: 'SQL2017-WS2016'
-    sqlImageSku: 'Developer'
-    sqlManagement: 'Full'
-    sqlServerLicenseType: 'PAYG'
-    virtualMachineResourceId: virtualMachine.id
-  }
-}
-
-resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-07-01' = {
-  name: resourceName
-  properties: {
-    hardwareProfile: {
-      vmSize: 'Standard_F2s'
-    }
-    networkProfile: {
-      networkInterfaces: [
-        {
-          id: networkInterface.id
-          properties: {
-            primary: false
-          }
-        }
-      ]
-    }
-    osProfile: {
-      adminPassword: null
-      adminUsername: 'testadmin'
-      allowExtensionOperations: true
-      computerName: 'winhost01'
-      secrets: []
-      windowsConfiguration: {
-        enableAutomaticUpdates: true
-        patchSettings: {
-          assessmentMode: 'ImageDefault'
-          patchMode: 'AutomaticByOS'
-        }
-        provisionVMAgent: true
-        timeZone: 'Pacific Standard Time'
-      }
-    }
-    storageProfile: {
-      dataDisks: []
-      imageReference: {
-        offer: 'SQL2017-WS2016'
-        publisher: 'MicrosoftSQLServer'
-        sku: 'SQLDEV'
-        version: 'latest'
-      }
-      osDisk: {
-        caching: 'ReadOnly'
-        createOption: 'FromImage'
-        deleteOption: 'Detach'
-        diskSizeGB: 127
-        managedDisk: {
-          storageAccountType: 'Premium_LRS'
-        }
-        name: 'acctvm-250116171212663925OSDisk'
-        osType: 'Windows'
-        writeAcceleratorEnabled: false
-      }
-    }
-  }
-}
-
-resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '10.0.0.0/16'
-      ]
-    }
-  }
-}
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
-  name: resourceName
-  properties: {
-    addressPrefix: '10.0.0.0/24'
-    networkSecurityGroup: {
-      id: networkSecurityGroup.id
-    }
   }
 }

@@ -14,7 +14,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: '4dministr4t0r'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -22,10 +22,28 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   }
 }
 
-resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
-  parent: server
+resource jobAgent 'Microsoft.Sql/servers/jobAgents@2020-11-01-preview' = {
   name: resourceName
   location: location
+  parent: server
+  properties: {
+    databaseId: database.id
+  }
+}
+
+resource credential 'Microsoft.Sql/servers/jobAgents/credentials@2020-11-01-preview' = {
+  name: resourceName
+  parent: jobAgent
+  properties: {
+    password: sqlAdminPassword
+    username: sqlAdminUsername
+  }
+}
+
+resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
+  name: resourceName
+  location: location
+  parent: server
   properties: {
     autoPauseDelay: 0
     collation: 'SQL_Latin1_General_CP1_CI_AS'
@@ -37,23 +55,5 @@ resource database 'Microsoft.Sql/servers/databases@2021-02-01-preview' = {
     readScale: 'Disabled'
     requestedBackupStorageRedundancy: 'Geo'
     zoneRedundant: false
-  }
-}
-
-resource jobAgent 'Microsoft.Sql/servers/jobAgents@2020-11-01-preview' = {
-  parent: server
-  name: resourceName
-  location: location
-  properties: {
-    databaseId: database.id
-  }
-}
-
-resource credential 'Microsoft.Sql/servers/jobAgents/credentials@2020-11-01-preview' = {
-  parent: jobAgent
-  name: resourceName
-  properties: {
-    password: null
-    username: null
   }
 }

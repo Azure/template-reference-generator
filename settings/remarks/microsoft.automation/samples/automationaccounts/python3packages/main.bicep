@@ -17,8 +17,8 @@ resource automationAccount 'Microsoft.Automation/automationAccounts@2023-11-01' 
 }
 
 resource python3Package 'Microsoft.Automation/automationAccounts/python3Packages@2023-11-01' = {
-  parent: automationAccount
   name: resourceName
+  parent: automationAccount
   properties: {
     contentLink: {
       uri: 'https://files.pythonhosted.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl'

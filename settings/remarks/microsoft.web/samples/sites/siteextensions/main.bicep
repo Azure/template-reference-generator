@@ -1,18 +1,18 @@
+param location string = 'westeurope'
 param resourceName string = 'acctest0001'
 param resourceSiteName string = 'acctestsite0001'
-param location string = 'westeurope'
 
 resource serverfarm 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'S1'
+  }
   properties: {
     hyperV: false
     perSiteScaling: false
     reserved: false
     zoneRedundant: false
-  }
-  sku: {
-    name: 'S1'
   }
 }
 
@@ -51,7 +51,7 @@ resource site 'Microsoft.Web/sites@2022-09-01' = {
 }
 
 resource dynatraceSiteExtension 'Microsoft.Web/sites/siteextensions@2022-09-01' = {
-  parent: site
   name: 'Dynatrace'
   location: location
+  parent: site
 }

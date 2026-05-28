@@ -3,6 +3,7 @@ param location string = 'westeurope'
 
 resource redis 'Microsoft.Cache/redis@2023-04-01' = {
   name: resourceName
+  location: 'eastus'
   properties: {
     enableNonSslPort: true
     minimumTlsVersion: '1.2'
@@ -17,6 +18,10 @@ resource redis 'Microsoft.Cache/redis@2023-04-01' = {
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 0
+    name: 'Consumption'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -32,17 +37,13 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 0
-    name: 'Consumption'
-  }
 }
 
 resource cache 'Microsoft.ApiManagement/service/caches@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
-    connectionString: '${redis.name}.redis.cache.windows.net:6380,password=redis.listKeys().primaryKey,ssl=true,abortConnect=False'
+    connectionString: '${redis.name}.redis.cache.windows.net:6380,password=${redis.listKeys().primaryKey},ssl=true,abortConnect=False'
     useFromLocation: 'default'
   }
 }

@@ -9,9 +9,15 @@ param administratorLoginPassword string
 resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 2
+    family: 'Gen5'
+    name: 'GP_Gen5_2'
+    tier: 'GeneralPurpose'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
     infrastructureEncryption: 'Disabled'
     minimalTlsVersion: 'TLS1_2'
@@ -24,17 +30,11 @@ resource server 'Microsoft.DBforPostgreSQL/servers@2017-12-01' = {
     }
     version: '9.6'
   }
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'GP_Gen5_2'
-    tier: 'GeneralPurpose'
-  }
 }
 
 resource configuration 'Microsoft.DBforPostgreSQL/servers/configurations@2017-12-01' = {
-  parent: server
   name: 'backslash_quote'
+  parent: server
   properties: {
     value: 'on'
   }

@@ -37,8 +37,8 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
 }
 
 resource service 'Microsoft.DocumentDB/databaseAccounts/services@2022-05-15' = {
-  parent: databaseAccount
   name: 'SqlDedicatedGateway'
+  parent: databaseAccount
   properties: {
     instanceCount: 1
     instanceSize: 'Cosmos.D4s'

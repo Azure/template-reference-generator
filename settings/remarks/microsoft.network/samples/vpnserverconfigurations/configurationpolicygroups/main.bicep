@@ -16,7 +16,7 @@ resource vpnServerConfiguration 'Microsoft.Network/vpnServerConfigurations@2022-
       {
         radiusServerAddress: '10.105.1.1'
         radiusServerScore: 15
-        radiusServerSecret: null
+        radiusServerSecret: radiusServerSecret
       }
     ]
     vpnAuthenticationTypes: [
@@ -33,8 +33,8 @@ resource vpnServerConfiguration 'Microsoft.Network/vpnServerConfigurations@2022-
 }
 
 resource configurationPolicyGroup 'Microsoft.Network/vpnServerConfigurations/configurationPolicyGroups@2022-07-01' = {
-  parent: vpnServerConfiguration
   name: resourceName
+  parent: vpnServerConfiguration
   properties: {
     isDefault: false
     policyMembers: [

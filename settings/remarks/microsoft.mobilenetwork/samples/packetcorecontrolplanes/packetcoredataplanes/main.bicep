@@ -46,17 +46,17 @@ resource packetCoreControlPlane 'Microsoft.MobileNetwork/packetCoreControlPlanes
 }
 
 resource packetCoreDataPlane 'Microsoft.MobileNetwork/packetCoreControlPlanes/packetCoreDataPlanes@2022-11-01' = {
-  parent: packetCoreControlPlane
   name: resourceName
   location: location
+  parent: packetCoreControlPlane
   properties: {
     userPlaneAccessInterface: {}
   }
 }
 
 resource site 'Microsoft.MobileNetwork/mobileNetworks/sites@2022-11-01' = {
-  parent: mobileNetwork
   name: resourceName
   location: location
+  parent: mobileNetwork
   properties: {}
 }

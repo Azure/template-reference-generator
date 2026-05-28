@@ -1,4 +1,5 @@
 param resourceName string = 'acctest0001'
+param location string = 'westeurope'
 
 resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08-01' = {
   name: resourceName
@@ -21,9 +22,9 @@ resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08
   }
 }
 
-resource externalendpoint 'Microsoft.Network/trafficManagerProfiles/ExternalEndpoints@2018-08-01' = {
-  parent: trafficManagerProfile
+resource externalEndpoint 'Microsoft.Network/trafficManagerProfiles/ExternalEndpoints@2018-08-01' = {
   name: resourceName
+  parent: trafficManagerProfile
   properties: {
     customHeaders: []
     endpointStatus: 'Enabled'

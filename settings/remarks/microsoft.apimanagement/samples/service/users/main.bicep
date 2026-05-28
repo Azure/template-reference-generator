@@ -1,9 +1,13 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Developer'
+  }
   properties: {
     certificates: []
     customProperties: {
@@ -31,15 +35,11 @@ resource service 'Microsoft.ApiManagement/service@2021-08-01' = {
     publisherName: 'pub1'
     virtualNetworkType: 'None'
   }
-  sku: {
-    capacity: 1
-    name: 'Developer'
-  }
 }
 
 resource user 'Microsoft.ApiManagement/service/users@2021-08-01' = {
-  parent: service
   name: resourceName
+  parent: service
   properties: {
     email: 'azure-acctest230630032559695401@example.com'
     firstName: 'Acceptance'

@@ -10,6 +10,10 @@ resource fleet 'Microsoft.ContainerService/fleets@2024-04-01' = {
 resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Base'
+    tier: 'Free'
+  }
   properties: {
     addonProfiles: {}
     agentPoolProfiles: [
@@ -52,7 +56,7 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
       }
     }
     disableLocalAccounts: false
-    dnsPrefix: 'acctest0001'
+    dnsPrefix: resourceName
     enableRBAC: true
     kubernetesVersion: ''
     metricsProfile: {
@@ -67,15 +71,11 @@ resource managedCluster 'Microsoft.ContainerService/managedClusters@2025-02-01' 
     }
     supportPlan: 'KubernetesOfficial'
   }
-  sku: {
-    name: 'Base'
-    tier: 'Free'
-  }
 }
 
 resource member 'Microsoft.ContainerService/fleets/members@2024-04-01' = {
-  parent: fleet
   name: resourceName
+  parent: fleet
   properties: {
     clusterResourceId: managedCluster.id
     group: 'default'

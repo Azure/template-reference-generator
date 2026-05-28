@@ -41,12 +41,12 @@ resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
 }
 
 resource cassandraKeyspace 'Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces@2021-10-15' = {
-  parent: databaseAccount
   name: resourceName
+  parent: databaseAccount
   properties: {
     options: {}
     resource: {
-      id: 'acctest0001'
+      id: resourceName
     }
   }
 }

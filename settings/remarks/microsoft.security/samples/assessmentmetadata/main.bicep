@@ -1,5 +1,8 @@
 targetScope = 'subscription'
 
+param resourceName string = 'acctest0001'
+param location string = 'eastus'
+
 resource assessmentMetadatum 'Microsoft.Security/assessmentMetadata@2020-01-01' = {
   name: '95c7a001-d595-43af-9754-1310c740d34c'
   properties: {

@@ -4,6 +4,10 @@ param location string = 'centralus'
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -11,9 +15,5 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
-    tier: 'Regional'
   }
 }

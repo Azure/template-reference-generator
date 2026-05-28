@@ -41,8 +41,8 @@ resource vpnGateway 'Microsoft.Network/vpnGateways@2022-07-01' = {
 }
 
 resource natRule 'Microsoft.Network/vpnGateways/natRules@2022-07-01' = {
-  parent: vpnGateway
   name: resourceName
+  parent: vpnGateway
   properties: {
     externalMappings: [
       {

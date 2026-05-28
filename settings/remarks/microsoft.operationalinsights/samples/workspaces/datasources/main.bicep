@@ -22,8 +22,8 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource dataSource 'Microsoft.OperationalInsights/workspaces/dataSources@2020-08-01' = {
-  parent: workspace
   name: resourceName
+  parent: workspace
   kind: 'WindowsPerformanceCounter'
   properties: {
     counterName: 'CPU'

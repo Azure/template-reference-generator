@@ -1,5 +1,5 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource p2svpnGateway 'Microsoft.Network/p2svpnGateways@2022-07-01' = {
   name: resourceName

@@ -37,13 +37,12 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
 }
 
 resource daprComponent 'Microsoft.App/managedEnvironments/daprComponents@2022-03-01' = {
-  parent: managedEnvironment
   name: resourceName
+  parent: managedEnvironment
   properties: {
     componentType: 'state.azure.blobstorage'
     ignoreErrors: false
     initTimeout: '5s'
-    scopes: null
     version: 'v1'
   }
 }

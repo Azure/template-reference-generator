@@ -15,6 +15,9 @@ resource account 'Microsoft.VideoIndexer/accounts@2025-04-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: '${replace(resourceName, '-', '')}sa'
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -48,9 +51,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     }
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
-  }
-  sku: {
-    name: 'Standard_LRS'
   }
 }
 

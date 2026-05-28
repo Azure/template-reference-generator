@@ -10,16 +10,15 @@ resource gallery 'Microsoft.Compute/galleries@2022-03-03' = {
 }
 
 resource image 'Microsoft.Compute/galleries/images@2022-03-03' = {
-  parent: gallery
   name: resourceName
   location: location
+  parent: gallery
   properties: {
     architecture: 'x64'
     description: ''
     disallowed: {
       diskTypes: []
     }
-    features: null
     hyperVGeneration: 'V1'
     identifier: {
       offer: 'AccTesOffer230630032848825313'

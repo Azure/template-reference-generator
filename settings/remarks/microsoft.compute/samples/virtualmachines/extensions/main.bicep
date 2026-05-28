@@ -44,7 +44,7 @@ resource virtualMachine 'Microsoft.Compute/virtualMachines@2023-03-01' = {
       ]
     }
     osProfile: {
-      adminPassword: null
+      adminPassword: vmAdminPassword
       adminUsername: 'testadmin'
       computerName: 'hostname230630032848831819'
       linuxConfiguration: {
@@ -85,9 +85,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource extension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
-  parent: virtualMachine
   name: resourceName
   location: location
+  parent: virtualMachine
   properties: {
     autoUpgradeMinorVersion: false
     enableAutomaticUpgrade: false
@@ -105,8 +105,8 @@ resource extension 'Microsoft.Compute/virtualMachines/extensions@2023-03-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []

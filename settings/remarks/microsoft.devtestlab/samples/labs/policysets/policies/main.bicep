@@ -1,20 +1,14 @@
-param resourceName string = 'acctest0001'
 param location string = 'westus'
+param resourceName string = 'acctest0001'
 
 resource lab 'Microsoft.DevTestLab/labs@2018-09-15' = {
   name: resourceName
   location: location
 }
 
-// The policy set is a singleton named 'default' under the lab
-resource policySet 'Microsoft.DevTestLab/labs/policySets@2018-09-15' existing = {
-  parent: lab
-  name: 'default'
-}
-
 resource policy 'Microsoft.DevTestLab/labs/policySets/policies@2018-09-15' = {
-  parent: policySet
   name: 'LabVmCount'
+  parent: policySet
   properties: {
     description: ''
     evaluatorType: 'MaxValuePolicy'
@@ -22,4 +16,9 @@ resource policy 'Microsoft.DevTestLab/labs/policySets/policies@2018-09-15' = {
     factName: 'LabVmCount'
     threshold: '999'
   }
+}
+
+resource policySet 'Microsoft.DevTestLab/labs/policySets@2018-09-15' existing = {
+  name: 'default'
+  parent: lab
 }

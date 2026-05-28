@@ -35,14 +35,14 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-10-01' = {
 }
 
 resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2024-10-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {}
 }
 
 resource networkGroupForSubnet 'Microsoft.Network/networkManagers/networkGroups@2024-10-01' = {
-  parent: networkManager
   name: '${resourceName}-subnet'
+  parent: networkManager
   properties: {
     description: 'example network group'
     memberType: 'Subnet'
@@ -50,8 +50,8 @@ resource networkGroupForSubnet 'Microsoft.Network/networkManagers/networkGroups@
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-10-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefixes: [
       '10.0.0.0/24'
@@ -60,16 +60,16 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-10-01' = {
 }
 
 resource staticMember 'Microsoft.Network/networkManagers/networkGroups/staticMembers@2024-10-01' = {
-  parent: networkGroup
   name: resourceName
+  parent: networkGroup
   properties: {
     resourceId: virtualNetwork.id
   }
 }
 
 resource staticMemberForSubnet 'Microsoft.Network/networkManagers/networkGroups/staticMembers@2024-10-01' = {
-  parent: networkGroupForSubnet
   name: '${resourceName}-subnet'
+  parent: networkGroupForSubnet
   properties: {
     resourceId: subnet.id
   }

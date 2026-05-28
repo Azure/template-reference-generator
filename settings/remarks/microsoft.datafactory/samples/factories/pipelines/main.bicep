@@ -1,18 +1,17 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
+param resourceName string = 'acctest0001'
 
 resource factory 'Microsoft.DataFactory/factories@2018-06-01' = {
   name: resourceName
   location: location
   properties: {
     publicNetworkAccess: 'Enabled'
-    repoConfiguration: null
   }
 }
 
 resource pipeline 'Microsoft.DataFactory/factories/pipelines@2018-06-01' = {
-  parent: factory
   name: resourceName
+  parent: factory
   properties: {
     annotations: []
     description: ''

@@ -1014,6 +1014,16 @@
       "ResourceType": "Microsoft.Network/vpnSites",
       "Path": "samples/vpnsites/main.bicep",
       "Description": "A basic example of deploying VPN Site."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagerConnections",
+      "Path": "samples/networkmanagerconnections/main.bicep",
+      "Description": "A basic example of deploying Network Manager Management Group Connection."
+    },
+    {
+      "ResourceType": "Microsoft.Network/networkManagerConnections",
+      "Path": "samples/networkmanagerconnections/main-rg-module.bicep",
+      "Description": "A basic example of deploying Network Manager Management Group Connection."
     }
   ]
 }

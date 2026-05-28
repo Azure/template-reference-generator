@@ -6,52 +6,14 @@ param adminUsername string
 @description('The administrator password for the virtual machine scale set')
 param adminPassword string
 
-resource autoScaleSetting 'Microsoft.Insights/autoScaleSettings@2022-10-01' = {
-  name: resourceName
-  location: location
-  properties: {
-    enabled: true
-    notifications: []
-    profiles: [
-      {
-        capacity: {
-          default: '1'
-          maximum: '10'
-          minimum: '1'
-        }
-        name: 'metricRules'
-        rules: [
-          {
-            metricTrigger: {
-              dimensions: []
-              dividePerInstance: true
-              metricName: 'Percentage CPU'
-              metricNamespace: ''
-              metricResourceUri: virtualMachineScaleSet.id
-              operator: 'GreaterThan'
-              statistic: 'Average'
-              threshold: 75
-              timeAggregation: 'Last'
-              timeGrain: 'PT1M'
-              timeWindow: 'PT5M'
-            }
-            scaleAction: {
-              cooldown: 'PT1M'
-              direction: 'Increase'
-              type: 'ChangeCount'
-              value: '1'
-            }
-          }
-        ]
-      }
-    ]
-    targetResourceUri: virtualMachineScaleSet.id
-  }
-}
-
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 2
+    name: 'Standard_F2'
+    tier: 'Standard'
+  }
   properties: {
     additionalCapabilities: {}
     doNotRunExtensionsOnOverprovisionedVMs: false
@@ -109,8 +71,8 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
         ]
       }
       osProfile: {
-        adminPassword: null
-        adminUsername: null
+        adminPassword: adminPassword
+        adminUsername: adminUsername
         computerNamePrefix: 'testvm-230630033559396108'
         linuxConfiguration: {
           disablePasswordAuthentication: false
@@ -147,11 +109,6 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
     }
   }
-  sku: {
-    capacity: 2
-    name: 'Standard_F2'
-    tier: 'Standard'
-  }
 }
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
@@ -171,8 +128,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []
@@ -180,5 +137,48 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
     privateLinkServiceNetworkPolicies: 'Enabled'
     serviceEndpointPolicies: []
     serviceEndpoints: []
+  }
+}
+
+resource autoScaleSetting 'Microsoft.Insights/autoScaleSettings@2022-10-01' = {
+  name: resourceName
+  location: location
+  properties: {
+    enabled: true
+    notifications: []
+    profiles: [
+      {
+        capacity: {
+          default: '1'
+          maximum: '10'
+          minimum: '1'
+        }
+        name: 'metricRules'
+        rules: [
+          {
+            metricTrigger: {
+              dimensions: []
+              dividePerInstance: true
+              metricName: 'Percentage CPU'
+              metricNamespace: ''
+              metricResourceUri: virtualMachineScaleSet.id
+              operator: 'GreaterThan'
+              statistic: 'Average'
+              threshold: 75
+              timeAggregation: 'Last'
+              timeGrain: 'PT1M'
+              timeWindow: 'PT5M'
+            }
+            scaleAction: {
+              cooldown: 'PT1M'
+              direction: 'Increase'
+              type: 'ChangeCount'
+              value: '1'
+            }
+          }
+        ]
+      }
+    ]
+    targetResourceUri: virtualMachineScaleSet.id
   }
 }

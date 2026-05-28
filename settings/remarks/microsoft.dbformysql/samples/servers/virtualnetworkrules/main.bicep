@@ -9,9 +9,15 @@ param administratorLoginPassword string
 resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 2
+    family: 'Gen5'
+    name: 'GP_Gen5_2'
+    tier: 'GeneralPurpose'
+  }
   properties: {
-    administratorLogin: null
-    administratorLoginPassword: null
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
     infrastructureEncryption: 'Disabled'
     minimalTlsVersion: 'TLS1_2'
@@ -23,12 +29,6 @@ resource server 'Microsoft.DBforMySQL/servers@2017-12-01' = {
       storageMB: 51200
     }
     version: '5.7'
-  }
-  sku: {
-    capacity: 2
-    family: 'Gen5'
-    name: 'GP_Gen5_2'
-    tier: 'GeneralPurpose'
   }
 }
 
@@ -49,8 +49,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: resourceName
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.7.29.0/29'
     delegations: []
@@ -66,8 +66,8 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
 }
 
 resource virtualNetworkRule 'Microsoft.DBforMySQL/servers/virtualNetworkRules@2017-12-01' = {
-  parent: server
   name: resourceName
+  parent: server
   properties: {
     ignoreMissingVnetServiceEndpoint: false
     virtualNetworkSubnetId: subnet.id

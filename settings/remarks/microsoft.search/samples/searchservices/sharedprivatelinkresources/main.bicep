@@ -4,6 +4,9 @@ param location string = 'westeurope'
 resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'standard'
+  }
   properties: {
     authOptions: {
       apiKeyOnly: {}
@@ -20,9 +23,6 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
     publicNetworkAccess: 'Enabled'
     replicaCount: 1
   }
-  sku: {
-    name: 'standard'
-  }
   tags: {
     environment: 'staging'
   }
@@ -31,6 +31,9 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -59,14 +62,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource sharedPrivateLinkResource 'Microsoft.Search/searchServices/sharedPrivateLinkResources@2022-09-01' = {
-  parent: searchService
   name: resourceName
+  parent: searchService
   properties: {
     groupId: 'blob'
     privateLinkResourceId: storageAccount.id

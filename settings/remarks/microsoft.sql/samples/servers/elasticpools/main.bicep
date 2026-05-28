@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
   location: location
   properties: {
     administratorLogin: '4dm1n157r470r'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,9 +18,15 @@ resource server 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource elasticPool 'Microsoft.Sql/servers/elasticPools@2020-11-01-preview' = {
-  parent: server
   name: resourceName
   location: location
+  parent: server
+  sku: {
+    capacity: 50
+    family: ''
+    name: 'BasicPool'
+    tier: 'Basic'
+  }
   properties: {
     maintenanceConfigurationId: resourceId('Microsoft.Maintenance/publicMaintenanceConfigurations', 'SQL_Default')
     maxSizeBytes: 5242880000
@@ -29,11 +35,5 @@ resource elasticPool 'Microsoft.Sql/servers/elasticPools@2020-11-01-preview' = {
       minCapacity: 0
     }
     zoneRedundant: false
-  }
-  sku: {
-    capacity: 50
-    family: ''
-    name: 'BasicPool'
-    tier: 'Basic'
   }
 }

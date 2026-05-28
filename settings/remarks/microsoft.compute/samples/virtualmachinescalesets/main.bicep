@@ -4,6 +4,11 @@ param location string = 'westeurope'
 resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-03-01' = {
   name: resourceName
   location: location
+  sku: {
+    capacity: 1
+    name: 'Standard_F2'
+    tier: 'Standard'
+  }
   properties: {
     additionalCapabilities: {}
     doNotRunExtensionsOnOverprovisionedVMs: false
@@ -62,7 +67,7 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
       osProfile: {
         adminUsername: 'adminuser'
-        computerNamePrefix: 'acctest0001'
+        computerNamePrefix: resourceName
         linuxConfiguration: {
           disablePasswordAuthentication: true
           provisionVMAgent: true
@@ -98,11 +103,6 @@ resource virtualMachineScaleSet 'Microsoft.Compute/virtualMachineScaleSets@2023-
       }
     }
   }
-  sku: {
-    capacity: 1
-    name: 'Standard_F2'
-    tier: 'Standard'
-  }
 }
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
@@ -122,8 +122,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  parent: virtualNetwork
   name: 'internal'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     delegations: []

@@ -19,8 +19,8 @@ resource networkManager 'Microsoft.Network/networkManagers@2024-10-01' = {
 }
 
 resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2024-10-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {
     description: 'example network group'
     memberType: 'VirtualNetwork'

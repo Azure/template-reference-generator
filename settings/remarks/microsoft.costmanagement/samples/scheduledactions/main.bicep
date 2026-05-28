@@ -1,9 +1,11 @@
 targetScope = 'subscription'
 
+param location string = 'eastus'
 param resourceName string = 'acctest0001'
 
 resource scheduledAction 'Microsoft.CostManagement/scheduledActions@2022-10-01' = {
   name: resourceName
+  scope: subscription()
   kind: 'Email'
   properties: {
     displayName: 'CostByServiceViewerz3k'
@@ -21,12 +23,10 @@ resource scheduledAction 'Microsoft.CostManagement/scheduledActions@2022-10-01' 
     notificationEmail: 'test@test.com'
     schedule: {
       dayOfMonth: 0
-      daysOfWeek: null
       endDate: '2023-07-02T00:00:00Z'
       frequency: 'Daily'
       hourOfDay: 0
       startDate: '2023-07-01T00:00:00Z'
-      weeksOfMonth: null
     }
     status: 'Enabled'
     viewId: resourceId('Microsoft.CostManagement/views', 'ms:CostByService')

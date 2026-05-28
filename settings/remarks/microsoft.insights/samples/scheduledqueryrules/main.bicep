@@ -27,7 +27,6 @@ resource scheduledQueryRule 'Microsoft.Insights/scheduledQueryRules@2021-08-01' 
     criteria: {
       allOf: [
         {
-          dimensions: null
           operator: 'Equal'
           query: ''' requests
 | summarize CountByCountry=count() by client_CountryOrRegion
@@ -44,7 +43,6 @@ resource scheduledQueryRule 'Microsoft.Insights/scheduledQueryRules@2021-08-01' 
     ]
     severity: 3
     skipQueryValidation: false
-    targetResourceTypes: null
     windowSize: 'PT5M'
   }
 }

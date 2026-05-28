@@ -4,6 +4,10 @@ param location string = 'westus2'
 resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'S0'
+    tier: 'Standard'
+  }
   kind: 'SpeechServices'
   properties: {
     allowedFqdnList: []
@@ -13,10 +17,6 @@ resource account 'Microsoft.CognitiveServices/accounts@2022-10-01' = {
     dynamicThrottlingEnabled: false
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: false
-  }
-  sku: {
-    name: 'S0'
-    tier: 'Standard'
   }
 }
 

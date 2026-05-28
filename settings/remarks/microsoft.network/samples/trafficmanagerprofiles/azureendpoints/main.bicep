@@ -4,6 +4,10 @@ param location string = 'westeurope'
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   name: resourceName
   location: location
+  sku: {
+    name: 'Basic'
+    tier: 'Regional'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -14,10 +18,6 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Basic'
-    tier: 'Regional'
   }
 }
 
@@ -42,9 +42,9 @@ resource trafficManagerProfile 'Microsoft.Network/trafficManagerProfiles@2018-08
   }
 }
 
-resource azureendpoint 'Microsoft.Network/trafficManagerProfiles/AzureEndpoints@2018-08-01' = {
-  parent: trafficManagerProfile
+resource azureEndpoint 'Microsoft.Network/trafficManagerProfiles/AzureEndpoints@2018-08-01' = {
   name: resourceName
+  parent: trafficManagerProfile
   properties: {
     customHeaders: []
     endpointStatus: 'Enabled'

@@ -18,23 +18,17 @@ resource networkManager 'Microsoft.Network/networkManagers@2022-09-01' = {
   }
 }
 
-resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2022-09-01' = {
-  parent: networkManager
-  name: resourceName
-  properties: {}
-}
-
 resource securityAdminConfiguration 'Microsoft.Network/networkManagers/securityAdminConfigurations@2022-09-01' = {
-  parent: networkManager
   name: resourceName
+  parent: networkManager
   properties: {
     applyOnNetworkIntentPolicyBasedServices: []
   }
 }
 
 resource ruleCollection 'Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections@2022-09-01' = {
-  parent: securityAdminConfiguration
   name: resourceName
+  parent: securityAdminConfiguration
   properties: {
     appliesToGroups: [
       {
@@ -45,8 +39,8 @@ resource ruleCollection 'Microsoft.Network/networkManagers/securityAdminConfigur
 }
 
 resource rule 'Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules@2022-09-01' = {
-  parent: ruleCollection
   name: resourceName
+  parent: ruleCollection
   kind: 'Custom'
   properties: {
     access: 'Deny'
@@ -58,4 +52,10 @@ resource rule 'Microsoft.Network/networkManagers/securityAdminConfigurations/rul
     sourcePortRanges: []
     sources: []
   }
+}
+
+resource networkGroup 'Microsoft.Network/networkManagers/networkGroups@2022-09-01' = {
+  name: resourceName
+  parent: networkManager
+  properties: {}
 }

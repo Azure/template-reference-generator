@@ -9,7 +9,7 @@ resource server 'Microsoft.Sql/servers@2022-05-01-preview' = {
   location: location
   properties: {
     administratorLogin: 'mradministrator'
-    administratorLoginPassword: null
+    administratorLoginPassword: administratorLoginPassword
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'
@@ -18,8 +18,8 @@ resource server 'Microsoft.Sql/servers@2022-05-01-preview' = {
 }
 
 resource auditingSettings 'Microsoft.Sql/servers/auditingSettings@2022-05-01-preview' = {
-  parent: server
   name: 'default'
+  parent: server
   properties: {
     auditActionsAndGroups: [
       'FAILED_DATABASE_AUTHENTICATION_GROUP'

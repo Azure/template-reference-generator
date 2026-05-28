@@ -12,6 +12,9 @@ resource gallery 'Microsoft.Compute/galleries@2022-03-03' = {
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: '${resourceName}acc'
   location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
@@ -46,45 +49,44 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     publicNetworkAccess: 'Enabled'
     supportsHttpsTrafficOnly: true
   }
-  sku: {
-    name: 'Standard_LRS'
-  }
 }
 
 resource application 'Microsoft.Compute/galleries/applications@2022-03-03' = {
-  parent: gallery
   name: '${resourceName}-app'
   location: location
+  parent: gallery
   properties: {
     supportedOSType: 'Linux'
   }
 }
 
-// The blob service is a singleton named 'default' under the storage account
-resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' existing = {
-  parent: storageAccount
+resource storageaccountBlobservices 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
   name: 'default'
+  parent: storageAccount
 }
 
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
-  parent: blobService
   name: 'mycontainer'
+  parent: storageaccountBlobservices
   properties: {
     publicAccess: 'Blob'
   }
 }
 
 resource version 'Microsoft.Compute/galleries/applications/versions@2022-03-03' = {
-  parent: application
   name: '0.0.1'
   location: location
+  parent: application
+  dependsOn: [
+    container
+  ]
   properties: {
     publishingProfile: {
       enableHealthCheck: false
       excludeFromLatest: false
       manageActions: {
-        install: '[install command]'
-        remove: '[remove command]'
+        install: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
+        remove: /* ERROR: Unparsed HCL syntax in LiteralNode */ {}
         update: ''
       }
       source: {
@@ -93,7 +95,7 @@ resource version 'Microsoft.Compute/galleries/applications/versions@2022-03-03' 
       }
       targetRegions: [
         {
-          name: 'westus'
+          name: location
           regionalReplicaCount: 1
           storageAccountType: 'Standard_LRS'
         }
@@ -103,7 +105,4 @@ resource version 'Microsoft.Compute/galleries/applications/versions@2022-03-03' 
       allowDeletionOfReplicatedLocations: true
     }
   }
-  dependsOn: [
-    container
-  ]
 }

@@ -28,7 +28,7 @@ resource lab 'Microsoft.LabServices/labs@2022-08-01' = {
         installGpuDrivers: 'Disabled'
       }
       adminUser: {
-        password: null
+        password: adminPassword
         username: 'testadmin'
       }
       createOption: 'Image'

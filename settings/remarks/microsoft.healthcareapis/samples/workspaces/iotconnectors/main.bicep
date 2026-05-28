@@ -1,41 +1,15 @@
-param resourceName string = 'acctest0001'
 param location string = 'westeurope'
-
-resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
-  name: resourceName
-  location: location
-  properties: {
-    disableLocalAuth: false
-    isAutoInflateEnabled: false
-    publicNetworkAccess: 'Enabled'
-    zoneRedundant: false
-  }
-  sku: {
-    capacity: 1
-    name: 'Standard'
-    tier: 'Standard'
-  }
-}
+param resourceName string = 'acctest0001'
 
 resource workspace 'Microsoft.HealthcareApis/workspaces@2022-12-01' = {
   name: resourceName
   location: location
 }
 
-resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
-  parent: namespace
-  name: resourceName
-  properties: {
-    messageRetentionInDays: 1
-    partitionCount: 2
-    status: 'Active'
-  }
-}
-
 resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12-01' = {
-  parent: workspace
   name: resourceName
   location: location
+  parent: workspace
   properties: {
     deviceMapping: {
       content: {
@@ -51,9 +25,35 @@ resource iotConnector 'Microsoft.HealthcareApis/workspaces/iotConnectors@2022-12
   }
 }
 
-resource consumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumerGroups@2021-11-01' = {
-  parent: eventhub
+resource namespace 'Microsoft.EventHub/namespaces@2022-01-01-preview' = {
   name: resourceName
+  location: location
+  sku: {
+    capacity: 1
+    name: 'Standard'
+    tier: 'Standard'
+  }
+  properties: {
+    disableLocalAuth: false
+    isAutoInflateEnabled: false
+    publicNetworkAccess: 'Enabled'
+    zoneRedundant: false
+  }
+}
+
+resource eventhub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
+  name: resourceName
+  parent: namespace
+  properties: {
+    messageRetentionInDays: 1
+    partitionCount: 2
+    status: 'Active'
+  }
+}
+
+resource consumerGroup 'Microsoft.EventHub/namespaces/eventhubs/consumerGroups@2021-11-01' = {
+  name: resourceName
+  parent: eventhub
   properties: {
     userMetadata: ''
   }

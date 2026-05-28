@@ -4,6 +4,9 @@ param location string = 'westus'
 resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' = {
   name: '${resourceName}-nginx'
   location: location
+  sku: {
+    name: 'standardv2_Monthly'
+  }
   properties: {
     autoUpgradeProfile: {
       upgradeChannel: 'stable'
@@ -25,14 +28,14 @@ resource nginxDeployment 'Nginx.NginxPlus/nginxDeployments@2024-11-01-preview' =
       capacity: 10
     }
   }
-  sku: {
-    name: 'standardv2_Monthly'
-  }
 }
 
 resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
   name: '${resourceName}-pip'
   location: location
+  sku: {
+    name: 'Standard'
+  }
   properties: {
     ddosSettings: {
       protectionMode: 'VirtualNetworkInherited'
@@ -40,9 +43,6 @@ resource publicIPAddress 'Microsoft.Network/publicIPAddresses@2024-05-01' = {
     idleTimeoutInMinutes: 4
     publicIPAddressVersion: 'IPv4'
     publicIPAllocationMethod: 'Static'
-  }
-  sku: {
-    name: 'Standard'
   }
 }
 
@@ -64,8 +64,8 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
 }
 
 resource configuration 'Nginx.NginxPlus/nginxDeployments/configurations@2024-11-01-preview' = {
-  parent: nginxDeployment
   name: 'default'
+  parent: nginxDeployment
   properties: {
     files: [
       {
@@ -84,8 +84,8 @@ resource configuration 'Nginx.NginxPlus/nginxDeployments/configurations@2024-11-
 }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2024-05-01' = {
-  parent: virtualNetwork
   name: '${resourceName}-subnet'
+  parent: virtualNetwork
   properties: {
     addressPrefix: '10.0.2.0/24'
     defaultOutboundAccess: true

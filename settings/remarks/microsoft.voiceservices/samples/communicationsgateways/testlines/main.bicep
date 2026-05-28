@@ -48,10 +48,10 @@ resource communicationsGateway 'Microsoft.VoiceServices/communicationsGateways@2
   }
 }
 
-resource testline 'Microsoft.VoiceServices/communicationsGateways/testLines@2023-01-31' = {
-  parent: communicationsGateway
+resource testLine 'Microsoft.VoiceServices/communicationsGateways/testLines@2023-01-31' = {
   name: resourceName
   location: location
+  parent: communicationsGateway
   properties: {
     phoneNumber: '123456789'
     purpose: 'Automated'

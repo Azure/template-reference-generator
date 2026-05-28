@@ -30,9 +30,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
 }
 
 resource virtualNetworkLink 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2018-09-01' = {
-  parent: privateDnsZone
   name: resourceName
   location: 'global'
+  parent: privateDnsZone
   properties: {
     registrationEnabled: false
     virtualNetwork: {
