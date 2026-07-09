@@ -12,6 +12,11 @@
       "Description": "Update a cluster's administrator login password."
     },
     {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/scale-cluster-vertically.tf",
+      "Description": "Scale a cluster vertically."
+    },
+    {
       "ResourceType": "Microsoft.HorizonDB/parameterGroups",
       "Path": "samples/parametergroups/create.tf",
       "Description": "Create a parameter group."
@@ -32,6 +37,11 @@
       "ResourceType": "Microsoft.HorizonDB/clusters",
       "Path": "samples/clusters/update-administrator-login-password.bicep",
       "Description": "Update a cluster's administrator login password."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/scale-cluster-vertically.bicep",
+      "Description": "Scale a cluster vertically."
     },
     {
       "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
