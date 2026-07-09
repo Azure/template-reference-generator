@@ -17,6 +17,11 @@
       "Description": "Scale a cluster vertically."
     },
     {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/connect-parameter-group-to-cluster.tf",
+      "Description": "Connect a parameter group to a cluster."
+    },
+    {
       "ResourceType": "Microsoft.HorizonDB/parameterGroups",
       "Path": "samples/parametergroups/create.tf",
       "Description": "Create a parameter group."
@@ -44,14 +49,19 @@
       "Description": "Scale a cluster vertically."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
-      "Path": "samples/clusters/pools/firewallrules/create.bicep",
-      "Description": "Create a firewall rule on a cluster."
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/connect-parameter-group-to-cluster.bicep",
+      "Description": "Connect a parameter group to a cluster."
     },
     {
       "ResourceType": "Microsoft.HorizonDB/parameterGroups",
       "Path": "samples/parametergroups/create.bicep",
       "Description": "Create a parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "Path": "samples/clusters/pools/firewallrules/create.bicep",
+      "Description": "Create a firewall rule on a cluster."
     }
   ]
 }
