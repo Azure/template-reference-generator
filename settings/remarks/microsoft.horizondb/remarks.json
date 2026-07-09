@@ -1,0 +1,47 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/create.tf",
+      "Description": "Create a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/update-administrator-login-password.tf",
+      "Description": "Update a cluster's administrator login password."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
+      "Path": "samples/parametergroups/create.tf",
+      "Description": "Create a parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "Path": "samples/clusters/pools/firewallrules/create.tf",
+      "Description": "Create a firewall rule on a cluster."
+    }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/create.bicep",
+      "Description": "Create a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/update-administrator-login-password.bicep",
+      "Description": "Update a cluster's administrator login password."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "Path": "samples/clusters/pools/firewallrules/create.bicep",
+      "Description": "Create a firewall rule on a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
+      "Path": "samples/parametergroups/create.bicep",
+      "Description": "Create a parameter group."
+    }
+  ]
+}
