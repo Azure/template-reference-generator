@@ -30,6 +30,16 @@
       "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
       "Path": "samples/clusters/pools/firewallrules/create.tf",
       "Description": "Create a firewall rule on a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.tf",
+      "Description": "Add a replica without a specific availability zone to a pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.tf",
+      "Description": "Add a replica in a specific availability zone to a pool."
     }
   ],
   "BicepSamples": [
@@ -62,6 +72,16 @@
       "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
       "Path": "samples/clusters/pools/firewallrules/create.bicep",
       "Description": "Create a firewall rule on a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.bicep",
+      "Description": "Add a replica without a specific availability zone to a pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.bicep",
+      "Description": "Add a replica in a specific availability zone to a pool."
     }
   ]
 }
