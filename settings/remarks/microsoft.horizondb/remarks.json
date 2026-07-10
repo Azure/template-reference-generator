@@ -1,0 +1,87 @@
+{
+  "$schema": "../../schemas/remarks.schema.json",
+  "TerraformSamples": [
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/create.tf",
+      "Description": "Create a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/update-administrator-login-password.tf",
+      "Description": "Update a cluster's administrator login password."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/scale-cluster-vertically.tf",
+      "Description": "Scale a cluster vertically."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/connect-parameter-group-to-cluster.tf",
+      "Description": "Connect a parameter group to a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
+      "Path": "samples/parametergroups/create.tf",
+      "Description": "Create a parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "Path": "samples/clusters/pools/firewallrules/create.tf",
+      "Description": "Create a firewall rule on a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.tf",
+      "Description": "Add a replica without a specific availability zone to a pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.tf",
+      "Description": "Add a replica in a specific availability zone to a pool."
+    }
+  ],
+  "BicepSamples": [
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/create.bicep",
+      "Description": "Create a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/update-administrator-login-password.bicep",
+      "Description": "Update a cluster's administrator login password."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/scale-cluster-vertically.bicep",
+      "Description": "Scale a cluster vertically."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/connect-parameter-group-to-cluster.bicep",
+      "Description": "Connect a parameter group to a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
+      "Path": "samples/parametergroups/create.bicep",
+      "Description": "Create a parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "Path": "samples/clusters/pools/firewallrules/create.bicep",
+      "Description": "Create a firewall rule on a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.bicep",
+      "Description": "Add a replica without a specific availability zone to a pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.bicep",
+      "Description": "Add a replica in a specific availability zone to a pool."
+    }
+  ]
+}
