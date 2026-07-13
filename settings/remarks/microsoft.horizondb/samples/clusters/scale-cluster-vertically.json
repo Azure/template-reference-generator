@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "eastus",
+      "metadata": {
+        "description": "The location for the cluster"
+      }
+    },
+    "clusterName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the cluster"
+      }
+    },
+    "createMode": {
+      "type": "string",
+      "defaultValue": "Update",
+      "metadata": {
+        "description": "The create mode for cluster"
+      }
+    },
+    "vCores": {
+      "type": "int",
+      "defaultValue": 8,
+      "metadata": {
+        "description": "The number of vCores for each replica of the cluster"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDB/clusters",
+      "apiVersion": "2026-01-20-preview",
+      "name": "[parameters('clusterName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "createMode": "[parameters('createMode')]",
+        "vCores": "[parameters('vCores')]"
+      }
+    }
+  ]
+}

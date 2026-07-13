@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the cluster"
+      }
+    },
+    "poolName": {
+      "type": "string",
+      "defaultValue": "DefaultPool",
+      "metadata": {
+        "description": "The name for the pool"
+      }
+    },
+    "replicaName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the replica"
+      }
+    },
+    "role": {
+      "type": "string",
+      "defaultValue": "Read",
+      "metadata": {
+        "description": "The role for the replica"
+      }
+    },
+    "availabilityZone": {
+      "type": "string",
+      "defaultValue": "1",
+      "metadata": {
+        "description": "The availability zone for the replica"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "apiVersion": "2026-01-20-preview",
+      "name": "[format('{0}/{1}/{2}', parameters('clusterName'), parameters('poolName'), parameters('replicaName'))]",
+      "properties": {
+        "role": "[parameters('role')]",
+        "availabilityZone": "[parameters('availabilityZone')]"
+      }
+    }
+  ]
+}

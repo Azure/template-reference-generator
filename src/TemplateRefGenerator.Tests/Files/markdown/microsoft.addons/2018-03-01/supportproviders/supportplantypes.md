@@ -23,6 +23,7 @@ The supportProviders/supportPlanTypes resource type can be deployed with operati
 
 For a list of changed properties in each API version, see [change log](~/microsoft.addons/change-log/supportproviders/supportplantypes.md).
 
+
 ## Resource format
 
 To create a Microsoft.Addons/supportProviders/supportPlanTypes resource, add the following Bicep to your template.
@@ -51,8 +52,9 @@ resource symbolicname 'Microsoft.Addons/supportProviders/supportPlanTypes@2018-0
 The supportProviders/supportPlanTypes resource type can be deployed with operations that target: 
 
 * **Subscription** - See [subscription deployment commands](/azure/azure-resource-manager/templates/deploy-to-subscription)
-
 For a list of changed properties in each API version, see [change log](~/microsoft.addons/change-log/supportproviders/supportplantypes.md).
+
+## Usage Examples
 
 ## Resource format
 
@@ -74,7 +76,6 @@ To create a Microsoft.Addons/supportProviders/supportPlanTypes resource, add the
 | name | The resource name | 'Advanced'<br />'Essential'<br />'Standard' (required) |
 | type | The resource type | 'Microsoft.Addons/supportProviders/supportPlanTypes' |
 
-## Usage Examples
 
 ::: zone-end
 
@@ -85,8 +86,8 @@ To create a Microsoft.Addons/supportProviders/supportPlanTypes resource, add the
 The supportProviders/supportPlanTypes resource type can be deployed with operations that target: 
 
 * **Subscription**
-
 For a list of changed properties in each API version, see [change log](~/microsoft.addons/change-log/supportproviders/supportplantypes.md).
+
 
 ## Resource format
 

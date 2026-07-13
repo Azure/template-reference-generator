@@ -43,6 +43,56 @@ The disks resource type can be deployed with operations that target:
 
 For a list of changed properties in each API version, see [change log](~/microsoft.compute/change-log/disks.md).
 
+## Usage Examples
+### Bicep Samples
+
+A basic example of deploying Managed Disk.
+
+```bicep
+param location string = 'westeurope'
+param resourceName string = 'acctest0001'
+
+resource disk 'Microsoft.Compute/disks@2022-03-02' = {
+  name: resourceName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {
+    creationData: {
+      createOption: 'Empty'
+    }
+    diskSizeGB: 10
+    encryption: {
+      type: 'EncryptionAtRestWithPlatformKey'
+    }
+    networkAccessPolicy: 'AllowAll'
+    osType: ''
+    publicNetworkAccess: 'Enabled'
+  }
+}
+```
+### Azure Verified Modules
+
+The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Module | Description |
+> | ----- | ----- |
+> | [Compute Disk](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/compute/disk) | AVM Resource Module for Compute Disk |
+
+### Azure Quickstart Samples
+
+The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep samples for deploying this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Bicep File | Description |
+> | ----- | ----- |
+> | [Create Disk & enable protection via Backup Vault](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.dataprotection/backup-create-disk-enable-protection/main.bicep) | Template that creates a disk and enables protection via Backup Vault |
+> | [Windows Docker Host with Portainer and Traefik pre-installed](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/traefik/docker-portainer-traefik-windows-vm/main.bicep) | Windows Docker Host with Portainer and Traefik pre-installed |
+> | [Windows Server VM with SSH](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-windows-ssh/main.bicep) | Deploy a single Windows VM with Open SSH enabled so that you can connect through SSH using key-based authentication. |
+
+
 ## Resource format
 
 To create a Microsoft.Compute/disks resource, add the following Bicep to your template.
@@ -299,55 +349,6 @@ resource symbolicname 'Microsoft.Compute/disks@2024-03-02' = {
 | Name | Description | Value |
 | ---- | ----------- | ------------ |
 
-## Usage Examples
-### Bicep Samples
-
-A basic example of deploying Managed Disk.
-
-```bicep
-param location string = 'westeurope'
-param resourceName string = 'acctest0001'
-
-resource disk 'Microsoft.Compute/disks@2022-03-02' = {
-  name: resourceName
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  properties: {
-    creationData: {
-      createOption: 'Empty'
-    }
-    diskSizeGB: 10
-    encryption: {
-      type: 'EncryptionAtRestWithPlatformKey'
-    }
-    networkAccessPolicy: 'AllowAll'
-    osType: ''
-    publicNetworkAccess: 'Enabled'
-  }
-}
-```
-### Azure Verified Modules
-
-The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
-
-> [!div class="mx-tableFixed"]
-> | Module | Description |
-> | ----- | ----- |
-> | [Compute Disk](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/compute/disk) | AVM Resource Module for Compute Disk |
-
-### Azure Quickstart Samples
-
-The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep samples for deploying this resource type.
-
-> [!div class="mx-tableFixed"]
-> | Bicep File | Description |
-> | ----- | ----- |
-> | [Create Disk & enable protection via Backup Vault](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.dataprotection/backup-create-disk-enable-protection/main.bicep) | Template that creates a disk and enables protection via Backup Vault |
-> | [Windows Docker Host with Portainer and Traefik pre-installed](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/traefik/docker-portainer-traefik-windows-vm/main.bicep) | Windows Docker Host with Portainer and Traefik pre-installed |
-> | [Windows Server VM with SSH](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-windows-ssh/main.bicep) | Deploy a single Windows VM with Open SSH enabled so that you can connect through SSH using key-based authentication. |
-
 
 ::: zone-end
 
@@ -358,8 +359,26 @@ The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep s
 The disks resource type can be deployed with operations that target: 
 
 * **Resource groups** - See [resource group deployment commands](/azure/azure-resource-manager/templates/deploy-to-resource-group)
-
 For a list of changed properties in each API version, see [change log](~/microsoft.compute/change-log/disks.md).
+
+## Usage Examples
+### Azure Quickstart Templates
+
+The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Template | Description |
+> | ----- | ----- |
+> | [Create a VM from a EfficientIP VHD](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-efficientip-vhd)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-efficientip-vhd%2Fazuredeploy.json) | This template creates a VM from a EfficientIP VHD and let you connect it to an existing VNET that can reside in another Resource Group then the virtual machine |
+> | [Create a VM in a new or existing vnet from a custom VHD](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-specialized-vhd-new-or-existing-vnet)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-specialized-vhd-new-or-existing-vnet%2Fazuredeploy.json) | This template creates a VM from a specialized VHD and let you connect it to a new or existing VNET that can reside in another Resource Group than the virtual machine |
+> | [Create Disk & enable protection via Backup Vault](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.dataprotection/backup-create-disk-enable-protection)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.dataprotection%2Fbackup-create-disk-enable-protection%2Fazuredeploy.json) | Template that creates a disk and enables protection via Backup Vault |
+> | [Create VM from existing VHDs and connect it to existingVNET](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-os-disk-and-data-disk-existing-vnet)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-os-disk-and-data-disk-existing-vnet%2Fazuredeploy.json) | This template creates a VM from VHDs (OS + data disk) and let you connect it to an existing VNET that can reside in another Resource Group then the virtual machine |
+> | [Creates an ultra managed disk with a specific sector size](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/ultra-managed-disk)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fultra-managed-disk%2Fazuredeploy.json) | This template creates a new ultra managed disk allowing the user to specify a sector size of either 512 or 4096. |
+> | [Deploy a 3 node Percona XtraDB Cluster in Availability Zones](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/mysql/mysql-ha-pxc-zones)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fapplication-workloads%2Fmysql%2Fmysql-ha-pxc-zones%2Fazuredeploy.json) | This template deploys a 3 node MySQL high availability cluster on CentOS 6.5 or Ubuntu 12.04 |
+> | [SQL VM Performance Optimized Storage Settings on UltraSSD](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.sqlvirtualmachine/sql-vm-new-storage-ultrassd)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.sqlvirtualmachine%2Fsql-vm-new-storage-ultrassd%2Fazuredeploy.json) | Create a SQL Server Virtual Machine with performance optimized storage settings, using UltraSSD for SQL Log files |
+> | [Windows Docker Host with Portainer and Traefik pre-installed](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/traefik/docker-portainer-traefik-windows-vm)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fapplication-workloads%2Ftraefik%2Fdocker-portainer-traefik-windows-vm%2Fazuredeploy.json) | Windows Docker Host with Portainer and Traefik pre-installed |
+> | [Windows Server VM with SSH](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-windows-ssh)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-windows-ssh%2Fazuredeploy.json) | Deploy a single Windows VM with Open SSH enabled so that you can connect through SSH using key-based authentication. |
+
 
 ## Resource format
 
@@ -619,24 +638,6 @@ To create a Microsoft.Compute/disks resource, add the following JSON to your tem
 | Name | Description | Value |
 | ---- | ----------- | ------------ |
 
-## Usage Examples
-### Azure Quickstart Templates
-
-The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this resource type.
-
-> [!div class="mx-tableFixed"]
-> | Template | Description |
-> | ----- | ----- |
-> | [Create a VM from a EfficientIP VHD](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-efficientip-vhd)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-efficientip-vhd%2Fazuredeploy.json) | This template creates a VM from a EfficientIP VHD and let you connect it to an existing VNET that can reside in another Resource Group then the virtual machine |
-> | [Create a VM in a new or existing vnet from a custom VHD](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-specialized-vhd-new-or-existing-vnet)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-specialized-vhd-new-or-existing-vnet%2Fazuredeploy.json) | This template creates a VM from a specialized VHD and let you connect it to a new or existing VNET that can reside in another Resource Group than the virtual machine |
-> | [Create Disk & enable protection via Backup Vault](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.dataprotection/backup-create-disk-enable-protection)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.dataprotection%2Fbackup-create-disk-enable-protection%2Fazuredeploy.json) | Template that creates a disk and enables protection via Backup Vault |
-> | [Create VM from existing VHDs and connect it to existingVNET](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-os-disk-and-data-disk-existing-vnet)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-os-disk-and-data-disk-existing-vnet%2Fazuredeploy.json) | This template creates a VM from VHDs (OS + data disk) and let you connect it to an existing VNET that can reside in another Resource Group then the virtual machine |
-> | [Creates an ultra managed disk with a specific sector size](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/ultra-managed-disk)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fultra-managed-disk%2Fazuredeploy.json) | This template creates a new ultra managed disk allowing the user to specify a sector size of either 512 or 4096. |
-> | [Deploy a 3 node Percona XtraDB Cluster in Availability Zones](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/mysql/mysql-ha-pxc-zones)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fapplication-workloads%2Fmysql%2Fmysql-ha-pxc-zones%2Fazuredeploy.json) | This template deploys a 3 node MySQL high availability cluster on CentOS 6.5 or Ubuntu 12.04 |
-> | [SQL VM Performance Optimized Storage Settings on UltraSSD](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.sqlvirtualmachine/sql-vm-new-storage-ultrassd)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.sqlvirtualmachine%2Fsql-vm-new-storage-ultrassd%2Fazuredeploy.json) | Create a SQL Server Virtual Machine with performance optimized storage settings, using UltraSSD for SQL Log files |
-> | [Windows Docker Host with Portainer and Traefik pre-installed](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/traefik/docker-portainer-traefik-windows-vm)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fapplication-workloads%2Ftraefik%2Fdocker-portainer-traefik-windows-vm%2Fazuredeploy.json) | Windows Docker Host with Portainer and Traefik pre-installed |
-> | [Windows Server VM with SSH](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.compute/vm-windows-ssh)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.compute%2Fvm-windows-ssh%2Fazuredeploy.json) | Deploy a single Windows VM with Open SSH enabled so that you can connect through SSH using key-based authentication. |
-
 
 ::: zone-end
 
@@ -647,8 +648,77 @@ The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this res
 The disks resource type can be deployed with operations that target: 
 
 * **Resource groups**
-
 For a list of changed properties in each API version, see [change log](~/microsoft.compute/change-log/disks.md).
+
+## Usage Examples
+### Terraform Samples
+
+A basic example of deploying Managed Disk.
+
+```terraform
+terraform {
+  required_providers {
+    azapi = {
+      source = "Azure/azapi"
+    }
+  }
+}
+
+provider "azapi" {
+  skip_provider_registration = false
+}
+
+variable "resource_name" {
+  type    = string
+  default = "acctest0001"
+}
+
+variable "location" {
+  type    = string
+  default = "westeurope"
+}
+
+resource "azapi_resource" "resourceGroup" {
+  type     = "Microsoft.Resources/resourceGroups@2020-06-01"
+  name     = var.resource_name
+  location = var.location
+}
+
+resource "azapi_resource" "disk" {
+  type      = "Microsoft.Compute/disks@2022-03-02"
+  parent_id = azapi_resource.resourceGroup.id
+  name      = var.resource_name
+  location  = var.location
+  body = {
+    properties = {
+      creationData = {
+        createOption = "Empty"
+      }
+      diskSizeGB = 10
+      encryption = {
+        type = "EncryptionAtRestWithPlatformKey"
+      }
+      networkAccessPolicy = "AllowAll"
+      osType              = ""
+      publicNetworkAccess = "Enabled"
+    }
+    sku = {
+      name = "Standard_LRS"
+    }
+  }
+  schema_validation_enabled = false
+  response_export_values    = ["*"]
+}
+```
+### Azure Verified Modules
+
+The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Module | Description |
+> | ----- | ----- |
+> | [Compute Disk](https://github.com/Azure/terraform-azurerm-avm-res-compute-disk) | AVM Resource Module for Compute Disk |
+
 
 ## Resource format
 
@@ -910,75 +980,6 @@ resource "azapi_resource" "symbolicname" {
 
 | Name | Description | Value |
 | ---- | ----------- | ------------ |
-
-## Usage Examples
-### Terraform Samples
-
-A basic example of deploying Managed Disk.
-
-```terraform
-terraform {
-  required_providers {
-    azapi = {
-      source = "Azure/azapi"
-    }
-  }
-}
-
-provider "azapi" {
-  skip_provider_registration = false
-}
-
-variable "resource_name" {
-  type    = string
-  default = "acctest0001"
-}
-
-variable "location" {
-  type    = string
-  default = "westeurope"
-}
-
-resource "azapi_resource" "resourceGroup" {
-  type     = "Microsoft.Resources/resourceGroups@2020-06-01"
-  name     = var.resource_name
-  location = var.location
-}
-
-resource "azapi_resource" "disk" {
-  type      = "Microsoft.Compute/disks@2022-03-02"
-  parent_id = azapi_resource.resourceGroup.id
-  name      = var.resource_name
-  location  = var.location
-  body = {
-    properties = {
-      creationData = {
-        createOption = "Empty"
-      }
-      diskSizeGB = 10
-      encryption = {
-        type = "EncryptionAtRestWithPlatformKey"
-      }
-      networkAccessPolicy = "AllowAll"
-      osType              = ""
-      publicNetworkAccess = "Enabled"
-    }
-    sku = {
-      name = "Standard_LRS"
-    }
-  }
-  schema_validation_enabled = false
-  response_export_values    = ["*"]
-}
-```
-### Azure Verified Modules
-
-The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
-
-> [!div class="mx-tableFixed"]
-> | Module | Description |
-> | ----- | ----- |
-> | [Compute Disk](https://github.com/Azure/terraform-azurerm-avm-res-compute-disk) | AVM Resource Module for Compute Disk |
 
 
 ::: zone-end

@@ -319,12 +319,21 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
 """);
         }
 
-        var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Bicep);
-
         sb.Append($"""
 
 
 For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
+
+{GenerateOptionalSection("Usage Examples", [
+GetBicepSamplesSection(remarksLoader, resource, remarks),
+GetAvmSection(configLoader.GetSamples(), AvmLinkType.Bicep, resource),
+GetBicepQuickstartsSection(configLoader.GetSamples(), resource),
+])}
+""");
+
+        var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Bicep);
+
+        sb.Append($"""
 
 ## Resource format
 
@@ -366,12 +375,6 @@ For **{discSample.DiscriminatorValue}**, use:
             GetPropertyValues(resource, DeploymentType.Bicep, namedTypes, remarks, anchorIndex),
         ]));
 
-        sb.Append(GenerateOptionalSection("Usage Examples", [
-            GetBicepSamplesSection(remarksLoader, resource, remarks),
-            GetAvmSection(configLoader.GetSamples(), AvmLinkType.Bicep, resource),
-            GetBicepQuickstartsSection(configLoader.GetSamples(), resource),
-        ]));
-
         sb.Append($"""
 
 ::: zone-end
@@ -407,7 +410,7 @@ For **{discSample.DiscriminatorValue}**, use:
     }
 
 
-    private static string GetArmTemplateZone(ConfigLoader configLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex)
+    private static string GetArmTemplateZone(ConfigLoader configLoader, RemarksLoader remarksLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex)
     {
         var sb = new StringBuilder();
         sb.Append($"""
@@ -448,12 +451,19 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
 """);
         }
 
+        sb.Append($"""
+
+For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
+
+{GenerateOptionalSection("Usage Examples", [
+GetArmTemplateSamplesSection(remarksLoader, resource, remarks),
+GetJsonQuickstartsSection(configLoader.GetSamples(), resource),
+])}
+""");
+
         var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Json);
 
         sb.Append($"""
-
-
-For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
 ## Resource format
 
@@ -493,10 +503,6 @@ For **{discSample.DiscriminatorValue}**, use:
 
         sb.Append(GenerateOptionalSection("Property Values", [
             GetPropertyValues(resource, DeploymentType.Json, namedTypes, remarks, anchorIndex),
-        ]));
-
-        sb.Append(GenerateOptionalSection("Usage Examples", [
-            GetJsonQuickstartsSection(configLoader.GetSamples(), resource),
         ]));
 
         sb.Append($"""
@@ -549,12 +555,19 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
 """);
         }
 
+        sb.Append($"""
+
+For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
+
+{GenerateOptionalSection("Usage Examples", [
+GetTerraformSamplesSection(remarksLoader, resource, remarks),
+GetAvmSection(configLoader.GetSamples(), AvmLinkType.Terraform, resource),
+])}
+""");
+
         var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Terraform);
 
         sb.Append($"""
-
-
-For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
 ## Resource format
 
@@ -594,11 +607,6 @@ For **{discSample.DiscriminatorValue}**, use:
 
         sb.Append(GenerateOptionalSection("Property Values", [
             GetPropertyValues(resource, DeploymentType.Terraform, namedTypes, remarks, anchorIndex),
-        ]));
-
-        sb.Append(GenerateOptionalSection("Usage Examples", [
-            GetTerraformSamplesSection(remarksLoader, resource, remarks),
-            GetAvmSection(configLoader.GetSamples(), AvmLinkType.Terraform, resource),
         ]));
 
         sb.Append($"""
@@ -663,6 +671,37 @@ For **{discSample.DiscriminatorValue}**, use:
 {sample.Description}
 
 ```terraform
+{remarksLoader.GetCodeSample(resource.Provider, sample)}
+```
+
+""");
+        }
+
+        return sb.ToString();
+    }
+
+    private static string? GetArmTemplateSamplesSection(RemarksLoader remarksLoader, ResourceMetadata resource, RemarksFile remarks)
+    {
+        var samples = remarks.GetArmTemplateSamples(resource).ToArray();
+
+        if (!samples.Any())
+        {
+            return null;
+        }
+
+        var sb = new StringBuilder();
+        sb.Append($"""
+### ARM Template Samples
+
+
+""");
+
+        foreach (var sample in samples)
+        {
+            sb.Append($"""
+{sample.Description}
+
+```json
 {remarksLoader.GetCodeSample(resource.Provider, sample)}
 ```
 
@@ -1043,7 +1082,7 @@ For **{discSample.DiscriminatorValue}**, use:
 {GetApiVersionLinks(groupedTypes, resource, isLatestVersionPage)}
 {GetResourceRemarks(resource, remarks)}
 {GetBicepZone(configLoader, remarksLoader, resource, namedTypes, remarks, 0)}
-{GetArmTemplateZone(configLoader, resource, namedTypes, remarks, 1)}
+{GetArmTemplateZone(configLoader, remarksLoader, resource, namedTypes, remarks, 1)}
 {GetTerraformZone(configLoader, remarksLoader, resource, namedTypes, remarks, 2)}
 """;
     }

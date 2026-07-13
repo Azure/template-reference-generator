@@ -29,6 +29,12 @@
         "$ref": "#/definitions/CodeSample"
       }
     },
+    "ArmTemplateSamples": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/CodeSample"
+      }
+    },
     "TerraformSamples": {
       "type": "array",
       "items": {
