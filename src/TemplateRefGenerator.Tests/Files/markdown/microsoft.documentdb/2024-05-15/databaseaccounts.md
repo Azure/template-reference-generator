@@ -69,6 +69,93 @@ The databaseAccounts resource type can be deployed with operations that target:
 
 For a list of changed properties in each API version, see [change log](~/microsoft.documentdb/change-log/databaseaccounts.md).
 
+## Usage Examples
+### Bicep Samples
+
+A basic example of deploying CosmosDB (formally DocumentDB) Account.
+
+```bicep
+param resourceName string = 'acctest0001'
+param location string = 'westeurope'
+
+resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
+  name: resourceName
+  location: location
+  kind: 'GlobalDocumentDB'
+  properties: {
+    capabilities: []
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'BoundedStaleness'
+      maxIntervalInSeconds: 10
+      maxStalenessPrefix: 200
+    }
+    databaseAccountOfferType: 'Standard'
+    defaultIdentity: 'FirstPartyIdentity'
+    disableKeyBasedMetadataWriteAccess: false
+    disableLocalAuth: false
+    enableAnalyticalStorage: false
+    enableAutomaticFailover: false
+    enableFreeTier: false
+    enableMultipleWriteLocations: false
+    ipRules: []
+    isVirtualNetworkFilterEnabled: false
+    locations: [
+      {
+        failoverPriority: 0
+        isZoneRedundant: false
+        locationName: 'West Europe'
+      }
+    ]
+    networkAclBypass: 'None'
+    networkAclBypassResourceIds: []
+    publicNetworkAccess: 'Enabled'
+    virtualNetworkRules: []
+  }
+}
+```
+### Azure Verified Modules
+
+The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Module | Description |
+> | ----- | ----- |
+> | [Cosmos DB Database Account](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/document-db/database-account) | AVM Resource Module for Cosmos DB Database Account |
+
+### Azure Quickstart Samples
+
+The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep samples for deploying this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Bicep File | Description |
+> | ----- | ----- |
+> | [Azure Cosmos DB account SQL API with analytical store](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-analytical-store/main.bicep) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container configured with analytical store. |
+> | [Azure Cosmos DB Account with Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.web/documentdb-webapp/main.bicep) | This template deploys an Azure Cosmos DB account, an App Service Plan, and creates a Web App in the App Service Plan. It also adds two Application settings to the Web App that reference the Azure Cosmos DB account endpoint. This way solutions deployed to the Web App can connect to the Azure Cosmos DB account endpoint using those settings. |
+> | [Create a Cosmos DB account with Microsoft Defender enabled](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/microsoft-defender-cosmosdb-create-account/main.bicep) | Using this ARM template, you can deploy an Azure Cosmos DB account with Microsoft Defender for Azure Cosmos DB enabled. Microsoft Defender for Azure Cosmos DB is an Azure-native layer of security that detects attempts to exploit databases in your Azure Cosmos DB accounts. Microsoft Defender for Azure Cosmos DB detects potential SQL injections, known bad actors based on Microsoft Threat Intelligence, suspicious access patterns, and potential exploitations of your database through compromised identities or malicious insiders. |
+> | [Create a free-tier Azure Cosmos DB account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep) | This template creates a free-tier Azure Cosmos DB account for SQL API with a database with shared throughput and container. |
+> | [Create a minimal Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-minimal/main.bicep) | This template creates an Azure Cosmos DB account for the Core (SQL) API while only specifying the minimal required resource properties. |
+> | [Create a Serverless Azure Cosmos DB account for SQL API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-serverless/main.bicep) | This template creates an serverless Azure Cosmos DB account for the Core (SQL) API. |
+> | [Create a zero touch Azure Cosmos account and Azure Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-webapp/main.bicep) | This template creates an Azure Cosmos account, injects the Cosmos DB endpoint and keys into Azure Web App settings, then deploys an ASP MVC web app from GitHub. |
+> | [Create an Azure Cosmos account for MongoDB API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb/main.bicep) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using shared and dedicated throughput with two collections. |
+> | [Create an Azure Cosmos account for MongoDB API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using both shared and dedicated autoscale throughput. |
+> | [Create an Azure Cosmos account for Table API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table/main.bicep) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with provisioned throughput. |
+> | [Create an Azure Cosmos account for Table API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with autoscale throughput. |
+> | [Create an Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra/main.bicep) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with dedicated throughput. |
+> | [Create an Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql/main.bicep) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with throughput with multiple other options. |
+> | [Create an Azure Cosmos DB account for Gremlin API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin/main.bicep) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using dedicated throughput. |
+> | [Create an Azure Cosmos DB account for Gremlin API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using autoscale throughput. |
+> | [Create an Azure Cosmos DB account in multiple regions](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-multi-region-account/main.bicep) | This template creates an Azure Cosmos DB account for any database API type with a primary and secondary region with choice of consistency level and failover type. |
+> | [Create an Azure Cosmos DB account SQL API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-autoscale/main.bicep) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with autoscale throughput with multiple other options. |
+> | [Create an Azure Cosmos DB Account with a private endpoint](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-private-endpoint/main.bicep) | This template will create a Cosmos account, a virtual network and a private endpoint exposing the Cosmos account to the virtual network. |
+> | [Create an Azure Cosmos DB SQL Account with data plane RBAC](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-rbac/main.bicep) | This template will create a SQL Cosmos account, a natively maintained Role Definition, and a natively maintained Role Assignment for an AAD identity. |
+> | [Create an Azure CosmosDB Account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-account/main.bicep) | This ARM template is intented to create a CosmosDB Account quickly with the minimal required values |
+> | [Create autoscale Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with autoscale throughput. |
+> | [Create Azure Cosmos DB Core (SQL) API stored procedures](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-container-sprocs/main.bicep) | This template creates an Azure Cosmos DB account for Core (SQL) API and a container with a stored procedure, trigger and user defined function. |
+> | [Creates a Dapr microservices app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-blob/main.bicep) | Create a Dapr microservices app using Container Apps. |
+> | [Creates a Dapr pub-sub servicebus app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-pubsub-servicebus/main.bicep) | Create a Dapr pub-sub servicebus app using Container Apps. |
+> | [Deploy Azure Data Explorer DB with Cosmos DB connection](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.kusto/kusto-cosmos-db/main.bicep) | Deploy Azure Data Explorer DB with Cosmos DB connection. |
+
+
 ## Resource format
 
 To create a Microsoft.DocumentDB/databaseAccounts resource, add the following Bicep to your template.
@@ -421,92 +508,6 @@ For **Periodic**, use:
 | id | Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. | string |
 | ignoreMissingVNetServiceEndpoint | Create firewall rule before the virtual network has vnet service endpoint enabled. | bool |
 
-## Usage Examples
-### Bicep Samples
-
-A basic example of deploying CosmosDB (formally DocumentDB) Account.
-
-```bicep
-param resourceName string = 'acctest0001'
-param location string = 'westeurope'
-
-resource databaseAccount 'Microsoft.DocumentDB/databaseAccounts@2021-10-15' = {
-  name: resourceName
-  location: location
-  kind: 'GlobalDocumentDB'
-  properties: {
-    capabilities: []
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'BoundedStaleness'
-      maxIntervalInSeconds: 10
-      maxStalenessPrefix: 200
-    }
-    databaseAccountOfferType: 'Standard'
-    defaultIdentity: 'FirstPartyIdentity'
-    disableKeyBasedMetadataWriteAccess: false
-    disableLocalAuth: false
-    enableAnalyticalStorage: false
-    enableAutomaticFailover: false
-    enableFreeTier: false
-    enableMultipleWriteLocations: false
-    ipRules: []
-    isVirtualNetworkFilterEnabled: false
-    locations: [
-      {
-        failoverPriority: 0
-        isZoneRedundant: false
-        locationName: 'West Europe'
-      }
-    ]
-    networkAclBypass: 'None'
-    networkAclBypassResourceIds: []
-    publicNetworkAccess: 'Enabled'
-    virtualNetworkRules: []
-  }
-}
-```
-### Azure Verified Modules
-
-The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
-
-> [!div class="mx-tableFixed"]
-> | Module | Description |
-> | ----- | ----- |
-> | [Cosmos DB Database Account](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/document-db/database-account) | AVM Resource Module for Cosmos DB Database Account |
-
-### Azure Quickstart Samples
-
-The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep samples for deploying this resource type.
-
-> [!div class="mx-tableFixed"]
-> | Bicep File | Description |
-> | ----- | ----- |
-> | [Azure Cosmos DB account SQL API with analytical store](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-analytical-store/main.bicep) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container configured with analytical store. |
-> | [Azure Cosmos DB Account with Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.web/documentdb-webapp/main.bicep) | This template deploys an Azure Cosmos DB account, an App Service Plan, and creates a Web App in the App Service Plan. It also adds two Application settings to the Web App that reference the Azure Cosmos DB account endpoint. This way solutions deployed to the Web App can connect to the Azure Cosmos DB account endpoint using those settings. |
-> | [Create a Cosmos DB account with Microsoft Defender enabled](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/microsoft-defender-cosmosdb-create-account/main.bicep) | Using this ARM template, you can deploy an Azure Cosmos DB account with Microsoft Defender for Azure Cosmos DB enabled. Microsoft Defender for Azure Cosmos DB is an Azure-native layer of security that detects attempts to exploit databases in your Azure Cosmos DB accounts. Microsoft Defender for Azure Cosmos DB detects potential SQL injections, known bad actors based on Microsoft Threat Intelligence, suspicious access patterns, and potential exploitations of your database through compromised identities or malicious insiders. |
-> | [Create a free-tier Azure Cosmos DB account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-free/main.bicep) | This template creates a free-tier Azure Cosmos DB account for SQL API with a database with shared throughput and container. |
-> | [Create a minimal Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-minimal/main.bicep) | This template creates an Azure Cosmos DB account for the Core (SQL) API while only specifying the minimal required resource properties. |
-> | [Create a Serverless Azure Cosmos DB account for SQL API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-serverless/main.bicep) | This template creates an serverless Azure Cosmos DB account for the Core (SQL) API. |
-> | [Create a zero touch Azure Cosmos account and Azure Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-webapp/main.bicep) | This template creates an Azure Cosmos account, injects the Cosmos DB endpoint and keys into Azure Web App settings, then deploys an ASP MVC web app from GitHub. |
-> | [Create an Azure Cosmos account for MongoDB API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb/main.bicep) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using shared and dedicated throughput with two collections. |
-> | [Create an Azure Cosmos account for MongoDB API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using both shared and dedicated autoscale throughput. |
-> | [Create an Azure Cosmos account for Table API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table/main.bicep) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with provisioned throughput. |
-> | [Create an Azure Cosmos account for Table API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with autoscale throughput. |
-> | [Create an Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra/main.bicep) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with dedicated throughput. |
-> | [Create an Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql/main.bicep) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with throughput with multiple other options. |
-> | [Create an Azure Cosmos DB account for Gremlin API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin/main.bicep) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using dedicated throughput. |
-> | [Create an Azure Cosmos DB account for Gremlin API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using autoscale throughput. |
-> | [Create an Azure Cosmos DB account in multiple regions](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-multi-region-account/main.bicep) | This template creates an Azure Cosmos DB account for any database API type with a primary and secondary region with choice of consistency level and failover type. |
-> | [Create an Azure Cosmos DB account SQL API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-autoscale/main.bicep) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with autoscale throughput with multiple other options. |
-> | [Create an Azure Cosmos DB Account with a private endpoint](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-private-endpoint/main.bicep) | This template will create a Cosmos account, a virtual network and a private endpoint exposing the Cosmos account to the virtual network. |
-> | [Create an Azure Cosmos DB SQL Account with data plane RBAC](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-rbac/main.bicep) | This template will create a SQL Cosmos account, a natively maintained Role Definition, and a natively maintained Role Assignment for an AAD identity. |
-> | [Create an Azure CosmosDB Account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-account/main.bicep) | This ARM template is intented to create a CosmosDB Account quickly with the minimal required values |
-> | [Create autoscale Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra-autoscale/main.bicep) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with autoscale throughput. |
-> | [Create Azure Cosmos DB Core (SQL) API stored procedures](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-container-sprocs/main.bicep) | This template creates an Azure Cosmos DB account for Core (SQL) API and a container with a stored procedure, trigger and user defined function. |
-> | [Creates a Dapr microservices app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-blob/main.bicep) | Create a Dapr microservices app using Container Apps. |
-> | [Creates a Dapr pub-sub servicebus app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-pubsub-servicebus/main.bicep) | Create a Dapr pub-sub servicebus app using Container Apps. |
-> | [Deploy Azure Data Explorer DB with Cosmos DB connection](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.kusto/kusto-cosmos-db/main.bicep) | Deploy Azure Data Explorer DB with Cosmos DB connection. |
-
 
 ::: zone-end
 
@@ -517,8 +518,45 @@ The following [Azure Quickstart templates](https://aka.ms/azqst) contain Bicep s
 The databaseAccounts resource type can be deployed with operations that target: 
 
 * **Resource groups** - See [resource group deployment commands](/azure/azure-resource-manager/templates/deploy-to-resource-group)
-
 For a list of changed properties in each API version, see [change log](~/microsoft.documentdb/change-log/databaseaccounts.md).
+
+## Usage Examples
+### Azure Quickstart Templates
+
+The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Template | Description |
+> | ----- | ----- |
+> | [Azure Cosmos DB account SQL API with analytical store](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-analytical-store)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-analytical-store%2Fazuredeploy.json) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container configured with analytical store. |
+> | [Azure Cosmos DB Account with Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.web/documentdb-webapp)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.web%2Fdocumentdb-webapp%2Fazuredeploy.json) | This template deploys an Azure Cosmos DB account, an App Service Plan, and creates a Web App in the App Service Plan. It also adds two Application settings to the Web App that reference the Azure Cosmos DB account endpoint. This way solutions deployed to the Web App can connect to the Azure Cosmos DB account endpoint using those settings. |
+> | [CI/CD using Jenkins on Azure Container Service (AKS)](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/jenkins/jenkins-cicd-container)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fapplication-workloads%2Fjenkins%2Fjenkins-cicd-container%2Fazuredeploy.json) | Containers make it very easy for you to continuously build and deploy your applications. By orchestrating deployment of those containers using Kubernetes in Azure Container Service, you can achieve replicable, manageable clusters of containers. By setting up a continuous build to produce your container images and orchestration, you can increase the speed and reliability of your deployment. |
+> | [Create a Cosmos DB account with Microsoft Defender enabled](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/microsoft-defender-cosmosdb-create-account)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fmicrosoft-defender-cosmosdb-create-account%2Fazuredeploy.json) | Using this ARM template, you can deploy an Azure Cosmos DB account with Microsoft Defender for Azure Cosmos DB enabled. Microsoft Defender for Azure Cosmos DB is an Azure-native layer of security that detects attempts to exploit databases in your Azure Cosmos DB accounts. Microsoft Defender for Azure Cosmos DB detects potential SQL injections, known bad actors based on Microsoft Threat Intelligence, suspicious access patterns, and potential exploitations of your database through compromised identities or malicious insiders. |
+> | [Create a free-tier Azure Cosmos DB account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-free)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-free%2Fazuredeploy.json) | This template creates a free-tier Azure Cosmos DB account for SQL API with a database with shared throughput and container. |
+> | [Create a minimal Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-minimal)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-minimal%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for the Core (SQL) API while only specifying the minimal required resource properties. |
+> | [Create a Serverless Azure Cosmos DB account for SQL API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-serverless)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-serverless%2Fazuredeploy.json) | This template creates an serverless Azure Cosmos DB account for the Core (SQL) API. |
+> | [Create a zero touch Azure Cosmos account and Azure Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-webapp)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-webapp%2Fazuredeploy.json) | This template creates an Azure Cosmos account, injects the Cosmos DB endpoint and keys into Azure Web App settings, then deploys an ASP MVC web app from GitHub. |
+> | [Create an Azure Cosmos account for MongoDB API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-mongodb%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using shared and dedicated throughput with two collections. |
+> | [Create an Azure Cosmos account for MongoDB API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-mongodb-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using both shared and dedicated autoscale throughput. |
+> | [Create an Azure Cosmos account for Table API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-table%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with provisioned throughput. |
+> | [Create an Azure Cosmos account for Table API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-table-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with autoscale throughput. |
+> | [Create an Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-cassandra%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with dedicated throughput. |
+> | [Create an Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql%2Fazuredeploy.json) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with throughput with multiple other options. |
+> | [Create an Azure Cosmos DB account for Gremlin API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-gremlin%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using dedicated throughput. |
+> | [Create an Azure Cosmos DB account for Gremlin API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-gremlin-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using autoscale throughput. |
+> | [Create an Azure Cosmos DB account in multiple regions](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-multi-region-account)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-create-multi-region-account%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for any database API type with a primary and secondary region with choice of consistency level and failover type. |
+> | [Create an Azure Cosmos DB account SQL API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with autoscale throughput with multiple other options. |
+> | [Create an Azure Cosmos DB Account with a private endpoint](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-private-endpoint)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-private-endpoint%2Fazuredeploy.json) | This template will create a Cosmos account, a virtual network and a private endpoint exposing the Cosmos account to the virtual network. |
+> | [Create an Azure Cosmos DB SQL Account with data plane RBAC](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-rbac)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-rbac%2Fazuredeploy.json) | This template will create a SQL Cosmos account, a natively maintained Role Definition, and a natively maintained Role Assignment for an AAD identity. |
+> | [Create an Azure CosmosDB Account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-account)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-create-account%2Fazuredeploy.json) | This ARM template is intented to create a CosmosDB Account quickly with the minimal required values |
+> | [Create autoscale Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-cassandra-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with autoscale throughput. |
+> | [Create Azure Cosmos DB Core (SQL) API stored procedures](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-container-sprocs)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-container-sprocs%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Core (SQL) API and a container with a stored procedure, trigger and user defined function. |
+> | [Create Azure Cosmos with SQL API and multiple containers](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-multiple-containers)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-multiple-containers%2Fazuredeploy.json) | The template creates a Cosmos container with a SQL API and allows adding mulitple containers. |
+> | [Creates a Dapr microservices app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-blob)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.app%2Fcontainer-app-dapr-blob%2Fazuredeploy.json) | Create a Dapr microservices app using Container Apps. |
+> | [Creates a Dapr pub-sub servicebus app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-pubsub-servicebus)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.app%2Fcontainer-app-dapr-pubsub-servicebus%2Fazuredeploy.json) | Create a Dapr pub-sub servicebus app using Container Apps. |
+> | [Deploy Azure Data Explorer DB with Cosmos DB connection](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.kusto/kusto-cosmos-db)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.kusto%2Fkusto-cosmos-db%2Fazuredeploy.json) | Deploy Azure Data Explorer DB with Cosmos DB connection. |
+> | [Web App with a SQL Database, Azure Cosmos DB, Azure Search](https://github.com/Azure/azure-quickstart-templates/tree/master/demos/web-app-sql-docdb-search)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fdemos%2Fweb-app-sql-docdb-search%2Fazuredeploy.json) | This template provisions a Web App, a SQL Database, Azure Cosmos DB, Azure Search and Application Insights.  |
+
 
 ## Resource format
 
@@ -869,43 +907,6 @@ For **Periodic**, use:
 | id | Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. | string |
 | ignoreMissingVNetServiceEndpoint | Create firewall rule before the virtual network has vnet service endpoint enabled. | bool |
 
-## Usage Examples
-### Azure Quickstart Templates
-
-The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this resource type.
-
-> [!div class="mx-tableFixed"]
-> | Template | Description |
-> | ----- | ----- |
-> | [Azure Cosmos DB account SQL API with analytical store](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-analytical-store)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-analytical-store%2Fazuredeploy.json) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container configured with analytical store. |
-> | [Azure Cosmos DB Account with Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.web/documentdb-webapp)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.web%2Fdocumentdb-webapp%2Fazuredeploy.json) | This template deploys an Azure Cosmos DB account, an App Service Plan, and creates a Web App in the App Service Plan. It also adds two Application settings to the Web App that reference the Azure Cosmos DB account endpoint. This way solutions deployed to the Web App can connect to the Azure Cosmos DB account endpoint using those settings. |
-> | [CI/CD using Jenkins on Azure Container Service (AKS)](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/jenkins/jenkins-cicd-container)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fapplication-workloads%2Fjenkins%2Fjenkins-cicd-container%2Fazuredeploy.json) | Containers make it very easy for you to continuously build and deploy your applications. By orchestrating deployment of those containers using Kubernetes in Azure Container Service, you can achieve replicable, manageable clusters of containers. By setting up a continuous build to produce your container images and orchestration, you can increase the speed and reliability of your deployment. |
-> | [Create a Cosmos DB account with Microsoft Defender enabled](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/microsoft-defender-cosmosdb-create-account)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fmicrosoft-defender-cosmosdb-create-account%2Fazuredeploy.json) | Using this ARM template, you can deploy an Azure Cosmos DB account with Microsoft Defender for Azure Cosmos DB enabled. Microsoft Defender for Azure Cosmos DB is an Azure-native layer of security that detects attempts to exploit databases in your Azure Cosmos DB accounts. Microsoft Defender for Azure Cosmos DB detects potential SQL injections, known bad actors based on Microsoft Threat Intelligence, suspicious access patterns, and potential exploitations of your database through compromised identities or malicious insiders. |
-> | [Create a free-tier Azure Cosmos DB account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-free)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-free%2Fazuredeploy.json) | This template creates a free-tier Azure Cosmos DB account for SQL API with a database with shared throughput and container. |
-> | [Create a minimal Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-minimal)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-minimal%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for the Core (SQL) API while only specifying the minimal required resource properties. |
-> | [Create a Serverless Azure Cosmos DB account for SQL API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-serverless)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-serverless%2Fazuredeploy.json) | This template creates an serverless Azure Cosmos DB account for the Core (SQL) API. |
-> | [Create a zero touch Azure Cosmos account and Azure Web App](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-webapp)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-webapp%2Fazuredeploy.json) | This template creates an Azure Cosmos account, injects the Cosmos DB endpoint and keys into Azure Web App settings, then deploys an ASP MVC web app from GitHub. |
-> | [Create an Azure Cosmos account for MongoDB API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-mongodb%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using shared and dedicated throughput with two collections. |
-> | [Create an Azure Cosmos account for MongoDB API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-mongodb-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-mongodb-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for MongoDB API 4.2 in two regions using both shared and dedicated autoscale throughput. |
-> | [Create an Azure Cosmos account for Table API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-table%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with provisioned throughput. |
-> | [Create an Azure Cosmos account for Table API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-table-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-table-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Table API in two regions and a single table with autoscale throughput. |
-> | [Create an Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-cassandra%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with dedicated throughput. |
-> | [Create an Azure Cosmos DB account for Core (SQL) API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql%2Fazuredeploy.json) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with throughput with multiple other options. |
-> | [Create an Azure Cosmos DB account for Gremlin API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-gremlin%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using dedicated throughput. |
-> | [Create an Azure Cosmos DB account for Gremlin API autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-gremlin-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-gremlin-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Gremlin API in two regions with one database and one graph using autoscale throughput. |
-> | [Create an Azure Cosmos DB account in multiple regions](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-multi-region-account)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-create-multi-region-account%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for any database API type with a primary and secondary region with choice of consistency level and failover type. |
-> | [Create an Azure Cosmos DB account SQL API with autoscale](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos account for Core (SQL) API with a database and container with autoscale throughput with multiple other options. |
-> | [Create an Azure Cosmos DB Account with a private endpoint](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-private-endpoint)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-private-endpoint%2Fazuredeploy.json) | This template will create a Cosmos account, a virtual network and a private endpoint exposing the Cosmos account to the virtual network. |
-> | [Create an Azure Cosmos DB SQL Account with data plane RBAC](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-rbac)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-rbac%2Fazuredeploy.json) | This template will create a SQL Cosmos account, a natively maintained Role Definition, and a natively maintained Role Assignment for an AAD identity. |
-> | [Create an Azure CosmosDB Account](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-create-account)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-create-account%2Fazuredeploy.json) | This ARM template is intented to create a CosmosDB Account quickly with the minimal required values |
-> | [Create autoscale Azure Cosmos DB account for Cassandra API](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-cassandra-autoscale)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-cassandra-autoscale%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Cassandra API in two regions with a keyspace and table with autoscale throughput. |
-> | [Create Azure Cosmos DB Core (SQL) API stored procedures](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-container-sprocs)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-container-sprocs%2Fazuredeploy.json) | This template creates an Azure Cosmos DB account for Core (SQL) API and a container with a stored procedure, trigger and user defined function. |
-> | [Create Azure Cosmos with SQL API and multiple containers](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.documentdb/cosmosdb-sql-multiple-containers)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.documentdb%2Fcosmosdb-sql-multiple-containers%2Fazuredeploy.json) | The template creates a Cosmos container with a SQL API and allows adding mulitple containers. |
-> | [Creates a Dapr microservices app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-blob)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.app%2Fcontainer-app-dapr-blob%2Fazuredeploy.json) | Create a Dapr microservices app using Container Apps. |
-> | [Creates a Dapr pub-sub servicebus app using Container Apps](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.app/container-app-dapr-pubsub-servicebus)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.app%2Fcontainer-app-dapr-pubsub-servicebus%2Fazuredeploy.json) | Create a Dapr pub-sub servicebus app using Container Apps. |
-> | [Deploy Azure Data Explorer DB with Cosmos DB connection](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.kusto/kusto-cosmos-db)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fquickstarts%2Fmicrosoft.kusto%2Fkusto-cosmos-db%2Fazuredeploy.json) | Deploy Azure Data Explorer DB with Cosmos DB connection. |
-> | [Web App with a SQL Database, Azure Cosmos DB, Azure Search](https://github.com/Azure/azure-quickstart-templates/tree/master/demos/web-app-sql-docdb-search)<br><br>[![Deploy to Azure](~/media/deploy-to-azure.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-quickstart-templates%2Fmaster%2Fdemos%2Fweb-app-sql-docdb-search%2Fazuredeploy.json) | This template provisions a Web App, a SQL Database, Azure Cosmos DB, Azure Search and Application Insights.  |
-
 
 ::: zone-end
 
@@ -916,8 +917,87 @@ The following [Azure Quickstart templates](https://aka.ms/azqst) deploy this res
 The databaseAccounts resource type can be deployed with operations that target: 
 
 * **Resource groups**
-
 For a list of changed properties in each API version, see [change log](~/microsoft.documentdb/change-log/databaseaccounts.md).
+
+## Usage Examples
+### Terraform Samples
+
+A basic example of deploying CosmosDB (formally DocumentDB) Account.
+
+```terraform
+terraform {
+  required_providers {
+    azapi = {
+      source = "Azure/azapi"
+    }
+  }
+}
+
+provider "azapi" {
+  skip_provider_registration = false
+}
+
+variable "resource_name" {
+  type    = string
+  default = "acctest0001"
+}
+
+variable "location" {
+  type    = string
+  default = "westeurope"
+}
+
+resource "azapi_resource" "resourceGroup" {
+  type     = "Microsoft.Resources/resourceGroups@2020-06-01"
+  name     = var.resource_name
+  location = var.location
+}
+
+resource "azapi_resource" "databaseAccount" {
+  type      = "Microsoft.DocumentDB/databaseAccounts@2021-10-15"
+  parent_id = azapi_resource.resourceGroup.id
+  name      = var.resource_name
+  location  = var.location
+  body = {
+    kind = "GlobalDocumentDB"
+    properties = {
+      capabilities = [
+      ]
+      consistencyPolicy = {
+        defaultConsistencyLevel = "BoundedStaleness"
+        maxIntervalInSeconds    = 10
+        maxStalenessPrefix      = 200
+      }
+      databaseAccountOfferType           = "Standard"
+      defaultIdentity                    = "FirstPartyIdentity"
+      disableKeyBasedMetadataWriteAccess = false
+      disableLocalAuth                   = false
+      enableAnalyticalStorage            = false
+      enableAutomaticFailover            = false
+      enableFreeTier                     = false
+      enableMultipleWriteLocations       = false
+      ipRules = [
+      ]
+      isVirtualNetworkFilterEnabled = false
+      locations = [
+        {
+          failoverPriority = 0
+          isZoneRedundant  = false
+          locationName     = "West Europe"
+        },
+      ]
+      networkAclBypass = "None"
+      networkAclBypassResourceIds = [
+      ]
+      publicNetworkAccess = "Enabled"
+      virtualNetworkRules = [
+      ]
+    }
+  }
+  schema_validation_enabled = false
+  response_export_values    = ["*"]
+}
+```
 
 ## Resource format
 
@@ -1276,84 +1356,5 @@ For **Periodic**, use:
 | id | Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. | string |
 | ignoreMissingVNetServiceEndpoint | Create firewall rule before the virtual network has vnet service endpoint enabled. | bool |
 
-## Usage Examples
-### Terraform Samples
-
-A basic example of deploying CosmosDB (formally DocumentDB) Account.
-
-```terraform
-terraform {
-  required_providers {
-    azapi = {
-      source = "Azure/azapi"
-    }
-  }
-}
-
-provider "azapi" {
-  skip_provider_registration = false
-}
-
-variable "resource_name" {
-  type    = string
-  default = "acctest0001"
-}
-
-variable "location" {
-  type    = string
-  default = "westeurope"
-}
-
-resource "azapi_resource" "resourceGroup" {
-  type     = "Microsoft.Resources/resourceGroups@2020-06-01"
-  name     = var.resource_name
-  location = var.location
-}
-
-resource "azapi_resource" "databaseAccount" {
-  type      = "Microsoft.DocumentDB/databaseAccounts@2021-10-15"
-  parent_id = azapi_resource.resourceGroup.id
-  name      = var.resource_name
-  location  = var.location
-  body = {
-    kind = "GlobalDocumentDB"
-    properties = {
-      capabilities = [
-      ]
-      consistencyPolicy = {
-        defaultConsistencyLevel = "BoundedStaleness"
-        maxIntervalInSeconds    = 10
-        maxStalenessPrefix      = 200
-      }
-      databaseAccountOfferType           = "Standard"
-      defaultIdentity                    = "FirstPartyIdentity"
-      disableKeyBasedMetadataWriteAccess = false
-      disableLocalAuth                   = false
-      enableAnalyticalStorage            = false
-      enableAutomaticFailover            = false
-      enableFreeTier                     = false
-      enableMultipleWriteLocations       = false
-      ipRules = [
-      ]
-      isVirtualNetworkFilterEnabled = false
-      locations = [
-        {
-          failoverPriority = 0
-          isZoneRedundant  = false
-          locationName     = "West Europe"
-        },
-      ]
-      networkAclBypass = "None"
-      networkAclBypassResourceIds = [
-      ]
-      publicNetworkAccess = "Enabled"
-      virtualNetworkRules = [
-      ]
-    }
-  }
-  schema_validation_enabled = false
-  response_export_values    = ["*"]
-}
-```
 
 ::: zone-end

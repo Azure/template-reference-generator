@@ -83,5 +83,47 @@
       "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.bicep",
       "Description": "Add a replica in a specific availability zone to a pool."
     }
+  ],
+  "ArmTemplateSamples": [
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/create.json",
+      "Description": "Create a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/update-administrator-login-password.json",
+      "Description": "Update a cluster's administrator login password."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/scale-cluster-vertically.json",
+      "Description": "Scale a cluster vertically."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "Path": "samples/clusters/connect-parameter-group-to-cluster.json",
+      "Description": "Connect a parameter group to a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
+      "Path": "samples/parametergroups/create.json",
+      "Description": "Create a parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "Path": "samples/clusters/pools/firewallrules/create.json",
+      "Description": "Create a firewall rule on a cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.json",
+      "Description": "Add a replica without a specific availability zone to a pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
+      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.json",
+      "Description": "Add a replica in a specific availability zone to a pool."
+    }
   ]
 }

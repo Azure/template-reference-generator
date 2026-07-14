@@ -32,4 +32,5 @@ For example, [remarks/microsoft.resources/remarks.json](../settings/remarks/micr
 * `ResourceRemarks`: Can be used to add custom remarks in markdown format about a particular resource type. See [here](https://github.com/Azure/bicep-refdocs-generator/blob/016143aa9375ba0ce62255fed1fad8905cfe75bf/src/TemplateRefGenerator.Tests/Files/markdown/microsoft.keyvault/2023-07-01/vaults.md?plain=1#L29-L35) for an example of what the customized output looks like.
 * `PropertyRemarks`: Can be used to replace the description markdown for a particular resource type property.
 * `BicepSamples`: A list of `.bicep` files that will be added as samples to documentation. See [here](https://github.com/Azure/bicep-refdocs-generator/blob/016143aa9375ba0ce62255fed1fad8905cfe75bf/src/TemplateRefGenerator.Tests/Files/markdown/microsoft.resources/2024-07-01/resourcegroups.md?plain=1#L61-L75) for an example of what the customized looks like.
+* `ArmTemplateSamples`: A list of ARM template `.json` files that will be added as samples to documentation.
 * `TerraformSamples`: A list of `.tf` files that will be added as samples to documentation.

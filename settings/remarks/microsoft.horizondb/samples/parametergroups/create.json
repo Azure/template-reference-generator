@@ -1,0 +1,84 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "parameterGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the parameter group"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "eastus",
+      "metadata": {
+        "description": "The location for the parameter group"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {
+        "env": "dev"
+      },
+      "metadata": {
+        "description": "The tags for the parameter group"
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "defaultValue": [
+        {
+          "name": "max_connections",
+          "value": "200"
+        },
+        {
+          "name": "log_min_error_statement",
+          "value": "error"
+        },
+        {
+          "name": "shared_buffers",
+          "value": "2000"
+        }
+      ],
+      "metadata": {
+        "description": "The database parameters for the parameter group"
+      }
+    },
+    "parameterGroupDescription": {
+      "type": "string",
+      "defaultValue": "Parameter group for high-throughput workloads",
+      "metadata": {
+        "description": "The description of the parameter group"
+      }
+    },
+    "pgVersion": {
+      "type": "int",
+      "defaultValue": 17,
+      "metadata": {
+        "description": "The PostgreSQL version for the parameter group"
+      }
+    },
+    "applyImmediately": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Whether to apply changes immediately"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDB/parameterGroups",
+      "apiVersion": "2026-01-20-preview",
+      "name": "[parameters('parameterGroupName')]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "parameters": "[parameters('parameters')]",
+        "description": "[parameters('parameterGroupDescription')]",
+        "pgVersion": "[parameters('pgVersion')]",
+        "applyImmediately": "[parameters('applyImmediately')]"
+      }
+    }
+  ]
+}

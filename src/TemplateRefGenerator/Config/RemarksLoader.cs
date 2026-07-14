@@ -53,10 +53,11 @@ public class RemarksLoader
         ImmutableArray<PropertyRemark>? PropertyRemarks,
         ImmutableArray<DeploymentRemark>? DeploymentRemarks,
         ImmutableArray<CodeSample>? BicepSamples,
+        ImmutableArray<CodeSample>? ArmTemplateSamples,
         ImmutableArray<CodeSample>? TerraformSamples)
     {
         public static RemarksFile Empty
-            => new(null, null, null, null, null);
+            => new(null, null, null, null, null, null);
 
         public IEnumerable<ResourceRemark> GetResourceRemarks(MarkdownGenerator.ResourceMetadata resource)
             => (ResourceRemarks ?? [])
@@ -76,6 +77,11 @@ public class RemarksLoader
 
         public IEnumerable<CodeSample> GetBicepSamples(MarkdownGenerator.ResourceMetadata resource)
             => (BicepSamples ?? [])
+                .Where(r => StringComparer.OrdinalIgnoreCase.Equals(resource.ResourceType, r.ResourceType))
+                .Where(r => FilterApiVersions(resource, r.ApiVersion));
+
+        public IEnumerable<CodeSample> GetArmTemplateSamples(MarkdownGenerator.ResourceMetadata resource)
+            => (ArmTemplateSamples ?? [])
                 .Where(r => StringComparer.OrdinalIgnoreCase.Equals(resource.ResourceType, r.ResourceType))
                 .Where(r => FilterApiVersions(resource, r.ApiVersion));
 

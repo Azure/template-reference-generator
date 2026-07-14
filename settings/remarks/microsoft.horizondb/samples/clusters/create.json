@@ -1,0 +1,93 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "eastus",
+      "metadata": {
+        "description": "The location for the cluster"
+      }
+    },
+    "clusterName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name for the cluster"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {
+        "env": "dev"
+      },
+      "metadata": {
+        "description": "The tags for the cluster"
+      }
+    },
+    "createMode": {
+      "type": "string",
+      "defaultValue": "Create",
+      "metadata": {
+        "description": "The create mode for cluster"
+      }
+    },
+    "version": {
+      "type": "int",
+      "defaultValue": 17,
+      "metadata": {
+        "description": "The major version of server"
+      }
+    },
+    "administratorLogin": {
+      "type": "string",
+      "metadata": {
+        "description": "The administrator login name for cluster"
+      }
+    },
+    "administratorLoginPassword": {
+      "type": "secureString",
+      "metadata": {
+        "description": "The administrator login password for cluster"
+      }
+    },
+    "vCores": {
+      "type": "int",
+      "defaultValue": 4,
+      "metadata": {
+        "description": "The number of vCores for each replica of the cluster"
+      }
+    },
+    "replicaCount": {
+      "type": "int",
+      "defaultValue": 2,
+      "metadata": {
+        "description": "The number of replicas for the cluster, including the primary replica, which is the only one in which writes are allowed. The other replicas are read-only."
+      }
+    },
+    "zonePlacementPolicy": {
+      "type": "string",
+      "defaultValue": "BestEffort",
+      "metadata": {
+        "description": "The name of the SKU for cluster"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDB/clusters",
+      "apiVersion": "2026-01-20-preview",
+      "name": "[parameters('clusterName')]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "createMode": "[parameters('createMode')]",
+        "version": "[parameters('version')]",
+        "administratorLogin": "[parameters('administratorLogin')]",
+        "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+        "vCores": "[parameters('vCores')]",
+        "replicaCount": "[parameters('replicaCount')]",
+        "zonePlacementPolicy": "[parameters('zonePlacementPolicy')]"
+      }
+    }
+  ]
+}
