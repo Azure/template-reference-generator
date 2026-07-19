@@ -108,4 +108,9 @@ public class RemarksLoader
 
         return Utils.DeserializeJsonFile<RemarksFile>(Utils.GetManifestFilePath(pathComponents), contents);
     }
+
+    public ImmutableArray<string> GetProviderNamespacesWithRemarks()
+        => [.. Utils.ListManifestFiles("settings/remarks")
+            .Select(path => path.Split('/')[2])
+            .Distinct(StringComparer.OrdinalIgnoreCase)];
 }
