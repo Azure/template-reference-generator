@@ -998,6 +998,15 @@ resource "azapi_resource" "databaseAccount" {
   response_export_values    = ["*"]
 }
 ```
+### Azure Verified Modules
+
+The following [Azure Verified Modules](https://aka.ms/avm) can be used to deploy this resource type.
+
+> [!div class="mx-tableFixed"]
+> | Module | Description |
+> | ----- | ----- |
+> | [CosmosDB Database Account](https://github.com/Azure/terraform-azurerm-avm-res-documentdb-databaseaccount) | AVM Resource Module for CosmosDB Database Account |
+
 
 ## Resource format
 
