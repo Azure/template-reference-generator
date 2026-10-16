@@ -47,3 +47,21 @@ src/TemplateRefGenerator/bin/Debug/net10.0/TemplateRefGenerator --source-folder 
 ```
 
 To get detailed logging, use the `--verbose` flag.
+
+## Excluding API versions
+
+To omit specific API versions for a provider, add an optional `ExcludedApiVersions` entry to `settings/config/config.json`:
+
+```json
+"ExcludedApiVersions": [
+  {
+    "ProviderNamespace": "Microsoft.Example",
+    "ApiVersions": [
+      "2024-01-01",
+      "2024-06-01-preview"
+    ]
+  }
+]
+```
+
+Exclusions are matched case-insensitively. If `ExcludedApiVersions` is omitted or empty, the generator produces documentation for every available API version. Versions that aren't present in the source types are ignored.
