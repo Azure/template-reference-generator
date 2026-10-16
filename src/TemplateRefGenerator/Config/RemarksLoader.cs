@@ -29,6 +29,10 @@ public class RemarksLoader
         ApiVersionRequirement? ApiVersion,
         string Description);
 
+    public record ReadOnlyResource(
+        ImmutableArray<string> ResourceTypes,
+        ApiVersionRequirement? ApiVersion);
+
     public record PropertyRemark(
         string ResourceType,
         ApiVersionRequirement? ApiVersion,
@@ -54,10 +58,16 @@ public class RemarksLoader
         ImmutableArray<DeploymentRemark>? DeploymentRemarks,
         ImmutableArray<CodeSample>? BicepSamples,
         ImmutableArray<CodeSample>? ArmTemplateSamples,
-        ImmutableArray<CodeSample>? TerraformSamples)
+        ImmutableArray<CodeSample>? TerraformSamples,
+        ImmutableArray<ReadOnlyResource>? ReadOnlyResources)
     {
         public static RemarksFile Empty
-            => new(null, null, null, null, null, null);
+            => new(null, null, null, null, null, null, null);
+
+        public bool IsReadOnlyResource(MarkdownGenerator.ResourceMetadata resource)
+            => (ReadOnlyResources ?? [])
+                .Where(r => r.ResourceTypes.Contains(resource.ResourceType, StringComparer.OrdinalIgnoreCase))
+                .Any(r => FilterApiVersions(resource, r.ApiVersion));
 
         public IEnumerable<ResourceRemark> GetResourceRemarks(MarkdownGenerator.ResourceMetadata resource)
             => (ResourceRemarks ?? [])

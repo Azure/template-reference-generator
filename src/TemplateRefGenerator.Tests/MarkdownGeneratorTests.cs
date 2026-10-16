@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Bicep.Types.Az;
+using Azure.Bicep.Types.Concrete;
 using Azure.Deployments.Testing.Utilities;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -43,5 +44,17 @@ public class MarkdownGeneratorTests
 
         markdownFile.WriteToOutputFolder(markdown);
         markdownFile.ShouldHaveExpectedValue();
+    }
+
+    [TestMethod]
+    public void Read_only_resources_must_be_explicitly_configured()
+    {
+        var typeProvider = new ResourceTypeProvider(new AzTypeLoader());
+        var resourceType = typeProvider.GetResourceTypes()
+            .Select(x => typeProvider.Get(x.resourceType, x.apiVersion))
+            .First(x => Utils.HasWritableScope(x, ScopeType.None));
+
+        MarkdownGenerator.IsReadOnlyResource(resourceType, isConfiguredReadOnly: true).Should().BeTrue();
+        MarkdownGenerator.IsReadOnlyResource(resourceType, isConfiguredReadOnly: false).Should().BeFalse();
     }
 }
