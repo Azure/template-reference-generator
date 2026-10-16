@@ -2,128 +2,680 @@
   "$schema": "../../schemas/remarks.schema.json",
   "TerraformSamples": [
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCapture",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapture/enable.tf",
+      "Description": "Enable the cluster change data capture capability."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCapture",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapture/update.tf",
+      "Description": "Update the cluster change data capture capability."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacaptureconfigurations/enroll-database.tf",
+      "Description": "Enroll a database for Microsoft Fabric Mirroring."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacaptureconfigurations/disable.tf",
+      "Description": "Disable a Microsoft Fabric Mirroring configuration."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/create-fabric.tf",
+      "Description": "Create a Microsoft Fabric change data capture destination."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/disable.tf",
+      "Description": "Disable a Microsoft Fabric change data capture destination."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
       "Path": "samples/clusters/create.tf",
-      "Description": "Create a cluster."
+      "Description": "Create or replace a HorizonDB cluster."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/update-administrator-login-password.tf",
-      "Description": "Update a cluster's administrator login password."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/restore-cross-region.tf",
+      "Description": "Restore a HorizonDB cluster across Azure regions from the latest available backup."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/scale-cluster-vertically.tf",
-      "Description": "Scale a cluster vertically."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/create-minimum-defaults.tf",
+      "Description": "Create a PostgreSQL 18 HorizonDB cluster with minimum configuration and service defaults."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/connect-parameter-group-to-cluster.tf",
-      "Description": "Connect a parameter group to a cluster."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/restore-point-in-time.tf",
+      "Description": "Restore a HorizonDB cluster to a point in time."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
-      "Path": "samples/parametergroups/create.tf",
-      "Description": "Create a parameter group."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/create-with-data-encryption.tf",
+      "Description": "Create a HorizonDB cluster with customer-managed key data encryption."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/update.tf",
+      "Description": "Update a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/rotate-data-encryption-key.tf",
+      "Description": "Rotate the customer-managed key used by a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools/firewallRules",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
       "Path": "samples/clusters/pools/firewallrules/create.tf",
-      "Description": "Create a firewall rule on a cluster."
+      "Description": "Create or replace a firewall rule on a HorizonDB pool."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
-      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.tf",
-      "Description": "Add a replica without a specific availability zone to a pool."
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations/identityAssignments",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/identityassignments/create.tf",
+      "Description": "Create a change data capture identity assignment for a UAMI attached to the parent cluster."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
-      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.tf",
-      "Description": "Add a replica in a specific availability zone to a pool."
+      "ResourceType": "Microsoft.HorizonDb/clusters/logCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/logcaptureconfigurations/disable.tf",
+      "Description": "Disable PostgreSQL server log capture."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/microsoftEntraAdministrators",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/microsoftentraadministrators/create.tf",
+      "Description": "Create or replace a Microsoft Entra administrator for a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/create-microsoft-entra-disabled.tf",
+      "Description": "Disable Microsoft Entra authentication declaratively."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/create-microsoft-entra-enabled.tf",
+      "Description": "Enable Microsoft Entra authentication declaratively."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/parameterGroups",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/parametergroups/create.tf",
+      "Description": "Create or replace a HorizonDB parameter group for a PostgreSQL version."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/parameterGroups",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/parametergroups/update.tf",
+      "Description": "Update a HorizonDB parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/enable-password.tf",
+      "Description": "Enable password authentication and set the administrator login and password during initial setup."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/create.tf",
+      "Description": "Create a minimum provisioned HorizonDB pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/update-compute.tf",
+      "Description": "Update a single HorizonDB pool compute property."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/update-high-availability.tf",
+      "Description": "Require zone-redundant placement for a HorizonDB pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-default-parameter-group.tf",
+      "Description": "Switch a HorizonDB pool back to its corresponding default parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-parameter-group-immediately.tf",
+      "Description": "Associate a HorizonDB pool with a parameter group immediately."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-parameter-group-after-reboot.tf",
+      "Description": "Associate a HorizonDB pool with a parameter group pending reboot."
     }
   ],
   "BicepSamples": [
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCapture",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapture/enable.bicep",
+      "Description": "Enable the cluster change data capture capability."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCapture",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapture/update.bicep",
+      "Description": "Update the cluster change data capture capability."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacaptureconfigurations/enroll-database.bicep",
+      "Description": "Enroll a database for Microsoft Fabric Mirroring."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacaptureconfigurations/disable.bicep",
+      "Description": "Disable a Microsoft Fabric Mirroring configuration."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/create-fabric.bicep",
+      "Description": "Create a Microsoft Fabric change data capture destination."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/disable.bicep",
+      "Description": "Disable a Microsoft Fabric change data capture destination."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
       "Path": "samples/clusters/create.bicep",
-      "Description": "Create a cluster."
+      "Description": "Create or replace a HorizonDB cluster."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/update-administrator-login-password.bicep",
-      "Description": "Update a cluster's administrator login password."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/restore-cross-region.bicep",
+      "Description": "Restore a HorizonDB cluster across Azure regions from the latest available backup."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/scale-cluster-vertically.bicep",
-      "Description": "Scale a cluster vertically."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/create-minimum-defaults.bicep",
+      "Description": "Create a PostgreSQL 18 HorizonDB cluster with minimum configuration and service defaults."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/connect-parameter-group-to-cluster.bicep",
-      "Description": "Connect a parameter group to a cluster."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/restore-point-in-time.bicep",
+      "Description": "Restore a HorizonDB cluster to a point in time."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
-      "Path": "samples/parametergroups/create.bicep",
-      "Description": "Create a parameter group."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/create-with-data-encryption.bicep",
+      "Description": "Create a HorizonDB cluster with customer-managed key data encryption."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/update.bicep",
+      "Description": "Update a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/rotate-data-encryption-key.bicep",
+      "Description": "Rotate the customer-managed key used by a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools/firewallRules",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
       "Path": "samples/clusters/pools/firewallrules/create.bicep",
-      "Description": "Create a firewall rule on a cluster."
+      "Description": "Create or replace a firewall rule on a HorizonDB pool."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
-      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.bicep",
-      "Description": "Add a replica without a specific availability zone to a pool."
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations/identityAssignments",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/identityassignments/create.bicep",
+      "Description": "Create a change data capture identity assignment for a UAMI attached to the parent cluster."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
-      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.bicep",
-      "Description": "Add a replica in a specific availability zone to a pool."
+      "ResourceType": "Microsoft.HorizonDb/clusters/logCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/logcaptureconfigurations/disable.bicep",
+      "Description": "Disable PostgreSQL server log capture."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/microsoftEntraAdministrators",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/microsoftentraadministrators/create.bicep",
+      "Description": "Create or replace a Microsoft Entra administrator for a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/create-microsoft-entra-disabled.bicep",
+      "Description": "Disable Microsoft Entra authentication declaratively."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/create-microsoft-entra-enabled.bicep",
+      "Description": "Enable Microsoft Entra authentication declaratively."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/parameterGroups",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/parametergroups/create.bicep",
+      "Description": "Create or replace a HorizonDB parameter group for a PostgreSQL version."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/parameterGroups",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/parametergroups/update.bicep",
+      "Description": "Update a HorizonDB parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/enable-password.bicep",
+      "Description": "Enable password authentication and set the administrator login and password during initial setup."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/create.bicep",
+      "Description": "Create a minimum provisioned HorizonDB pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/update-compute.bicep",
+      "Description": "Update a single HorizonDB pool compute property."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/update-high-availability.bicep",
+      "Description": "Require zone-redundant placement for a HorizonDB pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-default-parameter-group.bicep",
+      "Description": "Switch a HorizonDB pool back to its corresponding default parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-parameter-group-immediately.bicep",
+      "Description": "Associate a HorizonDB pool with a parameter group immediately."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-parameter-group-after-reboot.bicep",
+      "Description": "Associate a HorizonDB pool with a parameter group pending reboot."
     }
   ],
   "ArmTemplateSamples": [
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCapture",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapture/enable.json",
+      "Description": "Enable the cluster change data capture capability."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCapture",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapture/update.json",
+      "Description": "Update the cluster change data capture capability."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacaptureconfigurations/enroll-database.json",
+      "Description": "Enroll a database for Microsoft Fabric Mirroring."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacaptureconfigurations/disable.json",
+      "Description": "Disable a Microsoft Fabric Mirroring configuration."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/create-fabric.json",
+      "Description": "Create a Microsoft Fabric change data capture destination."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/disable.json",
+      "Description": "Disable a Microsoft Fabric change data capture destination."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
       "Path": "samples/clusters/create.json",
-      "Description": "Create a cluster."
+      "Description": "Create or replace a HorizonDB cluster."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/update-administrator-login-password.json",
-      "Description": "Update a cluster's administrator login password."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/restore-cross-region.json",
+      "Description": "Restore a HorizonDB cluster across Azure regions from the latest available backup."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/scale-cluster-vertically.json",
-      "Description": "Scale a cluster vertically."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/create-minimum-defaults.json",
+      "Description": "Create a PostgreSQL 18 HorizonDB cluster with minimum configuration and service defaults."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters",
-      "Path": "samples/clusters/connect-parameter-group-to-cluster.json",
-      "Description": "Connect a parameter group to a cluster."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/restore-point-in-time.json",
+      "Description": "Restore a HorizonDB cluster to a point in time."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/parameterGroups",
-      "Path": "samples/parametergroups/create.json",
-      "Description": "Create a parameter group."
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/create-with-data-encryption.json",
+      "Description": "Create a HorizonDB cluster with customer-managed key data encryption."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/firewallRules",
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/update.json",
+      "Description": "Update a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/rotate-data-encryption-key.json",
+      "Description": "Rotate the customer-managed key used by a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools/firewallRules",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
       "Path": "samples/clusters/pools/firewallrules/create.json",
-      "Description": "Create a firewall rule on a cluster."
+      "Description": "Create or replace a firewall rule on a HorizonDB pool."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
-      "Path": "samples/clusters/pools/replicas/add-no-specific-availability-zone.json",
-      "Description": "Add a replica without a specific availability zone to a pool."
+      "ResourceType": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations/identityAssignments",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/changedatacapturedestinations/identityassignments/create.json",
+      "Description": "Create a change data capture identity assignment for a UAMI attached to the parent cluster."
     },
     {
-      "ResourceType": "Microsoft.HorizonDB/clusters/pools/replicas",
-      "Path": "samples/clusters/pools/replicas/add-specific-availability-zone.json",
-      "Description": "Add a replica in a specific availability zone to a pool."
+      "ResourceType": "Microsoft.HorizonDb/clusters/logCaptureConfigurations",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/logcaptureconfigurations/disable.json",
+      "Description": "Disable PostgreSQL server log capture."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/microsoftEntraAdministrators",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/microsoftentraadministrators/create.json",
+      "Description": "Create or replace a Microsoft Entra administrator for a HorizonDB cluster."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/create-microsoft-entra-disabled.json",
+      "Description": "Disable Microsoft Entra authentication declaratively."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/create-microsoft-entra-enabled.json",
+      "Description": "Enable Microsoft Entra authentication declaratively."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/parameterGroups",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/parametergroups/create.json",
+      "Description": "Create or replace a HorizonDB parameter group for a PostgreSQL version."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/parameterGroups",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/parametergroups/update.json",
+      "Description": "Update a HorizonDB parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/authentications",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/authentications/enable-password.json",
+      "Description": "Enable password authentication and set the administrator login and password during initial setup."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/create.json",
+      "Description": "Create a minimum provisioned HorizonDB pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/update-compute.json",
+      "Description": "Update a single HorizonDB pool compute property."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/update-high-availability.json",
+      "Description": "Require zone-redundant placement for a HorizonDB pool."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-default-parameter-group.json",
+      "Description": "Switch a HorizonDB pool back to its corresponding default parameter group."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-parameter-group-immediately.json",
+      "Description": "Associate a HorizonDB pool with a parameter group immediately."
+    },
+    {
+      "ResourceType": "Microsoft.HorizonDb/clusters/pools",
+      "ApiVersion": {
+        "Minimum": "2026-10-01-preview"
+      },
+      "Path": "samples/clusters/pools/use-parameter-group-after-reboot.json",
+      "Description": "Associate a HorizonDB pool with a parameter group pending reboot."
     }
   ]
 }
