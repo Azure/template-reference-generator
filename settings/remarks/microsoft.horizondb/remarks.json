@@ -4,10 +4,7 @@
     {
       "ResourceTypes": [
         "Microsoft.HorizonDb/clusters/logFiles"
-      ],
-      "ApiVersion": {
-        "Minimum": "2026-10-01-preview"
-      }
+      ]
     }
   ],
   "ResourceRemarks": [
@@ -15,9 +12,6 @@
       "ResourceTypes": [
         "Microsoft.HorizonDb/clusters/logFiles"
       ],
-      "ApiVersion": {
-        "Minimum": "2026-10-01-preview"
-      },
       "Description": "Log file resources are created and managed by HorizonDB when log capture is enabled through the Microsoft.HorizonDb/clusters/logCaptureConfigurations resource."
     }
   ],

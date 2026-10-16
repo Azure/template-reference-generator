@@ -30,8 +30,7 @@ public class RemarksLoader
         string Description);
 
     public record ReadOnlyResource(
-        ImmutableArray<string> ResourceTypes,
-        ApiVersionRequirement? ApiVersion);
+        ImmutableArray<string> ResourceTypes);
 
     public record PropertyRemark(
         string ResourceType,
@@ -66,8 +65,7 @@ public class RemarksLoader
 
         public bool IsReadOnlyResource(MarkdownGenerator.ResourceMetadata resource)
             => (ReadOnlyResources ?? [])
-                .Where(r => r.ResourceTypes.Contains(resource.ResourceType, StringComparer.OrdinalIgnoreCase))
-                .Any(r => FilterApiVersions(resource, r.ApiVersion));
+                .Any(r => r.ResourceTypes.Contains(resource.ResourceType, StringComparer.OrdinalIgnoreCase));
 
         public IEnumerable<ResourceRemark> GetResourceRemarks(MarkdownGenerator.ResourceMetadata resource)
             => (ResourceRemarks ?? [])

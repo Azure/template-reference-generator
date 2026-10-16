@@ -92,9 +92,6 @@
           "items": {
             "type": "string"
           }
-        },
-        "ApiVersion": {
-          "$ref": "#/definitions/ApiVersionRequirement"
         }
       },
       "required": [

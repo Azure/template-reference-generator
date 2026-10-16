@@ -51,17 +51,16 @@ public class RemarksLoaderTests
     }
 
     [TestMethod]
-    [DataRow("2026-01-20-preview", false)]
-    [DataRow("2026-10-01-preview", true)]
-    public void Read_only_resources_are_filtered_by_api_version(string apiVersion, bool expected)
+    [DataRow("Microsoft.Test/widgets", "2026-01-20-preview", true)]
+    [DataRow("Microsoft.Test/widgets", "2026-10-01-preview", true)]
+    [DataRow("Microsoft.Test/gadgets", "2026-10-01-preview", false)]
+    public void Read_only_resources_apply_to_all_api_versions(string resourceType, string apiVersion, bool expected)
     {
-        var readOnlyResource = new RemarksLoader.ReadOnlyResource(
-            ["Microsoft.Test/widgets"],
-            new RemarksLoader.ApiVersionRequirement("2026-10-01-preview", null));
+        var readOnlyResource = new RemarksLoader.ReadOnlyResource(["Microsoft.Test/widgets"]);
         var remarks = new RemarksLoader.RemarksFile(null, null, null, null, null, null, [readOnlyResource]);
         var resource = new MarkdownGenerator.ResourceMetadata(
             "Microsoft.Test",
-            "Microsoft.Test/widgets",
+            resourceType,
             "widgets",
             apiVersion,
             null!,
