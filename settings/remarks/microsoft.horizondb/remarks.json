@@ -1,18 +1,5 @@
 {
   "$schema": "../../schemas/remarks.schema.json",
-  "ReadOnlyResources": [
-    {
-      "ResourceTypes": [
-        "Microsoft.HorizonDb/clusters/endpoints",
-        "Microsoft.HorizonDb/clusters/logFiles",
-        "Microsoft.HorizonDb/clusters/pools/maintenanceEvents",
-        "Microsoft.HorizonDb/clusters/pools/nodes",
-        "Microsoft.HorizonDb/clusters/privateLinkResources",
-        "Microsoft.HorizonDb/locations/capabilities",
-        "Microsoft.HorizonDb/locations/parameterGroups"
-      ]
-    }
-  ],
   "ResourceRemarks": [
     {
       "ResourceTypes": [

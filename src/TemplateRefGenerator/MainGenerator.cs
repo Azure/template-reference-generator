@@ -7,7 +7,6 @@ using System.Linq;
 using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 
 namespace TemplateRefGenerator;
 
@@ -35,27 +34,6 @@ public class MainGenerator
         fileSystem.File.WriteAllText(filePath, content);
     }
 
-    public static MarkdownGenerator.GroupedTypes? ApplyApiVersionExclusions(MarkdownGenerator.GroupedTypes grouping, ConfigLoader.ConfigFile config)
-    {
-        var excludedVersions = (config.ExcludedApiVersions ?? [])
-            .Where(x => StringComparer.OrdinalIgnoreCase.Equals(x.ProviderNamespace, grouping.ProviderNamespace))
-            .SelectMany(x => x.ApiVersions)
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-        if (excludedVersions.Count == 0)
-        {
-            return grouping;
-        }
-
-        var filteredTypes = grouping.ResourceTypeByApiVersion
-            .Where(x => !excludedVersions.Contains(x.Key))
-            .ToImmutableDictionary(StringComparer.OrdinalIgnoreCase);
-
-        return filteredTypes.Count == 0
-            ? null
-            : new(grouping.ProviderNamespace, filteredTypes);
-    }
-
     private IEnumerable<MarkdownGenerator.GroupedTypes> GetGroupedTypes(Options options, MarkdownGenerator mdGenerator, ConfigLoader.ConfigFile config)
     {
         foreach (var grouping in mdGenerator.GetGroupedTypes())
@@ -72,14 +50,7 @@ public class MainGenerator
                 continue;
             }
 
-            var filteredGrouping = ApplyApiVersionExclusions(grouping, config);
-            if (filteredGrouping is null)
-            {
-                Trace.WriteLine($"Skipping {grouping.ProviderNamespace} - all API versions excluded in config");
-                continue;
-            }
-
-            yield return filteredGrouping;
+            yield return grouping;
         }
     }
 

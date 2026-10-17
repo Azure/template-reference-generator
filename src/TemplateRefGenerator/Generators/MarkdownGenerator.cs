@@ -98,8 +98,8 @@ ms.topic: reference
 """;
     }
 
-    public static bool IsReadOnlyResource(ResourceType resourceType, bool isConfiguredReadOnly)
-        => Utils.HasWritableScope(resourceType, ScopeType.None) && isConfiguredReadOnly;
+    public static bool IsReadOnlyResource(ResourceType resourceType)
+        => Utils.HasWritableScope(resourceType, ScopeType.None);
 
     private static string GetApiVersionLinks(GroupedTypes groupedTypes, ResourceMetadata resource, bool isLatestVersionPage)
     {
@@ -1136,7 +1136,7 @@ For **{discSample.DiscriminatorValue}**, use:
 
         var namedTypes = GetNamedTypes(resource);
         var remarks = remarksLoader.GetRemarks(providerNamespace);
-        var isReadOnly = IsReadOnlyResource(resource.Type, remarks.IsReadOnlyResource(resource));
+        var isReadOnly = IsReadOnlyResource(resource.Type);
         var pageTitle = isLatestVersionPage ? $"{resource.Provider} {resource.UnqualifiedResourceType}" : $"{resource.Provider} {resource.UnqualifiedResourceType} {resource.ApiVersion}";
 
         return $"""

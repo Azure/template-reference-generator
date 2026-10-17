@@ -16,12 +16,7 @@ public class ConfigLoader
 
     public record ConfigFile(
         ImmutableDictionary<string, string> TocTitleMapping,
-        ImmutableArray<string> ExcludedProviders,
-        ImmutableArray<ApiVersionExclusion>? ExcludedApiVersions);
-
-    public record ApiVersionExclusion(
-        string ProviderNamespace,
-        ImmutableArray<string> ApiVersions);
+        ImmutableArray<string> ExcludedProviders);
 
     public record SamplesFile(
         ImmutableArray<AvmLink> AvmLinks,

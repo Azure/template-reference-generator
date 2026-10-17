@@ -16,38 +16,11 @@
       "items": {
         "type": "string"
       }
-    },
-    "ExcludedApiVersions": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ApiVersionExclusion"
-      }
     }
   },
   "required": [
     "TocTitleMapping",
     "ExcludedProviders"
   ],
-  "additionalProperties": false,
-  "definitions": {
-    "ApiVersionExclusion": {
-      "type": "object",
-      "properties": {
-        "ProviderNamespace": {
-          "type": "string"
-        },
-        "ApiVersions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "ProviderNamespace",
-        "ApiVersions"
-      ],
-      "additionalProperties": false
-    }
-  }
+  "additionalProperties": false
 }

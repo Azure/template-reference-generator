@@ -28,7 +28,7 @@ public class RemarksLoaderTests
             new RemarksLoader.ApiVersionRequirement(minimum, maximum),
             "samples/widget.bicep",
             "Deploy a widget.");
-        var remarks = new RemarksLoader.RemarksFile(null, null, null, [sample], null, null, null);
+        var remarks = new RemarksLoader.RemarksFile(null, null, null, [sample], null, null);
         var resource = new MarkdownGenerator.ResourceMetadata(
             "Microsoft.Test",
             "Microsoft.Test/widgets",
@@ -51,22 +51,36 @@ public class RemarksLoaderTests
     }
 
     [TestMethod]
-    [DataRow("Microsoft.Test/widgets", "2026-01-20-preview", true)]
-    [DataRow("Microsoft.Test/widgets", "2026-10-01-preview", true)]
-    [DataRow("Microsoft.Test/gadgets", "2026-10-01-preview", false)]
-    public void Read_only_resources_apply_to_all_api_versions(string resourceType, string apiVersion, bool expected)
+    [DataRow("2026-01-20-preview", false)]
+    [DataRow("2026-05-01-preview", false)]
+    [DataRow("2026-10-01-preview", true)]
+    public void HorizonDB_samples_are_only_included_for_compatible_api_versions(string apiVersion, bool expected)
     {
-        var readOnlyResource = new RemarksLoader.ReadOnlyResource(["Microsoft.Test/widgets"]);
-        var remarks = new RemarksLoader.RemarksFile(null, null, null, null, null, null, [readOnlyResource]);
+        var remarks = new RemarksLoader().GetRemarks("Microsoft.HorizonDb");
         var resource = new MarkdownGenerator.ResourceMetadata(
-            "Microsoft.Test",
-            resourceType,
-            "widgets",
+            "Microsoft.HorizonDb",
+            "Microsoft.HorizonDb/clusters",
+            "clusters",
             apiVersion,
             null!,
             false,
             false);
 
-        remarks.IsReadOnlyResource(resource).Should().Be(expected);
+        foreach (var samples in new[]
+        {
+            remarks.GetBicepSamples(resource),
+            remarks.GetArmTemplateSamples(resource),
+            remarks.GetTerraformSamples(resource),
+        })
+        {
+            if (expected)
+            {
+                samples.Should().NotBeEmpty();
+            }
+            else
+            {
+                samples.Should().BeEmpty();
+            }
+        }
     }
 }

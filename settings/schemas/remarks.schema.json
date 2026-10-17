@@ -11,12 +11,6 @@
         "$ref": "#/definitions/ResourceRemark"
       }
     },
-    "ReadOnlyResources": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ReadOnlyResource"
-      }
-    },
     "PropertyRemarks": {
       "type": "array",
       "items": {
@@ -81,21 +75,6 @@
       "required": [
         "ResourceTypes",
         "Description"
-      ],
-      "additionalProperties": false
-    },
-    "ReadOnlyResource": {
-      "type": "object",
-      "properties": {
-        "ResourceTypes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "ResourceTypes"
       ],
       "additionalProperties": false
     },

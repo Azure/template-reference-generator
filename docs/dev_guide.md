@@ -48,20 +48,28 @@ src/TemplateRefGenerator/bin/Debug/net10.0/TemplateRefGenerator --source-folder 
 
 To get detailed logging, use the `--verbose` flag.
 
-## Excluding API versions
+## Read-only resources
 
-To omit specific API versions for a provider, add an optional `ExcludedApiVersions` entry to `settings/config/config.json`:
+Read-only rendering is determined by the source resource type metadata. When
+`ResourceType.WritableScopes` is `ScopeType.None`, the generated Bicep, ARM template,
+and Terraform sections describe the resource as read-only, retain property reference
+tables, and omit deployment syntax and usage examples. No provider-specific remarks
+configuration is required. Incorrect writability metadata should be corrected
+upstream in the API specifications or type generation.
+
+## Versioning code samples
+
+Reference pages are generated for every available API version of included providers.
+To restrict a curated code sample to compatible API versions, set its optional
+`ApiVersion` property in the provider's remarks configuration:
 
 ```json
-"ExcludedApiVersions": [
-  {
-    "ProviderNamespace": "Microsoft.Example",
-    "ApiVersions": [
-      "2024-01-01",
-      "2024-06-01-preview"
-    ]
-  }
-]
+"ApiVersion": {
+  "Minimum": "2026-10-01-preview"
+}
 ```
 
-Exclusions are matched case-insensitively. If `ExcludedApiVersions` is omitted or empty, the generator produces documentation for every available API version. Versions that aren't present in the source types are ignored.
+`Minimum` and `Maximum` are inclusive, optional bounds. A minimum-only requirement
+includes that version and later versions, not just the latest version. Omit
+`ApiVersion` to show the sample on all versions. These filters apply to Bicep,
+ARM template, and Terraform samples without removing older reference pages.

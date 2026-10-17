@@ -278,14 +278,5 @@
     "microsoft.storage.admin",
     "microsoft.subscriptions.admin",
     "microsoft.update.admin"
-  ],
-  "ExcludedApiVersions": [
-    {
-      "ProviderNamespace": "Microsoft.HorizonDb",
-      "ApiVersions": [
-        "2026-01-20-preview",
-        "2026-05-01-preview"
-      ]
-    }
   ]
 }
