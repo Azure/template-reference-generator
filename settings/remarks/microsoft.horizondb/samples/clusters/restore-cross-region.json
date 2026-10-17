@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "type": "string",
+      "defaultValue": "cross-region-restored-cluster",
+      "metadata": {
+        "description": "The name of the HorizonDB cluster"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDb/clusters",
+      "apiVersion": "2026-10-01-preview",
+      "name": "[parameters('clusterName')]",
+      "location": "westus2",
+      "properties": {
+        "creationMode": "PointInTimeRestore",
+        "pointInTimeUtc": "2026-07-27T12:00:00Z",
+        "creationSourceClusterResourceId": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/example-resource-group/providers/Microsoft.HorizonDb/clusters/source-cluster",
+        "creationSourceClusterLocation": "eastus2",
+        "network": {
+          "publicAccess": "Disabled"
+        },
+        "backup": {
+          "geoRedundancy": "Enabled",
+          "retentionDays": 14
+        }
+      }
+    }
+  ]
+}
