@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "type": "string",
+      "defaultValue": "example-cluster",
+      "metadata": {
+        "description": "The name of the HorizonDB cluster"
+      }
+    },
+    "destinationName": {
+      "type": "string",
+      "defaultValue": "fabric-mirroring",
+      "metadata": {
+        "description": "The name of the change data capture destination"
+      }
+    },
+    "assignmentName": {
+      "type": "string",
+      "defaultValue": "fabric-writer",
+      "metadata": {
+        "description": "The name of the identity assignment"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDb/clusters/changeDataCaptureDestinations/identityAssignments",
+      "apiVersion": "2026-10-01-preview",
+      "name": "[format('{0}/{1}/{2}', parameters('clusterName'), parameters('destinationName'), parameters('assignmentName'))]",
+      "properties": {
+        "identityResourceId": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/identity-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/fabric-writer"
+      }
+    }
+  ]
+}
