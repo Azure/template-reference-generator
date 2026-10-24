@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "type": "string",
+      "defaultValue": "example-cluster",
+      "metadata": {
+        "description": "The name of the HorizonDB cluster"
+      }
+    },
+    "logCaptureConfigurationName": {
+      "type": "string",
+      "defaultValue": "PostgreSqlServer",
+      "metadata": {
+        "description": "The name of the log capture configuration"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDb/clusters/logCaptureConfigurations",
+      "apiVersion": "2026-10-01-preview",
+      "name": "[format('{0}/{1}', parameters('clusterName'), parameters('logCaptureConfigurationName'))]",
+      "properties": {
+        "state": "Disabled"
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "type": "string",
+      "defaultValue": "example-cluster",
+      "metadata": {
+        "description": "The name of the HorizonDB cluster"
+      }
+    },
+    "configurationName": {
+      "type": "string",
+      "defaultValue": "sales-database",
+      "metadata": {
+        "description": "The name of the change data capture configuration"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDb/clusters/changeDataCaptureConfigurations",
+      "apiVersion": "2026-10-01-preview",
+      "name": "[format('{0}/{1}', parameters('clusterName'), parameters('configurationName'))]",
+      "properties": {
+        "desiredState": "Disabled"
+      }
+    }
+  ]
+}

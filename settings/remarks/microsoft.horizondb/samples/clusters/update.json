@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "clusterName": {
+      "type": "string",
+      "defaultValue": "example-cluster",
+      "metadata": {
+        "description": "The name of the HorizonDB cluster"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HorizonDb/clusters",
+      "apiVersion": "2026-10-01-preview",
+      "name": "[parameters('clusterName')]",
+      "tags": {
+        "environment": "production",
+        "team": "data-platform"
+      },
+      "properties": {
+        "network": {
+          "publicAccess": "Disabled"
+        },
+        "backup": {
+          "retentionDays": 21
+        }
+      }
+    }
+  ]
+}

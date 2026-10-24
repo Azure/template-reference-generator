@@ -79,21 +79,27 @@ public class MarkdownGenerator
         => properties.Where(x => !x.Value.Flags.HasFlag(ObjectTypePropertyFlags.ReadOnly))
             .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase);
 
-    private static string GetHeading(ResourceMetadata resource, bool isLatestVersionPage)
+    private static string GetHeading(ResourceMetadata resource, bool isLatestVersionPage, bool isReadOnly)
     {
         var pageTitle = isLatestVersionPage ? resource.ResourceType : $"{resource.ResourceType} {resource.ApiVersion}";
         var apiVersion = isLatestVersionPage ? "latest" : resource.ApiVersion;
+        var description = isReadOnly
+            ? $"Azure {resource.ResourceType} reference for retrieving the resource. API version {apiVersion}"
+            : $"Azure {resource.ResourceType} syntax and properties to use in Azure Resource Manager templates for deploying the resource. API version {apiVersion}";
 
         return $"""
 ---
 title: {pageTitle}
-description: Azure {resource.ResourceType} syntax and properties to use in Azure Resource Manager templates for deploying the resource. API version {apiVersion}
+description: {description}
 zone_pivot_groups: deployment-languages-reference
 ms.service: azure-resource-manager
 ms.topic: reference
 ---
 """;
     }
+
+    public static bool IsReadOnlyResource(ResourceType resourceType)
+        => Utils.HasWritableScope(resourceType, ScopeType.None);
 
     private static string GetApiVersionLinks(GroupedTypes groupedTypes, ResourceMetadata resource, bool isLatestVersionPage)
     {
@@ -278,7 +284,7 @@ The following {MarkdownUtils.GetLink("Azure Verified Modules", "https://aka.ms/a
         return sb.ToString();
     }
 
-    private static string GetBicepZone(ConfigLoader configLoader, RemarksLoader remarksLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex)
+    private static string GetBicepZone(ConfigLoader configLoader, RemarksLoader remarksLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex, bool isReadOnly)
     {
         var sb = new StringBuilder();
         sb.Append($"""
@@ -286,37 +292,51 @@ The following {MarkdownUtils.GetLink("Azure Verified Modules", "https://aka.ms/a
 
 ## Bicep resource definition
 
+""");
+        sb.AppendLine();
+
+        if (isReadOnly)
+        {
+            sb.Append($"""
+The {resource.UnqualifiedResourceType} resource type is read-only and cannot be deployed. Existing instances can be retrieved through resource provider operations.
+
+""");
+        }
+        else
+        {
+            sb.Append($"""
 The {resource.UnqualifiedResourceType} resource type can be deployed with operations that target: 
 
 
 """);
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.Tenant))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.Tenant))
+            {
+                sb.Append($"""
 * **Tenant** - See {MarkdownUtils.GetLink("tenant deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-tenant")}
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.ManagementGroup))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.ManagementGroup))
+            {
+                sb.Append($"""
 * **Management groups** - See {MarkdownUtils.GetLink("management group deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-management-group")}
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.Subscription))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.Subscription))
+            {
+                sb.Append($"""
 * **Subscription** - See {MarkdownUtils.GetLink("subscription deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-subscription")}
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.ResourceGroup))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.ResourceGroup))
+            {
+                sb.Append($"""
 * **Resource groups** - See {MarkdownUtils.GetLink("resource group deployment commands", "/azure/azure-resource-manager/bicep/deploy-to-resource-group")}
 """);
+            }
         }
 
         sb.Append($"""
@@ -324,16 +344,20 @@ The {resource.UnqualifiedResourceType} resource type can be deployed with operat
 
 For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
-{GenerateOptionalSection("Usage Examples", [
+""");
+        sb.AppendLine();
+
+        if (!isReadOnly)
+        {
+            sb.Append(GenerateOptionalSection("Usage Examples", [
 GetBicepSamplesSection(remarksLoader, resource, remarks),
 GetAvmSection(configLoader.GetSamples(), AvmLinkType.Bicep, resource),
 GetBicepQuickstartsSection(configLoader.GetSamples(), resource),
-])}
-""");
+]));
 
-        var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Bicep);
+            var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Bicep);
 
-        sb.Append($"""
+            sb.Append($"""
 
 ## Resource format
 
@@ -345,11 +369,11 @@ To create a {resource.ResourceType} resource, add the following Bicep to your te
 
 """);
 
-        sb.Append(GetDeploymentRemarks(resource, remarks, DeploymentType.Bicep));
+            sb.Append(GetDeploymentRemarks(resource, remarks, DeploymentType.Bicep));
 
-        foreach (var (discObjectType, discSamples) in samples.DiscrimatedSamples)
-        {
-            sb.Append($"""
+            foreach (var (discObjectType, discSamples) in samples.DiscrimatedSamples)
+            {
+                sb.Append($"""
 ### {discObjectType.Name} objects
 
 Set the **{discObjectType.Discriminator}** property to specify the type of object.
@@ -357,9 +381,9 @@ Set the **{discObjectType.Discriminator}** property to specify the type of objec
 
 """);
 
-            foreach (var discSample in discSamples)
-            {
-                sb.Append($"""
+                foreach (var discSample in discSamples)
+                {
+                    sb.Append($"""
 For **{discSample.DiscriminatorValue}**, use:
 
 ```bicep
@@ -368,6 +392,7 @@ For **{discSample.DiscriminatorValue}**, use:
 
 
 """);
+                }
             }
         }
 
@@ -410,7 +435,7 @@ For **{discSample.DiscriminatorValue}**, use:
     }
 
 
-    private static string GetArmTemplateZone(ConfigLoader configLoader, RemarksLoader remarksLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex)
+    private static string GetArmTemplateZone(ConfigLoader configLoader, RemarksLoader remarksLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex, bool isReadOnly)
     {
         var sb = new StringBuilder();
         sb.Append($"""
@@ -418,52 +443,70 @@ For **{discSample.DiscriminatorValue}**, use:
 
 ## ARM template resource definition
 
+""");
+        sb.AppendLine();
+
+        if (isReadOnly)
+        {
+            sb.Append($"""
+The {resource.UnqualifiedResourceType} resource type is read-only and cannot be deployed. Existing instances can be retrieved through resource provider operations.
+
+""");
+        }
+        else
+        {
+            sb.Append($"""
 The {resource.UnqualifiedResourceType} resource type can be deployed with operations that target: 
 
 
 """);
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.Tenant))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.Tenant))
+            {
+                sb.Append($"""
 * **Tenant** - See {MarkdownUtils.GetLink("tenant deployment commands", "/azure/azure-resource-manager/templates/deploy-to-tenant")}
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.ManagementGroup))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.ManagementGroup))
+            {
+                sb.Append($"""
 * **Management groups** - See {MarkdownUtils.GetLink("management group deployment commands", "/azure/azure-resource-manager/templates/deploy-to-management-group")}
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.Subscription))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.Subscription))
+            {
+                sb.Append($"""
 * **Subscription** - See {MarkdownUtils.GetLink("subscription deployment commands", "/azure/azure-resource-manager/templates/deploy-to-subscription")}
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.ResourceGroup))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.ResourceGroup))
+            {
+                sb.Append($"""
 * **Resource groups** - See {MarkdownUtils.GetLink("resource group deployment commands", "/azure/azure-resource-manager/templates/deploy-to-resource-group")}
 """);
+            }
         }
 
         sb.Append($"""
 
 For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
-{GenerateOptionalSection("Usage Examples", [
+""");
+        sb.AppendLine();
+
+        if (!isReadOnly)
+        {
+            sb.Append(GenerateOptionalSection("Usage Examples", [
 GetArmTemplateSamplesSection(remarksLoader, resource, remarks),
 GetJsonQuickstartsSection(configLoader.GetSamples(), resource),
-])}
-""");
+]));
 
-        var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Json);
+            var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Json);
 
-        sb.Append($"""
+            sb.Append($"""
 
 ## Resource format
 
@@ -475,11 +518,11 @@ To create a {resource.ResourceType} resource, add the following JSON to your tem
 
 """);
 
-        sb.Append(GetDeploymentRemarks(resource, remarks, DeploymentType.Json));
+            sb.Append(GetDeploymentRemarks(resource, remarks, DeploymentType.Json));
 
-        foreach (var (discObjectType, discSamples) in samples.DiscrimatedSamples)
-        {
-            sb.Append($"""
+            foreach (var (discObjectType, discSamples) in samples.DiscrimatedSamples)
+            {
+                sb.Append($"""
 ### {discObjectType.Name} objects
 
 Set the **{discObjectType.Discriminator}** property to specify the type of object.
@@ -487,9 +530,9 @@ Set the **{discObjectType.Discriminator}** property to specify the type of objec
 
 """);
 
-            foreach (var discSample in discSamples)
-            {
-                sb.Append($"""
+                foreach (var discSample in discSamples)
+                {
+                    sb.Append($"""
 For **{discSample.DiscriminatorValue}**, use:
 
 ```json
@@ -498,6 +541,7 @@ For **{discSample.DiscriminatorValue}**, use:
 
 
 """);
+                }
             }
         }
 
@@ -514,7 +558,7 @@ For **{discSample.DiscriminatorValue}**, use:
         return sb.ToString();
     }
 
-    private static string GetTerraformZone(ConfigLoader configLoader, RemarksLoader remarksLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex)
+    private static string GetTerraformZone(ConfigLoader configLoader, RemarksLoader remarksLoader, ResourceMetadata resource, ImmutableArray<NamedType> namedTypes, RemarksFile remarks, int anchorIndex, bool isReadOnly)
     {
         var sb = new StringBuilder();
         sb.Append($"""
@@ -522,52 +566,70 @@ For **{discSample.DiscriminatorValue}**, use:
 
 ## Terraform (AzAPI provider) resource definition
 
+""");
+        sb.AppendLine();
+
+        if (isReadOnly)
+        {
+            sb.Append($"""
+The {resource.UnqualifiedResourceType} resource type is read-only and cannot be deployed. Existing instances can be retrieved through resource provider operations.
+
+""");
+        }
+        else
+        {
+            sb.Append($"""
 The {resource.UnqualifiedResourceType} resource type can be deployed with operations that target: 
 
 
 """);
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.Tenant))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.Tenant))
+            {
+                sb.Append($"""
 * **Tenant**
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.ManagementGroup))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.ManagementGroup))
+            {
+                sb.Append($"""
 * **Management groups**
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.Subscription))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.Subscription))
+            {
+                sb.Append($"""
 * **Subscription**
 """);
-        }
+            }
 
-        if (Utils.HasWritableScope(resource.Type, ScopeType.ResourceGroup))
-        {
-                    sb.Append($"""
+            if (Utils.HasWritableScope(resource.Type, ScopeType.ResourceGroup))
+            {
+                sb.Append($"""
 * **Resource groups**
 """);
+            }
         }
 
         sb.Append($"""
 
 For a list of changed properties in each API version, see {MarkdownUtils.GetLink("change log", $"~/{resource.Provider.ToLowerInvariant()}/change-log/{resource.UnqualifiedResourceType.ToLowerInvariant()}.md")}.
 
-{GenerateOptionalSection("Usage Examples", [
+""");
+        sb.AppendLine();
+
+        if (!isReadOnly)
+        {
+            sb.Append(GenerateOptionalSection("Usage Examples", [
 GetTerraformSamplesSection(remarksLoader, resource, remarks),
 GetAvmSection(configLoader.GetSamples(), AvmLinkType.Terraform, resource),
-])}
-""");
+]));
 
-        var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Terraform);
+            var samples = CodeSampleGenerator.GetExample(resource, namedTypes, CodeSampleGenerator.Flavor.Terraform);
 
-        sb.Append($"""
+            sb.Append($"""
 
 ## Resource format
 
@@ -579,11 +641,11 @@ To create a {resource.ResourceType} resource, add the following Terraform to you
 
 """);
 
-        sb.Append(GetDeploymentRemarks(resource, remarks, DeploymentType.Terraform));
+            sb.Append(GetDeploymentRemarks(resource, remarks, DeploymentType.Terraform));
 
-        foreach (var (discObjectType, discSamples) in samples.DiscrimatedSamples)
-        {
-            sb.Append($"""
+            foreach (var (discObjectType, discSamples) in samples.DiscrimatedSamples)
+            {
+                sb.Append($"""
 ### {discObjectType.Name} objects
 
 Set the **{discObjectType.Discriminator}** property to specify the type of object.
@@ -591,9 +653,9 @@ Set the **{discObjectType.Discriminator}** property to specify the type of objec
 
 """);
 
-            foreach (var discSample in discSamples)
-            {
-                sb.Append($"""
+                foreach (var discSample in discSamples)
+                {
+                    sb.Append($"""
 For **{discSample.DiscriminatorValue}**, use:
 
 ```terraform
@@ -602,6 +664,7 @@ For **{discSample.DiscriminatorValue}**, use:
 
 
 """);
+                }
             }
         }
 
@@ -1073,17 +1136,18 @@ For **{discSample.DiscriminatorValue}**, use:
 
         var namedTypes = GetNamedTypes(resource);
         var remarks = remarksLoader.GetRemarks(providerNamespace);
+        var isReadOnly = IsReadOnlyResource(resource.Type);
         var pageTitle = isLatestVersionPage ? $"{resource.Provider} {resource.UnqualifiedResourceType}" : $"{resource.Provider} {resource.UnqualifiedResourceType} {resource.ApiVersion}";
 
         return $"""
-{GetHeading(resource, isLatestVersionPage)}
+{GetHeading(resource, isLatestVersionPage, isReadOnly)}
 # {pageTitle}
 
 {GetApiVersionLinks(groupedTypes, resource, isLatestVersionPage)}
 {GetResourceRemarks(resource, remarks)}
-{GetBicepZone(configLoader, remarksLoader, resource, namedTypes, remarks, 0)}
-{GetArmTemplateZone(configLoader, remarksLoader, resource, namedTypes, remarks, 1)}
-{GetTerraformZone(configLoader, remarksLoader, resource, namedTypes, remarks, 2)}
+{GetBicepZone(configLoader, remarksLoader, resource, namedTypes, remarks, 0, isReadOnly)}
+{GetArmTemplateZone(configLoader, remarksLoader, resource, namedTypes, remarks, 1, isReadOnly)}
+{GetTerraformZone(configLoader, remarksLoader, resource, namedTypes, remarks, 2, isReadOnly)}
 """;
     }
 

@@ -91,8 +91,8 @@ public class RemarksLoader
                 .Where(r => FilterApiVersions(resource, r.ApiVersion));
 
         private static bool FilterApiVersions(MarkdownGenerator.ResourceMetadata resource, ApiVersionRequirement? apiVersionRequirement)
-            => (apiVersionRequirement?.Minimum is null || ApiVersionComparer.Instance.Compare(apiVersionRequirement.Minimum, resource.ApiVersion) >= 0) &&
-            (apiVersionRequirement?.Maximum is null || ApiVersionComparer.Instance.Compare(apiVersionRequirement.Maximum, resource.ApiVersion) <= 0);
+            => (apiVersionRequirement?.Minimum is null || ApiVersionComparer.Instance.Compare(apiVersionRequirement.Minimum, resource.ApiVersion) <= 0) &&
+            (apiVersionRequirement?.Maximum is null || ApiVersionComparer.Instance.Compare(apiVersionRequirement.Maximum, resource.ApiVersion) >= 0);
     }
 
     public string GetCodeSample(string providerNamespace, CodeSample sample)
