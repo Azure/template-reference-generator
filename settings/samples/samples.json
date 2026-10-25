@@ -4458,7 +4458,7 @@
     },
     {
       "Title": "WinRM on a Windows VM",
-      "Description": "This template installs a certificate from Azure Key Vault on a Virtual Machine and opens up WinRM HTTP and HTTPS listeners. Prerequisite: A certificate uploaded to Azure Key Vault. Create the Key Vault using the template at http://azure.microsoft.com/en-us/documentation/templates/101-create-key-vault",
+      "Description": "This template installs a certificate from Azure Key Vault on a Virtual Machine and opens up WinRM HTTP and HTTPS listeners. Prerequisite: A certificate uploaded to Azure Key Vault.",
       "Path": "demos/vm-winrm-keyvault-windows",
       "ResourceTypes": [
         "Microsoft.Compute/virtualMachines",
@@ -5487,6 +5487,13 @@
       "Title": "creates an Azure Stack HCI 24H2 cluster with RAC enabled ",
       "Description": "This template creates an Azure Stack HCI 24H2 cluster with RAC enabled using an ARM template.",
       "Path": "quickstarts/microsoft.azurestackhci/create-cluster-rac-enabled",
+      "ResourceTypes": [],
+      "HasBicep": false
+    },
+    {
+      "Title": "Create an Azure Local cluster with iSCSI SAN storage",
+      "Description": "This ARM template validates and deploys an Active Directory domain-joined Azure Local cluster with external iSCSI SAN storage, per-node iSCSI networking, and optional CHAP authentication backed by Azure Key Vault.",
+      "Path": "quickstarts/microsoft.azurestackhci/create-cluster-san-iscsi",
       "ResourceTypes": [],
       "HasBicep": false
     },
@@ -6983,7 +6990,7 @@
     },
     {
       "Title": "Push a certificate onto a Windows VM",
-      "Description": "Push a certificate onto a Windows VM. Create the Key Vault using the template at http://azure.microsoft.com/en-us/documentation/templates/101-create-key-vault",
+      "Description": "Push a certificate onto a Windows VM",
       "Path": "quickstarts/microsoft.compute/vm-push-certificate-windows",
       "ResourceTypes": [
         "Microsoft.Compute/virtualMachines",
@@ -8967,6 +8974,8 @@
         "Microsoft.Discovery/workspaces/chatModelDeployments",
         "Microsoft.Discovery/workspaces/projects",
         "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "Microsoft.Network/natGateways",
+        "Microsoft.Network/publicIPAddresses",
         "Microsoft.Network/virtualNetworks",
         "Microsoft.Storage/storageAccounts",
         "Microsoft.Storage/storageAccounts/blobServices",
