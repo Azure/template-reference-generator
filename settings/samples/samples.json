@@ -2133,8 +2133,8 @@
       "HasBicep": false
     },
     {
-      "Title": "SharePoint Subscription / 2019 / 2016 fully configured",
-      "Description": "Create a DC, a SQL Server 2025, and from 1 to 5 server(s) hosting a SharePoint Subscription / 2019 / 2016 farm with an extensive configuration, including trusted authentication, user profiles with personal sites, an OAuth trust (using a certificate), a dedicated IIS site for hosting high-trust add-ins, etc... The latest version of key softwares (including Fiddler, vscode, np++, 7zip, ULS Viewer) is installed. SharePoint machines have additional fine-tuning to make them immediately usable (remote administration tools, custom policies for Edge and Chrome, shortcuts, etc...).",
+      "Title": "SharePoint Subscription Edition fully configured",
+      "Description": "Create a DC, a SQL Server 2025, and from 1 to 5 server(s) hosting a SharePoint Subscription Edition farm with an extensive configuration, including trusted authentication, user profiles with personal sites, an OAuth trust (using a certificate), a dedicated IIS site for hosting high-trust add-ins, etc... The latest version of key softwares (including Fiddler, vscode, np++, 7zip, ULS Viewer) is installed. SharePoint machines have additional fine-tuning to make them immediately usable (remote administration tools, custom policies for Edge and Chrome, shortcuts, etc...).",
       "Path": "application-workloads/sharepoint/sharepoint-adfs",
       "ResourceTypes": [],
       "HasBicep": true
@@ -4458,7 +4458,7 @@
     },
     {
       "Title": "WinRM on a Windows VM",
-      "Description": "This template installs a certificate from Azure Key Vault on a Virtual Machine and opens up WinRM HTTP and HTTPS listeners. Prerequisite: A certificate uploaded to Azure Key Vault. Create the Key Vault using the template at http://azure.microsoft.com/en-us/documentation/templates/101-create-key-vault",
+      "Description": "This template installs a certificate from Azure Key Vault on a Virtual Machine and opens up WinRM HTTP and HTTPS listeners. Prerequisite: A certificate uploaded to Azure Key Vault.",
       "Path": "demos/vm-winrm-keyvault-windows",
       "ResourceTypes": [
         "Microsoft.Compute/virtualMachines",
@@ -5487,6 +5487,13 @@
       "Title": "creates an Azure Stack HCI 24H2 cluster with RAC enabled ",
       "Description": "This template creates an Azure Stack HCI 24H2 cluster with RAC enabled using an ARM template.",
       "Path": "quickstarts/microsoft.azurestackhci/create-cluster-rac-enabled",
+      "ResourceTypes": [],
+      "HasBicep": false
+    },
+    {
+      "Title": "Create an Azure Local cluster with iSCSI SAN storage",
+      "Description": "This ARM template validates and deploys an Active Directory domain-joined Azure Local cluster with external iSCSI SAN storage, per-node iSCSI networking, and optional CHAP authentication backed by Azure Key Vault.",
+      "Path": "quickstarts/microsoft.azurestackhci/create-cluster-san-iscsi",
       "ResourceTypes": [],
       "HasBicep": false
     },
@@ -6983,7 +6990,7 @@
     },
     {
       "Title": "Push a certificate onto a Windows VM",
-      "Description": "Push a certificate onto a Windows VM. Create the Key Vault using the template at http://azure.microsoft.com/en-us/documentation/templates/101-create-key-vault",
+      "Description": "Push a certificate onto a Windows VM",
       "Path": "quickstarts/microsoft.compute/vm-push-certificate-windows",
       "ResourceTypes": [
         "Microsoft.Compute/virtualMachines",
@@ -8967,6 +8974,8 @@
         "Microsoft.Discovery/workspaces/chatModelDeployments",
         "Microsoft.Discovery/workspaces/projects",
         "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "Microsoft.Network/natGateways",
+        "Microsoft.Network/publicIPAddresses",
         "Microsoft.Network/virtualNetworks",
         "Microsoft.Storage/storageAccounts",
         "Microsoft.Storage/storageAccounts/blobServices",
@@ -10889,7 +10898,7 @@
     {
       "Title": "Deploy private Key Vault for Azure Enclave workload",
       "Description": "This sample deploys a private Azure Key Vault at subscription scope with private endpoint networking and optional Azure Enclave workload association.",
-      "Path": "quickstarts/microsoft.mission/azure-enclave-keyvault",
+      "Path": "quickstarts/microsoft.mission/enclave-keyvault",
       "ResourceTypes": [
         "Microsoft.Insights/diagnosticSettings",
         "Microsoft.KeyVault/vaults",
@@ -10899,8 +10908,33 @@
         "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
         "Microsoft.Network/privateEndpoints",
         "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+        "Microsoft.OperationalInsights/workspaces",
+        "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts",
         "Microsoft.Resources/resourceGroups",
         "Microsoft.Resources/tags"
+      ],
+      "HasBicep": true
+    },
+    {
+      "Title": "Deploy private Storage account for Azure Enclave workload",
+      "Description": "This sample deploys a private Azure Storage account at subscription scope with private endpoints, CMK encryption, and optional Azure Enclave workload association.",
+      "Path": "quickstarts/microsoft.mission/enclave-storage-account",
+      "ResourceTypes": [
+        "Microsoft.Authorization/roleAssignments",
+        "Microsoft.Insights/diagnosticSettings",
+        "Microsoft.KeyVault/vaults",
+        "Microsoft.KeyVault/vaults/keys",
+        "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "Microsoft.Mission/virtualEnclaves/workloads",
+        "Microsoft.Network/privateDnsZones",
+        "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+        "Microsoft.Network/privateEndpoints",
+        "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+        "Microsoft.Resources/resourceGroups",
+        "Microsoft.Resources/tags",
+        "Microsoft.Storage/storageAccounts",
+        "Microsoft.Storage/storageAccounts/blobServices",
+        "Microsoft.Storage/storageAccounts/blobServices/containers"
       ],
       "HasBicep": true
     },
