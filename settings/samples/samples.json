@@ -2133,8 +2133,8 @@
       "HasBicep": false
     },
     {
-      "Title": "SharePoint Subscription / 2019 / 2016 fully configured",
-      "Description": "Create a DC, a SQL Server 2025, and from 1 to 5 server(s) hosting a SharePoint Subscription / 2019 / 2016 farm with an extensive configuration, including trusted authentication, user profiles with personal sites, an OAuth trust (using a certificate), a dedicated IIS site for hosting high-trust add-ins, etc... The latest version of key softwares (including Fiddler, vscode, np++, 7zip, ULS Viewer) is installed. SharePoint machines have additional fine-tuning to make them immediately usable (remote administration tools, custom policies for Edge and Chrome, shortcuts, etc...).",
+      "Title": "SharePoint Subscription Edition fully configured",
+      "Description": "Create a DC, a SQL Server 2025, and from 1 to 5 server(s) hosting a SharePoint Subscription Edition farm with an extensive configuration, including trusted authentication, user profiles with personal sites, an OAuth trust (using a certificate), a dedicated IIS site for hosting high-trust add-ins, etc... The latest version of key softwares (including Fiddler, vscode, np++, 7zip, ULS Viewer) is installed. SharePoint machines have additional fine-tuning to make them immediately usable (remote administration tools, custom policies for Edge and Chrome, shortcuts, etc...).",
       "Path": "application-workloads/sharepoint/sharepoint-adfs",
       "ResourceTypes": [],
       "HasBicep": true
@@ -4458,7 +4458,7 @@
     },
     {
       "Title": "WinRM on a Windows VM",
-      "Description": "This template installs a certificate from Azure Key Vault on a Virtual Machine and opens up WinRM HTTP and HTTPS listeners. Prerequisite: A certificate uploaded to Azure Key Vault. Create the Key Vault using the template at http://azure.microsoft.com/en-us/documentation/templates/101-create-key-vault",
+      "Description": "This template installs a certificate from Azure Key Vault on a Virtual Machine and opens up WinRM HTTP and HTTPS listeners. Prerequisite: A certificate uploaded to Azure Key Vault.",
       "Path": "demos/vm-winrm-keyvault-windows",
       "ResourceTypes": [
         "Microsoft.Compute/virtualMachines",
@@ -5487,6 +5487,13 @@
       "Title": "creates an Azure Stack HCI 24H2 cluster with RAC enabled ",
       "Description": "This template creates an Azure Stack HCI 24H2 cluster with RAC enabled using an ARM template.",
       "Path": "quickstarts/microsoft.azurestackhci/create-cluster-rac-enabled",
+      "ResourceTypes": [],
+      "HasBicep": false
+    },
+    {
+      "Title": "Create an Azure Local cluster with iSCSI SAN storage",
+      "Description": "This ARM template validates and deploys an Active Directory domain-joined Azure Local cluster with external iSCSI SAN storage, per-node iSCSI networking, and optional CHAP authentication backed by Azure Key Vault.",
+      "Path": "quickstarts/microsoft.azurestackhci/create-cluster-san-iscsi",
       "ResourceTypes": [],
       "HasBicep": false
     },
@@ -6983,7 +6990,7 @@
     },
     {
       "Title": "Push a certificate onto a Windows VM",
-      "Description": "Push a certificate onto a Windows VM. Create the Key Vault using the template at http://azure.microsoft.com/en-us/documentation/templates/101-create-key-vault",
+      "Description": "Push a certificate onto a Windows VM",
       "Path": "quickstarts/microsoft.compute/vm-push-certificate-windows",
       "ResourceTypes": [
         "Microsoft.Compute/virtualMachines",
@@ -8967,6 +8974,8 @@
         "Microsoft.Discovery/workspaces/chatModelDeployments",
         "Microsoft.Discovery/workspaces/projects",
         "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "Microsoft.Network/natGateways",
+        "Microsoft.Network/publicIPAddresses",
         "Microsoft.Network/virtualNetworks",
         "Microsoft.Storage/storageAccounts",
         "Microsoft.Storage/storageAccounts/blobServices",
@@ -10889,7 +10898,7 @@
     {
       "Title": "Deploy private Key Vault for Azure Enclave workload",
       "Description": "This sample deploys a private Azure Key Vault at subscription scope with private endpoint networking and optional Azure Enclave workload association.",
-      "Path": "quickstarts/microsoft.mission/azure-enclave-keyvault",
+      "Path": "quickstarts/microsoft.mission/enclave-keyvault",
       "ResourceTypes": [
         "Microsoft.Insights/diagnosticSettings",
         "Microsoft.KeyVault/vaults",
@@ -10899,8 +10908,33 @@
         "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
         "Microsoft.Network/privateEndpoints",
         "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+        "Microsoft.OperationalInsights/workspaces",
+        "Microsoft.OperationalInsights/workspaces/linkedStorageAccounts",
         "Microsoft.Resources/resourceGroups",
         "Microsoft.Resources/tags"
+      ],
+      "HasBicep": true
+    },
+    {
+      "Title": "Deploy private Storage account for Azure Enclave workload",
+      "Description": "This sample deploys a private Azure Storage account at subscription scope with private endpoints, CMK encryption, and optional Azure Enclave workload association.",
+      "Path": "quickstarts/microsoft.mission/enclave-storage-account",
+      "ResourceTypes": [
+        "Microsoft.Authorization/roleAssignments",
+        "Microsoft.Insights/diagnosticSettings",
+        "Microsoft.KeyVault/vaults",
+        "Microsoft.KeyVault/vaults/keys",
+        "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "Microsoft.Mission/virtualEnclaves/workloads",
+        "Microsoft.Network/privateDnsZones",
+        "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+        "Microsoft.Network/privateEndpoints",
+        "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+        "Microsoft.Resources/resourceGroups",
+        "Microsoft.Resources/tags",
+        "Microsoft.Storage/storageAccounts",
+        "Microsoft.Storage/storageAccounts/blobServices",
+        "Microsoft.Storage/storageAccounts/blobServices/containers"
       ],
       "HasBicep": true
     },
@@ -11497,6 +11531,26 @@
         "Microsoft.Network/virtualNetworks"
       ],
       "HasBicep": false
+    },
+    {
+      "Title": "Azure Firewall for Containers with AKS",
+      "Description": "This template deploys an AKS cluster, an Azure Firewall Premium with a firewall policy, and the identity and routing for Azure Firewall for Containers. Optionally, it installs the Azure Firewall Controller and a sample label-based security policy.",
+      "Path": "quickstarts/microsoft.network/azurefirewall-for-containers-aks",
+      "ResourceTypes": [
+        "Microsoft.Authorization/roleAssignments",
+        "Microsoft.ContainerService/managedClusters",
+        "Microsoft.ManagedIdentity/userAssignedIdentities",
+        "Microsoft.ManagedIdentity/userAssignedIdentities/federatedIdentityCredentials",
+        "Microsoft.Network/azureFirewalls",
+        "Microsoft.Network/firewallPolicies",
+        "Microsoft.Network/firewallPolicies/ruleCollectionGroups",
+        "Microsoft.Network/publicIPAddresses",
+        "Microsoft.Network/routeTables",
+        "Microsoft.Network/virtualNetworks",
+        "Microsoft.Network/virtualNetworks/subnets",
+        "Microsoft.Resources/deploymentScripts"
+      ],
+      "HasBicep": true
     },
     {
       "Title": "Create an Azure Firewall sandbox with forced tunneling",
@@ -12327,6 +12381,17 @@
       "Description": "This template shows how to create an Azure Traffic Manager profile using external endpoints.",
       "Path": "quickstarts/microsoft.network/traffic-manager-external-endpoint",
       "ResourceTypes": [
+        "Microsoft.Network/trafficmanagerprofiles"
+      ],
+      "HasBicep": true
+    },
+    {
+      "Title": "Traffic Manager linked record",
+      "Description": "This template creates an Azure DNS zone, a strictly typed Azure Traffic Manager profile with two priority-routed external endpoints, and an Azure DNS A record linked directly to the Traffic Manager profile.",
+      "Path": "quickstarts/microsoft.network/traffic-manager-linked-record",
+      "ResourceTypes": [
+        "Microsoft.Network/dnsZones",
+        "Microsoft.Network/dnsZones/A",
         "Microsoft.Network/trafficmanagerprofiles"
       ],
       "HasBicep": true
@@ -13284,6 +13349,17 @@
         "Microsoft.Sql/servers/databases",
         "Microsoft.Sql/servers/databases/transparentDataEncryption",
         "Microsoft.Sql/servers/securityAlertPolicies"
+      ],
+      "HasBicep": true
+    },
+    {
+      "Title": "Create an Azure SQL Database with the free tier",
+      "Description": "Deploys an Azure SQL logical server with Microsoft Entra-only authentication, a firewall rule for one client IPv4 address, and a General Purpose serverless database using the free tier. The database pauses when its monthly free allowance is exhausted instead of enabling paid overages.",
+      "Path": "quickstarts/microsoft.sql/sql-database-free-tier",
+      "ResourceTypes": [
+        "Microsoft.Sql/servers",
+        "Microsoft.Sql/servers/databases",
+        "Microsoft.Sql/servers/firewallRules"
       ],
       "HasBicep": true
     },
